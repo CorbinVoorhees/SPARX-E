@@ -1,0 +1,109 @@
+\doxysection{planning\+\_\+module\+::Trajectory Class Reference}
+\hypertarget{classplanning__module_1_1Trajectory}{}\label{classplanning__module_1_1Trajectory}\index{planning\_module::Trajectory@{planning\_module::Trajectory}}
+
+
+{\ttfamily \#include $<$trajectories.\+hpp$>$}
+
+
+
+Inheritance diagram for planning\+\_\+module\+::Trajectory\+:
+% FIG 0
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual std\+::optional$<$ Eigen\+::\+Vector\+Xd $>$ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}{evaluate\+\_\+at}} (double t) const =0
+\item 
+virtual double \mbox{\hyperlink{classplanning__module_1_1Trajectory_a9165657ca3b286a5941d1974560532a4}{curr\+\_\+time}} () final
+\item 
+virtual void \mbox{\hyperlink{classplanning__module_1_1Trajectory_a8c80270684d1270ad7006e313ab96691}{add\+\_\+time}} () final
+\item 
+std\+::optional$<$ Eigen\+::\+Vector2d $>$ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a363e09212341cf310073dc97c080886f}{linesearch}} (Eigen\+::\+Vector2d \&center, Eigen\+::\+Matrix2d \&cov, double t\+\_\+init) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static auto \mbox{\hyperlink{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}{mahalanobis}} (const Eigen\+::\+Matrix2d \&cov, const Eigen\+::\+Vector2d \&center, const Eigen\+::\+Vector2d \&r)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}} = 0.\+0005
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00009}{9}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classplanning__module_1_1Trajectory_a8c80270684d1270ad7006e313ab96691}\label{classplanning__module_1_1Trajectory_a8c80270684d1270ad7006e313ab96691} 
+\index{planning\_module::Trajectory@{planning\_module::Trajectory}!add\_time@{add\_time}}
+\index{add\_time@{add\_time}!planning\_module::Trajectory@{planning\_module::Trajectory}}
+\doxysubsubsection{\texorpdfstring{add\_time()}{add\_time()}}
+{\footnotesize\ttfamily virtual void planning\+\_\+module\+::\+Trajectory\+::add\+\_\+time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1Trajectory_a9165657ca3b286a5941d1974560532a4}\label{classplanning__module_1_1Trajectory_a9165657ca3b286a5941d1974560532a4} 
+\index{planning\_module::Trajectory@{planning\_module::Trajectory}!curr\_time@{curr\_time}}
+\index{curr\_time@{curr\_time}!planning\_module::Trajectory@{planning\_module::Trajectory}}
+\doxysubsubsection{\texorpdfstring{curr\_time()}{curr\_time()}}
+{\footnotesize\ttfamily virtual double planning\+\_\+module\+::\+Trajectory\+::curr\+\_\+time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00018}{18}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}\label{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c} 
+\index{planning\_module::Trajectory@{planning\_module::Trajectory}!evaluate\_at@{evaluate\_at}}
+\index{evaluate\_at@{evaluate\_at}!planning\_module::Trajectory@{planning\_module::Trajectory}}
+\doxysubsubsection{\texorpdfstring{evaluate\_at()}{evaluate\_at()}}
+{\footnotesize\ttfamily virtual std\+::optional$<$ Eigen\+::\+Vector\+Xd $>$ planning\+\_\+module\+::\+Trajectory\+::evaluate\+\_\+at (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_ab1d41eeb8d9f391443a41245e1e54900}{planning\+\_\+module\+::\+Nominal\+Trajectory}}, and \mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory_a94a79a0ef4d804ec0c81962b39b98bb2}{planning\+\_\+module\+::\+Replanned\+Trajectory}}.
+
+\Hypertarget{classplanning__module_1_1Trajectory_a363e09212341cf310073dc97c080886f}\label{classplanning__module_1_1Trajectory_a363e09212341cf310073dc97c080886f} 
+\index{planning\_module::Trajectory@{planning\_module::Trajectory}!linesearch@{linesearch}}
+\index{linesearch@{linesearch}!planning\_module::Trajectory@{planning\_module::Trajectory}}
+\doxysubsubsection{\texorpdfstring{linesearch()}{linesearch()}}
+{\footnotesize\ttfamily std\+::optional$<$ Eigen\+::\+Vector2d $>$ planning\+\_\+module\+::\+Trajectory\+::linesearch (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector2d \&}]{center,  }\item[{Eigen\+::\+Matrix2d \&}]{cov,  }\item[{double}]{t\+\_\+init }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00021}{21}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}\label{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce} 
+\index{planning\_module::Trajectory@{planning\_module::Trajectory}!mahalanobis@{mahalanobis}}
+\index{mahalanobis@{mahalanobis}!planning\_module::Trajectory@{planning\_module::Trajectory}}
+\doxysubsubsection{\texorpdfstring{mahalanobis()}{mahalanobis()}}
+{\footnotesize\ttfamily static auto planning\+\_\+module\+::\+Trajectory\+::mahalanobis (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix2d \&}]{cov,  }\item[{const Eigen\+::\+Vector2d \&}]{center,  }\item[{const Eigen\+::\+Vector2d \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00014}{14}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}\label{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263} 
+\index{planning\_module::Trajectory@{planning\_module::Trajectory}!dt@{dt}}
+\index{dt@{dt}!planning\_module::Trajectory@{planning\_module::Trajectory}}
+\doxysubsubsection{\texorpdfstring{dt}{dt}}
+{\footnotesize\ttfamily constexpr double planning\+\_\+module\+::\+Trajectory\+::dt = 0.\+0005\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00012}{12}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/autonomy/src/\mbox{\hyperlink{trajectories_8hpp}{trajectories.\+hpp}}\end{DoxyCompactItemize}

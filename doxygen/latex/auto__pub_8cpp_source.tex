@@ -1,0 +1,72 @@
+\doxysection{auto\+\_\+pub.\+cpp}
+\hypertarget{auto__pub_8cpp_source}{}\label{auto__pub_8cpp_source}\index{src/nav\_filters/src/auto\_pub.cpp@{src/nav\_filters/src/auto\_pub.cpp}}
+\mbox{\hyperlink{auto__pub_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}rclcpp/rclcpp.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/float32.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/int32.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/msg/vector3.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}sensor\_msgs/msg/imu.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/msg/odometry.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00015}\mbox{\hyperlink{classAutoPublisher}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAutoPublisher}{AutoPublisher}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ rclcpp::Subscription<geometry\_msgs::msg::Vector3>::SharedPtr\ subscriber;}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ rclcpp::Publisher<std\_msgs::msg::Int32>::SharedPtr\ publisher\_successful;}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ callback(\textcolor{keyword}{const}\ geometry\_msgs::msg::Vector3::SharedPtr\ \ msg)\textcolor{keyword}{\ const}\{}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pow(msg-\/>x,2)\ +\ pow(msg-\/>y,2)\ +\ pow(msg-\/>z,2)\ <\ 1e-\/3)\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ cmd\ =\ \textcolor{stringliteral}{"{}pkill\ -\/f\ nav\_node"{}};}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ status\ =\ std::system(cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std\_msgs::msg::Int32\ msg;}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg.data\ =\ WEXITSTATUS(status);}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>publisher\_successful-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ cmd\ =\ \textcolor{stringliteral}{"{}ros2\ run\ nav\_filters\ nav\_node\ -\/-\/ros-\/args\ "{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/p\ init\_x:="{}}\ +\ std::to\_string(msg-\/>x)\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/p\ init\_y:="{}}\ +\ std::to\_string(msg-\/>y)\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/p\ init\_z:="{}}\ +\ std::to\_string(msg-\/>z)\ +\ \textcolor{stringliteral}{"{}\ \&"{}};}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ status\ =\ std::system(cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ status\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std\_msgs::msg::Int32\ msg;}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg.data\ =\ WEXITSTATUS(status);}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>publisher\_successful-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00047}\mbox{\hyperlink{classAutoPublisher_a3fa16849013acdfdb28e080a873a3377}{00047}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAutoPublisher_a3fa16849013acdfdb28e080a873a3377}{AutoPublisher}}()\ :\ Node(\textcolor{stringliteral}{"{}auto\_pub\_node"{}})}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>subscriber\ =\ this-\/>create\_subscription<geometry\_msgs::msg::Vector3>(}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/start\_navigation"{}},\ 10,\ std::bind(\&AutoPublisher::callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1)}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>publisher\_successful\ =\ this-\/>create\_publisher<std\_msgs::msg::Int32>(}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/nav\_node\_successful"{}},10}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00057}00057\ \};}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00059}\mbox{\hyperlink{auto__pub_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00059}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}*\ argv[])\ }
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00060}00060\ \{}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00061}00061\ \ \ \ \ rclcpp::init(argc,\ argv);}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ std::make\_shared<AutoPublisher>();}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00063}00063\ \ \ \ \ rclcpp::spin(node);}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00064}00064\ \ \ \ \ rclcpp::shutdown();}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{auto__pub_8cpp_source_l00066}00066\ \}}
+
+\end{DoxyCode}

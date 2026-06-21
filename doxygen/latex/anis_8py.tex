@@ -1,0 +1,34 @@
+\doxysection{src/nav\+\_\+filters/src/anis.py File Reference}
+\hypertarget{anis_8py}{}\label{anis_8py}\index{src/nav\_filters/src/anis.py@{src/nav\_filters/src/anis.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceanis}{anis}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{anis.\+filetype}} = \textquotesingle{}trans\textquotesingle{}
+\item 
+int \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{anis.\+n}} = 3
+\item 
+str \mbox{\hyperlink{namespaceanis_a2b82989681fb127693ab49c70fe35eff}{anis.\+innovations}} = \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} + "{}\+\_\+innovations.\+csv"{}
+\item 
+str \mbox{\hyperlink{namespaceanis_a697c1287330daf209d0656fc315dda43}{anis.\+residuals}} = \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} + "{}\+\_\+residuals.\+csv"{}
+\item 
+list \mbox{\hyperlink{namespaceanis_a7186e97ab23a014980cca9618c55bc01}{anis.\+nis}} = \mbox{[}$\,$\mbox{]}
+\item 
+str \mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{anis.\+res}} = \mbox{\hyperlink{namespaceanis_a697c1287330daf209d0656fc315dda43}{residuals}}\mbox{[}i\mbox{]}
+\item 
+str \mbox{\hyperlink{namespaceanis_af0031aec072b27ab77df07dac53fe334}{anis.\+inno}} = \mbox{\hyperlink{namespaceanis_a2b82989681fb127693ab49c70fe35eff}{innovations}}\mbox{[}(len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}})\texorpdfstring{$\ast$}{*}i)\+:(len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}})\texorpdfstring{$\ast$}{*}i+len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}}))\mbox{]}
+\item 
+list \mbox{\hyperlink{namespaceanis_ab21ebd3a43a17bb6d0d45253acb19aeb}{anis.\+anis}} = \mbox{[}$\,$\mbox{]}
+\item 
+int \mbox{\hyperlink{namespaceanis_a6196bd2d528beef8967146b8d752bab6}{anis.\+window}} = 1
+\item 
+float \mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{anis.\+alpha}} = 0.\+05
+\item 
+int \mbox{\hyperlink{namespaceanis_afb46946943f0a8cfbdea5968f0f72792}{anis.\+lower\+\_\+bound}} = chi2.\+ppf(\mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}}/2, \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}) / \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}
+\item 
+int \mbox{\hyperlink{namespaceanis_abfcfb709e8a93706aaa3e262432fcc17}{anis.\+upper\+\_\+bound}} = chi2.\+ppf(1 -\/ \mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}}/2, \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}) / \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}
+\end{DoxyCompactItemize}

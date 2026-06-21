@@ -1,0 +1,238 @@
+\doxysection{planning\+\_\+module\+::Vec2\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structplanning__module_1_1Vec2}{}\label{structplanning__module_1_1Vec2}\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+
+
+{\ttfamily \#include $<$planning.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename U $>$ }\\constexpr \mbox{\hyperlink{structplanning__module_1_1Vec2_ae36be84398e7a4b9add2af44a8b4d854}{Vec2}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&other)
+\item 
+constexpr \mbox{\hyperlink{structplanning__module_1_1Vec2_a8c5aa980970646008db7427f1628f8b6}{Vec2}} (T \mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}=0, T \mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}=0)
+\item 
+bool \mbox{\hyperlink{structplanning__module_1_1Vec2_a4ac143984d2088435828b9afd4f4bc24}{operator$<$}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}} \&other) const
+\item 
+bool \mbox{\hyperlink{structplanning__module_1_1Vec2_a7c10cf1ec39c960bdfd9ffc8393728d8}{operator==}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}} \&other) const
+\item 
+bool \mbox{\hyperlink{structplanning__module_1_1Vec2_a004e8daf43f8ebc4d2a814f518d86521}{operator!=}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}} \&other) const
+\item 
+{\footnotesize template$<$typename U $>$ }\\auto \mbox{\hyperlink{structplanning__module_1_1Vec2_adfe416c378c23e792c63822491d6b343}{operator+}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&other) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}+other.\+x)$>$
+\item 
+{\footnotesize template$<$typename U $>$ }\\auto \mbox{\hyperlink{structplanning__module_1_1Vec2_ab1d7935db319108fcfe9469c772b0acb}{operator-\/}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&other) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} -\/ other.\+x)$>$
+\item 
+{\footnotesize template$<$typename U $>$ }\\auto \mbox{\hyperlink{structplanning__module_1_1Vec2_a70f6d62693de9d1b0d0f8c4b5ef9d55f}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&other) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} \texorpdfstring{$\ast$}{*}other.\+x)$>$
+\item 
+{\footnotesize template$<$typename U $>$ }\\auto \mbox{\hyperlink{structplanning__module_1_1Vec2_acc93de3e44da771114c4bb5db1b7379a}{operator/}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&other) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}/other.\+x)$>$
+\item 
+{\footnotesize template$<$typename U $>$ }\\auto \mbox{\hyperlink{structplanning__module_1_1Vec2_a3b33e86f6a8ee4f7a713fc57426e1a5f}{operator\texorpdfstring{$\ast$}{*}}} (const U \&scalar) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} \texorpdfstring{$\ast$}{*}scalar)$>$
+\item 
+{\footnotesize template$<$typename U $>$ }\\auto \mbox{\hyperlink{structplanning__module_1_1Vec2_af316b7d745bf463b6a9a24cc906b8c2a}{operator/}} (const U \&scalar) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}/scalar)$>$
+\item 
+{\footnotesize template$<$typename U $>$ }\\constexpr auto \mbox{\hyperlink{structplanning__module_1_1Vec2_ab9c8172fed96aa628ec543dd2b5bb84a}{dot}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&other) const -\/$>$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} \texorpdfstring{$\ast$}{*}other.\+x)
+\item 
+constexpr auto \mbox{\hyperlink{structplanning__module_1_1Vec2_a378a81bbebadc135306f68562a95add9}{round}} () const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ int32\+\_\+t $>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+T \mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}
+\item 
+T \mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+struct planning\+\_\+module\+::\+Vec2$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00024}{24}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structplanning__module_1_1Vec2_ae36be84398e7a4b9add2af44a8b4d854}\label{structplanning__module_1_1Vec2_ae36be84398e7a4b9add2af44a8b4d854} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!Vec2@{Vec2}}
+\index{Vec2@{Vec2}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Vec2()}{Vec2()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+constexpr \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::\+Vec2 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00029}{29}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a8c5aa980970646008db7427f1628f8b6}\label{structplanning__module_1_1Vec2_a8c5aa980970646008db7427f1628f8b6} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!Vec2@{Vec2}}
+\index{Vec2@{Vec2}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Vec2()}{Vec2()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::\+Vec2 (\begin{DoxyParamCaption}\item[{T}]{x = {\ttfamily 0},  }\item[{T}]{y = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00030}{30}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structplanning__module_1_1Vec2_ab9c8172fed96aa628ec543dd2b5bb84a}\label{structplanning__module_1_1Vec2_ab9c8172fed96aa628ec543dd2b5bb84a} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!dot@{dot}}
+\index{dot@{dot}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{dot()}{dot()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+constexpr auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::dot (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{other }\end{DoxyParamCaption}) const -\/$>$ decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} \texorpdfstring{$\ast$}{*} other.\+x) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00052}{52}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a004e8daf43f8ebc4d2a814f518d86521}\label{structplanning__module_1_1Vec2_a004e8daf43f8ebc4d2a814f518d86521} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ T $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00034}{34}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a3b33e86f6a8ee4f7a713fc57426e1a5f}\label{structplanning__module_1_1Vec2_a3b33e86f6a8ee4f7a713fc57426e1a5f} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const U \&}]{scalar }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} \texorpdfstring{$\ast$}{*} scalar)$>$ \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00047}{47}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a70f6d62693de9d1b0d0f8c4b5ef9d55f}\label{structplanning__module_1_1Vec2_a70f6d62693de9d1b0d0f8c4b5ef9d55f} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{other }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} \texorpdfstring{$\ast$}{*} other.\+x)$>$ \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00042}{42}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_adfe416c378c23e792c63822491d6b343}\label{structplanning__module_1_1Vec2_adfe416c378c23e792c63822491d6b343} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator+@{operator+}}
+\index{operator+@{operator+}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{other }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} + other.\+x)$>$ \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00038}{38}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_ab1d7935db319108fcfe9469c772b0acb}\label{structplanning__module_1_1Vec2_ab1d7935db319108fcfe9469c772b0acb} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{other }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} -\/ other.\+x)$>$ \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00040}{40}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_af316b7d745bf463b6a9a24cc906b8c2a}\label{structplanning__module_1_1Vec2_af316b7d745bf463b6a9a24cc906b8c2a} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator/@{operator/}}
+\index{operator/@{operator/}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator/ (\begin{DoxyParamCaption}\item[{const U \&}]{scalar }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} / scalar)$>$ \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00049}{49}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_acc93de3e44da771114c4bb5db1b7379a}\label{structplanning__module_1_1Vec2_acc93de3e44da771114c4bb5db1b7379a} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator/@{operator/}}
+\index{operator/@{operator/}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{other }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$decltype(\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}} / other.\+x)$>$ \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00044}{44}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a4ac143984d2088435828b9afd4f4bc24}\label{structplanning__module_1_1Vec2_a4ac143984d2088435828b9afd4f4bc24} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ T $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00032}{32}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a7c10cf1ec39c960bdfd9ffc8393728d8}\label{structplanning__module_1_1Vec2_a7c10cf1ec39c960bdfd9ffc8393728d8} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!operator==@{operator==}}
+\index{operator==@{operator==}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ T $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00033}{33}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_a378a81bbebadc135306f68562a95add9}\label{structplanning__module_1_1Vec2_a378a81bbebadc135306f68562a95add9} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!round@{round}}
+\index{round@{round}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{round()}{round()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::round (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$int32\+\_\+t$>$         \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00054}{54}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}\label{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!x@{x}}
+\index{x@{x}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::x}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00026}{26}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+\Hypertarget{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}\label{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207} 
+\index{planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}!y@{y}}
+\index{y@{y}!planning\_module::Vec2$<$ T $>$@{planning\_module::Vec2$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2}}$<$ T $>$\+::y}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00026}{26}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/autonomy/src/\mbox{\hyperlink{planning_8hpp}{planning.\+hpp}}\end{DoxyCompactItemize}

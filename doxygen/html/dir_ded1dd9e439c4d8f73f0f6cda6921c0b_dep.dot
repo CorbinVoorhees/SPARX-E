@@ -1,0 +1,16 @@
+digraph "build/uwb_bridge/CMakeFiles/uwb_bridge_node.dir"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_9ef415954e59e401e9f3cd9ba3d7d962 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", label="CMakeFiles", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_9ef415954e59e401e9f3cd9ba3d7d962.html",tooltip=""]
+  subgraph clusterdir_ded1dd9e439c4d8f73f0f6cda6921c0b {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_ded1dd9e439c4d8f73f0f6cda6921c0b.html",tooltip=""]
+    dir_ded1dd9e439c4d8f73f0f6cda6921c0b [shape=plaintext, label="uwb_bridge_node.dir"];
+  dir_e8cb7f75e091a7e1a7494b06c974bd39 [label="src", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_e8cb7f75e091a7e1a7494b06c974bd39.html",tooltip=""];
+  }
+  }
+}

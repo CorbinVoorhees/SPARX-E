@@ -1,0 +1,45 @@
+\doxysection{src/lidar\+\_\+processor/src/main.cpp File Reference}
+\hypertarget{lidar__processor_2src_2main_8cpp}{}\label{lidar__processor_2src_2main_8cpp}\index{src/lidar\_processor/src/main.cpp@{src/lidar\_processor/src/main.cpp}}
+{\ttfamily \#include $<$rclcpp/rclcpp.\+hpp$>$}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/msg/point\+\_\+cloud2.\+hpp$>$}\newline
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/env.\+hpp"{}}\newline
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/obstacle.\+hpp"{}}\newline
+{\ttfamily \#include "{}nav\+\_\+msgs/msg/odometry.\+hpp"{}}\newline
+{\ttfamily \#include $<$pcl\+\_\+conversions/pcl\+\_\+conversions.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/point\+\_\+cloud.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/point\+\_\+types.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/search/kdtree.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/segmentation/extract\+\_\+clusters.\+h$>$}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+Include dependency graph for main.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classLidarObstacleProcessor}{Lidar\+Obstacle\+Processor}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{lidar__processor_2src_2main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{lidar__processor_2src_2main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{lidar__processor_2src_2main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lidar__processor_2src_2main_8cpp_source_l00508}{508}} of file \mbox{\hyperlink{lidar__processor_2src_2main_8cpp_source}{main.\+cpp}}.
+

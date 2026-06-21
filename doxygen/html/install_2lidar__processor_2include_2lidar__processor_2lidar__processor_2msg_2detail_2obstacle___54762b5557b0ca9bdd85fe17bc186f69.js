@@ -1,0 +1,4 @@
+var install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle___54762b5557b0ca9bdd85fe17bc186f69 =
+[
+    [ "ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME", "install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle___54762b5557b0ca9bdd85fe17bc186f69.html#a81d84ecf60cddd5f49afa5cda12ab101", null ]
+];

@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/**",
+                "/usr/include/eigen3/**"
+            ],
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-arm64",
+            // FIX: Changed from array to a single wildcard string for ROS 2 packages
+            "compileCommands": "${workspaceFolder}/build/*/compile_commands.json"
+        }
+    ],
+    "version": 4
+}

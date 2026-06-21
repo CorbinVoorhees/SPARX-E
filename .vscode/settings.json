@@ -1,0 +1,28 @@
+{
+  "clangd.arguments": [
+    "--compile-commands-dir=build",
+    "--clang-tidy",
+    "--enable-config"
+  ],
+  "clangd.trace.server": "verbose",
+  "C_Cpp.intelliSenseEngine": "Disabled",
+  "cmake.sourceDirectory": "/home/sparky/Desktop/SPARX_E/src/arduino_bridge",
+  "git.ignoreLimitWarning": true,
+  "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+  "ROS2.distro": "kilted",
+  "python.autoComplete.extraPaths": [
+    "/home/sparky/Desktop/SPARX_E/install/status_updater/lib/python3.12/site-packages",
+    "/home/sparky/Desktop/SPARX_E/install/lidar_processor/lib/python3.12/site-packages",
+    "/home/sparky/Desktop/SPARX_E/install/camera/lib/python3.12/site-packages",
+    "/home/sparky/Desktop/SPARX_E/install/build_sparxe/lib/python3.12/site-packages",
+    "/opt/ros/kilted/lib/python3.12/site-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/sparky/Desktop/SPARX_E/install/status_updater/lib/python3.12/site-packages",
+    "/home/sparky/Desktop/SPARX_E/install/lidar_processor/lib/python3.12/site-packages",
+    "/home/sparky/Desktop/SPARX_E/install/camera/lib/python3.12/site-packages",
+    "/home/sparky/Desktop/SPARX_E/install/build_sparxe/lib/python3.12/site-packages",
+    "/opt/ros/kilted/lib/python3.12/site-packages"
+  ],
+  "editor.formatOnSave": true
+}

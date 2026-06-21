@@ -1,0 +1,152 @@
+\doxysection{anis Namespace Reference}
+\hypertarget{namespaceanis}{}\label{namespaceanis}\index{anis@{anis}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} = \textquotesingle{}trans\textquotesingle{}
+\item 
+int \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}} = 3
+\item 
+str \mbox{\hyperlink{namespaceanis_a2b82989681fb127693ab49c70fe35eff}{innovations}} = \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} + "{}\+\_\+innovations.\+csv"{}
+\item 
+str \mbox{\hyperlink{namespaceanis_a697c1287330daf209d0656fc315dda43}{residuals}} = \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} + "{}\+\_\+residuals.\+csv"{}
+\item 
+list \mbox{\hyperlink{namespaceanis_a7186e97ab23a014980cca9618c55bc01}{nis}} = \mbox{[}$\,$\mbox{]}
+\item 
+str \mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}} = \mbox{\hyperlink{namespaceanis_a697c1287330daf209d0656fc315dda43}{residuals}}\mbox{[}i\mbox{]}
+\item 
+str \mbox{\hyperlink{namespaceanis_af0031aec072b27ab77df07dac53fe334}{inno}} = \mbox{\hyperlink{namespaceanis_a2b82989681fb127693ab49c70fe35eff}{innovations}}\mbox{[}(len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}})\texorpdfstring{$\ast$}{*}i)\+:(len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}})\texorpdfstring{$\ast$}{*}i+len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}}))\mbox{]}
+\item 
+list \mbox{\hyperlink{namespaceanis_ab21ebd3a43a17bb6d0d45253acb19aeb}{anis}} = \mbox{[}$\,$\mbox{]}
+\item 
+int \mbox{\hyperlink{namespaceanis_a6196bd2d528beef8967146b8d752bab6}{window}} = 1
+\item 
+float \mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}} = 0.\+05
+\item 
+int \mbox{\hyperlink{namespaceanis_afb46946943f0a8cfbdea5968f0f72792}{lower\+\_\+bound}} = chi2.\+ppf(\mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}}/2, \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}) / \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}
+\item 
+int \mbox{\hyperlink{namespaceanis_abfcfb709e8a93706aaa3e262432fcc17}{upper\+\_\+bound}} = chi2.\+ppf(1 -\/ \mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}}/2, \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}) / \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}\label{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7} 
+\index{anis@{anis}!alpha@{alpha}}
+\index{alpha@{alpha}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{alpha}{alpha}}
+{\footnotesize\ttfamily anis.\+alpha = 0.\+05}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00035}{35}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_ab21ebd3a43a17bb6d0d45253acb19aeb}\label{namespaceanis_ab21ebd3a43a17bb6d0d45253acb19aeb} 
+\index{anis@{anis}!anis@{anis}}
+\index{anis@{anis}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{anis}{anis}}
+{\footnotesize\ttfamily anis.\+anis = \mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00026}{26}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}\label{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9} 
+\index{anis@{anis}!filetype@{filetype}}
+\index{filetype@{filetype}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{filetype}{filetype}}
+{\footnotesize\ttfamily str anis.\+filetype = \textquotesingle{}trans\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00007}{7}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_af0031aec072b27ab77df07dac53fe334}\label{namespaceanis_af0031aec072b27ab77df07dac53fe334} 
+\index{anis@{anis}!inno@{inno}}
+\index{inno@{inno}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{inno}{inno}}
+{\footnotesize\ttfamily str anis.\+inno = \mbox{\hyperlink{namespaceanis_a2b82989681fb127693ab49c70fe35eff}{innovations}}\mbox{[}(len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}})\texorpdfstring{$\ast$}{*}i)\+:(len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}})\texorpdfstring{$\ast$}{*}i+len(\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{res}}))\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00024}{24}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_a2b82989681fb127693ab49c70fe35eff}\label{namespaceanis_a2b82989681fb127693ab49c70fe35eff} 
+\index{anis@{anis}!innovations@{innovations}}
+\index{innovations@{innovations}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{innovations}{innovations}}
+{\footnotesize\ttfamily anis.\+innovations = \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} + "{}\+\_\+innovations.\+csv"{}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00013}{13}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_afb46946943f0a8cfbdea5968f0f72792}\label{namespaceanis_afb46946943f0a8cfbdea5968f0f72792} 
+\index{anis@{anis}!lower\_bound@{lower\_bound}}
+\index{lower\_bound@{lower\_bound}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{lower\_bound}{lower\_bound}}
+{\footnotesize\ttfamily anis.\+lower\+\_\+bound = chi2.\+ppf(\mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}}/2, \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}) / \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00036}{36}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_a9a700875aeff78e6d163593ba5910794}\label{namespaceanis_a9a700875aeff78e6d163593ba5910794} 
+\index{anis@{anis}!n@{n}}
+\index{n@{n}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily int anis.\+n = 3}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00009}{9}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_a7186e97ab23a014980cca9618c55bc01}\label{namespaceanis_a7186e97ab23a014980cca9618c55bc01} 
+\index{anis@{anis}!nis@{nis}}
+\index{nis@{nis}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{nis}{nis}}
+{\footnotesize\ttfamily list anis.\+nis = \mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00020}{20}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}\label{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8} 
+\index{anis@{anis}!res@{res}}
+\index{res@{res}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{res}{res}}
+{\footnotesize\ttfamily str anis.\+res = \mbox{\hyperlink{namespaceanis_a697c1287330daf209d0656fc315dda43}{residuals}}\mbox{[}i\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00023}{23}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_a697c1287330daf209d0656fc315dda43}\label{namespaceanis_a697c1287330daf209d0656fc315dda43} 
+\index{anis@{anis}!residuals@{residuals}}
+\index{residuals@{residuals}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{residuals}{residuals}}
+{\footnotesize\ttfamily anis.\+residuals = \mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{filetype}} + "{}\+\_\+residuals.\+csv"{}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00014}{14}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_abfcfb709e8a93706aaa3e262432fcc17}\label{namespaceanis_abfcfb709e8a93706aaa3e262432fcc17} 
+\index{anis@{anis}!upper\_bound@{upper\_bound}}
+\index{upper\_bound@{upper\_bound}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{upper\_bound}{upper\_bound}}
+{\footnotesize\ttfamily anis.\+upper\+\_\+bound = chi2.\+ppf(1 -\/ \mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{alpha}}/2, \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}) / \mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{n}}}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00037}{37}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+
+\Hypertarget{namespaceanis_a6196bd2d528beef8967146b8d752bab6}\label{namespaceanis_a6196bd2d528beef8967146b8d752bab6} 
+\index{anis@{anis}!window@{window}}
+\index{window@{window}!anis@{anis}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily int anis.\+window = 1}
+
+
+
+Definition at line \mbox{\hyperlink{anis_8py_source_l00027}{27}} of file \mbox{\hyperlink{anis_8py_source}{anis.\+py}}.
+

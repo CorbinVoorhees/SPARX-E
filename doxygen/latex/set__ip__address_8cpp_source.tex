@@ -1,0 +1,68 @@
+\doxysection{set\+\_\+ip\+\_\+address.\+cpp}
+\hypertarget{set__ip__address_8cpp_source}{}\label{set__ip__address_8cpp_source}\index{src/unilidar\_sdk2/unitree\_lidar\_sdk/examples/set\_ip\_address.cpp@{src/unilidar\_sdk2/unitree\_lidar\_sdk/examples/set\_ip\_address.cpp}}
+\mbox{\hyperlink{set__ip__address_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00001}00001\ \textcolor{comment}{/**********************************************************************}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00002}00002\ \textcolor{comment}{\ Copyright\ (c)\ 2020-\/2024,\ Unitree\ Robotics.Co.Ltd.\ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00003}00003\ \textcolor{comment}{***********************************************************************/}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{example_8h}{example.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00007}\mbox{\hyperlink{set__ip__address_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00007}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00010}00010\ \ \ \ \ \textcolor{comment}{//\ Initialize}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{UnitreeLidarReader}}\ *lreader\ =\ \mbox{\hyperlink{namespaceunilidar__sdk2_aabf1d7a4981ee03b10c9ded43c03f063}{createUnitreeLidarReader}}();}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00013}00013\ \ \ \ \ std::string\ lidar\_ip\ =\ \textcolor{stringliteral}{"{}192.168.1.62"{}};}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00014}00014\ \ \ \ \ std::string\ local\_ip\ =\ \textcolor{stringliteral}{"{}192.168.1.2"{}};}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ lidar\_port\ =\ 6101;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ local\_port\ =\ 6201;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{if}\ (lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}{initializeUDP}}(lidar\_port,\ lidar\_ip,\ local\_port,\ local\_ip))}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00020}00020\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Unilidar\ initialization\ failed!\ Exit\ here!\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ exit(-\/1);}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00025}00025\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Unilidar\ initialization\ succeed!\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00027}00027\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00029}00029\ \ \ \ \ sleep(1);}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ Set\ lidar\ ip\ address}}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig}{LidarIpAddressConfig}}\ config;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00033}00033\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_ad6c4c85a0d93eca97b7635d22ccc5b5c}{lidar\_ip}}[0]\ =\ 192;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00034}00034\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_ad6c4c85a0d93eca97b7635d22ccc5b5c}{lidar\_ip}}[1]\ =\ 168;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00035}00035\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_ad6c4c85a0d93eca97b7635d22ccc5b5c}{lidar\_ip}}[2]\ =\ 123;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00036}00036\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_ad6c4c85a0d93eca97b7635d22ccc5b5c}{lidar\_ip}}[3]\ =\ 110;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00038}00038\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_a30def63bbbdf662e9824a84c57231a5c}{user\_ip}}[0]\ =\ 192;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00039}00039\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_a30def63bbbdf662e9824a84c57231a5c}{user\_ip}}[1]\ =\ 168;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00040}00040\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_a30def63bbbdf662e9824a84c57231a5c}{user\_ip}}[2]\ =\ 123;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00041}00041\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_a30def63bbbdf662e9824a84c57231a5c}{user\_ip}}[3]\ =\ 120;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00043}00043\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_a9ec2bf88129fba6cb4ae37fa84302a2a}{lidar\_port}}\ =\ 6101;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00044}00044\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_a9fbca0627b590cddc969c097d87dc428}{user\_port}}\ =\ 6201;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00046}00046\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_aa890a719ebe9ba35f01f747d86828fbf}{gateway}}[0]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00047}00047\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_aa890a719ebe9ba35f01f747d86828fbf}{gateway}}[1]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00048}00048\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_aa890a719ebe9ba35f01f747d86828fbf}{gateway}}[2]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00049}00049\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_aa890a719ebe9ba35f01f747d86828fbf}{gateway}}[3]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00051}00051\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_acb5d45d0d916bf5b913f4fde6de5496f}{subnet\_mask}}[0]\ =\ 255;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00052}00052\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_acb5d45d0d916bf5b913f4fde6de5496f}{subnet\_mask}}[1]\ =\ 255;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00053}00053\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_acb5d45d0d916bf5b913f4fde6de5496f}{subnet\_mask}}[2]\ =\ 255;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00054}00054\ \ \ \ \ config.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig_acb5d45d0d916bf5b913f4fde6de5496f}{subnet\_mask}}[3]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00056}00056\ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}{setLidarIpAddressConfig}}(config);}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00057}00057\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Lidar\ IP\ is\ reset!\ Please\ reboot\ lidar!\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00058}00058\ \ \ \ \ sleep(1);}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00059}00059\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{set__ip__address_8cpp_source_l00062}00062\ \}}
+
+\end{DoxyCode}

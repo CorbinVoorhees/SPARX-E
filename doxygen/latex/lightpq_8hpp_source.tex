@@ -1,0 +1,40 @@
+\doxysection{lightpq.\+hpp}
+\hypertarget{lightpq_8hpp_source}{}\label{lightpq_8hpp_source}\index{src/autonomy/src/lightpq.hpp@{src/autonomy/src/lightpq.hpp}}
+\mbox{\hyperlink{lightpq_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_LIGHTPQ\_\_}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_LIGHTPQ\_\_}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{planning_8hpp}{planning.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00008}00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplanning__module}{planning\_module}}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{class\ }grid2d;}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00012}\mbox{\hyperlink{classplanning__module_1_1lightpq}{00012}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplanning__module_1_1lightpq}{lightpq}}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00013}00013\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00015}00015\ \ \ \ \ \ \ \ \ std::unique\_ptr<std::pair<coordf,\ uint32\_t>[]>\ U;}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00016}00016\ \ \ \ \ \ \ \ \ std::shared\_ptr<grid2d>\ grid;}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00017}00017\ \ \ \ \ \ \ \ \ uint32\_t\ U\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ swap(uint32\_t\ i,\ uint32\_t\ j);}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ siftup(uint32\_t\ idx);}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ siftdown(uint32\_t\ idx);}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classplanning__module_1_1lightpq}{lightpq}}(std::shared\_ptr<grid2d>\ g);}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00026}\mbox{\hyperlink{classplanning__module_1_1lightpq_ac9b1022ad6d543ea41c02db2993c4da2}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::pair<coordf,\ uint32\_t>\ \&\mbox{\hyperlink{classplanning__module_1_1lightpq_ac9b1022ad6d543ea41c02db2993c4da2}{operator[]}}(uint32\_t\ idx)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ U[idx];\ \}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00027}\mbox{\hyperlink{classplanning__module_1_1lightpq_a6ab0736dbdb1fe5ae49a91e2ec15e1e3}{00027}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{classplanning__module_1_1lightpq_a6ab0736dbdb1fe5ae49a91e2ec15e1e3}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ U\_size;\ \}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1lightpq_a781a42abc703b2a9ff9098aabde90e77}{push}}(std::pair<coordf,\ coordi>\ element);}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ std::pair<coordf,\ coordi>\ \mbox{\hyperlink{classplanning__module_1_1lightpq_a06525d3dffad8eeeab9b4929695ac159}{pop}}();}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00031}00031\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{lightpq_8hpp_source_l00034}00034\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

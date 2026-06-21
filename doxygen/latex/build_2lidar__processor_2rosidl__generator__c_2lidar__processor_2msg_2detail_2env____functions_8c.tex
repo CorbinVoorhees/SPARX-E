@@ -1,0 +1,303 @@
+\doxysection{build/lidar\+\_\+processor/rosidl\+\_\+generator\+\_\+c/lidar\+\_\+processor/msg/detail/env\+\_\+\+\_\+functions.c File Reference}
+\hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c}{}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c}\index{build/lidar\_processor/rosidl\_generator\_c/lidar\_processor/msg/detail/env\_\_functions.c@{build/lidar\_processor/rosidl\_generator\_c/lidar\_processor/msg/detail/env\_\_functions.c}}
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/detail/env\+\_\+\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}rcutils/allocator.\+h"{}}\newline
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/detail/obstacle\+\_\+\+\_\+functions.\+h"{}}\newline
+Include dependency graph for env\+\_\+\+\_\+functions.\+c\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_aabe4b480675b76809a14e5a1f9b360ac}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+init}} (\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Initialize msg/\+Env message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a6a2cb0cab020271225a4070f45bb5bb9}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+fini}} (\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Finalize msg/\+Env message. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a64a40c051c37037b09207dd1c1c868ae}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+are\+\_\+equal}} (const \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}rhs)
+\begin{DoxyCompactList}\small\item\em Check for msg/\+Env message equality. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ab36352efe5c0e92e0967b1cebab0d35b}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+copy}} (const \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}input, \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Copy a msg/\+Env message. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_aea725cfaff439dc16274e8c462e0330e}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+create}} (void)
+\begin{DoxyCompactList}\small\item\em Create msg/\+Env message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ada5e1d7be2ab9fd61ca84a711bcdc7f1}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+destroy}} (\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Destroy msg/\+Env message. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a371d7242e35ebae2a55025e093d59572}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+init}} (\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}array, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Initialize array of msg/\+Env messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ae973dd2f796d207cf2ab2442cf2a1f04}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+fini}} (\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}array)
+\begin{DoxyCompactList}\small\item\em Finalize array of msg/\+Env messages. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_abad0e88e038fe65b21d5578c3bddf03f}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+create}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Create array of msg/\+Env messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_af9843364269cf3906fa8ff7614c0fcc4}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+destroy}} (\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}array)
+\begin{DoxyCompactList}\small\item\em Destroy array of msg/\+Env messages. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a6634943abc97be62bc6685efc87720a8}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+are\+\_\+equal}} (const \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}rhs)
+\begin{DoxyCompactList}\small\item\em Check for msg/\+Env message array equality. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a49348c2c93f39638e7d61d86601c90cd}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+copy}} (const \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}input, \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Copy an array of msg/\+Env messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a64a40c051c37037b09207dd1c1c868ae}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a64a40c051c37037b09207dd1c1c868ae} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_are\_equal@{lidar\_processor\_\_msg\_\_Env\_\_are\_equal}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_are\_equal@{lidar\_processor\_\_msg\_\_Env\_\_are\_equal}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_are\_equal()}{lidar\_processor\_\_msg\_\_Env\_\_are\_equal()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+are\+\_\+equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{const \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Check for msg/\+Env message equality. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em lhs} & The message on the left hand size of the equality operator. \\
+\hline
+\mbox{\texttt{ in}}  & {\em rhs} & The message on the right hand size of the equality operator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if messages are equal, otherwise false. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00043}{43}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ab36352efe5c0e92e0967b1cebab0d35b}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ab36352efe5c0e92e0967b1cebab0d35b} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_copy@{lidar\_processor\_\_msg\_\_Env\_\_copy}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_copy@{lidar\_processor\_\_msg\_\_Env\_\_copy}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_copy()}{lidar\_processor\_\_msg\_\_Env\_\_copy()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+copy (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{input,  }\item[{\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{output }\end{DoxyParamCaption})}
+
+
+
+Copy a msg/\+Env message. 
+
+This functions performs a deep copy, as opposed to the shallow copy that plain assignment yields.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & The source message pointer. \\
+\hline
+\mbox{\texttt{ out}}  & {\em output} & The target message pointer, which must have been initialized before calling this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, or false if either pointer is null or memory allocation fails. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00058}{58}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_aea725cfaff439dc16274e8c462e0330e}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_aea725cfaff439dc16274e8c462e0330e} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_create@{lidar\_processor\_\_msg\_\_Env\_\_create}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_create@{lidar\_processor\_\_msg\_\_Env\_\_create}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_create()}{lidar\_processor\_\_msg\_\_Env\_\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*} lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+create (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create msg/\+Env message. 
+
+It allocates the memory for the message, sets the memory to zero, and calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_a7f651827c6c56856406be7e487af8e4a}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+init()}. \begin{DoxyReturn}{Returns}
+The pointer to the initialized message if successful, otherwise NULL 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00075}{75}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ada5e1d7be2ab9fd61ca84a711bcdc7f1}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ada5e1d7be2ab9fd61ca84a711bcdc7f1} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_destroy@{lidar\_processor\_\_msg\_\_Env\_\_destroy}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_destroy@{lidar\_processor\_\_msg\_\_Env\_\_destroy}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_destroy()}{lidar\_processor\_\_msg\_\_Env\_\_destroy()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{msg }\end{DoxyParamCaption})}
+
+
+
+Destroy msg/\+Env message. 
+
+It calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_a02ede2d47d0ec56363c4e64dbec7ffc6}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+fini()} and frees the memory of the message. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em msg} & The allocated message pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00092}{92}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a6a2cb0cab020271225a4070f45bb5bb9}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a6a2cb0cab020271225a4070f45bb5bb9} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_fini@{lidar\_processor\_\_msg\_\_Env\_\_fini}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_fini@{lidar\_processor\_\_msg\_\_Env\_\_fini}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_fini()}{lidar\_processor\_\_msg\_\_Env\_\_fini()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+fini (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{msg }\end{DoxyParamCaption})}
+
+
+
+Finalize msg/\+Env message. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em msg} & The allocated message pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00033}{33}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_aabe4b480675b76809a14e5a1f9b360ac}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_aabe4b480675b76809a14e5a1f9b360ac} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_init@{lidar\_processor\_\_msg\_\_Env\_\_init}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_init@{lidar\_processor\_\_msg\_\_Env\_\_init}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_init()}{lidar\_processor\_\_msg\_\_Env\_\_init()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env}} \texorpdfstring{$\ast$}{*}}]{msg }\end{DoxyParamCaption})}
+
+
+
+Initialize msg/\+Env message. 
+
+If the init function is called twice for the same message without calling fini inbetween previously allocated memory will be leaked. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em msg} & The previously allocated message pointer. Fields without a default value will not be initialized by this function. You might want to call memset(msg, 0, sizeof( lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env )) before or use \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_a81ed4aab62ae4c6792cc806095cbbd16}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+create()} to allocate and initialize the message. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if initialization was successful, otherwise false 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00019}{19}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a6634943abc97be62bc6685efc87720a8}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a6634943abc97be62bc6685efc87720a8} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_are\_equal@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_are\_equal}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_are\_equal@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_are\_equal}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_are\_equal()}{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_are\_equal()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+are\+\_\+equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{const \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Check for msg/\+Env message array equality. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em lhs} & The message array on the left hand size of the equality operator. \\
+\hline
+\mbox{\texttt{ in}}  & {\em rhs} & The message array on the right hand size of the equality operator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if message arrays are equal in size and content, otherwise false. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00192}{192}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a49348c2c93f39638e7d61d86601c90cd}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a49348c2c93f39638e7d61d86601c90cd} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_copy@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_copy}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_copy@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_copy}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_copy()}{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_copy()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+copy (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{input,  }\item[{\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{output }\end{DoxyParamCaption})}
+
+
+
+Copy an array of msg/\+Env messages. 
+
+This functions performs a deep copy, as opposed to the shallow copy that plain assignment yields.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & The source array pointer. \\
+\hline
+\mbox{\texttt{ out}}  & {\em output} & The target array pointer, which must have been initialized before calling this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, or false if either pointer is null or memory allocation fails. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00209}{209}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_abad0e88e038fe65b21d5578c3bddf03f}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_abad0e88e038fe65b21d5578c3bddf03f} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_create@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_create}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_create@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_create}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_create()}{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*} lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+create (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Create array of msg/\+Env messages. 
+
+It allocates the memory for the array and calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_a0f2a440f1bc606f902b6332c2826c203}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+init()}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em size} & The size / capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The pointer to the initialized array if successful, otherwise NULL 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00166}{166}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_af9843364269cf3906fa8ff7614c0fcc4}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_af9843364269cf3906fa8ff7614c0fcc4} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_destroy@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_destroy}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_destroy@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_destroy}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_destroy()}{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_destroy()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{array }\end{DoxyParamCaption})}
+
+
+
+Destroy array of msg/\+Env messages. 
+
+It calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_afef602dc070f14caa6f62de16812d5f1}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+fini()} on the array, and frees the memory of the array. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em array} & The initialized array pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00182}{182}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ae973dd2f796d207cf2ab2442cf2a1f04}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_ae973dd2f796d207cf2ab2442cf2a1f04} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_fini@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_fini}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_fini@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_fini}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_fini()}{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_fini()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+fini (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{array }\end{DoxyParamCaption})}
+
+
+
+Finalize array of msg/\+Env messages. 
+
+It calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_a02ede2d47d0ec56363c4e64dbec7ffc6}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+fini()} for each element of the array and frees the memory for the number of elements. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em array} & The initialized array pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00140}{140}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a371d7242e35ebae2a55025e093d59572}\label{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_a371d7242e35ebae2a55025e093d59572} 
+\index{env\_\_functions.c@{env\_\_functions.c}!lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_init@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_init}}
+\index{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_init@{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_init}!env\_\_functions.c@{env\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_init()}{lidar\_processor\_\_msg\_\_Env\_\_Sequence\_\_init()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Env____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{array,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Initialize array of msg/\+Env messages. 
+
+It allocates the memory for the number of elements and calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h_a7f651827c6c56856406be7e487af8e4a}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Env\+\_\+\+\_\+init()} for each element of the array. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em array} & The allocated array pointer. \\
+\hline
+\mbox{\texttt{ in}}  & {\em size} & The size / capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if initialization was successful, otherwise false If the array pointer is valid and the size is zero it is guaranteed 
+\end{DoxyReturn}
+\hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2env____functions_8h_autotoc_md0}{}\doxysubsection{\texorpdfstring{to return true.}{to return true.}}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2env____functions_8h_autotoc_md0}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source_l00103}{103}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8c_source}{env\+\_\+\+\_\+functions.\+c}}.
+

@@ -1,0 +1,407 @@
+\doxysection{env\+\_\+\+\_\+type\+\_\+support\+\_\+c.\+cpp}
+\hypertarget{env____type__support__c_8cpp_source}{}\label{env____type__support__c_8cpp_source}\index{build/lidar\_processor/rosidl\_typesupport\_fastrtps\_c/lidar\_processor/msg/detail/env\_\_type\_support\_c.cpp@{build/lidar\_processor/rosidl\_typesupport\_fastrtps\_c/lidar\_processor/msg/detail/env\_\_type\_support\_c.cpp}}
+\mbox{\hyperlink{env____type__support__c_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00001}00001\ \textcolor{comment}{//\ generated\ from\ rosidl\_typesupport\_fastrtps\_c/resource/idl\_\_type\_support\_c.cpp.em}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00002}00002\ \textcolor{comment}{//\ with\ input\ from\ lidar\_processor:msg/Env.idl}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00003}00003\ \textcolor{comment}{//\ generated\ code\ does\ not\ contain\ a\ copyright\ notice}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/detail/env\_\_rosidl\_typesupport\_fastrtps\_c.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}rosidl\_typesupport\_fastrtps\_c/identifier.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}rosidl\_typesupport\_fastrtps\_c/serialization\_helpers.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}rosidl\_typesupport\_fastrtps\_c/wstring\_conversion.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}rosidl\_typesupport\_fastrtps\_cpp/message\_type\_support.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/rosidl\_typesupport\_fastrtps\_c\_\_visibility\_control.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/detail/env\_\_struct.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/detail/env\_\_functions.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}fastcdr/Cdr.h"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00020}00020\ \textcolor{preprocessor}{\#ifndef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00021}00021\ \textcolor{preprocessor}{\#\ pragma\ GCC\ diagnostic\ push}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00022}00022\ \textcolor{preprocessor}{\#\ pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wunused-\/parameter"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00023}00023\ \textcolor{preprocessor}{\#\ ifdef\ \_\_clang\_\_}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00024}00024\ \textcolor{preprocessor}{\#\ \ pragma\ clang\ diagnostic\ ignored\ "{}-\/Wdeprecated-\/register"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00025}00025\ \textcolor{preprocessor}{\#\ \ pragma\ clang\ diagnostic\ ignored\ "{}-\/Wreturn-\/type-\/c-\/linkage"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00026}00026\ \textcolor{preprocessor}{\#\ endif}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00027}00027\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00028}00028\ \textcolor{preprocessor}{\#ifndef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00029}00029\ \textcolor{preprocessor}{\#\ pragma\ GCC\ diagnostic\ pop}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00030}00030\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00032}00032\ \textcolor{comment}{//\ includes\ and\ forward\ declarations\ of\ message\ dependencies\ and\ their\ conversion\ functions}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00034}00034\ \textcolor{preprocessor}{\#if\ defined(\_\_cplusplus)}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00035}00035\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00036}00036\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00037}00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00039}00039\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/detail/obstacle\_\_functions.h"{}}\ \ \textcolor{comment}{//\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00041}00041\ \textcolor{comment}{//\ forward\ declare\ type\ support\ functions}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00043}00043\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{env____type__support__c_8cpp_a736e54870803804a1d63f9952463b5db}{cdr\_serialize\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00044}00044\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\_processor\_\_msg\_\_Obstacle}}\ *\ ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00045}00045\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00047}00047\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{env____type__support__c_8cpp_a86ec74d5f7c0edfff08b66625e724029}{cdr\_deserialize\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00048}00048\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00049}00049\ \ \ \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\_processor\_\_msg\_\_Obstacle}}\ *\ ros\_message);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00051}00051\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_a095970823fea48c2a10710cb1b2bb1ab}{get\_serialized\_size\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00052}00052\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00053}00053\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00055}00055\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_ac132e071358db3b0a99ddc4ae9ec7a67}{max\_serialized\_size\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00056}00056\ \ \ \textcolor{keywordtype}{bool}\ \&\ full\_bounded,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00057}00057\ \ \ \textcolor{keywordtype}{bool}\ \&\ is\_plain,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00058}00058\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00060}00060\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{env____type__support__c_8cpp_a229cd03e5f69a0f1765bd6774b705478}{cdr\_serialize\_key\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00061}00061\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\_processor\_\_msg\_\_Obstacle}}\ *\ ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00062}00062\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00064}00064\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_a5f9f086d85ad56f3e7a6ab3a421591d6}{get\_serialized\_size\_key\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00065}00065\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00066}00066\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00068}00068\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_ac49cae8de505a450bc4bf06b9920b5e6}{max\_serialized\_size\_key\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00069}00069\ \ \ \textcolor{keywordtype}{bool}\ \&\ full\_bounded,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00070}00070\ \ \ \textcolor{keywordtype}{bool}\ \&\ is\_plain,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00071}00071\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00073}00073\ \textcolor{keyword}{const}\ rosidl\_message\_type\_support\_t\ *}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00074}00074\ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_ad9bc5bc9d60f70c1c7daa2c739d42c05}{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME}}(rosidl\_typesupport\_fastrtps\_c,\ \mbox{\hyperlink{namespacelidar__processor}{lidar\_processor}},\ msg,\ Obstacle)();}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00077}\mbox{\hyperlink{env____type__support__c_8cpp_afeb22f972f3bb244d131c0047d18c40f}{00077}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{structlidar__processor____msg____Env}{\_Env\_\_ros\_msg\_type}}\ =\ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00080}00080\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00081}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_a17a818c90005ff4771af536bd4c46c7a}{00081}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{env____type__support__c_8cpp_a17a818c90005ff4771af536bd4c46c7a}{cdr\_serialize\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00082}00082\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\ ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00083}00083\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00084}00084\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00085}00085\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00086}00086\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_a609b080f142da3641c93a6a98997073d}{size}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keyword}{auto}\ array\_ptr\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_adb0a6e34d0a5957b7e46d459562988d9}{data}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00089}00089\ \ \ \ \ cdr\ <<\ static\_cast<uint32\_t>(size);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00090}00090\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ size;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00091}00091\ \ \ \ \ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_a736e54870803804a1d63f9952463b5db}{cdr\_serialize\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \&array\_ptr[i],\ cdr);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00093}00093\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00094}00094\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00096}00096\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00099}00099\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00100}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_ab839bcbe0a5d0caeab5e5cdf6807c4e6}{00100}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{env____type__support__c_8cpp_ac31716116137d5db11f5f02f59a39017}{cdr\_deserialize\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00101}00101\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00102}00102\ \ \ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\ ros\_message)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00103}00103\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00104}00104\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00105}00105\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00106}00106\ \ \ \ \ uint32\_t\ cdrSize;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00107}00107\ \ \ \ \ cdr\ >>\ cdrSize;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00108}00108\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(cdrSize);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00110}00110\ \ \ \ \ \textcolor{comment}{//\ Check\ there\ are\ at\ least\ 'size'\ remaining\ bytes\ in\ the\ CDR\ stream\ before\ resizing}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00111}00111\ \ \ \ \ \textcolor{keyword}{auto}\ old\_state\ =\ cdr.get\_state();}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ correct\_size\ =\ cdr.jump(size);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00113}00113\ \ \ \ \ cdr.set\_state(old\_state);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00114}00114\ \ \ \ \ \textcolor{keywordflow}{if}\ (!correct\_size)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00115}00115\ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}sequence\ size\ exceeds\ remaining\ buffer\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00116}00116\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00117}00117\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00119}00119\ \ \ \ \ \textcolor{keywordflow}{if}\ (ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_adb0a6e34d0a5957b7e46d459562988d9}{data}})\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00120}00120\ \ \ \ \ \ \ \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a2be9c047749f4cec9b4750a1b8ddc4fa}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini}}(\&ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}});}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00121}00121\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00122}00122\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a6c1d1bc6feaee9725e566b48eda85508}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init}}(\&ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}},\ size))\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00123}00123\ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}failed\ to\ create\ array\ for\ field\ 'environment'"{}});}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00124}00124\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00125}00125\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00126}00126\ \ \ \ \ \textcolor{keyword}{auto}\ array\_ptr\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_adb0a6e34d0a5957b7e46d459562988d9}{data}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ size;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00128}00128\ \ \ \ \ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_a86ec74d5f7c0edfff08b66625e724029}{cdr\_deserialize\_lidar\_processor\_\_msg\_\_Obstacle}}(cdr,\ \&array\_ptr[i]);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00129}00129\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00130}00130\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00132}00132\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00133}00133\ \}\ \ \textcolor{comment}{//\ NOLINT(readability/fn\_size)}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00136}00136\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00137}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_a8dc15352f8900179f4033aac57e7b97b}{00137}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_a8dc15352f8900179f4033aac57e7b97b}{get\_serialized\_size\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00138}00138\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00139}00139\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00140}00140\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00141}00141\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Env}{\_Env\_\_ros\_msg\_type}}\ *\ ros\_message\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{structlidar__processor____msg____Env}{\_Env\_\_ros\_msg\_type}}\ *\textcolor{keyword}{>}(untyped\_ros\_message);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00142}00142\ \ \ (void)ros\_message;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00143}00143\ \ \ \textcolor{keywordtype}{size\_t}\ initial\_alignment\ =\ current\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00145}00145\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ padding\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00146}00146\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ wchar\_size\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00147}00147\ \ \ (void)padding;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00148}00148\ \ \ (void)wchar\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00150}00150\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00151}00151\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00152}00152\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ array\_size\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_a609b080f142da3641c93a6a98997073d}{size}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00153}00153\ \ \ \ \ \textcolor{keyword}{auto}\ array\_ptr\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_adb0a6e34d0a5957b7e46d459562988d9}{data}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00154}00154\ \ \ \ \ current\_alignment\ +=\ padding\ +}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00155}00155\ \ \ \ \ \ \ eprosima::fastcdr::Cdr::alignment(current\_alignment,\ padding);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ index\ =\ 0;\ index\ <\ array\_size;\ ++index)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00157}00157\ \ \ \ \ \ \ current\_alignment\ +=\ \mbox{\hyperlink{env____type__support__c_8cpp_a095970823fea48c2a10710cb1b2bb1ab}{get\_serialized\_size\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \&array\_ptr[index],\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00159}00159\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00160}00160\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00162}00162\ \ \ \textcolor{keywordflow}{return}\ current\_alignment\ -\/\ initial\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00163}00163\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00166}00166\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00167}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_ae4c0d0b7b2a92c7f5657676e926c75a0}{00167}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_ae4c0d0b7b2a92c7f5657676e926c75a0}{max\_serialized\_size\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00168}00168\ \ \ \textcolor{keywordtype}{bool}\ \&\ full\_bounded,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00169}00169\ \ \ \textcolor{keywordtype}{bool}\ \&\ is\_plain,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00170}00170\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00171}00171\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00172}00172\ \ \ \textcolor{keywordtype}{size\_t}\ initial\_alignment\ =\ current\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00174}00174\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ padding\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00175}00175\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ wchar\_size\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00176}00176\ \ \ \textcolor{keywordtype}{size\_t}\ last\_member\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00177}00177\ \ \ (void)last\_member\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00178}00178\ \ \ (void)padding;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00179}00179\ \ \ (void)wchar\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00181}00181\ \ \ full\_bounded\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00182}00182\ \ \ is\_plain\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00184}00184\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00185}00185\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00186}00186\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ array\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00187}00187\ \ \ \ \ full\_bounded\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00188}00188\ \ \ \ \ is\_plain\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00189}00189\ \ \ \ \ current\_alignment\ +=\ padding\ +}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00190}00190\ \ \ \ \ \ \ eprosima::fastcdr::Cdr::alignment(current\_alignment,\ padding);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00191}00191\ \ \ \ \ last\_member\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00192}00192\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ index\ =\ 0;\ index\ <\ array\_size;\ ++index)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00193}00193\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ inner\_full\_bounded;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00194}00194\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ inner\_is\_plain;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00195}00195\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ inner\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00196}00196\ \ \ \ \ \ \ inner\_size\ =}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_ac132e071358db3b0a99ddc4ae9ec7a67}{max\_serialized\_size\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ inner\_full\_bounded,\ inner\_is\_plain,\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00199}00199\ \ \ \ \ \ \ last\_member\_size\ +=\ inner\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00200}00200\ \ \ \ \ \ \ current\_alignment\ +=\ inner\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00201}00201\ \ \ \ \ \ \ full\_bounded\ \&=\ inner\_full\_bounded;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00202}00202\ \ \ \ \ \ \ is\_plain\ \&=\ inner\_is\_plain;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00203}00203\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00204}00204\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00207}00207\ \ \ \textcolor{keywordtype}{size\_t}\ ret\_val\ =\ current\_alignment\ -\/\ initial\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00208}00208\ \ \ \textcolor{keywordflow}{if}\ (is\_plain)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00209}00209\ \ \ \ \ \textcolor{comment}{//\ All\ members\ are\ plain,\ and\ type\ is\ not\ empty.}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00210}00210\ \ \ \ \ \textcolor{comment}{//\ We\ still\ need\ to\ check\ that\ the\ in-\/memory\ alignment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00211}00211\ \ \ \ \ \textcolor{comment}{//\ is\ the\ same\ as\ the\ CDR\ mandated\ alignment.}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keyword}{using\ }DataType\ =\ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00213}00213\ \ \ \ \ is\_plain\ =}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00214}00214\ \ \ \ \ \ \ (}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00215}00215\ \ \ \ \ \ \ offsetof(DataType,\ environment)\ +}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00216}00216\ \ \ \ \ \ \ last\_member\_size}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00217}00217\ \ \ \ \ \ \ )\ ==\ ret\_val;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00218}00218\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00219}00219\ \ \ \textcolor{keywordflow}{return}\ ret\_val;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00220}00220\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00222}00222\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00223}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_a9d6ea31bf5d04598bc286cbd786aee68}{00223}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{env____type__support__c_8cpp_a9d6ea31bf5d04598bc286cbd786aee68}{cdr\_serialize\_key\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00224}00224\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\ ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00225}00225\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00226}00226\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00227}00227\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00228}00228\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00229}00229\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_a609b080f142da3641c93a6a98997073d}{size}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00230}00230\ \ \ \ \ \textcolor{keyword}{auto}\ array\_ptr\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_adb0a6e34d0a5957b7e46d459562988d9}{data}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00231}00231\ \ \ \ \ cdr\ <<\ static\_cast<uint32\_t>(size);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00232}00232\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ size;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00233}00233\ \ \ \ \ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_a229cd03e5f69a0f1765bd6774b705478}{cdr\_serialize\_key\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \&array\_ptr[i],\ cdr);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00235}00235\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00236}00236\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00238}00238\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00239}00239\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00241}00241\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00242}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_a32ea774b87f39ac28293eb449eb6d833}{00242}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_a32ea774b87f39ac28293eb449eb6d833}{get\_serialized\_size\_key\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00243}00243\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00244}00244\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00245}00245\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00246}00246\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Env}{\_Env\_\_ros\_msg\_type}}\ *\ ros\_message\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{structlidar__processor____msg____Env}{\_Env\_\_ros\_msg\_type}}\ *\textcolor{keyword}{>}(untyped\_ros\_message);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00247}00247\ \ \ (void)ros\_message;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00249}00249\ \ \ \textcolor{keywordtype}{size\_t}\ initial\_alignment\ =\ current\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00251}00251\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ padding\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00252}00252\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ wchar\_size\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00253}00253\ \ \ (void)padding;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00254}00254\ \ \ (void)wchar\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00256}00256\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00257}00257\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00258}00258\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ array\_size\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_a609b080f142da3641c93a6a98997073d}{size}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00259}00259\ \ \ \ \ \textcolor{keyword}{auto}\ array\_ptr\ =\ ros\_message-\/>\mbox{\hyperlink{structlidar__processor____msg____Env_ac10230e379d72cd5de3ba7781feabc42}{environment}}.\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence_adb0a6e34d0a5957b7e46d459562988d9}{data}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00260}00260\ \ \ \ \ current\_alignment\ +=\ padding\ +}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00261}00261\ \ \ \ \ \ \ eprosima::fastcdr::Cdr::alignment(current\_alignment,\ padding);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00262}00262\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ index\ =\ 0;\ index\ <\ array\_size;\ ++index)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00263}00263\ \ \ \ \ \ \ current\_alignment\ +=\ \mbox{\hyperlink{env____type__support__c_8cpp_a5f9f086d85ad56f3e7a6ab3a421591d6}{get\_serialized\_size\_key\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \&array\_ptr[index],\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00265}00265\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00266}00266\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00268}00268\ \ \ \textcolor{keywordflow}{return}\ current\_alignment\ -\/\ initial\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00269}00269\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00271}00271\ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b_a3fdab827d4f5f1b0db732325181b3efb}{ROSIDL\_TYPESUPPORT\_FASTRTPS\_C\_PUBLIC\_lidar\_processor}}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00272}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_a79badc5582bc1bdab08d87f130c10ef5}{00272}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{env____type__support__c_8cpp_a79badc5582bc1bdab08d87f130c10ef5}{max\_serialized\_size\_key\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00273}00273\ \ \ \textcolor{keywordtype}{bool}\ \&\ full\_bounded,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00274}00274\ \ \ \textcolor{keywordtype}{bool}\ \&\ is\_plain,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00275}00275\ \ \ \textcolor{keywordtype}{size\_t}\ current\_alignment)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00276}00276\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00277}00277\ \ \ \textcolor{keywordtype}{size\_t}\ initial\_alignment\ =\ current\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00279}00279\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ padding\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00280}00280\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ wchar\_size\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00281}00281\ \ \ \textcolor{keywordtype}{size\_t}\ last\_member\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00282}00282\ \ \ (void)last\_member\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00283}00283\ \ \ (void)padding;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00284}00284\ \ \ (void)wchar\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00286}00286\ \ \ full\_bounded\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00287}00287\ \ \ is\_plain\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00288}00288\ \ \ \textcolor{comment}{//\ Field\ name:\ environment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00289}00289\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00290}00290\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ array\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00291}00291\ \ \ \ \ full\_bounded\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00292}00292\ \ \ \ \ is\_plain\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00293}00293\ \ \ \ \ current\_alignment\ +=\ padding\ +}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00294}00294\ \ \ \ \ \ \ eprosima::fastcdr::Cdr::alignment(current\_alignment,\ padding);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00295}00295\ \ \ \ \ last\_member\_size\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00296}00296\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ index\ =\ 0;\ index\ <\ array\_size;\ ++index)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00297}00297\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ inner\_full\_bounded;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00298}00298\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ inner\_is\_plain;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00299}00299\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ inner\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00300}00300\ \ \ \ \ \ \ inner\_size\ =}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_ac49cae8de505a450bc4bf06b9920b5e6}{max\_serialized\_size\_key\_lidar\_processor\_\_msg\_\_Obstacle}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00302}00302\ \ \ \ \ \ \ \ \ inner\_full\_bounded,\ inner\_is\_plain,\ current\_alignment);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00303}00303\ \ \ \ \ \ \ last\_member\_size\ +=\ inner\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00304}00304\ \ \ \ \ \ \ current\_alignment\ +=\ inner\_size;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00305}00305\ \ \ \ \ \ \ full\_bounded\ \&=\ inner\_full\_bounded;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00306}00306\ \ \ \ \ \ \ is\_plain\ \&=\ inner\_is\_plain;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00307}00307\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00308}00308\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00310}00310\ \ \ \textcolor{keywordtype}{size\_t}\ ret\_val\ =\ current\_alignment\ -\/\ initial\_alignment;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00311}00311\ \ \ \textcolor{keywordflow}{if}\ (is\_plain)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00312}00312\ \ \ \ \ \textcolor{comment}{//\ All\ members\ are\ plain,\ and\ type\ is\ not\ empty.}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00313}00313\ \ \ \ \ \textcolor{comment}{//\ We\ still\ need\ to\ check\ that\ the\ in-\/memory\ alignment}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00314}00314\ \ \ \ \ \textcolor{comment}{//\ is\ the\ same\ as\ the\ CDR\ mandated\ alignment.}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00315}00315\ \ \ \ \ \textcolor{keyword}{using\ }DataType\ =\ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00316}00316\ \ \ \ \ is\_plain\ =}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00317}00317\ \ \ \ \ \ \ (}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00318}00318\ \ \ \ \ \ \ offsetof(DataType,\ environment)\ +}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00319}00319\ \ \ \ \ \ \ last\_member\_size}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00320}00320\ \ \ \ \ \ \ )\ ==\ ret\_val;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00321}00321\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00322}00322\ \ \ \textcolor{keywordflow}{return}\ ret\_val;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00323}00323\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00325}00325\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00326}00326\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \_Env\_\_cdr\_serialize(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00327}00327\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00328}00328\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00329}00329\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00330}00330\ \ \ \textcolor{keywordflow}{if}\ (!untyped\_ros\_message)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00331}00331\ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}ros\ message\ handle\ is\ null\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00332}00332\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00333}00333\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00334}00334\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\ ros\_message\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\textcolor{keyword}{>}(untyped\_ros\_message);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00335}00335\ \ \ (void)ros\_message;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00336}00336\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{env____type__support__c_8cpp_a17a818c90005ff4771af536bd4c46c7a}{cdr\_serialize\_lidar\_processor\_\_msg\_\_Env}}(ros\_message,\ cdr);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00337}00337\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00339}00339\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \_Env\_\_cdr\_deserialize(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00340}00340\ \ \ eprosima::fastcdr::Cdr\ \&\ cdr,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00341}00341\ \ \ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00342}00342\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00343}00343\ \ \ \textcolor{keywordflow}{if}\ (!untyped\_ros\_message)\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00344}00344\ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}ros\ message\ handle\ is\ null\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00345}00345\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00346}00346\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00347}00347\ \ \ \mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\ ros\_message\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{structlidar__processor____msg____Env}{lidar\_processor\_\_msg\_\_Env}}\ *\textcolor{keyword}{>}(untyped\_ros\_message);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00348}00348\ \ \ (void)ros\_message;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00349}00349\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{env____type__support__c_8cpp_ac31716116137d5db11f5f02f59a39017}{cdr\_deserialize\_lidar\_processor\_\_msg\_\_Env}}(cdr,\ ros\_message);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00350}00350\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00352}00352\ \textcolor{keyword}{static}\ uint32\_t\ \_Env\_\_get\_serialized\_size(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ untyped\_ros\_message)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00353}00353\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00354}00354\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00355}00355\ \ \ \ \ \mbox{\hyperlink{env____type__support__c_8cpp_a8dc15352f8900179f4033aac57e7b97b}{get\_serialized\_size\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00356}00356\ \ \ \ \ \ \ untyped\_ros\_message,\ 0));}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00357}00357\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00358}00358\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00359}00359\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \_Env\_\_max\_serialized\_size(\textcolor{keywordtype}{char}\ \&\ bounds\_info)}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00360}00360\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00361}00361\ \ \ \textcolor{keywordtype}{bool}\ full\_bounded;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00362}00362\ \ \ \textcolor{keywordtype}{bool}\ is\_plain;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00363}00363\ \ \ \textcolor{keywordtype}{size\_t}\ ret\_val;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00364}00364\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00365}00365\ \ \ ret\_val\ =\ \mbox{\hyperlink{env____type__support__c_8cpp_ae4c0d0b7b2a92c7f5657676e926c75a0}{max\_serialized\_size\_lidar\_processor\_\_msg\_\_Env}}(}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00366}00366\ \ \ \ \ full\_bounded,\ is\_plain,\ 0);}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00368}00368\ \ \ bounds\_info\ =}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00369}00369\ \ \ \ \ is\_plain\ ?\ ROSIDL\_TYPESUPPORT\_FASTRTPS\_PLAIN\_TYPE\ :}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00370}00370\ \ \ \ \ full\_bounded\ ?\ ROSIDL\_TYPESUPPORT\_FASTRTPS\_BOUNDED\_TYPE\ :\ ROSIDL\_TYPESUPPORT\_FASTRTPS\_UNBOUNDED\_TYPE;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00371}00371\ \ \ \textcolor{keywordflow}{return}\ ret\_val;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00372}00372\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00375}00375\ \textcolor{keyword}{static}\ message\_type\_support\_callbacks\_t\ \_\_callbacks\_Env\ =\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00376}00376\ \ \ \textcolor{stringliteral}{"{}lidar\_processor::msg"{}},}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00377}00377\ \ \ \textcolor{stringliteral}{"{}Env"{}},}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00378}00378\ \ \ \_Env\_\_cdr\_serialize,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00379}00379\ \ \ \_Env\_\_cdr\_deserialize,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00380}00380\ \ \ \_Env\_\_get\_serialized\_size,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00381}00381\ \ \ \_Env\_\_max\_serialized\_size,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00382}00382\ \ \ \textcolor{keyword}{nullptr}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00383}00383\ \};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00384}00384\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00385}00385\ \textcolor{keyword}{static}\ rosidl\_message\_type\_support\_t\ \_Env\_\_type\_support\ =\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00386}00386\ \ \ rosidl\_typesupport\_fastrtps\_c\_\_identifier,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00387}00387\ \ \ \&\_\_callbacks\_Env,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00388}00388\ \ \ get\_message\_typesupport\_handle\_function,}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00389}00389\ \ \ \&\mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____description_8c_a70a61a995488c727c38b11018b44bf52}{lidar\_processor\_\_msg\_\_Env\_\_get\_type\_hash}},}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00390}00390\ \ \ \&\mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____description_8c_a5684ba0790fccbf88ad5043c4a300913}{lidar\_processor\_\_msg\_\_Env\_\_get\_type\_description}},}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00391}00391\ \ \ \&\mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____description_8c_a0c42b2032344575aafe4beabe0dea5a6}{lidar\_processor\_\_msg\_\_Env\_\_get\_type\_description\_sources}},}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00392}00392\ \};}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00393}00393\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00394}00394\ \textcolor{keyword}{const}\ rosidl\_message\_type\_support\_t\ *}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00395}\mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2detail_2env___8da7fe1c510bbe506000ee37817d2a3c_a34ae8dae7d03518f4526ec7199c07175}{00395}}\ \mbox{\hyperlink{env____type__support__c_8cpp_ad9bc5bc9d60f70c1c7daa2c739d42c05}{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME}}(rosidl\_typesupport\_fastrtps\_c,\ \mbox{\hyperlink{namespacelidar__processor}{lidar\_processor}},\ msg,\ Env)()\ \{}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00396}00396\ \ \ \textcolor{keywordflow}{return}\ \&\_Env\_\_type\_support;}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00397}00397\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00398}00398\ }
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00399}00399\ \textcolor{preprocessor}{\#if\ defined(\_\_cplusplus)}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00400}00400\ \}}
+\DoxyCodeLine{\Hypertarget{env____type__support__c_8cpp_source_l00401}00401\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

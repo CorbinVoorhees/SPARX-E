@@ -1,0 +1,10 @@
+\doxysection{sitecustomize.\+py}
+\hypertarget{build_2build__sparxe_2prefix__override_2sitecustomize_8py_source}{}\label{build_2build__sparxe_2prefix__override_2sitecustomize_8py_source}\index{build/build\_sparxe/prefix\_override/sitecustomize.py@{build/build\_sparxe/prefix\_override/sitecustomize.py}}
+\mbox{\hyperlink{build_2build__sparxe_2prefix__override_2sitecustomize_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{build_2build__sparxe_2prefix__override_2sitecustomize_8py_source_l00001}\mbox{\hyperlink{namespacesitecustomize}{00001}}\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{build_2build__sparxe_2prefix__override_2sitecustomize_8py_source_l00002}00002\ \textcolor{keywordflow}{if}\ sys.prefix\ ==\ \textcolor{stringliteral}{'/usr'}:}
+\DoxyCodeLine{\Hypertarget{build_2build__sparxe_2prefix__override_2sitecustomize_8py_source_l00003}\mbox{\hyperlink{namespacesitecustomize_ad92471310d42d90c5d1670962e6548f2}{00003}}\ \ \ \ \ sys.real\_prefix\ =\ sys.prefix}
+\DoxyCodeLine{\Hypertarget{build_2build__sparxe_2prefix__override_2sitecustomize_8py_source_l00004}\mbox{\hyperlink{namespacesitecustomize_aa24a9daadb3b3d6ea8946395e6186baa}{00004}}\ \ \ \ \ sys.prefix\ =\ sys.exec\_prefix\ =\ \textcolor{stringliteral}{'/home/sparky/Desktop/SPARX\_E/install/build\_sparxe'}}
+
+\end{DoxyCode}

@@ -1,0 +1,4 @@
+var build_2lidar__processor_2rosidl__typesupport__introspection__c_2lidar__processor_2msg_2detail_2o973c2ad6953fc125d3f449a82fa6dfdd =
+[
+    [ "ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME", "build_2lidar__processor_2rosidl__typesupport__introspection__c_2lidar__processor_2msg_2detail_2o973c2ad6953fc125d3f449a82fa6dfdd.html#a81d84ecf60cddd5f49afa5cda12ab101", null ]
+];

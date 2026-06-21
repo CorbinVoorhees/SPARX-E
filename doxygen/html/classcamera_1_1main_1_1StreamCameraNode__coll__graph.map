@@ -1,0 +1,9 @@
+<map id="camera.main.StreamCameraNode" name="camera.main.StreamCameraNode">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,249,104"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="99,5,155,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,43,95,61,102,77,98,80,89,62,91,43"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="113,44,112,62,116,78,111,79,107,63,107,44"/>
+<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="130,44,130,79,125,79,125,44"/>
+<area shape="poly" id="edge4_Node000001_Node000002" title=" " alt="" coords="147,44,148,63,144,79,138,78,142,62,142,44"/>
+<area shape="poly" id="edge5_Node000001_Node000002" title=" " alt="" coords="164,43,165,62,157,80,152,77,160,61,159,43"/>
+</map>

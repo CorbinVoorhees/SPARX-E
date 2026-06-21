@@ -1,0 +1,11 @@
+---
+# Enable all clang-tidy checks; alpha checks are omitted to reduce false positives
+Checks: '*, -clang-analyzer-alpha*'
+
+# Treat nothing as errors by default; developers can opt-in
+WarningsAsErrors: ''
+
+# Only run linting checks on files inside your workspace src directory
+HeaderFilterRegex: '^src/.*'
+AnalyzeTemporaryDtors: false
+...

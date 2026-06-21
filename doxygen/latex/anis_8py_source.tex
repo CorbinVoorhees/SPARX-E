@@ -1,0 +1,51 @@
+\doxysection{anis.\+py}
+\hypertarget{anis_8py_source}{}\label{anis_8py_source}\index{src/nav\_filters/src/anis.py@{src/nav\_filters/src/anis.py}}
+\mbox{\hyperlink{anis_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00001}\mbox{\hyperlink{namespaceanis}{00001}}\ \textcolor{keyword}{import}\ csv}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00002}00002\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00003}00003\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00004}00004\ \textcolor{keyword}{from}\ scipy.stats\ \textcolor{keyword}{import}\ chi2}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00007}\mbox{\hyperlink{namespaceanis_a9d87d17b262a504ad2a7674c1d2d87f9}{00007}}\ filetype\ =\ \textcolor{stringliteral}{'trans'}}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00008}00008\ \textcolor{keywordflow}{if}\ filetype\ ==\ \textcolor{stringliteral}{'rot'}:}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00009}\mbox{\hyperlink{namespaceanis_a9a700875aeff78e6d163593ba5910794}{00009}}\ \ \ \ \ n\ =\ 3}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00010}00010\ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00011}00011\ \ \ \ \ n\ =\ 5}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00013}\mbox{\hyperlink{namespaceanis_a2b82989681fb127693ab49c70fe35eff}{00013}}\ innovations\ =\ filetype\ +\ \textcolor{stringliteral}{"{}\_innovations.csv"{}}}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00014}\mbox{\hyperlink{namespaceanis_a697c1287330daf209d0656fc315dda43}{00014}}\ residuals\ =\ filetype\ +\ \textcolor{stringliteral}{"{}\_residuals.csv"{}}}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00016}00016\ innovations\ =\ np.loadtxt(innovations,\ delimiter=\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00017}00017\ residuals\ =\ np.loadtxt(residuals,\ delimiter=\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00020}\mbox{\hyperlink{namespaceanis_a7186e97ab23a014980cca9618c55bc01}{00020}}\ nis\ =\ []}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00022}00022\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(len(residuals)):\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00023}\mbox{\hyperlink{namespaceanis_ab7e41dce99e624409ef9fb37007d78a8}{00023}}\ \ \ \ \ res\ =\ residuals[i]}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00024}\mbox{\hyperlink{namespaceanis_af0031aec072b27ab77df07dac53fe334}{00024}}\ \ \ \ \ inno\ =\ innovations[(len(res)*i):(len(res)*i+len(res))]}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00025}00025\ \ \ \ \ nis.append(res.T\ @\ np.linalg.inv(inno)\ @\ res)}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00026}\mbox{\hyperlink{namespaceanis_ab21ebd3a43a17bb6d0d45253acb19aeb}{00026}}\ anis\ =\ []}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00027}\mbox{\hyperlink{namespaceanis_a6196bd2d528beef8967146b8d752bab6}{00027}}\ window\ =\ 1}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00028}00028\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(np.int32(np.floor(len(nis)\ /\ window))):}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00029}00029\ \ \ \ \ anis.append(np.mean(nis[(window\ *\ i):(window\ *\ i\ +\ window)]))}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00030}00030\ anis\ =\ np.array(anis)}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00031}00031\ \textcolor{comment}{\#if\ filetype\ ==\ 'rot':}}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00032}00032\ \textcolor{comment}{\#\ \ \ \ anis\ =\ np.array(anis)\ *\ (180\ /\ np.pi)**2}}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00034}00034\ plt.figure()}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00035}\mbox{\hyperlink{namespaceanis_a18d3cbb88ccaf449ee64e7cada5caed7}{00035}}\ alpha\ =\ 0.05}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00036}\mbox{\hyperlink{namespaceanis_afb46946943f0a8cfbdea5968f0f72792}{00036}}\ lower\_bound\ =\ chi2.ppf(alpha/2,\ n)\ /\ n}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00037}\mbox{\hyperlink{namespaceanis_abfcfb709e8a93706aaa3e262432fcc17}{00037}}\ upper\_bound\ =\ chi2.ppf(1\ -\/\ alpha/2,\ n)\ /\ n}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00038}00038\ plt.fill\_between(np.linspace(0,\ len(anis),\ len(anis)),\ \ lower\_bound,\ upper\_bound,\ alpha=0.2)}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00039}00039\ plt.plot(anis)}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00040}00040\ \textcolor{comment}{\#plt.ylim([0,\ 20])}}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00041}00041\ plt.show()}
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{anis_8py_source_l00045}00045\ }
+
+\end{DoxyCode}

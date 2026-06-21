@@ -1,0 +1,12 @@
+digraph "build/lidar_processor/CMakeFiles/lidar_processor__rosidl_generator_c.dir/rosidl_generator_c/lidar_processor/msg/detail"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_3ebb12daf0d97262f61fe76f7b4bd245 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", label="msg", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_3ebb12daf0d97262f61fe76f7b4bd245.html",tooltip=""]
+  dir_cd02958e545069222f4497044c9f2c42 [label="detail", fillcolor="#edf0f7", color="grey25", style="filled,bold", URL="dir_cd02958e545069222f4497044c9f2c42.html",tooltip=""];
+  }
+}

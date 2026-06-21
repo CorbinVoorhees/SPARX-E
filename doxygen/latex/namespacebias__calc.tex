@@ -1,0 +1,212 @@
+\doxysection{bias\+\_\+calc Namespace Reference}
+\hypertarget{namespacebias__calc}{}\label{namespacebias__calc}\index{bias\_calc@{bias\_calc}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a2fa2b52b8ab13dbc04c24ab3cfd1bbac}{log\+\_\+file}} = pd.\+read\+\_\+csv(\textquotesingle{}../../../output.\+csv\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}} = log\+\_\+file.\+to\+\_\+numpy()
+\item 
+\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,0\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,1\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,2\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,3\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{roll}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,4\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a720eb9b30be9048d3d70f2e592ac55cf}{ptch}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,5\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{yaw}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,6\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a6a72218ebba10c01878ae3f73eed3956}{fig}}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a3ad9ba5919a79b990675fd6ef83bb7df}{ax}}
+\item 
+\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}} = np.\+mean(np.\+diff(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_ac3607645434b5c0144d3d99c54216c93}{X\+\_\+roll}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_a57a27ae5cae559048cdc83bebc118388}{X\+\_\+ptch}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4}{X\+\_\+yaw}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}{freqs}} = np.\+fft.\+fftfreq(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{len}}(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{d}}=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})
+\item 
+\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{int}} \mbox{\hyperlink{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174}{mask}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacebias__calc_a3ad9ba5919a79b990675fd6ef83bb7df}\label{namespacebias__calc_a3ad9ba5919a79b990675fd6ef83bb7df} 
+\index{bias\_calc@{bias\_calc}!ax@{ax}}
+\index{ax@{ax}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{ax}{ax}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+ax}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00017}{17}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}\label{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b} 
+\index{bias\_calc@{bias\_calc}!data@{data}}
+\index{data@{data}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+data = log\+\_\+file.\+to\+\_\+numpy()}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00007}{7}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}\label{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b} 
+\index{bias\_calc@{bias\_calc}!dt@{dt}}
+\index{dt@{dt}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{dt}{dt}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+dt = np.\+mean(np.\+diff(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}))}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00026}{26}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a6a72218ebba10c01878ae3f73eed3956}\label{namespacebias__calc_a6a72218ebba10c01878ae3f73eed3956} 
+\index{bias\_calc@{bias\_calc}!fig@{fig}}
+\index{fig@{fig}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{fig}{fig}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+fig}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00017}{17}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}\label{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1} 
+\index{bias\_calc@{bias\_calc}!freqs@{freqs}}
+\index{freqs@{freqs}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{freqs}{freqs}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+freqs = np.\+fft.\+fftfreq(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{len}}(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{d}}=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00032}{32}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a2fa2b52b8ab13dbc04c24ab3cfd1bbac}\label{namespacebias__calc_a2fa2b52b8ab13dbc04c24ab3cfd1bbac} 
+\index{bias\_calc@{bias\_calc}!log\_file@{log\_file}}
+\index{log\_file@{log\_file}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{log\_file}{log\_file}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+log\+\_\+file = pd.\+read\+\_\+csv(\textquotesingle{}../../../output.\+csv\textquotesingle{})}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00005}{5}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174}\label{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174} 
+\index{bias\_calc@{bias\_calc}!mask@{mask}}
+\index{mask@{mask}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{mask}{mask}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{int}} bias\+\_\+calc.\+mask = 0}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00033}{33}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a720eb9b30be9048d3d70f2e592ac55cf}\label{namespacebias__calc_a720eb9b30be9048d3d70f2e592ac55cf} 
+\index{bias\_calc@{bias\_calc}!ptch@{ptch}}
+\index{ptch@{ptch}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{ptch}{ptch}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+ptch = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,5\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00014}{14}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}\label{namespacebias__calc_afb4965f188ce8b2565847622538c07fd} 
+\index{bias\_calc@{bias\_calc}!roll@{roll}}
+\index{roll@{roll}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{roll}{roll}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+roll = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,4\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00013}{13}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}\label{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6} 
+\index{bias\_calc@{bias\_calc}!t@{t}}
+\index{t@{t}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{t}{t}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+t = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,0\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00009}{9}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a226897bee09ef544894f20bd0773b477}\label{namespacebias__calc_a226897bee09ef544894f20bd0773b477} 
+\index{bias\_calc@{bias\_calc}!wptch@{wptch}}
+\index{wptch@{wptch}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{wptch}{wptch}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+wptch = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,2\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00011}{11}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}\label{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1} 
+\index{bias\_calc@{bias\_calc}!wroll@{wroll}}
+\index{wroll@{wroll}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{wroll}{wroll}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+wroll = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,1\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00010}{10}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}\label{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add} 
+\index{bias\_calc@{bias\_calc}!wyaw@{wyaw}}
+\index{wyaw@{wyaw}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{wyaw}{wyaw}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+wyaw = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,3\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00012}{12}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a57a27ae5cae559048cdc83bebc118388}\label{namespacebias__calc_a57a27ae5cae559048cdc83bebc118388} 
+\index{bias\_calc@{bias\_calc}!X\_ptch@{X\_ptch}}
+\index{X\_ptch@{X\_ptch}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{X\_ptch}{X\_ptch}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+X\+\_\+ptch = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}}))}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00029}{29}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_ac3607645434b5c0144d3d99c54216c93}\label{namespacebias__calc_ac3607645434b5c0144d3d99c54216c93} 
+\index{bias\_calc@{bias\_calc}!X\_roll@{X\_roll}}
+\index{X\_roll@{X\_roll}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{X\_roll}{X\_roll}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+X\+\_\+roll = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}))}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00028}{28}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4}\label{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4} 
+\index{bias\_calc@{bias\_calc}!X\_yaw@{X\_yaw}}
+\index{X\_yaw@{X\_yaw}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{X\_yaw}{X\_yaw}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+X\+\_\+yaw = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}}))}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00030}{30}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+
+\Hypertarget{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}\label{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e} 
+\index{bias\_calc@{bias\_calc}!yaw@{yaw}}
+\index{yaw@{yaw}!bias\_calc@{bias\_calc}}
+\doxysubsubsection{\texorpdfstring{yaw}{yaw}}
+{\footnotesize\ttfamily bias\+\_\+calc.\+yaw = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,6\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00015}{15}} of file \mbox{\hyperlink{bias__calc_8py_source}{bias\+\_\+calc.\+py}}.
+

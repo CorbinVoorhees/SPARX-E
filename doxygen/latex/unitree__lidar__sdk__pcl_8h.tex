@@ -1,0 +1,135 @@
+\doxysection{src/unilidar\+\_\+sdk2/unitree\+\_\+lidar\+\_\+sdk/include/unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.h File Reference}
+\hypertarget{unitree__lidar__sdk__pcl_8h}{}\label{unitree__lidar__sdk__pcl_8h}\index{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/unitree\_lidar\_sdk\_pcl.h@{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/unitree\_lidar\_sdk\_pcl.h}}
+{\ttfamily \#include $<$pcl/point\+\_\+cloud.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/point\+\_\+types.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/search/impl/search.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/range\+\_\+image/range\+\_\+image.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/kdtree/kdtree\+\_\+flann.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/common/common.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/common/transforms.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/registration/icp.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/io/pcd\+\_\+io.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/filters/filter.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/filters/voxel\+\_\+grid.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/filters/crop\+\_\+box.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/filters/radius\+\_\+outlier\+\_\+removal.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/filters/conditional\+\_\+removal.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/filters/passthrough.\+h$>$}\newline
+{\ttfamily \#include $<$pcl/impl/instantiate.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/impl/point\+\_\+types.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/filters/impl/voxel\+\_\+grid.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/filters/impl/approximate\+\_\+voxel\+\_\+grid.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/filters/impl/radius\+\_\+outlier\+\_\+removal.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/filters/impl/conditional\+\_\+removal.\+hpp$>$}\newline
+{\ttfamily \#include $<$pcl/filters/impl/passthrough.\+hpp$>$}\newline
+{\ttfamily \#include $<$Eigen/\+Core$>$}\newline
+{\ttfamily \#include $<$Eigen/\+Geometry$>$}\newline
+{\ttfamily \#include "{}unitree\+\_\+lidar\+\_\+sdk.\+h"{}}\newline
+Include dependency graph for unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structPointType}{Point\+Type}}
+\begin{DoxyCompactList}\small\item\em PCL Point Type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_adf799d3fdc3e86716e9188debf724bbf}{PCL\+\_\+\+NO\+\_\+\+PRECOMPILE}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a0f9d9b2c53e052049b0ae4240ffb9b55}{POINT\+\_\+\+CLOUD\+\_\+\+REGISTER\+\_\+\+POINT\+\_\+\+STRUCT}} (\mbox{\hyperlink{structPointType}{Point\+Type}},(float, x, x)(float, y, y)(float, z, z)(float, intensity, intensity)(std\+::uint16\+\_\+t, ring, ring)(float, time, time)) void transform\+Unitree\+Cloud\+To\+PCL(const \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{Point\+Cloud\+Unitree}} \&cloud\+In
+\begin{DoxyCompactList}\small\item\em Transform a Unitree cloud to PCL cloud. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887}{for}} (size\+\_\+t i=0;i$<$ cloud\+In.\+points.\+size();i++)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structPointType}{Point\+Type}} \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_aafcaf9041d92a869b42334a0e073b536}{EIGEN\+\_\+\+ALIGN16}}
+\item 
+pcl\+::\+Point\+Cloud$<$ \mbox{\hyperlink{structPointType}{Point\+Type}} $>$\+::\+Ptr \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}{cloud\+Out}}
+\item 
+\mbox{\hyperlink{structPointType}{Point\+Type}} \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{unitree__lidar__sdk__pcl_8h_adf799d3fdc3e86716e9188debf724bbf}\label{unitree__lidar__sdk__pcl_8h_adf799d3fdc3e86716e9188debf724bbf} 
+\index{unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}!PCL\_NO\_PRECOMPILE@{PCL\_NO\_PRECOMPILE}}
+\index{PCL\_NO\_PRECOMPILE@{PCL\_NO\_PRECOMPILE}!unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}}
+\doxysubsubsection{\texorpdfstring{PCL\_NO\_PRECOMPILE}{PCL\_NO\_PRECOMPILE}}
+{\footnotesize\ttfamily \#define PCL\+\_\+\+NO\+\_\+\+PRECOMPILE}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source_l00008}{8}} of file \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source}{unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887}\label{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887} 
+\index{unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}!for@{for}}
+\index{for@{for}!unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}}
+\doxysubsubsection{\texorpdfstring{for()}{for()}}
+{\footnotesize\ttfamily for (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source_l00074}{74}} of file \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source}{unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.\+h}}.
+
+\Hypertarget{unitree__lidar__sdk__pcl_8h_a0f9d9b2c53e052049b0ae4240ffb9b55}\label{unitree__lidar__sdk__pcl_8h_a0f9d9b2c53e052049b0ae4240ffb9b55} 
+\index{unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}!POINT\_CLOUD\_REGISTER\_POINT\_STRUCT@{POINT\_CLOUD\_REGISTER\_POINT\_STRUCT}}
+\index{POINT\_CLOUD\_REGISTER\_POINT\_STRUCT@{POINT\_CLOUD\_REGISTER\_POINT\_STRUCT}!unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}}
+\doxysubsubsection{\texorpdfstring{POINT\_CLOUD\_REGISTER\_POINT\_STRUCT()}{POINT\_CLOUD\_REGISTER\_POINT\_STRUCT()}}
+{\footnotesize\ttfamily POINT\+\_\+\+CLOUD\+\_\+\+REGISTER\+\_\+\+POINT\+\_\+\+STRUCT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structPointType}{Point\+Type}}}]{,  }\item[{(float, x, x)(float, y, y)(float, z, z)(float, intensity, intensity)(std\+::uint16\+\_\+t, ring, ring)(float, time, time)}]{ }\end{DoxyParamCaption}) const \&}
+
+
+
+Transform a Unitree cloud to PCL cloud. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cloud\+In} & \\
+\hline
+{\em cloud\+Out} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}\label{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5} 
+\index{unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}!cloudOut@{cloudOut}}
+\index{cloudOut@{cloudOut}!unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}}
+\doxysubsubsection{\texorpdfstring{cloudOut}{cloudOut}}
+{\footnotesize\ttfamily pcl\+::\+Point\+Cloud$<$\mbox{\hyperlink{structPointType}{Point\+Type}}$>$\+::\+Ptr cloud\+Out}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}{cloudOut}}-\/>clear()}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source_l00070}{70}} of file \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source}{unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.\+h}}.
+
+\Hypertarget{unitree__lidar__sdk__pcl_8h_aafcaf9041d92a869b42334a0e073b536}\label{unitree__lidar__sdk__pcl_8h_aafcaf9041d92a869b42334a0e073b536} 
+\index{unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}!EIGEN\_ALIGN16@{EIGEN\_ALIGN16}}
+\index{EIGEN\_ALIGN16@{EIGEN\_ALIGN16}!unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}}
+\doxysubsubsection{\texorpdfstring{EIGEN\_ALIGN16}{EIGEN\_ALIGN16}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structPointType}{Point\+Type}} EIGEN\+\_\+\+ALIGN16}
+
+\Hypertarget{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}\label{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c} 
+\index{unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}!pt@{pt}}
+\index{pt@{pt}!unitree\_lidar\_sdk\_pcl.h@{unitree\_lidar\_sdk\_pcl.h}}
+\doxysubsubsection{\texorpdfstring{pt}{pt}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPointType}{Point\+Type}} pt}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source_l00073}{73}} of file \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_source}{unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.\+h}}.
+

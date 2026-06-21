@@ -1,0 +1,82 @@
+\doxysection{unitree\+\_\+lidar\+\_\+sdk\+\_\+pcl.\+h}
+\hypertarget{unitree__lidar__sdk__pcl_8h_source}{}\label{unitree__lidar__sdk__pcl_8h_source}\index{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/unitree\_lidar\_sdk\_pcl.h@{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/unitree\_lidar\_sdk\_pcl.h}}
+\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00001}00001\ \textcolor{comment}{/**********************************************************************}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00002}00002\ \textcolor{comment}{\ Copyright\ (c)\ 2020-\/2024,\ Unitree\ Robotics.Co.Ltd.\ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00003}00003\ \textcolor{comment}{***********************************************************************/}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00005}00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00007}00007\ \textcolor{preprocessor}{\#ifndef\ PCL\_NO\_PRECOMPILE}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00008}\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_adf799d3fdc3e86716e9188debf724bbf}{00008}}\ \textcolor{preprocessor}{\#define\ PCL\_NO\_PRECOMPILE}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00011}00011\ \textcolor{comment}{//\ PCL}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <pcl/point\_cloud.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <pcl/point\_types.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <pcl/search/impl/search.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <pcl/range\_image/range\_image.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <pcl/kdtree/kdtree\_flann.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <pcl/common/common.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <pcl/common/transforms.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <pcl/registration/icp.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <pcl/io/pcd\_io.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <pcl/filters/filter.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <pcl/filters/voxel\_grid.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <pcl/filters/crop\_box.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <pcl/filters/radius\_outlier\_removal.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00026}00026\ \textcolor{preprocessor}{\#include\ <pcl/filters/conditional\_removal.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <pcl/filters/passthrough.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ <pcl/impl/instantiate.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00030}00030\ \textcolor{preprocessor}{\#include\ <pcl/impl/point\_types.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00031}00031\ \textcolor{preprocessor}{\#include\ <pcl/filters/voxel\_grid.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00032}00032\ \textcolor{preprocessor}{\#include\ <pcl/filters/impl/voxel\_grid.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00033}00033\ \textcolor{preprocessor}{\#include\ <pcl/filters/impl/approximate\_voxel\_grid.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00034}00034\ \textcolor{preprocessor}{\#include\ <pcl/filters/impl/radius\_outlier\_removal.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00035}00035\ \textcolor{preprocessor}{\#include\ <pcl/filters/impl/conditional\_removal.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00036}00036\ \textcolor{preprocessor}{\#include\ <pcl/filters/impl/passthrough.hpp>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00038}00038\ \textcolor{comment}{//\ Eigen}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00039}00039\ \textcolor{preprocessor}{\#include\ <Eigen/Core>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00040}00040\ \textcolor{preprocessor}{\#include\ <Eigen/Geometry>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00042}00042\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{unitree__lidar__sdk_8h}{unitree\_lidar\_sdk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00044}00044\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\_sdk2}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00049}\mbox{\hyperlink{structPointType}{00049}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structPointType}{PointType}}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00050}00050\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00051}00051\ \ \ \ \ PCL\_ADD\_POINT4D}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00052}00052\ \ \ \ \ PCL\_ADD\_INTENSITY}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00053}\mbox{\hyperlink{structPointType_a174ef211a58a2113461f4e92c7a7d2f0}{00053}}\ \ \ \ \ std::uint16\_t\ \mbox{\hyperlink{structPointType_a174ef211a58a2113461f4e92c7a7d2f0}{ring}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00054}\mbox{\hyperlink{structPointType_a9d5120fded7b3ef792f4c2ac03128430}{00054}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structPointType_a9d5120fded7b3ef792f4c2ac03128430}{time}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00055}00055\ \ \ \ \ EIGEN\_MAKE\_ALIGNED\_OPERATOR\_NEW}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00056}\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_aafcaf9041d92a869b42334a0e073b536}{00056}}\ \}\ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_aafcaf9041d92a869b42334a0e073b536}{EIGEN\_ALIGN16}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00057}\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a0f9d9b2c53e052049b0ae4240ffb9b55}{00057}}\ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a0f9d9b2c53e052049b0ae4240ffb9b55}{POINT\_CLOUD\_REGISTER\_POINT\_STRUCT}}(\mbox{\hyperlink{structPointType}{PointType}},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{float},\ x,\ x)(\textcolor{keywordtype}{float},\ y,\ y)(\textcolor{keywordtype}{float},\ z,\ z)(\textcolor{keywordtype}{float},\ intensity,\ intensity)(std::uint16\_t,\ ring,\ ring)(\textcolor{keywordtype}{float},\ time,\ time))}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00060}00060\ PCL\_INSTANTIATE(VoxelGrid,\ \mbox{\hyperlink{structPointType}{PointType}})}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00061}00061\ PCL\_INSTANTIATE(KdTree,\ \mbox{\hyperlink{structPointType}{PointType}})}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00062}00062\ PCL\_INSTANTIATE(RadiusOutlierRemoval,\ \mbox{\hyperlink{structPointType}{PointType}})}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00070}\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}{00070}}\ void\ transformUnitreeCloudToPCL(const\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloudIn,\ pcl::PointCloud<\mbox{\hyperlink{structPointType}{PointType}}>::Ptr\ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}{cloudOut}})}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00071}00071\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00072}00072\ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}{cloudOut}}-\/>clear();}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00073}\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{00073}}\ \ \ \ \ \mbox{\hyperlink{structPointType}{PointType}}\ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00074}\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887}{00074}}\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ cloudIn.points.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00075}00075\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}.x\ =\ cloudIn.points[i].x;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}.y\ =\ cloudIn.points[i].y;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}.z\ =\ cloudIn.points[i].z;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}.intensity\ =\ cloudIn.points[i].intensity;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}.\mbox{\hyperlink{structPointType_a9d5120fded7b3ef792f4c2ac03128430}{time}}\ =\ cloudIn.points[i].time;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}}.\mbox{\hyperlink{structPointType_a174ef211a58a2113461f4e92c7a7d2f0}{ring}}\ =\ cloudIn.points[i].ring;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a939d7116d4ba19c75c746b10c53688e5}{cloudOut}}-\/>push\_back(\mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a7372474de898495b1847327162588b4c}{pt}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk__pcl_8h_source_l00084}00084\ \}}
+
+\end{DoxyCode}

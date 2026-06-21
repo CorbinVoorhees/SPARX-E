@@ -1,0 +1,49 @@
+\doxysection{src/unilidar\+\_\+sdk2/unitree\+\_\+lidar\+\_\+sdk/include/unitree\+\_\+lidar\+\_\+utilities.h File Reference}
+\hypertarget{unitree__lidar__utilities_8h}{}\label{unitree__lidar__utilities_8h}\index{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/unitree\_lidar\_utilities.h@{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/unitree\_lidar\_utilities.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include "{}unitree\+\_\+lidar\+\_\+sdk\+\_\+config.\+h"{}}\newline
+{\ttfamily \#include "{}unitree\+\_\+lidar\+\_\+protocol.\+h"{}}\newline
+Include dependency graph for unitree\+\_\+lidar\+\_\+utilities.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{unilidar\+\_\+sdk2\+::\+Point\+Unitree}}
+\begin{DoxyCompactList}\small\item\em Point Type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{unilidar\+\_\+sdk2\+::\+Point\+Cloud\+Unitree}}
+\begin{DoxyCompactList}\small\item\em Point Cloud Type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\+\_\+sdk2}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceunilidar__sdk2_aa8cf3314b1bb7182032b45617be9325b}{unilidar\+\_\+sdk2\+::get\+System\+Time\+Stamp}} (\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp}{Time\+Stamp}} \&timestamp)
+\begin{DoxyCompactList}\small\item\em Get system timestamp. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{unilidar\+\_\+sdk2\+::get\+System\+Time\+Stamp}} ()
+\begin{DoxyCompactList}\small\item\em Get system timestamp. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{namespaceunilidar__sdk2_ac6bb362ccc5a5a72af19266c26406710}{unilidar\+\_\+sdk2\+::crc32}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buf, uint32\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em crc32 check \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceunilidar__sdk2_a49fb1dfcea9586d7f57697ebfd84b059}{unilidar\+\_\+sdk2\+::parse\+From\+Packet\+To\+Point\+Cloud}} (\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{Point\+Cloud\+Unitree}} \&cloud, const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{Lidar\+Point\+Data\+Packet}} \&packet, bool use\+\_\+system\+\_\+timestamp=true, float range\+\_\+min=0, float range\+\_\+max=100)
+\begin{DoxyCompactList}\small\item\em Parse from a point packet to a 3D point cloud. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceunilidar__sdk2_a877d2bb701aeb90e47b089ba145722f1}{unilidar\+\_\+sdk2\+::parse\+From\+Packet\+Point\+Cloud2D}} (\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{Point\+Cloud\+Unitree}} \&cloud, const \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2\+DPoint\+Data\+Packet}} \&packet, bool use\+\_\+system\+\_\+timestamp=true, float range\+\_\+min=0, float range\+\_\+max=100)
+\begin{DoxyCompactList}\small\item\em Parse from a packet to a 2D Laser\+Scan. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const float \mbox{\hyperlink{namespaceunilidar__sdk2_a02c6f66bd27cb120b9da7b509751280b}{unilidar\+\_\+sdk2\+::\+DEGREE\+\_\+\+TO\+\_\+\+RADIAN}} = M\+\_\+\+PI / 180.\+0
+\item 
+const float \mbox{\hyperlink{namespaceunilidar__sdk2_a08d0ed7f3d3c85235be118cdf7d872a4}{unilidar\+\_\+sdk2\+::\+RADIAN\+\_\+\+TO\+\_\+\+DEGREE}} = 180.\+0 / M\+\_\+\+PI
+\end{DoxyCompactItemize}

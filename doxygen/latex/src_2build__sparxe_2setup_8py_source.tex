@@ -1,0 +1,39 @@
+\doxysection{setup.\+py}
+\hypertarget{src_2build__sparxe_2setup_8py_source}{}\label{src_2build__sparxe_2setup_8py_source}\index{src/build\_sparxe/setup.py@{src/build\_sparxe/setup.py}}
+\mbox{\hyperlink{src_2build__sparxe_2setup_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00001}00001\ \textcolor{keyword}{from}\ setuptools\ \textcolor{keyword}{import}\ find\_packages,\ setup}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00002}00002\ \textcolor{keyword}{from}\ glob\ \textcolor{keyword}{import}\ glob}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00003}00003\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00005}\mbox{\hyperlink{namespacesetup_ae1914c6379853aac13554579d9b6b4ec}{00005}}\ package\_name\ =\ \textcolor{stringliteral}{'build\_sparxe'}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00007}00007\ \mbox{\hyperlink{namespacesetup}{setup}}(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00008}00008\ \ \ \ \ name=package\_name,}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00009}00009\ \ \ \ \ version=\textcolor{stringliteral}{'0.0.0'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00010}00010\ \ \ \ \ packages=find\_packages(exclude=[\textcolor{stringliteral}{'test'}]),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00011}\mbox{\hyperlink{namespacesetup_ad027a8e9452da003dca32bf7467bd16e}{00011}}\ \ \ \ \ data\_files=[}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'share/ament\_index/resource\_index/packages'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{stringliteral}{'resource/'}\ +\ package\_name]),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'share/'}\ +\ package\_name,\ [\textcolor{stringliteral}{'package.xml'}]),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ (os.path.join(\textcolor{stringliteral}{'share'},\ package\_name,\ \textcolor{stringliteral}{'launch'}),\ glob(\textcolor{stringliteral}{'launch/*.py'}))}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00016}00016\ \ \ \ \ ],}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00017}\mbox{\hyperlink{namespacesetup_a0a5ccc22976d20d42c6bb6c7651ce0be}{00017}}\ \ \ \ \ package\_data=\{\textcolor{stringliteral}{''}:\ [\textcolor{stringliteral}{'py.typed'}]\},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00018}\mbox{\hyperlink{namespacesetup_abead4f26b530856f858f0d44c7cf2588}{00018}}\ \ \ \ \ install\_requires=[\textcolor{stringliteral}{'setuptools'}],}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00019}\mbox{\hyperlink{namespacesetup_a13510753661cb74083a0c664db11dde9}{00019}}\ \ \ \ \ zip\_safe=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00020}\mbox{\hyperlink{namespacesetup_aa1a7cf9bbf76004bb72697dc00bbee9d}{00020}}\ \ \ \ \ maintainer=\textcolor{stringliteral}{'sparky'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00021}\mbox{\hyperlink{namespacesetup_a92a81adbfdd219564d5246ce8d77f869}{00021}}\ \ \ \ \ maintainer\_email=\textcolor{stringliteral}{'sparky@todo.todo'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00022}\mbox{\hyperlink{namespacesetup_aedf461ec52a946bda975938ba0b93ec0}{00022}}\ \ \ \ \ description=\textcolor{stringliteral}{'TODO:\ Package\ description'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00023}\mbox{\hyperlink{namespacesetup_a8ed6f50a28bd6a8794f8e1153baa6de9}{00023}}\ \ \ \ \ license=\textcolor{stringliteral}{'TODO:\ License\ declaration'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00024}\mbox{\hyperlink{namespacesetup_a5081a5a3f9d0dee597ab99a7fdc362df}{00024}}\ \ \ \ \ extras\_require=\{}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'test'}:\ [}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'pytest'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ ],}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00028}00028\ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00029}\mbox{\hyperlink{namespacesetup_ada7058afc98897f073d3f3b8b9157059}{00029}}\ \ \ \ \ entry\_points=\{}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'console\_scripts'}:\ [}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ ],}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00032}00032\ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2setup_8py_source_l00033}00033\ )}
+
+\end{DoxyCode}

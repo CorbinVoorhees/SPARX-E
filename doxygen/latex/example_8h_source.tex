@@ -1,0 +1,124 @@
+\doxysection{example.\+h}
+\hypertarget{example_8h_source}{}\label{example_8h_source}\index{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/example.h@{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/example.h}}
+\mbox{\hyperlink{example_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00001}00001\ \textcolor{comment}{/**********************************************************************}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00002}00002\ \textcolor{comment}{\ Copyright\ (c)\ 2020-\/2024,\ Unitree\ Robotics.Co.Ltd.\ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00003}00003\ \textcolor{comment}{***********************************************************************/}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00005}00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{unitree__lidar__sdk_8h}{unitree\_lidar\_sdk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\_sdk2}};}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00011}\mbox{\hyperlink{example_8h_a41b31f61a8671affcbbf73035f1a35fa}{00011}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{example_8h_a41b31f61a8671affcbbf73035f1a35fa}{exampleProcess}}(\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{UnitreeLidarReader}}\ *lreader)\{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00013}00013\ \ \ \ \ \textcolor{comment}{//\ Get\ lidar\ version}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00014}00014\ \ \ \ \ std::string\ versionSDK;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00015}00015\ \ \ \ \ std::string\ versionHardware;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00016}00016\ \ \ \ \ std::string\ versionFirmware;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{while}\ (!lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}{getVersionOfLidarFirmware}}(versionFirmware))}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00018}00018\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{runParse}}();}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00021}00021\ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}{getVersionOfLidarHardware}}(versionHardware);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00022}00022\ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}{getVersionOfSDK}}(versionSDK);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00024}00024\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}lidar\ hardware\ version\ =\ "{}}\ <<\ versionHardware\ <<\ std::endl}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}lidar\ firmware\ version\ =\ "{}}\ <<\ versionFirmware\ <<\ std::endl}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}lidar\ sdk\ version\ =\ "{}}\ <<\ versionSDK\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00027}00027\ \ \ \ \ sleep(1);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ Stop\ and\ start\ lidar\ again}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00030}00030\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}stop\ lidar\ rotation\ ..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00031}00031\ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}{stopLidarRotation}}();}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00032}00032\ \ \ \ \ sleep(3);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00034}00034\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}start\ lidar\ rotation\ ..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00035}00035\ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}{startLidarRotation}}();}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00036}00036\ \ \ \ \ sleep(3);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ Check\ lidar\ dirty\ percentange}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{float}\ dirtyPercentage;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{while}(!lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}{getDirtyPercentage}}(dirtyPercentage))\{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{runParse}}();}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00043}00043\ \ \ \ \ printf(\textcolor{stringliteral}{"{}dirty\ percentage\ =\ \%f\ \%\%\(\backslash\)n"{}},\ dirtyPercentage);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00044}00044\ \ \ \ \ sleep(1);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00046}00046\ \ \ \ \ \textcolor{comment}{//\ Get\ time\ delay}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{double}\ timeDelay;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{while}(!lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}{getTimeDelay}}(timeDelay))\{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{runParse}}();}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00051}00051\ \ \ \ \ printf(\textcolor{stringliteral}{"{}time\ delay\ (second)\ =\ \%f\(\backslash\)n"{}},\ timeDelay);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00052}00052\ \ \ \ \ sleep(1);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ Parse\ PointCloud\ and\ IMU\ data}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{int}\ result;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00056}00056\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData}{LidarImuData}}\ imu;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ cloud;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00059}00059\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ result\ =\ lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{runParse}}();}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (result)}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{unitree__lidar__protocol_8h_add19c84a95cfd23b8e02e634fb066a5f}{LIDAR\_IMU\_DATA\_PACKET\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}{getImuData}}(imu))}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}An\ IMU\ msg\ is\ parsed!\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::setprecision(20)\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)tsystem\ stamp\ =\ "{}}\ <<\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tseq\ =\ \%d,\ stamp\ =\ \%d.\%d\(\backslash\)n"{}},\ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a79521027aad21e7c42f4d9839d5f2136}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_a01df17fd500784f72f0dde77e9de5f66}{seq}},\ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a79521027aad21e7c42f4d9839d5f2136}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}},\ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a79521027aad21e7c42f4d9839d5f2136}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tquaternion\ (x,\ y,\ z,\ w)\ =\ [\%.4f,\ \%.4f,\ \%.4f,\ \%.4f]\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_abe4fefac4b033bf476c3e3d3eae32099}{quaternion}}[0],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_abe4fefac4b033bf476c3e3d3eae32099}{quaternion}}[1],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_abe4fefac4b033bf476c3e3d3eae32099}{quaternion}}[2],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_abe4fefac4b033bf476c3e3d3eae32099}{quaternion}}[3]);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tangular\_velocity\ (x,\ y,\ z)\ =\ [\%.4f,\ \%.4f,\ \%.4f]\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a762587441b8cc3aabcf8993201ab04c4}{angular\_velocity}}[0],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a762587441b8cc3aabcf8993201ab04c4}{angular\_velocity}}[1],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a762587441b8cc3aabcf8993201ab04c4}{angular\_velocity}}[2]);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tlinear\_acceleration\ (x,\ y,\ z)\ =\ [\%.4f,\ \%.4f,\ \%.4f]\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a0b533e21859c40fa7b9aeda5b0658d85}{linear\_acceleration}}[0],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a0b533e21859c40fa7b9aeda5b0658d85}{linear\_acceleration}}[1],}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ imu.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData_a0b533e21859c40fa7b9aeda5b0658d85}{linear\_acceleration}}[2]);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{unitree__lidar__protocol_8h_afaa709b327d0963ef86f5fdcf3b5e8ab}{LIDAR\_POINT\_DATA\_PACKET\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lreader-\/>\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}{getPointCloud}}(cloud))}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}A\ Cloud\ msg\ is\ parsed!\ \(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tstamp\ =\ \%f,\ id\ =\ \%d\(\backslash\)n"{}},\ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}},\ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tcloud\ size\ \ =\ \%ld,\ ringNum\ =\ \%d\(\backslash\)n"{}},\ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.size(),\ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)tfirst\ 10\ points\ (x,y,z,intensity,time,ring)\ =\ \(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 10;\ i++)}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)t\ \ (\%f,\ \%f,\ \%f,\ \%f,\ \%f,\ \%d)\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}[i].x,}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}[i].y,}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}[i].z,}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}[i].intensity,}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}[i].time,}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}[i].ring);}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)t\ \ ...\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00116}00116\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{example_8h_source_l00118}00118\ \}}
+
+\end{DoxyCode}

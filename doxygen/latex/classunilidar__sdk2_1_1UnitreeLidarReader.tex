@@ -1,0 +1,371 @@
+\doxysection{unilidar\+\_\+sdk2\+::Unitree\+Lidar\+Reader Class Reference}
+\hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader}{}\label{classunilidar__sdk2_1_1UnitreeLidarReader}\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+
+
+Unitree Lidar Reader.  
+
+
+
+
+{\ttfamily \#include $<$unitree\+\_\+lidar\+\_\+sdk.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual int \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86}{initialize\+Serial}} (std\+::string port="{}/dev/tty\+ACM0"{}, uint32\+\_\+t baudrate=4000000, uint16\+\_\+t cloud\+\_\+scan\+\_\+num=18, bool use\+\_\+system\+\_\+timestamp=true, float range\+\_\+min=0, float range\+\_\+max=100)=0
+\begin{DoxyCompactList}\small\item\em Initialize. \end{DoxyCompactList}\item 
+virtual int \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}{initialize\+UDP}} (unsigned short lidar\+\_\+port=6101, std\+::string lidar\+\_\+ip="{}192.\+168.\+1.\+62"{}, unsigned short local\+\_\+port=6201, std\+::string local\+\_\+ip="{}192.\+168.\+1.\+2"{}, uint16\+\_\+t cloud\+\_\+scan\+\_\+num=18, bool use\+\_\+system\+\_\+timestamp=true, float range\+\_\+min=0, float range\+\_\+max=100)=0
+\begin{DoxyCompactList}\small\item\em Initialize for UDP board. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615}{close\+Serial}} ()=0
+\begin{DoxyCompactList}\small\item\em Close Serial connection. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60}{close\+UDP}} ()=0
+\begin{DoxyCompactList}\small\item\em Close UDP connection. \end{DoxyCompactList}\item 
+virtual int \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{run\+Parse}} ()=0
+\begin{DoxyCompactList}\small\item\em Try to parse a message from the serial buffer once. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c}{clear\+Buffer}} ()=0
+\begin{DoxyCompactList}\small\item\em Clear buffer. \end{DoxyCompactList}\item 
+virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{Lidar\+Point\+Data\+Packet}} \& \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208}{get\+Lidar\+Point\+Data\+Packet}} () const =0
+\item 
+virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2\+DPoint\+Data\+Packet}} \& \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33}{get\+Lidar2\+DPoint\+Data\+Packet}} () const =0
+\item 
+virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuDataPacket}{Lidar\+Imu\+Data\+Packet}} \& \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e}{get\+Lidar\+Imu\+Data\+Packet}} () const =0
+\item 
+virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarVersionDataPacket}{Lidar\+Version\+Data\+Packet}} \& \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a}{get\+Lidar\+Version\+Data\+Packet}} () const =0
+\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}{get\+Point\+Cloud}} (\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{Point\+Cloud\+Unitree}} \&cloud) const =0
+\begin{DoxyCompactList}\small\item\em Get parsed point cloud data. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}{get\+Imu\+Data}} (\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData}{Lidar\+Imu\+Data}} \&imu) const =0
+\begin{DoxyCompactList}\small\item\em Get IMU data. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}{get\+Version\+Of\+SDK}} (std\+::string \&version) const =0
+\begin{DoxyCompactList}\small\item\em Get the Version of Lidar SDK. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}{get\+Version\+Of\+Lidar\+Firmware}} (std\+::string \&version) const =0
+\begin{DoxyCompactList}\small\item\em Get Version of lidar firmware. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}{get\+Version\+Of\+Lidar\+Hardware}} (std\+::string \&version) const =0
+\begin{DoxyCompactList}\small\item\em Get Version of lidar hardware. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}{get\+Time\+Delay}} (double \&delay) const =0
+\begin{DoxyCompactList}\small\item\em Get time delay of one-\/way data transmission in second. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}{get\+Dirty\+Percentage}} (float \&percentage) const =0
+\begin{DoxyCompactList}\small\item\em Get the removal percentage of points due to the dirt on the protection cover. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906}{send\+User\+Ctrl\+Cmd}} (\mbox{\hyperlink{structunilidar__sdk2_1_1LidarUserCtrlCmd}{Lidar\+User\+Ctrl\+Cmd}} cmd)=0
+\begin{DoxyCompactList}\small\item\em Send a user control command to lidar. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1}{set\+Lidar\+Work\+Mode}} (uint32\+\_\+t mode)=0
+\begin{DoxyCompactList}\small\item\em Set lidar work mode. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd}{sync\+Lidar\+Time\+Stamp}} ()=0
+\begin{DoxyCompactList}\small\item\em Sync lidar timestamp with system timestamp. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7}{reset\+Lidar}} ()=0
+\begin{DoxyCompactList}\small\item\em Stop lidar rotation. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}{stop\+Lidar\+Rotation}} ()=0
+\begin{DoxyCompactList}\small\item\em Stop lidar rotation. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}{start\+Lidar\+Rotation}} ()=0
+\begin{DoxyCompactList}\small\item\em Start lidar rotation. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}{set\+Lidar\+Ip\+Address\+Config}} (\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig}{Lidar\+Ip\+Address\+Config}} config)=0
+\begin{DoxyCompactList}\small\item\em Set the Lidar Ip Address Config. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a}{set\+Lidar\+Mac\+Address\+Config}} (\mbox{\hyperlink{structunilidar__sdk2_1_1LidarMacAddressConfig}{Lidar\+Mac\+Address\+Config}} config)=0
+\begin{DoxyCompactList}\small\item\em Set the Lidar Mac Address Config. \end{DoxyCompactList}\item 
+virtual size\+\_\+t \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e}{get\+Buffer\+Cached\+Size}} () const =0
+\begin{DoxyCompactList}\small\item\em Get the Buffer Cached Size. \end{DoxyCompactList}\item 
+virtual size\+\_\+t \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4}{get\+Buffer\+Read\+Size}} () const =0
+\begin{DoxyCompactList}\small\item\em Get the Buffer Read Size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Unitree Lidar Reader. 
+
+Definition at line \mbox{\hyperlink{unitree__lidar__sdk_8h_source_l00013}{13}} of file \mbox{\hyperlink{unitree__lidar__sdk_8h_source}{unitree\+\_\+lidar\+\_\+sdk.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c}\label{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!clearBuffer@{clearBuffer}}
+\index{clearBuffer@{clearBuffer}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{clearBuffer()}{clearBuffer()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::clear\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Clear buffer. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!closeSerial@{closeSerial}}
+\index{closeSerial@{closeSerial}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{closeSerial()}{closeSerial()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::close\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Close Serial connection. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60}\label{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!closeUDP@{closeUDP}}
+\index{closeUDP@{closeUDP}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{closeUDP()}{closeUDP()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::close\+UDP (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Close UDP connection. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getBufferCachedSize@{getBufferCachedSize}}
+\index{getBufferCachedSize@{getBufferCachedSize}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getBufferCachedSize()}{getBufferCachedSize()}}
+{\footnotesize\ttfamily virtual size\+\_\+t unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Buffer\+Cached\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get the Buffer Cached Size. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4}\label{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getBufferReadSize@{getBufferReadSize}}
+\index{getBufferReadSize@{getBufferReadSize}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getBufferReadSize()}{getBufferReadSize()}}
+{\footnotesize\ttfamily virtual size\+\_\+t unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Buffer\+Read\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get the Buffer Read Size. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getDirtyPercentage@{getDirtyPercentage}}
+\index{getDirtyPercentage@{getDirtyPercentage}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getDirtyPercentage()}{getDirtyPercentage()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Dirty\+Percentage (\begin{DoxyParamCaption}\item[{float \&}]{percentage }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get the removal percentage of points due to the dirt on the protection cover. 
+
+\begin{DoxyReturn}{Returns}
+the percentage of removed dirty points 
+\end{DoxyReturn}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}\label{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getImuData@{getImuData}}
+\index{getImuData@{getImuData}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getImuData()}{getImuData()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Imu\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData}{Lidar\+Imu\+Data}} \&}]{imu }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get IMU data. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getLidar2DPointDataPacket@{getLidar2DPointDataPacket}}
+\index{getLidar2DPointDataPacket@{getLidar2DPointDataPacket}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getLidar2DPointDataPacket()}{getLidar2DPointDataPacket()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2\+DPoint\+Data\+Packet}} \& unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Lidar2\+DPoint\+Data\+Packet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getLidarImuDataPacket@{getLidarImuDataPacket}}
+\index{getLidarImuDataPacket@{getLidarImuDataPacket}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getLidarImuDataPacket()}{getLidarImuDataPacket()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuDataPacket}{Lidar\+Imu\+Data\+Packet}} \& unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Lidar\+Imu\+Data\+Packet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getLidarPointDataPacket@{getLidarPointDataPacket}}
+\index{getLidarPointDataPacket@{getLidarPointDataPacket}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getLidarPointDataPacket()}{getLidarPointDataPacket()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{Lidar\+Point\+Data\+Packet}} \& unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Lidar\+Point\+Data\+Packet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getLidarVersionDataPacket@{getLidarVersionDataPacket}}
+\index{getLidarVersionDataPacket@{getLidarVersionDataPacket}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getLidarVersionDataPacket()}{getLidarVersionDataPacket()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{structunilidar__sdk2_1_1LidarVersionDataPacket}{Lidar\+Version\+Data\+Packet}} \& unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Lidar\+Version\+Data\+Packet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getPointCloud@{getPointCloud}}
+\index{getPointCloud@{getPointCloud}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getPointCloud()}{getPointCloud()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Point\+Cloud (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{Point\+Cloud\+Unitree}} \&}]{cloud }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get parsed point cloud data. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getTimeDelay@{getTimeDelay}}
+\index{getTimeDelay@{getTimeDelay}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getTimeDelay()}{getTimeDelay()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Time\+Delay (\begin{DoxyParamCaption}\item[{double \&}]{delay }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get time delay of one-\/way data transmission in second. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}\label{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getVersionOfLidarFirmware@{getVersionOfLidarFirmware}}
+\index{getVersionOfLidarFirmware@{getVersionOfLidarFirmware}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getVersionOfLidarFirmware()}{getVersionOfLidarFirmware()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Version\+Of\+Lidar\+Firmware (\begin{DoxyParamCaption}\item[{std\+::string \&}]{version }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get Version of lidar firmware. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getVersionOfLidarHardware@{getVersionOfLidarHardware}}
+\index{getVersionOfLidarHardware@{getVersionOfLidarHardware}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getVersionOfLidarHardware()}{getVersionOfLidarHardware()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Version\+Of\+Lidar\+Hardware (\begin{DoxyParamCaption}\item[{std\+::string \&}]{version }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get Version of lidar hardware. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}\label{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!getVersionOfSDK@{getVersionOfSDK}}
+\index{getVersionOfSDK@{getVersionOfSDK}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{getVersionOfSDK()}{getVersionOfSDK()}}
+{\footnotesize\ttfamily virtual bool unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::get\+Version\+Of\+SDK (\begin{DoxyParamCaption}\item[{std\+::string \&}]{version }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get the Version of Lidar SDK. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!initializeSerial@{initializeSerial}}
+\index{initializeSerial@{initializeSerial}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{initializeSerial()}{initializeSerial()}}
+{\footnotesize\ttfamily virtual int unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::initialize\+Serial (\begin{DoxyParamCaption}\item[{std\+::string}]{port = {\ttfamily "{}/dev/ttyACM0"{}},  }\item[{uint32\+\_\+t}]{baudrate = {\ttfamily 4000000},  }\item[{uint16\+\_\+t}]{cloud\+\_\+scan\+\_\+num = {\ttfamily 18},  }\item[{bool}]{use\+\_\+system\+\_\+timestamp = {\ttfamily true},  }\item[{float}]{range\+\_\+min = {\ttfamily 0},  }\item[{float}]{range\+\_\+max = {\ttfamily 100} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Initialize. 
+
+\begin{DoxyReturn}{Returns}
+Return 0 if the serial port is opened successfully; return -\/1 if we failed to open the serial port. 
+\end{DoxyReturn}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!initializeUDP@{initializeUDP}}
+\index{initializeUDP@{initializeUDP}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{initializeUDP()}{initializeUDP()}}
+{\footnotesize\ttfamily virtual int unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::initialize\+UDP (\begin{DoxyParamCaption}\item[{unsigned short}]{lidar\+\_\+port = {\ttfamily 6101},  }\item[{std\+::string}]{lidar\+\_\+ip = {\ttfamily "{}192.168.1.62"{}},  }\item[{unsigned short}]{local\+\_\+port = {\ttfamily 6201},  }\item[{std\+::string}]{local\+\_\+ip = {\ttfamily "{}192.168.1.2"{}},  }\item[{uint16\+\_\+t}]{cloud\+\_\+scan\+\_\+num = {\ttfamily 18},  }\item[{bool}]{use\+\_\+system\+\_\+timestamp = {\ttfamily true},  }\item[{float}]{range\+\_\+min = {\ttfamily 0},  }\item[{float}]{range\+\_\+max = {\ttfamily 100} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Initialize for UDP board. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!resetLidar@{resetLidar}}
+\index{resetLidar@{resetLidar}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{resetLidar()}{resetLidar()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::reset\+Lidar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Stop lidar rotation. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!runParse@{runParse}}
+\index{runParse@{runParse}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{runParse()}{runParse()}}
+{\footnotesize\ttfamily virtual int unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::run\+Parse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Try to parse a message from the serial buffer once. 
+
+\begin{DoxyNote}{Note}
+This is the main entrance of this class 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+the data packet type id, eg. 0 if no valid message parsed LIDAR\+\_\+\+POINT\+\_\+\+DATA\+\_\+\+PACKET\+\_\+\+TYPE 102 LIDAR\+\_\+2\+D\+\_\+\+POINT\+\_\+\+DATA\+\_\+\+PACKET\+\_\+\+TYPE 103 LIDAR\+\_\+\+IMU\+\_\+\+DATA\+\_\+\+PACKET\+\_\+\+TYPE 104 LIDAR\+\_\+\+VERSION\+\_\+\+PACKET\+\_\+\+TYPE 105 
+\end{DoxyReturn}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!sendUserCtrlCmd@{sendUserCtrlCmd}}
+\index{sendUserCtrlCmd@{sendUserCtrlCmd}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{sendUserCtrlCmd()}{sendUserCtrlCmd()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::send\+User\+Ctrl\+Cmd (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structunilidar__sdk2_1_1LidarUserCtrlCmd}{Lidar\+User\+Ctrl\+Cmd}}}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Send a user control command to lidar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}\label{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!setLidarIpAddressConfig@{setLidarIpAddressConfig}}
+\index{setLidarIpAddressConfig@{setLidarIpAddressConfig}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{setLidarIpAddressConfig()}{setLidarIpAddressConfig()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::set\+Lidar\+Ip\+Address\+Config (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig}{Lidar\+Ip\+Address\+Config}}}]{config }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Set the Lidar Ip Address Config. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a}\label{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!setLidarMacAddressConfig@{setLidarMacAddressConfig}}
+\index{setLidarMacAddressConfig@{setLidarMacAddressConfig}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{setLidarMacAddressConfig()}{setLidarMacAddressConfig()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::set\+Lidar\+Mac\+Address\+Config (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structunilidar__sdk2_1_1LidarMacAddressConfig}{Lidar\+Mac\+Address\+Config}}}]{config }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Set the Lidar Mac Address Config. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!setLidarWorkMode@{setLidarWorkMode}}
+\index{setLidarWorkMode@{setLidarWorkMode}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{setLidarWorkMode()}{setLidarWorkMode()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::set\+Lidar\+Work\+Mode (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{mode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Set lidar work mode. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!startLidarRotation@{startLidarRotation}}
+\index{startLidarRotation@{startLidarRotation}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{startLidarRotation()}{startLidarRotation()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::start\+Lidar\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Start lidar rotation. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}\label{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!stopLidarRotation@{stopLidarRotation}}
+\index{stopLidarRotation@{stopLidarRotation}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{stopLidarRotation()}{stopLidarRotation()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::stop\+Lidar\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Stop lidar rotation. 
+
+\Hypertarget{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd}\label{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd} 
+\index{unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}!syncLidarTimeStamp@{syncLidarTimeStamp}}
+\index{syncLidarTimeStamp@{syncLidarTimeStamp}!unilidar\_sdk2::UnitreeLidarReader@{unilidar\_sdk2::UnitreeLidarReader}}
+\doxysubsubsection{\texorpdfstring{syncLidarTimeStamp()}{syncLidarTimeStamp()}}
+{\footnotesize\ttfamily virtual void unilidar\+\_\+sdk2\+::\+Unitree\+Lidar\+Reader\+::sync\+Lidar\+Time\+Stamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Sync lidar timestamp with system timestamp. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stamp\+\_\+sec} & second \\
+\hline
+{\em stamp\+\_\+nsec} & nanosecond \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/unilidar\+\_\+sdk2/unitree\+\_\+lidar\+\_\+sdk/include/\mbox{\hyperlink{unitree__lidar__sdk_8h}{unitree\+\_\+lidar\+\_\+sdk.\+h}}\end{DoxyCompactItemize}

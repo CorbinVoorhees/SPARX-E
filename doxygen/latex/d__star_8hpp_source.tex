@@ -1,0 +1,359 @@
+\doxysection{d\+\_\+star.\+hpp}
+\hypertarget{d__star_8hpp_source}{}\label{d__star_8hpp_source}\index{src/autonomy/src/d\_star.hpp@{src/autonomy/src/d\_star.hpp}}
+\mbox{\hyperlink{d__star_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_D\_STAR\_\_}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_D\_STAR\_\_}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{planning_8hpp}{planning.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{grid2d_8hpp}{grid2d.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lightpq_8hpp}{lightpq.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}Eigen/Dense"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00014}\mbox{\hyperlink{namespaceplanning__module}{00014}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplanning__module}{planning\_module}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00016}\mbox{\hyperlink{classplanning__module_1_1d__star}{00016}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplanning__module_1_1d__star}{d\_star}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00017}00017\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00019}00019\ \ \ \ \ \ \ \ \ uint32\_t\ rows;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ uint32\_t\ cols;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ start;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ goal;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ lander\_loc;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ std::shared\_ptr<grid2d>\ grid;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplanning__module_1_1lightpq}{lightpq}}\ U;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ std::unique\_ptr<coordi[]>\ path;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ uint32\_t\ path\_length\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8-\/connected\ neighborhood}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keyword}{static}\ std::array<coordi,\ 8>\ directions\{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{1,\ 0\},\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{0,\ 1\},\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{-\/1,\ 0\},\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{0,\ -\/1\},}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{1,\ 1\},\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{1,\ -\/1\},\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{-\/1,\ 1\},\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{-\/1,\ -\/1\}\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ km\ =\ 0.0f;\ \textcolor{comment}{//\ D*\ Lite\ key\ modifier\ (accumulates\ as\ the\ robot\ moves)}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00042}\mbox{\hyperlink{classplanning__module_1_1d__star_ad741bfd8473f4efdac64a9e456626f3e}{00042}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplanning__module_1_1d__star_ad741bfd8473f4efdac64a9e456626f3e}{d\_star}}(uint32\_t\ rows,\ uint32\_t\ cols,}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ start,\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ goal,\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ lander\_loc,}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<grid2d>\ grid\_in)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ :\ rows(rows),\ cols(cols),\ start(start),\ goal(goal),\ lander\_loc(lander\_loc),}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid(grid\_in),}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U(grid),}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ path(std::make\_unique<\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}[]>(rows\ *\ cols))}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[this-\/>goal].rhs\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ goal\_key\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}{calculate\_key}}(this-\/>goal);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ U.\mbox{\hyperlink{classplanning__module_1_1lightpq_a781a42abc703b2a9ff9098aabde90e77}{push}}(\{goal\_key,\ this-\/>goal\});}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00059}\mbox{\hyperlink{classplanning__module_1_1d__star_a9687917f1c71c34fad586ccea894eb89}{00059}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1d__star_a9687917f1c71c34fad586ccea894eb89}{on\_robot\_moved}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ new\_pos)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>km\ +=\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e}{heuristic}}(this-\/>start,\ new\_pos);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>start\ =\ new\_pos;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00069}\mbox{\hyperlink{classplanning__module_1_1d__star_ac260e7d769f8cdbc416ed8cb26c624e6}{00069}}\ \ \ \ \ \ \ \ \ std::pair<const\ coordi\ *,\ uint32\_t>\ \mbox{\hyperlink{classplanning__module_1_1d__star_ac260e7d769f8cdbc416ed8cb26c624e6}{extract\_path}}()}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>path\_length\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ current\ =\ this-\/>start;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>path[this-\/>path\_length++]\ =\ current;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Extracting\ path\ from\ (\%d,\ \%d)\ to\ (\%d,\ \%d)\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>start.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}},\ this-\/>start.y,\ this-\/>goal.x,\ this-\/>goal.y);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ safety\ cap\ so\ we\ never\ spin\ forever\ if\ the\ grid\ is\ in\ a\ weird\ state}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ max\_steps\ =\ this-\/>rows\ *\ this-\/>cols;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (current\ !=\ this-\/>goal\ \&\&\ this-\/>path\_length\ <\ max\_steps)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ best\_s\{-\/1,\ -\/1\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ min\_val\ =\ \mbox{\hyperlink{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}{INFTY}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<coordi,\ 9>\ ns;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{neighbors}}(current,\ ns,\ count);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ count;\ i++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ s\_next\ =\ ns[i];}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ candidate\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a}{cost}}(current,\ s\_next)\ +\ (*this-\/>grid)[s\_next].g;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (candidate\ <\ min\_val)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ min\_val\ =\ candidate;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ best\_s\ =\ s\_next;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (best\_s\ ==\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\{-\/1,\ -\/1\}\ ||\ min\_val\ ==\ \mbox{\hyperlink{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}{INFTY}})}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}extract\_path:\ dead\ end\ at\ (\%d,\ \%d)\(\backslash\)n"{}},\ current.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}},\ current.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}});}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{nullptr},\ 0\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ current\ =\ best\_s;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ path[path\_length++]\ =\ current;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{path.get(),\ path\_length\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00114}\mbox{\hyperlink{classplanning__module_1_1d__star_a8474ffa7a709b975aa1b8462d5999905}{00114}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1d__star_a8474ffa7a709b975aa1b8462d5999905}{compute\_shortest\_path}}()}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (this-\/>U.\mbox{\hyperlink{classplanning__module_1_1lightpq_a6ab0736dbdb1fe5ae49a91e2ec15e1e3}{size}}()\ >\ 0\ \&\&}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (this-\/>U[0].first\ <\ this-\/>calculate\_key(this-\/>start)\ ||}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !\mbox{\hyperlink{namespaceplanning__module_a7c2d51cae71646b1e354d1a546f5198a}{float\_eq}}((*this-\/>grid)[this-\/>start].rhs,\ (*this-\/>grid)[this-\/>start].g)))}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ top\ =\ this-\/>U.\mbox{\hyperlink{classplanning__module_1_1lightpq_a06525d3dffad8eeeab9b4929695ac159}{pop}}();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordf}}\ k\_old\ =\ top.first;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ u\ =\ top.second;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordf}}\ k\_new\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}{calculate\_key}}(u);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (k\_old\ <\ k\_new)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ key\ was\ stale;\ reinsert\ with\ updated\ key}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>U.\mbox{\hyperlink{classplanning__module_1_1lightpq_a781a42abc703b2a9ff9098aabde90e77}{push}}(\{k\_new,\ u\});}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ overconsistent\ =\ ((*this-\/>grid)[u].g\ >\ (*this-\/>grid)[u].rhs);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overconsistent)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ g\ :=\ rhs,\ then\ update\ predecessors\ only}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[u].g\ =\ (*this-\/>grid)[u].rhs;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<coordi,\ 9>\ ns;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{neighbors}}(u,\ ns,\ count,\ \textcolor{comment}{/*include\_s=*/}\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ count;\ i++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}{update\_vertex}}(ns[i]);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ underconsistent:\ g\ :=\ infty,\ update\ predecessors\ AND\ u\ itself}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[u].g\ =\ \mbox{\hyperlink{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}{INFTY}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<coordi,\ 9>\ ns;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{neighbors}}(u,\ ns,\ count,\ \textcolor{comment}{/*include\_s=*/}\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ count;\ i++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}{update\_vertex}}(ns[i]);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00160}\mbox{\hyperlink{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}{00160}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}{update\_vertex}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ u)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (u\ !=\ this-\/>goal)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<coordi,\ 9>\ ns;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{neighbors}}(u,\ ns,\ count);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rhs\ =\ \mbox{\hyperlink{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}{INFTY}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ count;\ i++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ c\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a}{cost}}(u,\ ns[i])\ +\ (*this-\/>grid)[ns[i]].g;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ <\ rhs)\ rhs\ =\ c;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[u].rhs\ =\ rhs;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespaceplanning__module_a7c2d51cae71646b1e354d1a546f5198a}{float\_eq}}((*this-\/>grid)[u].g,\ (*this-\/>grid)[u].rhs))}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ key\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}{calculate\_key}}(u);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U.\mbox{\hyperlink{classplanning__module_1_1lightpq_a781a42abc703b2a9ff9098aabde90e77}{push}}(\{key,\ u\});\ \textcolor{comment}{//\ push\ handles\ "{}already\ in\ heap"{}\ via\ heap\_index}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00184}\mbox{\hyperlink{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}{00184}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordf}}\ \mbox{\hyperlink{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}{calculate\_key}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ s)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ min\_g\_rhs\ =\ std::min((*this-\/>grid)[s].g,\ (*this-\/>grid)[s].rhs);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ k1\ =\ min\_g\_rhs\ +\ \mbox{\hyperlink{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e}{heuristic}}(s,\ this-\/>start)\ +\ this-\/>km;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ k2\ =\ min\_g\_rhs;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{k1,\ k2\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00192}\mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{00192}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{neighbors}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ s,\ std::array<coordi,\ 9>\ \&out,\ uint32\_t\ \&count,\ \textcolor{keywordtype}{bool}\ include\_s\ =\ \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ d\ :\ directions)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ next\ =\ s\ +\ d;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (next.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}\ >=\ 0\ \&\&\ next.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}\ <\ (int32\_t)this-\/>cols\ \&\&}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ next.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}\ >=\ 0\ \&\&\ next.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}\ <\ (int32\_t)this-\/>rows)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[count++]\ =\ next;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (include\_s)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[count++]\ =\ s;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00208}\mbox{\hyperlink{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a}{00208}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a}{cost}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ a,\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ b)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>grid-\/>is\_obstacle(a)\ ||\ this-\/>grid-\/>is\_obstacle(b))}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}{INFTY}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Octile\ step\ distance:\ 1\ for\ cardinal,\ sqrt(2)\ for\ diagonal}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ diff\ =\ b\ -\/\ a;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ diagonal\ =\ (std::abs(diff.x)\ ==\ 1)\ \&\&\ (std::abs(diff.y)\ ==\ 1);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dist\_cost\ =\ diagonal\ ?\ 1.41421356f\ :\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Spline-\/following\ bias:\ cells\ far\ from\ the\ spline\ cost\ more}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ spline\_penalty\ =\ (*this-\/>grid)[b].dist\_to\_spline;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solar\ /\ illumination\ penalty}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ solar\_penalty\ =\ ((*this-\/>grid)[b].illumnation\ <\ 0.5f)\ ?\ 0.5f\ :\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Elevation:\ only\ penalize\ uphill\ (downhill\ is\ free;\ no\ negative\ weights)}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dz\ =\ (*this-\/>grid)[b].elevation\ -\/\ (*this-\/>grid)[a].elevation;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ elevation\_penalty\ =\ (dz\ >\ 0.0f)\ ?\ dz\ :\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dist\_cost\ +\ spline\_penalty\ +\ solar\_penalty\ +\ elevation\_penalty;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00231}\mbox{\hyperlink{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e}{00231}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e}{heuristic}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ a,\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ b)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Octile\ heuristic\ —\ admissible\ for\ 8-\/connected\ uniform\ cost.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Manhattan\ would\ over-\/estimate\ diagonal\ moves\ and\ break\ consistency.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(std::abs(a.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}\ -\/\ b.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(std::abs(a.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}\ -\/\ b.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dmin\ =\ std::min(dx,\ dy);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dmax\ =\ std::max(dx,\ dy);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (1.41421356f\ -\/\ 1.0f)\ *\ dmin\ +\ dmax;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ BFS\ reachability\ check.\ Resets\ has\_visited\ on\ the\ way\ out\ so\ the\ grid}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ is\ clean\ for\ the\ actual\ planner.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00244}\mbox{\hyperlink{classplanning__module_1_1d__star_aeb598b383328a858ac45dfe85d95a9c5}{00244}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classplanning__module_1_1d__star_aeb598b383328a858ac45dfe85d95a9c5}{path\_exists}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ src,\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ dst)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ [rows\_sz,\ cols\_sz]\ =\ this-\/>grid-\/>size();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ std::deque<coordi>\ q;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<coordi>\ touched;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ q.push\_back(src);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[src].has\_visited\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ touched.push\_back(src);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00252}00252\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ found\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!q.empty())}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ curr\ =\ q.front();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.pop\_front();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr\ ==\ dst)\ \{\ found\ =\ \textcolor{keyword}{true};\ \textcolor{keywordflow}{break};\ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ d\ :\ directions)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ next\ =\ curr\ +\ d;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (next.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}\ <\ 0\ ||\ next.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}}\ >=\ (int32\_t)cols\_sz\ ||}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ next.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}\ <\ 0\ ||\ next.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}}\ >=\ (int32\_t)rows\_sz)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*this-\/>grid)[next].has\_visited\ ||\ this-\/>grid-\/>is\_obstacle(next))}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[next].has\_visited\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ touched.push\_back(next);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.push\_back(next);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ restore\ has\_visited\ so\ we\ don't\ poison\ subsequent\ searches}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ \&c\ :\ touched)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*this-\/>grid)[c].has\_visited\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ found;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00287}\mbox{\hyperlink{classplanning__module_1_1d__star_a6e6db5507c87e1adbee87d8fbc2ade9a}{00287}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1d__star_a6e6db5507c87e1adbee87d8fbc2ade9a}{update\_grid}}(\textcolor{keyword}{const}\ Eigen::Vector2d\ \&center,}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix2d\ \&cov,}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{float}(\textcolor{keywordtype}{float},\ \textcolor{keywordtype}{float})>\ compute\_cost\_at)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ axis-\/aligned\ bounding\ box\ that\ contains\ the\ 3-\/sigma\ ellipse.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Use\ eigenvalues\ so\ rotation\ is\ captured\ (cov(0,0)/(1,1)\ alone\ is\ not\ enough).}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::SelfAdjointEigenSolver<Eigen::Matrix2d>\ es(cov);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ lam\_max\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(es.eigenvalues().maxCoeff());}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ r\_box\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::ceil(3.0f\ *\ std::sqrt(std::max(lam\_max,\ 0.0f))));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix2d\ sinv\ =\ cov.inverse();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ icx\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::round(center[0]));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ icy\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::round(center[1]));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ collect\ the\ cells\ we\ touched\ so\ we\ only\ call\ update\_vertex\ once\ each.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<coordi>\ touched;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ touched.reserve((2\ *\ r\_box\ +\ 1)\ *\ (2\ *\ r\_box\ +\ 1));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ dy\ =\ -\/r\_box;\ dy\ <=\ r\_box;\ dy++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ dx\ =\ -\/r\_box;\ dx\ <=\ r\_box;\ dx++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ gx\ =\ icx\ +\ dx;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ gy\ =\ icy\ +\ dy;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Correct\ bounds\ check:\ separate\ gx/gy\ and\ use\ >=\ against\ rows/cols.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gx\ <\ 0\ ||\ gy\ <\ 0\ ||}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gx\ >=\ (\textcolor{keywordtype}{int})this-\/>cols\ ||\ gy\ >=\ (int)this-\/>rows)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mahalanobis-\/distance\ gate:\ drop\ points\ outside\ the\ 3σ\ ellipse}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ r;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ <<\ gx\ -\/\ center.x(),\ gy\ -\/\ center.y();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ m2\ =\ r.transpose()\ *\ sinv\ *\ r;}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m2\ >\ 9.0)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ computed\_cost\ =\ compute\_cost\_at(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(gx),}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(gy));}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ c\{gx,\ gy\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}}\ \&dp\ =\ (*this-\/>grid)[c];}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dp.\mbox{\hyperlink{structplanning__module_1_1datapoint_af4c908862325861c4a578bb8ba135a1e}{is\_obstacle}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ *accumulate\ the\ worst*\ spline-\/penalty\ seen\ at\ this\ cell.}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (Field\ is\ named\ dist\_to\_spline\ for\ legacy\ reasons;\ it\ stores\ cost.)}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ dp.dist\_to\_spline\ =\ std::max(dp.dist\_to\_spline,\ computed\_cost);}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ touched.push\_back(c);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ \&c\ :\ touched)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}{update\_vertex}}(c);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00342}\mbox{\hyperlink{classplanning__module_1_1d__star_a194bf0d69aae4b35cc560f72a6faa7c4}{00342}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1d__star_a194bf0d69aae4b35cc560f72a6faa7c4}{dump\_path\_csv}}(\textcolor{keyword}{const}\ std::string\ \&path\_filename\ =\ \textcolor{stringliteral}{"{}dstar\_path.csv"{}},}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&cost\_filename\ =\ \textcolor{stringliteral}{"{}dstar\_cost.csv"{}})}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ [path\_ptr,\ len]\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1d__star_ac260e7d769f8cdbc416ed8cb26c624e6}{extract\_path}}();}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ pf(path\_filename);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ pf\ <<\ \textcolor{stringliteral}{"{}x,y\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (path\_ptr\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ len;\ i++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pf\ <<\ path\_ptr[i].x\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ path\_ptr[i].y\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ cf(cost\_filename);}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ cf\ <<\ \textcolor{stringliteral}{"{}x,y,is\_obstacle,dist\_to\_spline,g\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ y\ =\ 0;\ y\ <\ this-\/>rows;\ y++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ x\ =\ 0;\ x\ <\ this-\/>cols;\ x++)}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ c\{(int32\_t)x,\ (int32\_t)y\};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cf\ <<\ x\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ y\ <<\ \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ (this-\/>grid-\/>is\_obstacle(c)\ ?\ 1\ :\ 0)\ <<\ \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ (*this-\/>grid)[c].dist\_to\_spline\ <<\ \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ (*this-\/>grid)[c].g\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00367}00367\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00368}00368\ \};}
+\DoxyCodeLine{\Hypertarget{d__star_8hpp_source_l00369}00369\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

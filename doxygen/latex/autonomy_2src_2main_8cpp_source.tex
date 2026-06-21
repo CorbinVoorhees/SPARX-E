@@ -1,0 +1,301 @@
+\doxysection{main.\+cpp}
+\hypertarget{autonomy_2src_2main_8cpp_source}{}\label{autonomy_2src_2main_8cpp_source}\index{src/autonomy/src/main.cpp@{src/autonomy/src/main.cpp}}
+\mbox{\hyperlink{autonomy_2src_2main_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <termios.h>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <cerrno>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}rclcpp/rclcpp.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/float32.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/string.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/msg/odometry.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/env.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/obstacle.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{planning_8hpp}{planning.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00022}00022\ \textcolor{preprocessor}{\#include\ "{}Eigen/Dense"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00023}00023\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{d__star_8hpp}{d\_star.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00024}00024\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{grid2d_8hpp}{grid2d.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00025}00025\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lightpq_8hpp}{lightpq.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00026}00026\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spline__testcase_8hpp}{spline\_testcase.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00027}00027\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spline_8h}{spline.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00028}00028\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{trajectories_8hpp}{trajectories.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00039}\mbox{\hyperlink{classAutoNode}{00039}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAutoNode}{AutoNode}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00040}00040\ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00041}00041\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ has\_trajectory\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00044}00044\ \ \ \ \ rclcpp::Subscription<std\_msgs::msg::String>::SharedPtr\ spliner\_vals;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00045}00045\ \ \ \ \ rclcpp::Subscription<lidar\_processor::msg::Env>::SharedPtr\ lidar\_data;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00046}00046\ \ \ \ \ rclcpp::Subscription<nav\_msgs::msg::Odometry>::SharedPtr\ nav\_ests;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00048}00048\ \ \ \ \ rclcpp::Publisher<nav\_msgs::msg::Odometry>::SharedPtr\ auto\_next\_state;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00049}00049\ \ \ \ \ rclcpp::TimerBase::SharedPtr\ timer\_;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00051}00051\ \ \ \ \ std::shared\_ptr<planning\_module::NominalTrajectory>\ nt;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00053}00053\ \ \ \ \ std::shared\_ptr<planning\_module::grid2d>\ grid;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00054}00054\ \ \ \ \ std::unique\_ptr<planning\_module::d\_star>\ planner;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00055}00055\ \ \ \ \ std::shared\_ptr<planning\_module::Trajectory>\ active\_trajectory;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ GRID\_R\ =\ 300;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ GRID\_C\ =\ 300;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ cells\_per\_meter\ =\ 50.0;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{void}\ switch\_trajectory(std::shared\_ptr<planning\_module::Trajectory>\ next)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00062}00062\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (active\_trajectory\ ==\ next)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ else\ if\ (active\_trajectory\ ==\ nt)\ \{}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ this-\/>curr\_time\ =\ 0.0;}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (next\ ==\ nt\ \&\&\ active\_trajectory\ !=\ nullptr)\ \{}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ this-\/>curr\_time\ =\ this-\/>final\_time;}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ this-\/>final\_time\ =\ 1.0;}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ std::atomic\_store(\&active\_trajectory,\ std::move(next));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00078}00078\ \ \ \ \ std::optional<Eigen::VectorXd>\ get\_reference(\textcolor{keywordtype}{double}\ t)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00079}00079\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ traj\ =\ std::atomic\_load(\&active\_trajectory);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!traj)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ traj-\/>evaluate\_at(t);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00086}00086\ \ \ \ \ std::mutex\ mtx;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00087}00087\ \ \ \ \ nav\_msgs::msg::Odometry::SharedPtr\ latest\_odom;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00089}00089\ \ \ \ \ \textcolor{keywordtype}{void}\ nav\_cb(\textcolor{keyword}{const}\ nav\_msgs::msg::Odometry::SharedPtr\ odom)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00090}00090\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ guard(this-\/>mtx);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ this-\/>latest\_odom\ =\ odom;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00093}00093\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{void}\ recompute\_cb(\textcolor{keyword}{const}\ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Env___a1f4b85d1c2117111073022411bb8b780}{lidar\_processor::msg::Env::SharedPtr}}\ obstacles)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00096}00096\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>has\_trajectory)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ traj\ =\ std::atomic\_load(\&this-\/>active\_trajectory);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!traj)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ std::optional<Eigen::Vector2d>\ time\_opt;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lg(this-\/>mtx);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ vec\ =\ obstacles-\/>environment;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ longest\_time\ =\ -\/1.0;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ longest\_time\_idx\ =\ std::numeric\_limits<uint32\_t>::max();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ idx\ =\ 0;\ idx\ <\ vec.size();\ idx++)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ obstacle\ =\ vec[idx];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix3d\ cov\_matrix;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cov\_matrix\ <<\ obstacle.covariance[0]}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ obstacle.covariance[1]\ ,\ 0}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ obstacle.covariance[2]}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ obstacle.covariance[3]\ ,\ 0}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ 0\ ,0\ ,\ 0;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3d\ centers(obstacle.center[0],\ obstacle.center[1],\ 0.0);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ rotate\ cov\ and\ center}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rot\_quat\ =\ this-\/>latest\_odom-\/>pose.pose.orientation;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ quat(rot\_quat.w,\ rot\_quat.x,\ rot\_quat.y,\ rot\_quat.z);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ R\ =\ quat.toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3d\ inertial\_centers\ =\ R\ *\ centers;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix3d\ inertial\_covs\ =\ R\ *\ cov\_matrix\ *\ R.transpose();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ translate\ the\ center}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ position\ =\ this-\/>latest\_odom-\/>pose.pose.position;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ inertial\_centers\ +=\ Eigen::Vector3d(position.x,\ position.y,\ position.z);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FIX\ 1:\ Extract\ 2D\ parts\ into\ actual\ non-\/temporary\ lvalue\ variables}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ center\_2d\ =\ inertial\_centers.head<2>();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix2d\ cov\_2d\ =\ inertial\_covs.topLeftCorner<2,\ 2>();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<Eigen::Vector2d>\ curr\_search\ =\ this-\/>nt-\/>linesearch(center\_2d,\ cov\_2d,\ active\_trajectory-\/>curr\_time());}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FIX\ 2:\ Use\ 'continue'\ instead\ of\ 'return'\ to\ evaluate\ other\ obstacles}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!curr\_search.has\_value()\ ||\ curr\_search.value()[1]\ ==\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (longest\_time\ <\ curr\_search.value()[1])}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FIX\ 3:\ Assign\ the\ double\ scalar\ (time\ element),\ not\ the\ whole\ vector}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ longest\_time\ =\ curr\_search.value()[1];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ longest\_time\_idx\ =\ idx;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time\_opt\ =\ curr\_search;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FIX\ 4:\ Safety\ guard\ to\ prevent\ a\ crash\ if\ no\ obstacle\ needed\ replanning}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!time\_opt.has\_value())}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ we\ have\ to\ replan\ now...}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ t\_current\ =\ time\_opt.value()[0];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ t\_target\ =\ time\_opt.value()[1];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ current\ =\ this-\/>nt-\/>evaluate\_at(t\_current);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ target\ =\ this-\/>nt-\/>evaluate\_at(t\_target);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!current.has\_value()\ ||\ !target.has\_value())}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ switch\_trajectory(this-\/>nt);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\_module::coordi}}\ start\_cell\{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ (int32\_t)std::round(current.value()[0]),}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ (int32\_t)std::round(current.value()[1])\};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\_module::coordi}}\ goal\_cell\{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ (int32\_t)std::round(target.value()[0]),}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ (int32\_t)std::round(target.value()[1])\};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ this-\/>planner\ =\ std::make\_unique<planning\_module::d\_star>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ GRID\_R,\ GRID\_C,\ start\_cell,\ goal\_cell,}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\_module::coordi}}\{0,\ 0\},\ this-\/>grid);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//update\ obstacles}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ this-\/>planner-\/>compute\_shortest\_path();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ [path,\ length]\ =\ planner-\/>extract\_path();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (path\ ==\ \textcolor{keyword}{nullptr}\ ||\ length\ <\ 2)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ std::vector<double>\ t\_knots,\ x\_knots,\ y\_knots;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ dt\_total\ =\ t\_target\ -\/\ t\_current;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ length;\ i++)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ t\_knots.push\_back(t\_current\ +\ (dt\_total\ *\ i\ /\ (length\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ x\_knots.push\_back(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(path[i].x));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ y\_knots.push\_back(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(path[i].y));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ tk::spline\ x\_spline,\ y\_spline;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ x\_spline.set\_points(t\_knots,\ x\_knots);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ y\_spline.set\_points(t\_knots,\ y\_knots);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ deviation\ =\ std::make\_shared<planning\_module::ReplannedTrajectory>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ std::move(x\_spline),\ std::move(y\_spline),\ t\_current,\ t\_target);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ switch\_trajectory(deviation);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00210}00210\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00213}00213\ \ \ \ \ parse\_testcase\_cb(std\_msgs::msg::String\ str)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00214}00214\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>has\_trajectory)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ this-\/>has\_trajectory\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classspline__testcase}{spline\_testcase}}\ sp;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ sp.\mbox{\hyperlink{classspline__testcase_a435b730b2f415aa3ccc3babd2851e438}{parse\_testcase}}(str.data);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ std::vector<float>\ elevation(GRID\_R\ *\ GRID\_C,\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ std::vector<float>\ illumination(GRID\_R\ *\ GRID\_C,\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ std::unique\_ptr<bool[]>\ obstacles(\textcolor{keyword}{new}\ \textcolor{keywordtype}{bool}[GRID\_R\ *\ GRID\_C]());}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ this-\/>grid\ =\ std::make\_shared<planning\_module::grid2d>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ GRID\_R,\ GRID\_C,}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ elevation.data(),\ illumination.data(),\ obstacles.get());}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ create\ nominal\ trajectory\ with\ the\ sp\ val}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ this-\/>nt\ =\ std::make\_shared<planning\_module::NominalTrajectory>(std::move(sp));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ this-\/>curr\_time\ =\ 0.0;}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ this-\/>final\_time\ =\ 1.0;}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ std::atomic\_store(\&this-\/>active\_trajectory,\ std::static\_pointer\_cast<planning\_module::Trajectory>(this-\/>nt));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00235}00235\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00237}00237\ \ \ \ \ \textcolor{keywordtype}{void}\ publish\_reference\_cb()}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00238}00238\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ this-\/>has\_trajectory\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>has\_trajectory)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ nav\_msgs::msg::Odometry\ odom;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ odom.pose.pose.orientation.x\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>auto\_next\_state-\/>publish(odom);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>active\_trajectory-\/>curr\_time()\ >=\ 1)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>has\_trajectory\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>active\_trajectory\ !=\ this-\/>nt\ \&\&\ this-\/>active\_trajectory-\/>curr\_time()\ >=\ 1.0)}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ switch\_trajectory(this-\/>nt);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ vec\ =\ this-\/>active\_trajectory-\/>evaluate\_at(this-\/>active\_trajectory-\/>curr\_time());}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00258}00258\ \ \ \ \ \ \ \ \ nav\_msgs::msg::Odometry\ odom;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ odom.pose.pose.orientation.x\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&pose\ =\ odom.pose.pose.position;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ pose.x\ =\ vec.value()[0];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ pose.y\ =\ vec.value()[1];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ pose.z\ =\ vec.value()[2];\ \textcolor{comment}{//\ YAW}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&twist\ =\ odom.twist.twist.linear;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ twist.x\ =\ vec.value()[3];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ twist.y\ =\ vec.value()[4];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ twist.z\ =\ vec.value()[5];}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ this-\/>auto\_next\_state-\/>publish(odom);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ this-\/>active\_trajectory-\/>add\_time();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00270}00270\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00272}00272\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00273}\mbox{\hyperlink{classAutoNode_a5b9ea30130ea657172fd228c6fcd2d77}{00273}}\ \ \ \ \ \mbox{\hyperlink{classAutoNode_a5b9ea30130ea657172fd228c6fcd2d77}{AutoNode}}()\ :\ Node(\textcolor{stringliteral}{"{}auto\_node"{}})}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00274}00274\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ this-\/>spliner\_vals\ =\ this-\/>create\_subscription<std\_msgs::msg::String>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/spline\_path"{}},\ 10,}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&AutoNode::parse\_testcase\_cb,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ this-\/>lidar\_data\ =\ this-\/>create\_subscription<lidar\_processor::msg::Env>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/obstacles"{}},\ 10,\ \textcolor{comment}{//\ change\ this\ to\ lidar\ topic}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&AutoNode::recompute\_cb,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ need\ to\ make\ a\ callback\ that\ determibntes\ the\ publishing\ rate\ of\ the\ soline\ s.t.\ the\ smc\ only\ fires\ when\ we\ want\ it\ to}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ this-\/>auto\_next\_state\ =\ this-\/>create\_publisher<nav\_msgs::msg::Odometry>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/auto\_next\_state"{}},\ 10);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00286}00286\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ this-\/>nav\_ests\ =\ this-\/>create\_subscription<nav\_msgs::msg::Odometry>(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/trans\_est"{}},\ 10,}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&AutoNode::nav\_cb,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ this-\/>timer\_\ =\ this-\/>create\_wall\_timer(}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ std::chrono::milliseconds(67),}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&AutoNode::publish\_reference\_cb,\ \textcolor{keyword}{this}));}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00294}00294\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00295}00295\ \};}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00297}\mbox{\hyperlink{autonomy_2src_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00297}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00298}00298\ \{}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00299}00299\ \ \ \ \ rclcpp::init(argc,\ argv);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00300}00300\ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ std::make\_shared<AutoNode>();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00301}00301\ \ \ \ \ rclcpp::spin(node);}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00302}00302\ \ \ \ \ rclcpp::shutdown();}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00303}00303\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{autonomy_2src_2main_8cpp_source_l00304}00304\ \}}
+
+\end{DoxyCode}

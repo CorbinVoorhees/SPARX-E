@@ -1,0 +1,83 @@
+\doxysection{planning\+\_\+module\+::Nominal\+Trajectory Class Reference}
+\hypertarget{classplanning__module_1_1NominalTrajectory}{}\label{classplanning__module_1_1NominalTrajectory}\index{planning\_module::NominalTrajectory@{planning\_module::NominalTrajectory}}
+
+
+{\ttfamily \#include $<$trajectories.\+hpp$>$}
+
+
+
+Inheritance diagram for planning\+\_\+module\+::Nominal\+Trajectory\+:
+% FIG 0
+
+
+Collaboration diagram for planning\+\_\+module\+::Nominal\+Trajectory\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_af2ee9ab825bdb770e19c462ba6f2709e}{Nominal\+Trajectory}} (\mbox{\hyperlink{classspline__testcase}{spline\+\_\+testcase}} sp)
+\item 
+std\+::optional$<$ Eigen\+::\+Vector\+Xd $>$ \mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_ab1d41eeb8d9f391443a41245e1e54900}{evaluate\+\_\+at}} (double t) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classplanning__module_1_1Trajectory}{planning\+\_\+module\+::\+Trajectory}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual double \mbox{\hyperlink{classplanning__module_1_1Trajectory_a9165657ca3b286a5941d1974560532a4}{curr\+\_\+time}} () final
+\item 
+virtual void \mbox{\hyperlink{classplanning__module_1_1Trajectory_a8c80270684d1270ad7006e313ab96691}{add\+\_\+time}} () final
+\item 
+std\+::optional$<$ Eigen\+::\+Vector2d $>$ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a363e09212341cf310073dc97c080886f}{linesearch}} (Eigen\+::\+Vector2d \&center, Eigen\+::\+Matrix2d \&cov, double t\+\_\+init) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classplanning__module_1_1Trajectory}{planning\+\_\+module\+::\+Trajectory}}}
+\begin{DoxyCompactItemize}
+\item 
+static auto \mbox{\hyperlink{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}{mahalanobis}} (const Eigen\+::\+Matrix2d \&cov, const Eigen\+::\+Vector2d \&center, const Eigen\+::\+Vector2d \&r)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes inherited from \mbox{\hyperlink{classplanning__module_1_1Trajectory}{planning\+\_\+module\+::\+Trajectory}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}} = 0.\+0005
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00050}{50}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classplanning__module_1_1NominalTrajectory_af2ee9ab825bdb770e19c462ba6f2709e}\label{classplanning__module_1_1NominalTrajectory_af2ee9ab825bdb770e19c462ba6f2709e} 
+\index{planning\_module::NominalTrajectory@{planning\_module::NominalTrajectory}!NominalTrajectory@{NominalTrajectory}}
+\index{NominalTrajectory@{NominalTrajectory}!planning\_module::NominalTrajectory@{planning\_module::NominalTrajectory}}
+\doxysubsubsection{\texorpdfstring{NominalTrajectory()}{NominalTrajectory()}}
+{\footnotesize\ttfamily planning\+\_\+module\+::\+Nominal\+Trajectory\+::\+Nominal\+Trajectory (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classspline__testcase}{spline\+\_\+testcase}}}]{sp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00052}{52}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classplanning__module_1_1NominalTrajectory_ab1d41eeb8d9f391443a41245e1e54900}\label{classplanning__module_1_1NominalTrajectory_ab1d41eeb8d9f391443a41245e1e54900} 
+\index{planning\_module::NominalTrajectory@{planning\_module::NominalTrajectory}!evaluate\_at@{evaluate\_at}}
+\index{evaluate\_at@{evaluate\_at}!planning\_module::NominalTrajectory@{planning\_module::NominalTrajectory}}
+\doxysubsubsection{\texorpdfstring{evaluate\_at()}{evaluate\_at()}}
+{\footnotesize\ttfamily std\+::optional$<$ Eigen\+::\+Vector\+Xd $>$ planning\+\_\+module\+::\+Nominal\+Trajectory\+::evaluate\+\_\+at (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}{planning\+\_\+module\+::\+Trajectory}}.
+
+
+
+Definition at line \mbox{\hyperlink{trajectories_8hpp_source_l00055}{55}} of file \mbox{\hyperlink{trajectories_8hpp_source}{trajectories.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/autonomy/src/\mbox{\hyperlink{trajectories_8hpp}{trajectories.\+hpp}}\end{DoxyCompactItemize}

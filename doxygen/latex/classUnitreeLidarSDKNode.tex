@@ -1,0 +1,329 @@
+\doxysection{Unitree\+Lidar\+SDKNode Class Reference}
+\hypertarget{classUnitreeLidarSDKNode}{}\label{classUnitreeLidarSDKNode}\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+
+
+{\ttfamily \#include $<$unitree\+\_\+lidar\+\_\+ros2.\+h$>$}
+
+
+
+Inheritance diagram for Unitree\+Lidar\+SDKNode\+:
+% FIG 0
+
+
+Collaboration diagram for Unitree\+Lidar\+SDKNode\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classUnitreeLidarSDKNode_ab184db8b92c806b1b61325d861fece8e}{Unitree\+Lidar\+SDKNode}} (const rclcpp\+::\+Node\+Options \&options=rclcpp\+::\+Node\+Options())
+\item 
+\mbox{\hyperlink{classUnitreeLidarSDKNode_ac7f54d1390f5479cf8b2d8eaadf4ff4d}{\texorpdfstring{$\sim$}{\string~}\+Unitree\+Lidar\+SDKNode}} ()
+\item 
+void \mbox{\hyperlink{classUnitreeLidarSDKNode_a9e04ae4b7f046350135752a9220b511d}{timer\+\_\+callback}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+rclcpp\+::\+Publisher$<$ sensor\+\_\+msgs\+::msg\+::\+Point\+Cloud2 $>$\+::\+Shared\+Ptr \mbox{\hyperlink{classUnitreeLidarSDKNode_a3cad4846b13dcd3c908c3785d9d30c22}{pub\+\_\+cloud\+\_\+}}
+\item 
+rclcpp\+::\+Publisher$<$ sensor\+\_\+msgs\+::msg\+::\+Imu $>$\+::\+Shared\+Ptr \mbox{\hyperlink{classUnitreeLidarSDKNode_aa19b3f9e6b7df993b715a7c53cea9ccc}{pub\+\_\+imu\+\_\+}}
+\item 
+rclcpp\+::\+Timer\+Base\+::\+Shared\+Ptr \mbox{\hyperlink{classUnitreeLidarSDKNode_a6179ec85e85c9ca5b566ebacaf49523b}{timer\+\_\+}}
+\item 
+std\+::shared\+\_\+ptr$<$ tf2\+\_\+ros\+::\+Transform\+Broadcaster $>$ \mbox{\hyperlink{classUnitreeLidarSDKNode_a2293481bd32b2bf965c1e0e34330f7c1}{broadcaster\+\_\+}}
+\item 
+\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{Unitree\+Lidar\+Reader}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classUnitreeLidarSDKNode_a2f3b7891e23466a9414c21feef30e63a}{lsdk\+\_\+}}
+\item 
+int \mbox{\hyperlink{classUnitreeLidarSDKNode_a6736f7e934ada03c9f20caa9bda7023e}{work\+\_\+mode\+\_\+}}
+\item 
+int \mbox{\hyperlink{classUnitreeLidarSDKNode_a8b2c63610dfdcd5a9f249784328ec0bf}{initialize\+\_\+type\+\_\+}}
+\item 
+int \mbox{\hyperlink{classUnitreeLidarSDKNode_ab8e16624b0eb70cc9f5156da213f729b}{local\+\_\+port\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_ad63d68ffc554bd8c16c1de467546008c}{local\+\_\+ip\+\_\+}}
+\item 
+int \mbox{\hyperlink{classUnitreeLidarSDKNode_a5c73f53b1e72244029bd9a08cd850d77}{lidar\+\_\+port\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_a0dc730a66ce69d88d86bac413f37d0df}{lidar\+\_\+ip\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_a7a4ac3925402b98897e69468dc434bb1}{serial\+\_\+port\+\_\+}}
+\item 
+int \mbox{\hyperlink{classUnitreeLidarSDKNode_a55eb774348e6ab8f3143a5e2b920a974}{baudrate\+\_\+}}
+\item 
+int \mbox{\hyperlink{classUnitreeLidarSDKNode_afc7433cfa3720eb9b65f2b60a8689dd6}{cloud\+\_\+scan\+\_\+num\+\_\+}}
+\item 
+bool \mbox{\hyperlink{classUnitreeLidarSDKNode_a250be24e5da6f426b5e0d834a89b1a7a}{use\+\_\+system\+\_\+timestamp\+\_\+}}
+\item 
+double \mbox{\hyperlink{classUnitreeLidarSDKNode_ad04eda37d74d2a03dc976265e46baa82}{range\+\_\+min\+\_\+}}
+\item 
+double \mbox{\hyperlink{classUnitreeLidarSDKNode_a06898410e17625008f6f934968c097b2}{range\+\_\+max\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_ae994b0ccab61b5bb50e37ae74668ee8c}{cloud\+\_\+frame\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_a69c9a1eb394f90b3e4d4b316197555f6}{cloud\+\_\+topic\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_afce15e064d49191c75cd06f23b8fd379}{imu\+\_\+frame\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{classUnitreeLidarSDKNode_ac742c114b63f9373e44f4b1180315f7f}{imu\+\_\+topic\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00038}{38}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classUnitreeLidarSDKNode_ab184db8b92c806b1b61325d861fece8e}\label{classUnitreeLidarSDKNode_ab184db8b92c806b1b61325d861fece8e} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{UnitreeLidarSDKNode()}{UnitreeLidarSDKNode()}}
+{\footnotesize\ttfamily Unitree\+Lidar\+SDKNode\+::\+Unitree\+Lidar\+SDKNode (\begin{DoxyParamCaption}\item[{const rclcpp\+::\+Node\+Options \&}]{options = {\ttfamily rclcpp\+:\+:NodeOptions()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00081}{81}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_ac7f54d1390f5479cf8b2d8eaadf4ff4d}\label{classUnitreeLidarSDKNode_ac7f54d1390f5479cf8b2d8eaadf4ff4d} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!````~UnitreeLidarSDKNode@{\texorpdfstring{$\sim$}{\string~}UnitreeLidarSDKNode}}
+\index{````~UnitreeLidarSDKNode@{\texorpdfstring{$\sim$}{\string~}UnitreeLidarSDKNode}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}UnitreeLidarSDKNode()}{\string~UnitreeLidarSDKNode()}}
+{\footnotesize\ttfamily Unitree\+Lidar\+SDKNode\+::\texorpdfstring{$\sim$}{\string~}\+Unitree\+Lidar\+SDKNode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00043}{43}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classUnitreeLidarSDKNode_a9e04ae4b7f046350135752a9220b511d}\label{classUnitreeLidarSDKNode_a9e04ae4b7f046350135752a9220b511d} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!timer\_callback@{timer\_callback}}
+\index{timer\_callback@{timer\_callback}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{timer\_callback()}{timer\_callback()}}
+{\footnotesize\ttfamily void Unitree\+Lidar\+SDKNode\+::timer\+\_\+callback (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00158}{158}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classUnitreeLidarSDKNode_a55eb774348e6ab8f3143a5e2b920a974}\label{classUnitreeLidarSDKNode_a55eb774348e6ab8f3143a5e2b920a974} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!baudrate\_@{baudrate\_}}
+\index{baudrate\_@{baudrate\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{baudrate\_}{baudrate\_}}
+{\footnotesize\ttfamily int Unitree\+Lidar\+SDKNode\+::baudrate\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00065}{65}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a2293481bd32b2bf965c1e0e34330f7c1}\label{classUnitreeLidarSDKNode_a2293481bd32b2bf965c1e0e34330f7c1} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!broadcaster\_@{broadcaster\_}}
+\index{broadcaster\_@{broadcaster\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{broadcaster\_}{broadcaster\_}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$tf2\+\_\+ros\+::\+Transform\+Broadcaster$>$ Unitree\+Lidar\+SDKNode\+::broadcaster\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00052}{52}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_ae994b0ccab61b5bb50e37ae74668ee8c}\label{classUnitreeLidarSDKNode_ae994b0ccab61b5bb50e37ae74668ee8c} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!cloud\_frame\_@{cloud\_frame\_}}
+\index{cloud\_frame\_@{cloud\_frame\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{cloud\_frame\_}{cloud\_frame\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::cloud\+\_\+frame\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00072}{72}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_afc7433cfa3720eb9b65f2b60a8689dd6}\label{classUnitreeLidarSDKNode_afc7433cfa3720eb9b65f2b60a8689dd6} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!cloud\_scan\_num\_@{cloud\_scan\_num\_}}
+\index{cloud\_scan\_num\_@{cloud\_scan\_num\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{cloud\_scan\_num\_}{cloud\_scan\_num\_}}
+{\footnotesize\ttfamily int Unitree\+Lidar\+SDKNode\+::cloud\+\_\+scan\+\_\+num\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00067}{67}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a69c9a1eb394f90b3e4d4b316197555f6}\label{classUnitreeLidarSDKNode_a69c9a1eb394f90b3e4d4b316197555f6} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!cloud\_topic\_@{cloud\_topic\_}}
+\index{cloud\_topic\_@{cloud\_topic\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{cloud\_topic\_}{cloud\_topic\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::cloud\+\_\+topic\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00073}{73}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_afce15e064d49191c75cd06f23b8fd379}\label{classUnitreeLidarSDKNode_afce15e064d49191c75cd06f23b8fd379} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!imu\_frame\_@{imu\_frame\_}}
+\index{imu\_frame\_@{imu\_frame\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{imu\_frame\_}{imu\_frame\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::imu\+\_\+frame\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00075}{75}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_ac742c114b63f9373e44f4b1180315f7f}\label{classUnitreeLidarSDKNode_ac742c114b63f9373e44f4b1180315f7f} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!imu\_topic\_@{imu\_topic\_}}
+\index{imu\_topic\_@{imu\_topic\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{imu\_topic\_}{imu\_topic\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::imu\+\_\+topic\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00076}{76}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a8b2c63610dfdcd5a9f249784328ec0bf}\label{classUnitreeLidarSDKNode_a8b2c63610dfdcd5a9f249784328ec0bf} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!initialize\_type\_@{initialize\_type\_}}
+\index{initialize\_type\_@{initialize\_type\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{initialize\_type\_}{initialize\_type\_}}
+{\footnotesize\ttfamily int Unitree\+Lidar\+SDKNode\+::initialize\+\_\+type\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00059}{59}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a0dc730a66ce69d88d86bac413f37d0df}\label{classUnitreeLidarSDKNode_a0dc730a66ce69d88d86bac413f37d0df} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!lidar\_ip\_@{lidar\_ip\_}}
+\index{lidar\_ip\_@{lidar\_ip\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{lidar\_ip\_}{lidar\_ip\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::lidar\+\_\+ip\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00063}{63}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a5c73f53b1e72244029bd9a08cd850d77}\label{classUnitreeLidarSDKNode_a5c73f53b1e72244029bd9a08cd850d77} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!lidar\_port\_@{lidar\_port\_}}
+\index{lidar\_port\_@{lidar\_port\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{lidar\_port\_}{lidar\_port\_}}
+{\footnotesize\ttfamily int Unitree\+Lidar\+SDKNode\+::lidar\+\_\+port\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00062}{62}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_ad63d68ffc554bd8c16c1de467546008c}\label{classUnitreeLidarSDKNode_ad63d68ffc554bd8c16c1de467546008c} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!local\_ip\_@{local\_ip\_}}
+\index{local\_ip\_@{local\_ip\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{local\_ip\_}{local\_ip\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::local\+\_\+ip\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00061}{61}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_ab8e16624b0eb70cc9f5156da213f729b}\label{classUnitreeLidarSDKNode_ab8e16624b0eb70cc9f5156da213f729b} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!local\_port\_@{local\_port\_}}
+\index{local\_port\_@{local\_port\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{local\_port\_}{local\_port\_}}
+{\footnotesize\ttfamily int Unitree\+Lidar\+SDKNode\+::local\+\_\+port\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00060}{60}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a2f3b7891e23466a9414c21feef30e63a}\label{classUnitreeLidarSDKNode_a2f3b7891e23466a9414c21feef30e63a} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!lsdk\_@{lsdk\_}}
+\index{lsdk\_@{lsdk\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{lsdk\_}{lsdk\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{Unitree\+Lidar\+Reader}}\texorpdfstring{$\ast$}{*} Unitree\+Lidar\+SDKNode\+::lsdk\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00055}{55}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a3cad4846b13dcd3c908c3785d9d30c22}\label{classUnitreeLidarSDKNode_a3cad4846b13dcd3c908c3785d9d30c22} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!pub\_cloud\_@{pub\_cloud\_}}
+\index{pub\_cloud\_@{pub\_cloud\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{pub\_cloud\_}{pub\_cloud\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Publisher$<$sensor\+\_\+msgs\+::msg\+::\+Point\+Cloud2$>$\+::\+Shared\+Ptr Unitree\+Lidar\+SDKNode\+::pub\+\_\+cloud\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00049}{49}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_aa19b3f9e6b7df993b715a7c53cea9ccc}\label{classUnitreeLidarSDKNode_aa19b3f9e6b7df993b715a7c53cea9ccc} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!pub\_imu\_@{pub\_imu\_}}
+\index{pub\_imu\_@{pub\_imu\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{pub\_imu\_}{pub\_imu\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Publisher$<$sensor\+\_\+msgs\+::msg\+::\+Imu$>$\+::\+Shared\+Ptr Unitree\+Lidar\+SDKNode\+::pub\+\_\+imu\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00050}{50}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a06898410e17625008f6f934968c097b2}\label{classUnitreeLidarSDKNode_a06898410e17625008f6f934968c097b2} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!range\_max\_@{range\_max\_}}
+\index{range\_max\_@{range\_max\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{range\_max\_}{range\_max\_}}
+{\footnotesize\ttfamily double Unitree\+Lidar\+SDKNode\+::range\+\_\+max\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00070}{70}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_ad04eda37d74d2a03dc976265e46baa82}\label{classUnitreeLidarSDKNode_ad04eda37d74d2a03dc976265e46baa82} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!range\_min\_@{range\_min\_}}
+\index{range\_min\_@{range\_min\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{range\_min\_}{range\_min\_}}
+{\footnotesize\ttfamily double Unitree\+Lidar\+SDKNode\+::range\+\_\+min\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00069}{69}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a7a4ac3925402b98897e69468dc434bb1}\label{classUnitreeLidarSDKNode_a7a4ac3925402b98897e69468dc434bb1} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!serial\_port\_@{serial\_port\_}}
+\index{serial\_port\_@{serial\_port\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{serial\_port\_}{serial\_port\_}}
+{\footnotesize\ttfamily std\+::string Unitree\+Lidar\+SDKNode\+::serial\+\_\+port\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00064}{64}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a6179ec85e85c9ca5b566ebacaf49523b}\label{classUnitreeLidarSDKNode_a6179ec85e85c9ca5b566ebacaf49523b} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!timer\_@{timer\_}}
+\index{timer\_@{timer\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{timer\_}{timer\_}}
+{\footnotesize\ttfamily rclcpp\+::\+Timer\+Base\+::\+Shared\+Ptr Unitree\+Lidar\+SDKNode\+::timer\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00051}{51}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a250be24e5da6f426b5e0d834a89b1a7a}\label{classUnitreeLidarSDKNode_a250be24e5da6f426b5e0d834a89b1a7a} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!use\_system\_timestamp\_@{use\_system\_timestamp\_}}
+\index{use\_system\_timestamp\_@{use\_system\_timestamp\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{use\_system\_timestamp\_}{use\_system\_timestamp\_}}
+{\footnotesize\ttfamily bool Unitree\+Lidar\+SDKNode\+::use\+\_\+system\+\_\+timestamp\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00068}{68}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+\Hypertarget{classUnitreeLidarSDKNode_a6736f7e934ada03c9f20caa9bda7023e}\label{classUnitreeLidarSDKNode_a6736f7e934ada03c9f20caa9bda7023e} 
+\index{UnitreeLidarSDKNode@{UnitreeLidarSDKNode}!work\_mode\_@{work\_mode\_}}
+\index{work\_mode\_@{work\_mode\_}!UnitreeLidarSDKNode@{UnitreeLidarSDKNode}}
+\doxysubsubsection{\texorpdfstring{work\_mode\_}{work\_mode\_}}
+{\footnotesize\ttfamily int Unitree\+Lidar\+SDKNode\+::work\+\_\+mode\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{unitree__lidar__ros2_8h_source_l00058}{58}} of file \mbox{\hyperlink{unitree__lidar__ros2_8h_source}{unitree\+\_\+lidar\+\_\+ros2.\+h}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/unilidar\+\_\+sdk2/unitree\+\_\+lidar\+\_\+ros2/src/unitree\+\_\+lidar\+\_\+ros2/include/\mbox{\hyperlink{unitree__lidar__ros2_8h}{unitree\+\_\+lidar\+\_\+ros2.\+h}}\end{DoxyCompactItemize}

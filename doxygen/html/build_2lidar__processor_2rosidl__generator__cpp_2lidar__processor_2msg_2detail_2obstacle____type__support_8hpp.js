@@ -1,0 +1,4 @@
+var build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____type__support_8hpp =
+[
+    [ "ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME", "build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____type__support_8hpp.html#a4c6a6487ad5e1bf97fd5d1ec68a89ee5", null ]
+];

@@ -1,0 +1,67 @@
+\doxysection{src/unilidar\+\_\+sdk2/unitree\+\_\+lidar\+\_\+sdk/include/udp\+\_\+handler.h File Reference}
+\hypertarget{udp__handler_8h}{}\label{udp__handler_8h}\index{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/udp\_handler.h@{src/unilidar\_sdk2/unitree\_lidar\_sdk/include/udp\_handler.h}}
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+Include dependency graph for udp\+\_\+handler.\+h\+:
+% FIG 0
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classUDPHandler}{UDPHandler}}
+\begin{DoxyCompactList}\small\item\em UDP Handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{udp__handler_8h_afdbb9d84bd17efd2ae7290e664992c48}{closesocket}}~close
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Data\+Struct $>$ }\\uint32\+\_\+t \mbox{\hyperlink{udp__handler_8h_a292ecadbbf4b95588e87dee759c7ccd7}{data\+Struct\+To\+UDPBuffer}} (const Data\+Struct \&data, uint32\+\_\+t msg\+Type, char \texorpdfstring{$\ast$}{*}buffer)
+\begin{DoxyCompactList}\small\item\em Transform a Data Struct to UDP buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{udp__handler_8h_afdbb9d84bd17efd2ae7290e664992c48}\label{udp__handler_8h_afdbb9d84bd17efd2ae7290e664992c48} 
+\index{udp\_handler.h@{udp\_handler.h}!closesocket@{closesocket}}
+\index{closesocket@{closesocket}!udp\_handler.h@{udp\_handler.h}}
+\doxysubsubsection{\texorpdfstring{closesocket}{closesocket}}
+{\footnotesize\ttfamily \#define closesocket~close}
+
+
+
+Definition at line \mbox{\hyperlink{udp__handler_8h_source_l00014}{14}} of file \mbox{\hyperlink{udp__handler_8h_source}{udp\+\_\+handler.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{udp__handler_8h_a292ecadbbf4b95588e87dee759c7ccd7}\label{udp__handler_8h_a292ecadbbf4b95588e87dee759c7ccd7} 
+\index{udp\_handler.h@{udp\_handler.h}!dataStructToUDPBuffer@{dataStructToUDPBuffer}}
+\index{dataStructToUDPBuffer@{dataStructToUDPBuffer}!udp\_handler.h@{udp\_handler.h}}
+\doxysubsubsection{\texorpdfstring{dataStructToUDPBuffer()}{dataStructToUDPBuffer()}}
+{\footnotesize\ttfamily template$<$typename Data\+Struct $>$ \\
+uint32\+\_\+t data\+Struct\+To\+UDPBuffer (\begin{DoxyParamCaption}\item[{const Data\+Struct \&}]{data,  }\item[{uint32\+\_\+t}]{msg\+Type,  }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Transform a Data Struct to UDP buffer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Data\+Struct} & an Imu\+Unitree or Scan\+Unitree \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em data} & \\
+\hline
+{\em buffer} & \\
+\hline
+{\em msg\+Type} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t the total bytes sent through udp 
+\end{DoxyReturn}

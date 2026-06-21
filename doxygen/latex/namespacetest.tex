@@ -1,0 +1,80 @@
+\doxysection{test Namespace Reference}
+\hypertarget{namespacetest}{}\label{namespacetest}\index{test@{test}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}} = np.\+loadtxt("{}output.\+csv"{}, delimiter="{},"{},usecols=np.\+linspace(0, 25, 25, dtype=int))
+\item 
+\mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}} = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 0\mbox{]}
+\item 
+\mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{y}} = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 1\mbox{]}
+\item 
+\mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}} = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 6\+:10\mbox{]}
+\item 
+\mbox{\hyperlink{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}{eul}} = R.\+from\+\_\+quat(\mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}).as\+\_\+euler(\textquotesingle{}xyz\textquotesingle{}, degrees=False)
+\item 
+\mbox{\hyperlink{namespacetest_aab35dc833fa812fbf1fe41130f743fde}{yaw}} = \mbox{\hyperlink{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}{eul}}\mbox{[}\+:,2\mbox{]} \% (2\texorpdfstring{$\ast$}{*} np.\+pi) + np.\+pi
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}\label{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889} 
+\index{test@{test}!estimations@{estimations}}
+\index{estimations@{estimations}!test@{test}}
+\doxysubsubsection{\texorpdfstring{estimations}{estimations}}
+{\footnotesize\ttfamily test.\+estimations = np.\+loadtxt("{}output.\+csv"{}, delimiter="{},"{},usecols=np.\+linspace(0, 25, 25, dtype=int))}
+
+
+
+Definition at line \mbox{\hyperlink{test_8py_source_l00007}{7}} of file \mbox{\hyperlink{test_8py_source}{test.\+py}}.
+
+\Hypertarget{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}\label{namespacetest_a0f5261a366aa17b03c2c7dd5af995400} 
+\index{test@{test}!eul@{eul}}
+\index{eul@{eul}!test@{test}}
+\doxysubsubsection{\texorpdfstring{eul}{eul}}
+{\footnotesize\ttfamily test.\+eul = R.\+from\+\_\+quat(\mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}).as\+\_\+euler(\textquotesingle{}xyz\textquotesingle{}, degrees=False)}
+
+
+
+Definition at line \mbox{\hyperlink{test_8py_source_l00012}{12}} of file \mbox{\hyperlink{test_8py_source}{test.\+py}}.
+
+\Hypertarget{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}\label{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de} 
+\index{test@{test}!quat@{quat}}
+\index{quat@{quat}!test@{test}}
+\doxysubsubsection{\texorpdfstring{quat}{quat}}
+{\footnotesize\ttfamily test.\+quat = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 6\+:10\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{test_8py_source_l00011}{11}} of file \mbox{\hyperlink{test_8py_source}{test.\+py}}.
+
+\Hypertarget{namespacetest_accf9c2b29590b2e2d68bb2614364444e}\label{namespacetest_accf9c2b29590b2e2d68bb2614364444e} 
+\index{test@{test}!x@{x}}
+\index{x@{x}!test@{test}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily test.\+x = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 0\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{test_8py_source_l00009}{9}} of file \mbox{\hyperlink{test_8py_source}{test.\+py}}.
+
+\Hypertarget{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}\label{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d} 
+\index{test@{test}!y@{y}}
+\index{y@{y}!test@{test}}
+\doxysubsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily test.\+y = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 1\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{test_8py_source_l00010}{10}} of file \mbox{\hyperlink{test_8py_source}{test.\+py}}.
+
+\Hypertarget{namespacetest_aab35dc833fa812fbf1fe41130f743fde}\label{namespacetest_aab35dc833fa812fbf1fe41130f743fde} 
+\index{test@{test}!yaw@{yaw}}
+\index{yaw@{yaw}!test@{test}}
+\doxysubsubsection{\texorpdfstring{yaw}{yaw}}
+{\footnotesize\ttfamily test.\+yaw = \mbox{\hyperlink{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}{eul}}\mbox{[}\+:,2\mbox{]} \% (2\texorpdfstring{$\ast$}{*} np.\+pi) + np.\+pi}
+
+
+
+Definition at line \mbox{\hyperlink{test_8py_source_l00014}{14}} of file \mbox{\hyperlink{test_8py_source}{test.\+py}}.
+

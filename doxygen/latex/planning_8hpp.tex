@@ -1,0 +1,59 @@
+\doxysection{src/autonomy/src/planning.hpp File Reference}
+\hypertarget{planning_8hpp}{}\label{planning_8hpp}\index{src/autonomy/src/planning.hpp@{src/autonomy/src/planning.hpp}}
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+Include dependency graph for planning.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structplanning__module_1_1Vec2}{planning\+\_\+module\+::\+Vec2$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structplanning__module_1_1datapoint}{planning\+\_\+module\+::datapoint}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceplanning__module}{planning\+\_\+module}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}{INFTY}}~std\+::numeric\+\_\+limits$<$float$>$\+::infinity()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{planning\+\_\+module\+::coordi}} = \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ int32\+\_\+t $>$
+\item 
+using \mbox{\hyperlink{namespaceplanning__module_a7563ac145bb4d6b99e69c41af2dcf763}{planning\+\_\+module\+::coordf}} = \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ float $>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespaceplanning__module_a7c2d51cae71646b1e354d1a546f5198a}{planning\+\_\+module\+::float\+\_\+eq}} (float a, float b, float epsilon=1e-\/5f)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43}\label{planning_8hpp_a84d177cf462436476c9bca8ef9e22c43} 
+\index{planning.hpp@{planning.hpp}!INFTY@{INFTY}}
+\index{INFTY@{INFTY}!planning.hpp@{planning.hpp}}
+\doxysubsubsection{\texorpdfstring{INFTY}{INFTY}}
+{\footnotesize\ttfamily \#define INFTY~std\+::numeric\+\_\+limits$<$float$>$\+::infinity()}
+
+
+
+Definition at line \mbox{\hyperlink{planning_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{planning_8hpp_source}{planning.\+hpp}}.
+

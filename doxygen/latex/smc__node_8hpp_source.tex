@@ -1,0 +1,276 @@
+\doxysection{smc\+\_\+node.\+hpp}
+\hypertarget{smc__node_8hpp_source}{}\label{smc__node_8hpp_source}\index{src/motor\_commander/include/motor\_commander/smc\_node.hpp@{src/motor\_commander/include/motor\_commander/smc\_node.hpp}}
+\mbox{\hyperlink{smc__node_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_SMC\_NODE\_\_}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_SMC\_NODE\_\_}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}rclcpp/rclcpp.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/string.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/msg/twist.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/msg/quaternion.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/msg/odometry.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}Eigen/Dense"{}}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00019}00019\ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00021}\mbox{\hyperlink{classSmcNode}{00021}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSmcNode}{SmcNode}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00023}00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//\ generate\ a\ publisher\ of\ data}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00025}00025\ \ \ \ \ rclcpp::Publisher<geometry\_msgs::msg::Quaternion>::SharedPtr\ control\_publisher;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00026}00026\ \ \ \ \ rclcpp::Subscription<nav\_msgs::msg::Odometry>::SharedPtr\ nav\_subscriber;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00027}00027\ \ \ \ \ rclcpp::Subscription<nav\_msgs::msg::Odometry>::SharedPtr\ autonomy\_subscriber;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00029}00029\ \ \ \ \ rclcpp::TimerBase::SharedPtr\ control\_publisher\_timer;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00030}00030\ \ \ \ \ rclcpp::Publisher<std\_msgs::msg::String>::SharedPtr\ fuckass;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ robot\ parameters}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{double}\ r\_w\_\ =\ 0.175\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{double}\ B\_\ =\ 0.381;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{double}\ mu\_R\_\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordtype}{double}\ mu\_L\_\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ <return\ type>\ <function\ name>\ (<parameters>)}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00039}00039\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ function\ -\/-\/>\ input:\ geometry\ (Rw/B),\ slip\ efficiencies,\ orientation}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00040}00040\ \ \ \ \ \textcolor{keyword}{static}\ Eigen::Matrix<double,\ 3,\ 2>\ b\_jacobian(\textcolor{keywordtype}{double}\ r\_w,\ \textcolor{keywordtype}{double}\ B,\ \textcolor{keywordtype}{double}\ mu\_R,\ \textcolor{keywordtype}{double}\ mu\_L,\ Eigen::Vector3d\ \&orientation)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00041}00041\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ hardcode\ the\ jacobian\ matrix\ to\ be\ returned}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ Eigen::Matrix<double,\ 3,\ 2>\ dBdu;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ set\ all\ values\ to\ zero\ (they're\ random)}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ dBdu.setZero();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ unpack\ all\ of\ the\ orientation\ angles}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ roll\ =\ orientation[0];\ \ \textcolor{comment}{//\ rad}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pitch\ =\ orientation[1];\ \textcolor{comment}{//\ rad}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yaw\ =\ orientation[2];\ \ \ \textcolor{comment}{//\ rad}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ actually\ input\ values\ for\ jacobian\ matrix\ (derivative\ of\ X\_dot\ WRT\ control)}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ dBdu\ <<\ (r\_w\ /\ 2)\ *\ mu\_R\ *\ cos(pitch)\ *\ cos(yaw),\ (r\_w\ /\ 2)\ *\ mu\_L\ *\ cos(pitch)\ *\ cos(yaw),}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ (r\_w\ /\ 2)\ *\ mu\_R\ *\ cos(pitch)\ *\ sin(yaw),\ (r\_w\ /\ 2)\ *\ mu\_L\ *\ cos(pitch)\ *\ sin(yaw),}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ (r\_w\ /\ B)\ *\ mu\_R\ *\ cos(roll)\ *\ cos(pitch),\ (-\/r\_w\ /\ B)\ *\ mu\_L\ *\ cos(roll)\ *\ cos(pitch);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dBdu;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00063}00063\ \ \ \ \ \textcolor{comment}{//\ function\ to\ compute\ B\ matrix\ evaluated\ at\ current\ state\ (and\ previous\ control\ input)}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00064}00064\ \ \ \ \ \textcolor{keyword}{static}\ Eigen::Vector3d\ B\_Xu(\textcolor{keywordtype}{double}\ r\_w,\ \textcolor{keywordtype}{double}\ B,\ \textcolor{keywordtype}{double}\ mu\_R,\ \textcolor{keywordtype}{double}\ mu\_L,\ Eigen::Vector3d\ \&orientation,\ Eigen::Vector4d\ \&input)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00065}00065\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ hardcode\ the\ B\ matrix\ to\ be\ returned}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ B\_vec;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ set\ all\ values\ to\ zero\ (they're\ random)}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ B\_vec.setZero();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ unpack\ all\ of\ the\ orientation\ angles}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ roll\ =\ orientation[0];\ \ \textcolor{comment}{//\ rad}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pitch\ =\ orientation[1];\ \textcolor{comment}{//\ rad}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yaw\ =\ orientation[2];\ \ \ \textcolor{comment}{//\ rad}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ unpack\ control\ inputs}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ wR\ =\ input[0];\ \textcolor{comment}{//\ rad/s}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ wL\ =\ input[1];\ \textcolor{comment}{//\ rad/s}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ input[2],\ input[3]\ (dwR,\ dwL)\ currently\ unused\ in\ the\ dynamics}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ actually\ input\ values\ for\ B\ matrix}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ B\_vec\ <<\ (r\_w\ /\ 2)\ *\ (mu\_R\ *\ wR\ +\ mu\_L\ *\ wL)\ *\ cos(pitch)\ *\ cos(yaw),\ \textcolor{comment}{//\ m/s}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ (r\_w\ /\ 2)\ *\ (mu\_R\ *\ wR\ +\ mu\_L\ *\ wL)\ *\ cos(pitch)\ *\ sin(yaw),\ \ \ \ \ \ \textcolor{comment}{//\ m/s}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ (r\_w\ /\ B)\ *\ (mu\_R\ *\ wR\ -\/\ mu\_L\ *\ wL)\ *\ cos(roll)\ *\ cos(pitch);\ \ \ \ \ \textcolor{comment}{//\ rad/s}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ B\_vec;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00090}00090\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00092}00092\ \ \ \ \ \textcolor{keyword}{static}\ Eigen::Vector3d\ comp\_tanh(\textcolor{keyword}{const}\ Eigen::Vector3d\ \&z,\ \textcolor{keywordtype}{double}\ epsilon)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00093}00093\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (z.array()\ /\ (2.0\ *\ epsilon)).tanh();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00095}00095\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00097}00097\ \ \ \ \ std::mutex\ state\_mutex;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00098}00098\ \ \ \ \ Eigen::Vector4d\ control;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00099}00099\ \ \ \ \ Eigen::VectorXd\ latest\_state\_estimate;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00100}00100\ \ \ \ \ Eigen::VectorXd\ latest\_state\_desired;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ CALLER\ MUST\ HOLD\ state\_mutex.}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00103}00103\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ control\ increment\ du\ =\ [d\_wR,\ d\_wL]\ from\ the\ SMC\ law.}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00104}00104\ \ \ \ \ Eigen::Vector2d\ compute\_control\_increment(\textcolor{keywordtype}{double}\ r\_w,\ \textcolor{keywordtype}{double}\ B,\ \textcolor{keywordtype}{double}\ mu\_r,\ \textcolor{keywordtype}{double}\ mu\_l)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00105}00105\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ eulers(this-\/>latest\_state\_estimate[2],}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate[3],}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate[4]);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ matrix\ inversions\ -\/-\/\ materialized\ to\ a\ concrete\ type\ so\ we\ don't}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ hold\ a\ lazy\ expression\ that\ references\ a\ destroyed\ temporary}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ Eigen::Matrix<double,\ 2,\ 3>\ dbdx\_pseudo\_inv\ =}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ b\_jacobian(r\_w,\ B,\ mu\_r,\ mu\_l,\ eulers)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .completeOrthogonalDecomposition()}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .pseudoInverse();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ B\_prev\ =\ B\_Xu(r\_w,\ B,\ mu\_r,\ mu\_l,\ eulers,\ this-\/>control);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ tracking-\/relevant\ state\ slice:\ [x,\ y,\ yaw]}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ x\_track(this-\/>latest\_state\_estimate[0],}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate[1],}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate[4]);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ s\ =\ this-\/>latest\_state\_desired.head<3>()\ -\/\ x\_track;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ xdot\_d\ =\ this-\/>latest\_state\_desired.tail<3>();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ epsilon\ =\ 7.0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ K(0.1,\ 0.1,\ 2.0);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ Ks\ =\ (K.array()\ *\ comp\_tanh(s,\ epsilon).array()).matrix();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ residual\ =\ -\/Ks\ -\/\ xdot\_d\ -\/\ B\_prev;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dbdx\_pseudo\_inv\ *\ residual;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00133}00133\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00135}00135\ \ \ \ \ \textcolor{comment}{//\ function\ to\ publish\ the\ control\ input\ calculations}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00136}00136\ \ \ \ \ \textcolor{keywordtype}{void}\ publish\_callback()}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00137}00137\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ msg\ =\ geometry\_msgs::msg::Quaternion();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ log\ =\ std\_msgs::msg::String();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ print\ estimate\ and\ desired\ state}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ des\ =\ this-\/>latest\_state\_desired.head<3>();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ est(this-\/>latest\_state\_estimate[0],}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate[1],}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate[4]);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ xdot\_d\ =\ this-\/>latest\_state\_desired.tail<3>();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Inside\ your\ function:}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ ss\ <<\ std::fixed\ <<\ std::setprecision(3);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ ss\ <<\ \textcolor{stringliteral}{"{}Euler\ angles:\ "{}}\ <<\ this-\/>latest\_state\_estimate[2]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ <<\ this-\/>latest\_state\_estimate[3]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ this-\/>latest\_state\_estimate[4]}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ X,y,yaw\ desired:\ "{}}\ <<\ des[0]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ des[1]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ des[2]}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ X,y,yaw\ estimate:\ "{}}\ <<\ est[0]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ est[1]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ est[2]}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ x\_dot:\ "{}}\ <<\ xdot\_d[0]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ xdot\_d[1]\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ xdot\_d[2];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ std::string\ result\ =\ ss.str();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ log.data\ =\ result;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ this-\/>fuckass-\/>publish(log);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>drive\_motors)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ msg.w\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ msg.x\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ msg.y\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ msg.z\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>control\_publisher-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ Eigen::Vector4d\ ctrl\_snapshot;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(this-\/>state\_mutex);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ du\ =\ compute\_control\_increment(this-\/>r\_w\_,\ this-\/>B\_,\ this-\/>mu\_R\_,\ this-\/>mu\_L\_);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>control[0]\ +=\ du[0];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>control[1]\ +=\ du[1];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>control[2]\ =\ du[0];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>control[3]\ =\ du[1];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ ctrl\_snapshot\ =\ this-\/>control;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ msg.w\ =\ std::clamp(ctrl\_snapshot[0],\ -\/1.0,\ 1.0);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ msg.x\ =\ std::clamp(ctrl\_snapshot[1],\ -\/1.0,\ 1.0);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ msg.y\ =\ ctrl\_snapshot[2];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ msg.z\ =\ ctrl\_snapshot[3];}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ this-\/>control\_publisher-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00189}00189\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00191}00191\ \ \ \ \ \textcolor{comment}{//\ function\ that\ runs\ when\ nav\ node\ gives\ us\ state\ estimation}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00192}00192\ \ \ \ \ \textcolor{keywordtype}{void}\ nav\_callback(nav\_msgs::msg::Odometry\ odom)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00193}00193\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ extract\ state\ estimate\ from\ nav\ callback\ (do\ math\ outside\ the\ lock)}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ position\ =\ odom.pose.pose.position;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ orientation\ =\ odom.pose.pose.orientation;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ MY\_PI\ =\ 3.141592653589;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ quat(orientation.w,\ orientation.x,\ orientation.y,\ orientation.z);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ quat.normalize();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ R\ =\ quat.toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ roll\ =\ std::atan2(R(2,\ 1),\ R(2,\ 2));}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ s\ =\ -\/R(2,\ 0);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pitch\ =\ (std::abs(s)\ >=\ 1.0)\ ?\ std::copysign(MY\_PI\ /\ 2.0,\ s)\ :\ std::asin(s);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yaw\ =\ std::atan2(R(1,\ 0),\ R(0,\ 0));}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(this-\/>state\_mutex);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate\ <<\ position.x,\ position.y,\ roll,\ pitch,\ yaw;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00210}00210\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordtype}{bool}\ drive\_motors\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00214}00214\ \ \ \ \ \textcolor{keywordtype}{void}\ autonomy\_callback(nav\_msgs::msg::Odometry\ des)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00215}00215\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (des.pose.pose.orientation.x\ ==\ 1.0)}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>drive\_motors\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ this-\/>drive\_motors\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(this-\/>state\_mutex);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ this-\/>latest\_state\_desired\ <<\ des.pose.pose.position.x,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ des.pose.pose.position.y,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ des.pose.pose.position.z,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ des.twist.twist.linear.x,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ des.twist.twist.linear.y,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ des.twist.twist.linear.z;}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00230}00230\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00232}00232\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00233}\mbox{\hyperlink{classSmcNode_a72f186a4bdadfc066cb10a22e5b0ae4f}{00233}}\ \ \ \ \ \mbox{\hyperlink{classSmcNode_a72f186a4bdadfc066cb10a22e5b0ae4f}{SmcNode}}()\ :\ Node(\textcolor{stringliteral}{"{}smc\_node"{}})}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00234}00234\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ this-\/>control\_publisher\ =\ this-\/>create\_publisher<geometry\_msgs::msg::Quaternion>(}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/smc/control"{}},}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ 10);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ when\ nav\ publishes,\ nav\ callback\ runs}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ this-\/>nav\_subscriber\ =\ this-\/>create\_subscription<nav\_msgs::msg::Odometry>(}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/trans\_est"{}},}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&SmcNode::nav\_callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ this-\/>autonomy\_subscriber\ =\ this-\/>create\_subscription<nav\_msgs::msg::Odometry>(}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/auto\_next\_state"{}},}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&SmcNode::autonomy\_callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ this-\/>control\_publisher\_timer\ =\ this-\/>create\_wall\_timer(}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ std::chrono::milliseconds(67),}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&SmcNode::publish\_callback,\ \textcolor{keyword}{this}));}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ this-\/>fuckass\ =\ this-\/>create\_publisher<std\_msgs::msg::String>(}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/smc/control/log"{}},}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ 10}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ x\ y\ orientation}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate\ =\ Eigen::VectorXd(5);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ this-\/>latest\_state\_estimate.setZero();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ this-\/>latest\_state\_desired\ =\ Eigen::VectorXd(6);}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ this-\/>latest\_state\_desired.setZero();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ this-\/>control.setZero();}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00267}00267\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00268}00268\ \};}
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{smc__node_8hpp_source_l00270}00270\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

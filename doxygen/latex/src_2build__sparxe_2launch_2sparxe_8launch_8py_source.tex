@@ -1,0 +1,67 @@
+\doxysection{sparxe.\+launch.\+py}
+\hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source}{}\label{src_2build__sparxe_2launch_2sparxe_8launch_8py_source}\index{src/build\_sparxe/launch/sparxe.launch.py@{src/build\_sparxe/launch/sparxe.launch.py}}
+\mbox{\hyperlink{src_2build__sparxe_2launch_2sparxe_8launch_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00001}00001\ \textcolor{keyword}{from}\ launch\ \textcolor{keyword}{import}\ LaunchDescription}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00002}00002\ \textcolor{keyword}{from}\ launch.actions\ \textcolor{keyword}{import}\ IncludeLaunchDescription}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00003}00003\ \textcolor{keyword}{from}\ launch.launch\_description\_sources\ \textcolor{keyword}{import}\ PythonLaunchDescriptionSource}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00004}00004\ \textcolor{keyword}{from}\ launch.substitutions\ \textcolor{keyword}{import}\ PathJoinSubstitution}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00005}00005\ \textcolor{keyword}{from}\ launch\_ros.actions\ \textcolor{keyword}{import}\ Node}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00006}00006\ \textcolor{keyword}{from}\ launch\_ros.substitutions\ \textcolor{keyword}{import}\ FindPackageShare}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00008}00008\ \textcolor{keyword}{def\ }generate\_launch\_description():}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{return}\ LaunchDescription([}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ IncludeLaunchDescription(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ PythonLaunchDescriptionSource(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PathJoinSubstitution([}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FindPackageShare(\textcolor{stringliteral}{'phidgets\_spatial'}),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'launch'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'spatial-\/launch.py'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ])}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ launch\_arguments=\{\textcolor{stringliteral}{'hub\_port'}:\ \textcolor{stringliteral}{'1'}\}.items()}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ Node(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'imu\_filter\_madgwick'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'imu\_filter\_madgwick\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'imu\_filter'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ output=\textcolor{stringliteral}{'screen'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ parameters=[\{}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'use\_mag'}:\ \textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'publish\_tf'}:\ \textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'world\_frame'}:\ \textcolor{stringliteral}{'enu'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \}],}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ remappings=[}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'imu/data\_raw'},\ \textcolor{stringliteral}{'/imu/data\_raw'}),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'imu/mag'},\ \textcolor{stringliteral}{'/imu/mag'}),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'imu/data'},\ \textcolor{stringliteral}{'/imu/data'})}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Node(}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ package='camera',}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ executable='camera\_stream\_node',}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ name='camera',}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ),}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ Node(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'status\_updater'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'status\_updater\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'status\_updater'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ Node(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'motor\_commander'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'motor\_commander\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'motor\_commander'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ Node(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'arduino\_bridge'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'arduino\_bridge\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'arduino\_bridge'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ Node(}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'uwb\_bridge'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'uwb\_bridge\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'uwb\_bridge'}}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{src_2build__sparxe_2launch_2sparxe_8launch_8py_source_l00061}00061\ \ \ \ \ ])}
+
+\end{DoxyCode}

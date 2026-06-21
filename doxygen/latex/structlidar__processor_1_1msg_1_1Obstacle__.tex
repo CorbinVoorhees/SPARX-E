@@ -1,0 +1,618 @@
+\doxysection{lidar\+\_\+processor.\+msg\+::Obstacle\+\_\+\texorpdfstring{$<$}{<} Container\+Allocator \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structlidar__processor_1_1msg_1_1Obstacle__}{}\label{structlidar__processor_1_1msg_1_1Obstacle__}\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+
+
+{\ttfamily \#include $<$obstacle\+\_\+\+\_\+struct.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$ Container\+Allocator $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d}{\+\_\+center\+\_\+type}} = std\+::array$<$ double, 2 $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334}{\+\_\+covariance\+\_\+type}} = std\+::array$<$ double, 4 $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a4253311a11ff424cf901ab8deda1939c}{Raw\+Ptr}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \texorpdfstring{$\ast$}{*}
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ab0c1ecf0303a10d26d911f500e15eb17}{Const\+Raw\+Ptr}} = const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \texorpdfstring{$\ast$}{*}
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a667bb0d45adeb7e59775498b1e9094b2}{Shared\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a059115a563ca65b92021083fb2292bcc}{Const\+Shared\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const  $>$
+\item 
+{\footnotesize template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ }\\using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}{Unique\+Ptr\+With\+Deleter}} = std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$, Deleter $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a5e34d0afc828dd41cfefb3f9991041e8}{Unique\+Ptr}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}{Unique\+Ptr\+With\+Deleter}}$<$$>$
+\item 
+{\footnotesize template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ }\\using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}{Const\+Unique\+Ptr\+With\+Deleter}} = std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const, Deleter $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ac608eca5516ec5222b20e1c54eb1189e}{Const\+Unique\+Ptr}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}{Const\+Unique\+Ptr\+With\+Deleter}}$<$$>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ac02b451c9af84e11086fc55c9cfa93d4}{Weak\+Ptr}} = std\+::weak\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a409a08c38b1e4eaaf19bddca91705c5c}{Const\+Weak\+Ptr}} = std\+::weak\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const  $>$
+\item 
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ $>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a16cb9482a7ff78a8518e970b097f6c35}{Ptr}}
+\item 
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const  $>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ac0163107f8a38b99c158cb22dad9ea5f}{Const\+Ptr}}
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$ Container\+Allocator $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d}{\+\_\+center\+\_\+type}} = std\+::array$<$ double, 2 $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334}{\+\_\+covariance\+\_\+type}} = std\+::array$<$ double, 4 $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a4253311a11ff424cf901ab8deda1939c}{Raw\+Ptr}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \texorpdfstring{$\ast$}{*}
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ab0c1ecf0303a10d26d911f500e15eb17}{Const\+Raw\+Ptr}} = const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \texorpdfstring{$\ast$}{*}
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a667bb0d45adeb7e59775498b1e9094b2}{Shared\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a059115a563ca65b92021083fb2292bcc}{Const\+Shared\+Ptr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const  $>$
+\item 
+{\footnotesize template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ }\\using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}{Unique\+Ptr\+With\+Deleter}} = std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$, Deleter $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a5e34d0afc828dd41cfefb3f9991041e8}{Unique\+Ptr}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}{Unique\+Ptr\+With\+Deleter}}$<$$>$
+\item 
+{\footnotesize template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ }\\using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}{Const\+Unique\+Ptr\+With\+Deleter}} = std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const, Deleter $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ac608eca5516ec5222b20e1c54eb1189e}{Const\+Unique\+Ptr}} = \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}{Const\+Unique\+Ptr\+With\+Deleter}}$<$$>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ac02b451c9af84e11086fc55c9cfa93d4}{Weak\+Ptr}} = std\+::weak\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ $>$
+\item 
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a409a08c38b1e4eaaf19bddca91705c5c}{Const\+Weak\+Ptr}} = std\+::weak\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const  $>$
+\item 
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ $>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a16cb9482a7ff78a8518e970b097f6c35}{Ptr}}
+\item 
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$ const  $>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ac0163107f8a38b99c158cb22dad9ea5f}{Const\+Ptr}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a7eca5d12c9cc2f489641472f927826f6}{Obstacle\+\_\+}} (rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization \+\_\+init=rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization\+::\+ALL)
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a3493f4974557ec5ec2dd1df45e9bafc0}{Obstacle\+\_\+}} (const Container\+Allocator \&\+\_\+alloc, rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization \+\_\+init=rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization\+::\+ALL)
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ae979efbcafd0da251662701de61837f2}{set\+\_\+\+\_\+center}} (const std\+::array$<$ double, 2 $>$ \&\+\_\+arg)
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a695373fb00438bf0369f65c965fedf33}{set\+\_\+\+\_\+covariance}} (const std\+::array$<$ double, 4 $>$ \&\+\_\+arg)
+\item 
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___af7545b3b06349dd5e2a1793c188d8a84}{operator==}} (const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}} \&other) const
+\item 
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a0cdc62b5c5b39e003a0301927d316aec}{operator!=}} (const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}} \&other) const
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a7eca5d12c9cc2f489641472f927826f6}{Obstacle\+\_\+}} (rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization \+\_\+init=rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization\+::\+ALL)
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a3493f4974557ec5ec2dd1df45e9bafc0}{Obstacle\+\_\+}} (const Container\+Allocator \&\+\_\+alloc, rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization \+\_\+init=rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization\+::\+ALL)
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___ae979efbcafd0da251662701de61837f2}{set\+\_\+\+\_\+center}} (const std\+::array$<$ double, 2 $>$ \&\+\_\+arg)
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a695373fb00438bf0369f65c965fedf33}{set\+\_\+\+\_\+covariance}} (const std\+::array$<$ double, 4 $>$ \&\+\_\+arg)
+\item 
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___af7545b3b06349dd5e2a1793c188d8a84}{operator==}} (const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}} \&other) const
+\item 
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a0cdc62b5c5b39e003a0301927d316aec}{operator!=}} (const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}} \&other) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d}{\+\_\+center\+\_\+type}} \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___accd60f23f58357e578da3041f88ece02}{center}}
+\item 
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334}{\+\_\+covariance\+\_\+type}} \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a0fd4a19d1260fb3841b385eb36a5b222}{covariance}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Container\+Allocator$>$\newline
+struct lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+$<$ Container\+Allocator $>$}
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00036}{36}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d}\label{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!\_center\_type@{\_center\_type}}
+\index{\_center\_type@{\_center\_type}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{\_center\_type}{\_center\_type}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+\_\+center\+\_\+type =  std\+::array$<$double, 2$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00063}{63}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d}\label{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!\_center\_type@{\_center\_type}}
+\index{\_center\_type@{\_center\_type}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{\_center\_type}{\_center\_type}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+\_\+center\+\_\+type =  std\+::array$<$double, 2$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00063}{63}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334}\label{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!\_covariance\_type@{\_covariance\_type}}
+\index{\_covariance\_type@{\_covariance\_type}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{\_covariance\_type}{\_covariance\_type}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+\_\+covariance\+\_\+type =  std\+::array$<$double, 4$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00066}{66}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334}\label{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!\_covariance\_type@{\_covariance\_type}}
+\index{\_covariance\_type@{\_covariance\_type}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{\_covariance\_type}{\_covariance\_type}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+\_\+covariance\+\_\+type =  std\+::array$<$double, 4$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00066}{66}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ac0163107f8a38b99c158cb22dad9ea5f}\label{structlidar__processor_1_1msg_1_1Obstacle___ac0163107f8a38b99c158cb22dad9ea5f} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstPtr@{ConstPtr}}
+\index{ConstPtr@{ConstPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstPtr}{ConstPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const$>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Ptr}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00121}{121}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ac0163107f8a38b99c158cb22dad9ea5f}\label{structlidar__processor_1_1msg_1_1Obstacle___ac0163107f8a38b99c158cb22dad9ea5f} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstPtr@{ConstPtr}}
+\index{ConstPtr@{ConstPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstPtr}{ConstPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const$>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Ptr}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00121}{121}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ab0c1ecf0303a10d26d911f500e15eb17}\label{structlidar__processor_1_1msg_1_1Obstacle___ab0c1ecf0303a10d26d911f500e15eb17} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstRawPtr@{ConstRawPtr}}
+\index{ConstRawPtr@{ConstRawPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstRawPtr}{ConstRawPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Raw\+Ptr =  const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ \texorpdfstring{$\ast$}{*}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00089}{89}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ab0c1ecf0303a10d26d911f500e15eb17}\label{structlidar__processor_1_1msg_1_1Obstacle___ab0c1ecf0303a10d26d911f500e15eb17} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstRawPtr@{ConstRawPtr}}
+\index{ConstRawPtr@{ConstRawPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstRawPtr}{ConstRawPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Raw\+Ptr =  const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ \texorpdfstring{$\ast$}{*}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00089}{89}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a059115a563ca65b92021083fb2292bcc}\label{structlidar__processor_1_1msg_1_1Obstacle___a059115a563ca65b92021083fb2292bcc} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstSharedPtr@{ConstSharedPtr}}
+\index{ConstSharedPtr@{ConstSharedPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstSharedPtr}{ConstSharedPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Shared\+Ptr =  std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00093}{93}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a059115a563ca65b92021083fb2292bcc}\label{structlidar__processor_1_1msg_1_1Obstacle___a059115a563ca65b92021083fb2292bcc} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstSharedPtr@{ConstSharedPtr}}
+\index{ConstSharedPtr@{ConstSharedPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstSharedPtr}{ConstSharedPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Shared\+Ptr =  std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00093}{93}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ac608eca5516ec5222b20e1c54eb1189e}\label{structlidar__processor_1_1msg_1_1Obstacle___ac608eca5516ec5222b20e1c54eb1189e} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstUniquePtr@{ConstUniquePtr}}
+\index{ConstUniquePtr@{ConstUniquePtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstUniquePtr}{ConstUniquePtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Unique\+Ptr =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}{Const\+Unique\+Ptr\+With\+Deleter}}$<$$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00107}{107}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ac608eca5516ec5222b20e1c54eb1189e}\label{structlidar__processor_1_1msg_1_1Obstacle___ac608eca5516ec5222b20e1c54eb1189e} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstUniquePtr@{ConstUniquePtr}}
+\index{ConstUniquePtr@{ConstUniquePtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstUniquePtr}{ConstUniquePtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Unique\+Ptr =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}{Const\+Unique\+Ptr\+With\+Deleter}}$<$$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00107}{107}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}\label{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstUniquePtrWithDeleter@{ConstUniquePtrWithDeleter}}
+\index{ConstUniquePtrWithDeleter@{ConstUniquePtrWithDeleter}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstUniquePtrWithDeleter}{ConstUniquePtrWithDeleter}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Unique\+Ptr\+With\+Deleter =  std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const, Deleter$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00105}{105}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e}\label{structlidar__processor_1_1msg_1_1Obstacle___aa97df15c394301a973eb38f583a3085e} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstUniquePtrWithDeleter@{ConstUniquePtrWithDeleter}}
+\index{ConstUniquePtrWithDeleter@{ConstUniquePtrWithDeleter}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstUniquePtrWithDeleter}{ConstUniquePtrWithDeleter}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Unique\+Ptr\+With\+Deleter =  std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const, Deleter$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00105}{105}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a409a08c38b1e4eaaf19bddca91705c5c}\label{structlidar__processor_1_1msg_1_1Obstacle___a409a08c38b1e4eaaf19bddca91705c5c} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstWeakPtr@{ConstWeakPtr}}
+\index{ConstWeakPtr@{ConstWeakPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstWeakPtr}{ConstWeakPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Weak\+Ptr =  std\+::weak\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00111}{111}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a409a08c38b1e4eaaf19bddca91705c5c}\label{structlidar__processor_1_1msg_1_1Obstacle___a409a08c38b1e4eaaf19bddca91705c5c} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!ConstWeakPtr@{ConstWeakPtr}}
+\index{ConstWeakPtr@{ConstWeakPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{ConstWeakPtr}{ConstWeakPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Const\+Weak\+Ptr =  std\+::weak\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ const$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00111}{111}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a16cb9482a7ff78a8518e970b097f6c35}\label{structlidar__processor_1_1msg_1_1Obstacle___a16cb9482a7ff78a8518e970b097f6c35} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Ptr@{Ptr}}
+\index{Ptr@{Ptr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Ptr}{Ptr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ $>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Ptr}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00118}{118}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a16cb9482a7ff78a8518e970b097f6c35}\label{structlidar__processor_1_1msg_1_1Obstacle___a16cb9482a7ff78a8518e970b097f6c35} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Ptr@{Ptr}}
+\index{Ptr@{Ptr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Ptr}{Ptr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+typedef \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_a9a8f6864d98f68a2ced634602718aa18}{DEPRECATED\+\_\+\+\_\+lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ $>$ \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Ptr}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00118}{118}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a4253311a11ff424cf901ab8deda1939c}\label{structlidar__processor_1_1msg_1_1Obstacle___a4253311a11ff424cf901ab8deda1939c} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!RawPtr@{RawPtr}}
+\index{RawPtr@{RawPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{RawPtr}{RawPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Raw\+Ptr =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ \texorpdfstring{$\ast$}{*}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00087}{87}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a4253311a11ff424cf901ab8deda1939c}\label{structlidar__processor_1_1msg_1_1Obstacle___a4253311a11ff424cf901ab8deda1939c} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!RawPtr@{RawPtr}}
+\index{RawPtr@{RawPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{RawPtr}{RawPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Raw\+Ptr =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ \texorpdfstring{$\ast$}{*}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00087}{87}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a667bb0d45adeb7e59775498b1e9094b2}\label{structlidar__processor_1_1msg_1_1Obstacle___a667bb0d45adeb7e59775498b1e9094b2} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!SharedPtr@{SharedPtr}}
+\index{SharedPtr@{SharedPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{SharedPtr}{SharedPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Shared\+Ptr =  std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ $>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00091}{91}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a667bb0d45adeb7e59775498b1e9094b2}\label{structlidar__processor_1_1msg_1_1Obstacle___a667bb0d45adeb7e59775498b1e9094b2} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!SharedPtr@{SharedPtr}}
+\index{SharedPtr@{SharedPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{SharedPtr}{SharedPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Shared\+Ptr =  std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ $>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00091}{91}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}\label{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Type@{Type}}
+\index{Type@{Type}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Type =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$Container\+Allocator$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00038}{38}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}\label{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Type@{Type}}
+\index{Type@{Type}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Type =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$Container\+Allocator$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00038}{38}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a5e34d0afc828dd41cfefb3f9991041e8}\label{structlidar__processor_1_1msg_1_1Obstacle___a5e34d0afc828dd41cfefb3f9991041e8} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!UniquePtr@{UniquePtr}}
+\index{UniquePtr@{UniquePtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{UniquePtr}{UniquePtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Unique\+Ptr =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}{Unique\+Ptr\+With\+Deleter}}$<$$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00101}{101}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a5e34d0afc828dd41cfefb3f9991041e8}\label{structlidar__processor_1_1msg_1_1Obstacle___a5e34d0afc828dd41cfefb3f9991041e8} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!UniquePtr@{UniquePtr}}
+\index{UniquePtr@{UniquePtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{UniquePtr}{UniquePtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Unique\+Ptr =  \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}{Unique\+Ptr\+With\+Deleter}}$<$$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00101}{101}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}\label{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!UniquePtrWithDeleter@{UniquePtrWithDeleter}}
+\index{UniquePtrWithDeleter@{UniquePtrWithDeleter}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{UniquePtrWithDeleter}{UniquePtrWithDeleter}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Unique\+Ptr\+With\+Deleter =  std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$, Deleter$>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00098}{98}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3}\label{structlidar__processor_1_1msg_1_1Obstacle___adc25fc398f1b5640a392071eec67d6e3} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!UniquePtrWithDeleter@{UniquePtrWithDeleter}}
+\index{UniquePtrWithDeleter@{UniquePtrWithDeleter}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{UniquePtrWithDeleter}{UniquePtrWithDeleter}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+template$<$typename Deleter  = std\+::default\+\_\+delete$<$      lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+$<$\+Container\+Allocator$>$$>$$>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Unique\+Ptr\+With\+Deleter =  std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$, Deleter$>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00098}{98}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ac02b451c9af84e11086fc55c9cfa93d4}\label{structlidar__processor_1_1msg_1_1Obstacle___ac02b451c9af84e11086fc55c9cfa93d4} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!WeakPtr@{WeakPtr}}
+\index{WeakPtr@{WeakPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{WeakPtr}{WeakPtr}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Weak\+Ptr =  std\+::weak\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ $>$}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00109}{109}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ac02b451c9af84e11086fc55c9cfa93d4}\label{structlidar__processor_1_1msg_1_1Obstacle___ac02b451c9af84e11086fc55c9cfa93d4} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!WeakPtr@{WeakPtr}}
+\index{WeakPtr@{WeakPtr}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{WeakPtr}{WeakPtr}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+using \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Weak\+Ptr =  std\+::weak\+\_\+ptr$<$\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor\+::msg\+::\+Obstacle\+\_\+}}$<$Container\+Allocator$>$ $>$}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00109}{109}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a7eca5d12c9cc2f489641472f927826f6}\label{structlidar__processor_1_1msg_1_1Obstacle___a7eca5d12c9cc2f489641472f927826f6} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Obstacle\_@{Obstacle\_}}
+\index{Obstacle\_@{Obstacle\_}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Obstacle\_()}{Obstacle\_()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Obstacle\+\_\+ (\begin{DoxyParamCaption}\item[{rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization}]{\+\_\+init = {\ttfamily rosidl\+\_\+runtime\+\_\+cpp\+:\+:MessageInitialization\+:\+:ALL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00040}{40}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a3493f4974557ec5ec2dd1df45e9bafc0}\label{structlidar__processor_1_1msg_1_1Obstacle___a3493f4974557ec5ec2dd1df45e9bafc0} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Obstacle\_@{Obstacle\_}}
+\index{Obstacle\_@{Obstacle\_}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Obstacle\_()}{Obstacle\_()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Obstacle\+\_\+ (\begin{DoxyParamCaption}\item[{const Container\+Allocator \&}]{\+\_\+alloc,  }\item[{rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization}]{\+\_\+init = {\ttfamily rosidl\+\_\+runtime\+\_\+cpp\+:\+:MessageInitialization\+:\+:ALL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00050}{50}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a7eca5d12c9cc2f489641472f927826f6}\label{structlidar__processor_1_1msg_1_1Obstacle___a7eca5d12c9cc2f489641472f927826f6} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Obstacle\_@{Obstacle\_}}
+\index{Obstacle\_@{Obstacle\_}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Obstacle\_()}{Obstacle\_()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Obstacle\+\_\+ (\begin{DoxyParamCaption}\item[{rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization}]{\+\_\+init = {\ttfamily rosidl\+\_\+runtime\+\_\+cpp\+:\+:MessageInitialization\+:\+:ALL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00040}{40}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a3493f4974557ec5ec2dd1df45e9bafc0}\label{structlidar__processor_1_1msg_1_1Obstacle___a3493f4974557ec5ec2dd1df45e9bafc0} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!Obstacle\_@{Obstacle\_}}
+\index{Obstacle\_@{Obstacle\_}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Obstacle\_()}{Obstacle\_()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::\+Obstacle\+\_\+ (\begin{DoxyParamCaption}\item[{const Container\+Allocator \&}]{\+\_\+alloc,  }\item[{rosidl\+\_\+runtime\+\_\+cpp\+::\+Message\+Initialization}]{\+\_\+init = {\ttfamily rosidl\+\_\+runtime\+\_\+cpp\+:\+:MessageInitialization\+:\+:ALL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00050}{50}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a0cdc62b5c5b39e003a0301927d316aec}\label{structlidar__processor_1_1msg_1_1Obstacle___a0cdc62b5c5b39e003a0301927d316aec} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00134}{134}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a0cdc62b5c5b39e003a0301927d316aec}\label{structlidar__processor_1_1msg_1_1Obstacle___a0cdc62b5c5b39e003a0301927d316aec} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00134}{134}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___af7545b3b06349dd5e2a1793c188d8a84}\label{structlidar__processor_1_1msg_1_1Obstacle___af7545b3b06349dd5e2a1793c188d8a84} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!operator==@{operator==}}
+\index{operator==@{operator==}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00124}{124}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___af7545b3b06349dd5e2a1793c188d8a84}\label{structlidar__processor_1_1msg_1_1Obstacle___af7545b3b06349dd5e2a1793c188d8a84} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!operator==@{operator==}}
+\index{operator==@{operator==}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+bool \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{Obstacle\+\_\+}}$<$ Container\+Allocator $>$ \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00124}{124}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ae979efbcafd0da251662701de61837f2}\label{structlidar__processor_1_1msg_1_1Obstacle___ae979efbcafd0da251662701de61837f2} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!set\_\_center@{set\_\_center}}
+\index{set\_\_center@{set\_\_center}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{set\_\_center()}{set\_\_center()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::set\+\_\+\+\_\+center (\begin{DoxyParamCaption}\item[{const std\+::array$<$ double, 2 $>$ \&}]{\+\_\+arg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00071}{71}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___ae979efbcafd0da251662701de61837f2}\label{structlidar__processor_1_1msg_1_1Obstacle___ae979efbcafd0da251662701de61837f2} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!set\_\_center@{set\_\_center}}
+\index{set\_\_center@{set\_\_center}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{set\_\_center()}{set\_\_center()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::set\+\_\+\+\_\+center (\begin{DoxyParamCaption}\item[{const std\+::array$<$ double, 2 $>$ \&}]{\+\_\+arg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00071}{71}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a695373fb00438bf0369f65c965fedf33}\label{structlidar__processor_1_1msg_1_1Obstacle___a695373fb00438bf0369f65c965fedf33} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!set\_\_covariance@{set\_\_covariance}}
+\index{set\_\_covariance@{set\_\_covariance}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{set\_\_covariance()}{set\_\_covariance()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::set\+\_\+\+\_\+covariance (\begin{DoxyParamCaption}\item[{const std\+::array$<$ double, 4 $>$ \&}]{\+\_\+arg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00077}{77}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a695373fb00438bf0369f65c965fedf33}\label{structlidar__processor_1_1msg_1_1Obstacle___a695373fb00438bf0369f65c965fedf33} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!set\_\_covariance@{set\_\_covariance}}
+\index{set\_\_covariance@{set\_\_covariance}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{set\_\_covariance()}{set\_\_covariance()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a25b5f02073302cf5afef04ca1f3c7eed}{Type}} \& \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::set\+\_\+\+\_\+covariance (\begin{DoxyParamCaption}\item[{const std\+::array$<$ double, 4 $>$ \&}]{\+\_\+arg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00077}{77}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___accd60f23f58357e578da3041f88ece02}\label{structlidar__processor_1_1msg_1_1Obstacle___accd60f23f58357e578da3041f88ece02} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!center@{center}}
+\index{center@{center}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{center}{center}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a6ac46960daae1a18b633489d87c6981d}{\+\_\+center\+\_\+type}} \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::center}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00065}{65}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+\Hypertarget{structlidar__processor_1_1msg_1_1Obstacle___a0fd4a19d1260fb3841b385eb36a5b222}\label{structlidar__processor_1_1msg_1_1Obstacle___a0fd4a19d1260fb3841b385eb36a5b222} 
+\index{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}!covariance@{covariance}}
+\index{covariance@{covariance}!lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$@{lidar\_processor.msg::Obstacle\_$<$ ContainerAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{covariance}{covariance}}
+{\footnotesize\ttfamily template$<$class Container\+Allocator $>$ \\
+\mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle___a4bf7268ddc17b1d3a3878079ba088334}{\+\_\+covariance\+\_\+type}} \mbox{\hyperlink{structlidar__processor_1_1msg_1_1Obstacle__}{lidar\+\_\+processor.\+msg\+::\+Obstacle\+\_\+}}$<$ Container\+Allocator $>$\+::covariance}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source_l00068}{68}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp_source}{obstacle\+\_\+\+\_\+struct.\+hpp}}.
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+build/lidar\+\_\+processor/rosidl\+\_\+generator\+\_\+cpp/lidar\+\_\+processor/msg/detail/\mbox{\hyperlink{build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp}{obstacle\+\_\+\+\_\+struct.\+hpp}}\item 
+install/lidar\+\_\+processor/include/lidar\+\_\+processor/lidar\+\_\+processor/msg/detail/\mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____struct_8hpp}{obstacle\+\_\+\+\_\+struct.\+hpp}}\end{DoxyCompactItemize}

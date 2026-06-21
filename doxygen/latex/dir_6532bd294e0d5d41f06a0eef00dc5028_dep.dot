@@ -1,0 +1,12 @@
+digraph "src/build/build_sparxe/build/lib/build_sparxe"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_7ddd83ddcd4b750cc4b1f0fd63b2411e {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", label="lib", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_7ddd83ddcd4b750cc4b1f0fd63b2411e.html",tooltip=""]
+  dir_6532bd294e0d5d41f06a0eef00dc5028 [label="build_sparxe", fillcolor="#edf0f7", color="grey25", style="filled,bold", URL="dir_6532bd294e0d5d41f06a0eef00dc5028.html",tooltip=""];
+  }
+}

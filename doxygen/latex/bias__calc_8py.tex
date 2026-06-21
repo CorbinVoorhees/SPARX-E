@@ -1,0 +1,44 @@
+\doxysection{src/nav\+\_\+filters/src/bias\+\_\+calc.py File Reference}
+\hypertarget{bias__calc_8py}{}\label{bias__calc_8py}\index{src/nav\_filters/src/bias\_calc.py@{src/nav\_filters/src/bias\_calc.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacebias__calc}{bias\+\_\+calc}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a2fa2b52b8ab13dbc04c24ab3cfd1bbac}{bias\+\_\+calc.\+log\+\_\+file}} = pd.\+read\+\_\+csv(\textquotesingle{}../../../output.\+csv\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{bias\+\_\+calc.\+data}} = log\+\_\+file.\+to\+\_\+numpy()
+\item 
+\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{bias\+\_\+calc.\+t}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,0\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{bias\+\_\+calc.\+wroll}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,1\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{bias\+\_\+calc.\+wptch}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,2\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{bias\+\_\+calc.\+wyaw}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,3\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{bias\+\_\+calc.\+roll}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,4\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a720eb9b30be9048d3d70f2e592ac55cf}{bias\+\_\+calc.\+ptch}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,5\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{bias\+\_\+calc.\+yaw}} = \mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{data}}\mbox{[}\+:,6\mbox{]}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a6a72218ebba10c01878ae3f73eed3956}{bias\+\_\+calc.\+fig}}
+\item 
+\mbox{\hyperlink{namespacebias__calc_a3ad9ba5919a79b990675fd6ef83bb7df}{bias\+\_\+calc.\+ax}}
+\item 
+\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{bias\+\_\+calc.\+dt}} = np.\+mean(np.\+diff(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_ac3607645434b5c0144d3d99c54216c93}{bias\+\_\+calc.\+X\+\_\+roll}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_a57a27ae5cae559048cdc83bebc118388}{bias\+\_\+calc.\+X\+\_\+ptch}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a226897bee09ef544894f20bd0773b477}{wptch}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4}{bias\+\_\+calc.\+X\+\_\+yaw}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}}))
+\item 
+\mbox{\hyperlink{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}{bias\+\_\+calc.\+freqs}} = np.\+fft.\+fftfreq(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{len}}(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{d}}=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})
+\item 
+\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{int}} \mbox{\hyperlink{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174}{bias\+\_\+calc.\+mask}} = 0
+\end{DoxyCompactItemize}

@@ -1,0 +1,171 @@
+\doxysection{planning\+\_\+module\+::d\+\_\+star Class Reference}
+\hypertarget{classplanning__module_1_1d__star}{}\label{classplanning__module_1_1d__star}\index{planning\_module::d\_star@{planning\_module::d\_star}}
+
+
+{\ttfamily \#include $<$d\+\_\+star.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplanning__module_1_1d__star_ad741bfd8473f4efdac64a9e456626f3e}{d\+\_\+star}} (uint32\+\_\+t rows, uint32\+\_\+t cols, \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} start, \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} goal, \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} lander\+\_\+loc, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classplanning__module_1_1grid2d}{grid2d}} $>$ grid\+\_\+in)
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1d__star_a9687917f1c71c34fad586ccea894eb89}{on\+\_\+robot\+\_\+moved}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} new\+\_\+pos)
+\item 
+std\+::pair$<$ const \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} \texorpdfstring{$\ast$}{*}, uint32\+\_\+t $>$ \mbox{\hyperlink{classplanning__module_1_1d__star_ac260e7d769f8cdbc416ed8cb26c624e6}{extract\+\_\+path}} ()
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1d__star_a8474ffa7a709b975aa1b8462d5999905}{compute\+\_\+shortest\+\_\+path}} ()
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}{update\+\_\+vertex}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} u)
+\item 
+\mbox{\hyperlink{namespaceplanning__module_a7563ac145bb4d6b99e69c41af2dcf763}{coordf}} \mbox{\hyperlink{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}{calculate\+\_\+key}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} s)
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}{neighbors}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} s, std\+::array$<$ \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}, 9 $>$ \&out, uint32\+\_\+t \&count, bool include\+\_\+s=false)
+\item 
+float \mbox{\hyperlink{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a}{cost}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} a, \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} b)
+\item 
+float \mbox{\hyperlink{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e}{heuristic}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} a, \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} b)
+\item 
+bool \mbox{\hyperlink{classplanning__module_1_1d__star_aeb598b383328a858ac45dfe85d95a9c5}{path\+\_\+exists}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} src, \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} dst)
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1d__star_a6e6db5507c87e1adbee87d8fbc2ade9a}{update\+\_\+grid}} (const Eigen\+::\+Vector2d \&center, const Eigen\+::\+Matrix2d \&cov, std\+::function$<$ float(float, float)$>$ compute\+\_\+cost\+\_\+at)
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1d__star_a194bf0d69aae4b35cc560f72a6faa7c4}{dump\+\_\+path\+\_\+csv}} (const std\+::string \&path\+\_\+filename="{}dstar\+\_\+path.\+csv"{}, const std\+::string \&cost\+\_\+filename="{}dstar\+\_\+cost.\+csv"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00016}{16}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classplanning__module_1_1d__star_ad741bfd8473f4efdac64a9e456626f3e}\label{classplanning__module_1_1d__star_ad741bfd8473f4efdac64a9e456626f3e} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!d\_star@{d\_star}}
+\index{d\_star@{d\_star}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{d\_star()}{d\_star()}}
+{\footnotesize\ttfamily planning\+\_\+module\+::d\+\_\+star\+::d\+\_\+star (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{rows,  }\item[{uint32\+\_\+t}]{cols,  }\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{start,  }\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{goal,  }\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{lander\+\_\+loc,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classplanning__module_1_1grid2d}{grid2d}} $>$}]{grid\+\_\+in }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Takes shared ownership of grid; the ROS node and the planner share it. 
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00042}{42}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa}\label{classplanning__module_1_1d__star_ac7a3a454fbf580c3165e67c6455a68aa} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!calculate\_key@{calculate\_key}}
+\index{calculate\_key@{calculate\_key}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{calculate\_key()}{calculate\_key()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceplanning__module_a7563ac145bb4d6b99e69c41af2dcf763}{coordf}} planning\+\_\+module\+::d\+\_\+star\+::calculate\+\_\+key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00184}{184}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_a8474ffa7a709b975aa1b8462d5999905}\label{classplanning__module_1_1d__star_a8474ffa7a709b975aa1b8462d5999905} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!compute\_shortest\_path@{compute\_shortest\_path}}
+\index{compute\_shortest\_path@{compute\_shortest\_path}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{compute\_shortest\_path()}{compute\_shortest\_path()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::d\+\_\+star\+::compute\+\_\+shortest\+\_\+path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00114}{114}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a}\label{classplanning__module_1_1d__star_af858feb5af73a916bacf4bee22b7d78a} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!cost@{cost}}
+\index{cost@{cost}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{cost()}{cost()}}
+{\footnotesize\ttfamily float planning\+\_\+module\+::d\+\_\+star\+::cost (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{a,  }\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00208}{208}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_a194bf0d69aae4b35cc560f72a6faa7c4}\label{classplanning__module_1_1d__star_a194bf0d69aae4b35cc560f72a6faa7c4} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!dump\_path\_csv@{dump\_path\_csv}}
+\index{dump\_path\_csv@{dump\_path\_csv}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{dump\_path\_csv()}{dump\_path\_csv()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::d\+\_\+star\+::dump\+\_\+path\+\_\+csv (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path\+\_\+filename = {\ttfamily "{}dstar\+\_\+path.csv"{}},  }\item[{const std\+::string \&}]{cost\+\_\+filename = {\ttfamily "{}dstar\+\_\+cost.csv"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00342}{342}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_ac260e7d769f8cdbc416ed8cb26c624e6}\label{classplanning__module_1_1d__star_ac260e7d769f8cdbc416ed8cb26c624e6} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!extract\_path@{extract\_path}}
+\index{extract\_path@{extract\_path}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{extract\_path()}{extract\_path()}}
+{\footnotesize\ttfamily std\+::pair$<$ const \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} \texorpdfstring{$\ast$}{*}, uint32\+\_\+t $>$ planning\+\_\+module\+::d\+\_\+star\+::extract\+\_\+path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Greedy descent from start to goal over (cost(s,s\textquotesingle{}) + g(s\textquotesingle{})). Pure read on planner state — no mutation of km/start/last. 
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00069}{69}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e}\label{classplanning__module_1_1d__star_a51fb5eb9991fb1abb88c9de5774fed9e} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!heuristic@{heuristic}}
+\index{heuristic@{heuristic}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{heuristic()}{heuristic()}}
+{\footnotesize\ttfamily float planning\+\_\+module\+::d\+\_\+star\+::heuristic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{a,  }\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00231}{231}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623}\label{classplanning__module_1_1d__star_aca82f76f3a9078f6b0820c8bf1c61623} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!neighbors@{neighbors}}
+\index{neighbors@{neighbors}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{neighbors()}{neighbors()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::d\+\_\+star\+::neighbors (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{s,  }\item[{std\+::array$<$ \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}, 9 $>$ \&}]{out,  }\item[{uint32\+\_\+t \&}]{count,  }\item[{bool}]{include\+\_\+s = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00192}{192}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_a9687917f1c71c34fad586ccea894eb89}\label{classplanning__module_1_1d__star_a9687917f1c71c34fad586ccea894eb89} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!on\_robot\_moved@{on\_robot\_moved}}
+\index{on\_robot\_moved@{on\_robot\_moved}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{on\_robot\_moved()}{on\_robot\_moved()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::d\+\_\+star\+::on\+\_\+robot\+\_\+moved (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{new\+\_\+pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Call this AFTER the robot has actually moved one step along the path, to bump km and re-\/anchor the heuristic. Do NOT do this inside extract\+\_\+path. 
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00059}{59}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_aeb598b383328a858ac45dfe85d95a9c5}\label{classplanning__module_1_1d__star_aeb598b383328a858ac45dfe85d95a9c5} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!path\_exists@{path\_exists}}
+\index{path\_exists@{path\_exists}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{path\_exists()}{path\_exists()}}
+{\footnotesize\ttfamily bool planning\+\_\+module\+::d\+\_\+star\+::path\+\_\+exists (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{src,  }\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{dst }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00244}{244}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_a6e6db5507c87e1adbee87d8fbc2ade9a}\label{classplanning__module_1_1d__star_a6e6db5507c87e1adbee87d8fbc2ade9a} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!update\_grid@{update\_grid}}
+\index{update\_grid@{update\_grid}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{update\_grid()}{update\_grid()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::d\+\_\+star\+::update\+\_\+grid (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector2d \&}]{center,  }\item[{const Eigen\+::\+Matrix2d \&}]{cov,  }\item[{std\+::function$<$ float(float, float)$>$}]{compute\+\_\+cost\+\_\+at }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+After a sensor update along the spline (or anywhere), bump the cost field inside an ellipsoidal region defined by {\ttfamily cov} around {\ttfamily center}, then notify D\texorpdfstring{$\ast$}{*} Lite by calling update\+\_\+vertex on each touched cell. 
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00287}{287}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7}\label{classplanning__module_1_1d__star_a7e2ccde5625c35ade8423a1c8d312ed7} 
+\index{planning\_module::d\_star@{planning\_module::d\_star}!update\_vertex@{update\_vertex}}
+\index{update\_vertex@{update\_vertex}!planning\_module::d\_star@{planning\_module::d\_star}}
+\doxysubsubsection{\texorpdfstring{update\_vertex()}{update\_vertex()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::d\+\_\+star\+::update\+\_\+vertex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{u }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{d__star_8hpp_source_l00160}{160}} of file \mbox{\hyperlink{d__star_8hpp_source}{d\+\_\+star.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/autonomy/src/\mbox{\hyperlink{d__star_8hpp}{d\+\_\+star.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,101 @@
+\doxysection{spline\+\_\+testcase.\+hpp}
+\hypertarget{spline__testcase_8hpp_source}{}\label{spline__testcase_8hpp_source}\index{src/autonomy/src/spline\_testcase.hpp@{src/autonomy/src/spline\_testcase.hpp}}
+\mbox{\hyperlink{spline__testcase_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_SPLINE\_CASE\_\_}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_SPLINE\_CASE\_\_}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{planning_8hpp}{planning.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}Eigen/Dense"{}}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00011}\mbox{\hyperlink{classspline__testcase}{00011}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classspline__testcase}{spline\_testcase}}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00013}00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00014}\mbox{\hyperlink{structspline__testcase_1_1funct}{00014}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structspline__testcase_1_1funct}{funct}}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00016}\mbox{\hyperlink{structspline__testcase_1_1funct_a9513d9cad774acb1968459a403cf4743}{00016}}\ \ \ \ \ \ \ \ \ Eigen::Vector4d\ \mbox{\hyperlink{structspline__testcase_1_1funct_a9513d9cad774acb1968459a403cf4743}{x\_coeffs}};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00017}\mbox{\hyperlink{structspline__testcase_1_1funct_a1c2f4fec94398124324781fba871ebbf}{00017}}\ \ \ \ \ \ \ \ \ Eigen::Vector4d\ \mbox{\hyperlink{structspline__testcase_1_1funct_a1c2f4fec94398124324781fba871ebbf}{y\_coeffs}};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00018}\mbox{\hyperlink{structspline__testcase_1_1funct_a0821c2efd9c87a8608f1fba4d6a39e90}{00018}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structspline__testcase_1_1funct_a0821c2efd9c87a8608f1fba4d6a39e90}{start\_time}}\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00019}\mbox{\hyperlink{structspline__testcase_1_1funct_ae065c444a1a204fdc45491274ad10e38}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structspline__testcase_1_1funct_ae065c444a1a204fdc45491274ad10e38}{end\_time}}\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00021}\mbox{\hyperlink{structspline__testcase_1_1funct_aa2f560b3250609ce08b403d658241435}{00021}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structspline__testcase_1_1funct_aa2f560b3250609ce08b403d658241435}{case\_eval\_at}}(\textcolor{keywordtype}{double}\ t,\ Eigen::Vector2d\ \&result,\ \textcolor{keywordtype}{int}\ order\ =\ 0)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00022}00022\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t\ <\ this-\/>\mbox{\hyperlink{structspline__testcase_1_1funct_a0821c2efd9c87a8608f1fba4d6a39e90}{start\_time}}\ ||\ t\ >\ this-\/>end\_time)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\ =\ t\ -\/\ this-\/>\mbox{\hyperlink{structspline__testcase_1_1funct_a0821c2efd9c87a8608f1fba4d6a39e90}{start\_time}};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt2\ =\ dt\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt3\ =\ dt2\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector4d\ pows;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (order)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pows\ <<\ dt3,\ dt2,\ dt,\ 1.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pows\ <<\ 3.0\ *\ dt2,\ 2.0\ *\ dt,\ 1.0,\ 0.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pows\ <<\ 6.0\ *\ dt,\ 2.0,\ 0.0,\ 0.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pows\ <<\ 6.0,\ 0.0,\ 0.0,\ 0.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ result[0]\ =\ this-\/>x\_coeffs.dot(pows);}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ result[1]\ =\ this-\/>y\_coeffs.dot(pows);}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00052}00052\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00054}00054\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00055}00055\ \ \ \ \ std::vector<funct>\ vec;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00057}00057\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00058}\mbox{\hyperlink{classspline__testcase_aaef3bc1846a5ccd65ee331bd4e9b72d7}{00058}}\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<funct>\ \&\mbox{\hyperlink{classspline__testcase_aaef3bc1846a5ccd65ee331bd4e9b72d7}{get\_vec}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ vec;\ \}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00060}\mbox{\hyperlink{classspline__testcase_a1d6aafdd4ff0e7a69269285670b1d13f}{00060}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classspline__testcase_a1d6aafdd4ff0e7a69269285670b1d13f}{eval\_at}}(\textcolor{keywordtype}{double}\ t,\ Eigen::Vector2d\ \&result,\ \textcolor{keywordtype}{int}\ order\ =\ 0)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00061}00061\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ O(n)\ bin\ search;\ n\ is\ small\ (one\ segment\ per\ spline\ piece)\ so\ it's\ fine.}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item\ :\ this-\/>vec)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t\ >=\ item.start\_time\ \&\&\ t\ <=\ item.end\_time)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ item.case\_eval\_at(t,\ result,\ order);}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00067}00067\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00069}\mbox{\hyperlink{classspline__testcase_a435b730b2f415aa3ccc3babd2851e438}{00069}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classspline__testcase_a435b730b2f415aa3ccc3babd2851e438}{parse\_testcase}}(std::string\ data)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00070}00070\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ this-\/>vec.clear();}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ std::stringstream\ ss(data);}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ uint32\_t\ n\_lines\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ ss\ >>\ n\_lines;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ start\_time\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (n\_lines-\/-\/\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspline__testcase_1_1funct}{funct}}\ sp;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ 4;\ i++)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ss\ >>\ sp.\mbox{\hyperlink{structspline__testcase_1_1funct_a9513d9cad774acb1968459a403cf4743}{x\_coeffs}}[i];}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ 4;\ i++)}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ss\ >>\ sp.\mbox{\hyperlink{structspline__testcase_1_1funct_a1c2f4fec94398124324781fba871ebbf}{y\_coeffs}}[i];}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ sp.\mbox{\hyperlink{structspline__testcase_1_1funct_a0821c2efd9c87a8608f1fba4d6a39e90}{start\_time}}\ =\ start\_time;}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ ss\ >>\ sp.\mbox{\hyperlink{structspline__testcase_1_1funct_ae065c444a1a204fdc45491274ad10e38}{end\_time}};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ start\_time\ =\ sp.\mbox{\hyperlink{structspline__testcase_1_1funct_ae065c444a1a204fdc45491274ad10e38}{end\_time}};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>vec.push\_back(sp);}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00092}00092\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00093}00093\ \};}
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{spline__testcase_8hpp_source_l00095}00095\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,317 @@
+\chapter{Unilidar SDK2}
+\hypertarget{md_src_2unilidar__sdk2_2README}{}\label{md_src_2unilidar__sdk2_2README}\index{Unilidar SDK2@{Unilidar SDK2}}
+\label{md_src_2unilidar__sdk2_2README_autotoc_md4}%
+\Hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md4}%
+ \doxysectlink{md_src_2unilidar__sdk2_2README__CN}{中文版 \texorpdfstring{$\vert$}{|} Chinese}{0}\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md5}{}\doxysection{\texorpdfstring{1. Introduction}{1. Introduction}}\label{md_src_2unilidar__sdk2_2README_autotoc_md5}
+This repository is the Software Development Kit (SDK) for the \href{https://www.unitree.com/LiDAR}{\texttt{ Unitree L2}} Li\+DAR.
+
+You can use the code interfaces in this repository to obtain point cloud and IMU data from our Li\+DAR, as well as set and get relevant configuration parameters of the lidar.
+
+We provide several common interfaces for the Li\+DAR\+:
+\begin{DoxyItemize}
+\item The original C++ based SDK\+: \doxysectlink{md_src_2unilidar__sdk2_2unitree__lidar__sdk_2README}{unitree\+\_\+lidar\+\_\+sdk}{0}
+\item The package for parsing and publishing Li\+DAR data in the ROS environment\+: unitree\+\_\+lidar\+\_\+ros
+\item The package for parsing and publishing Li\+DAR data in the ROS2 environment\+: \doxysectlink{md_src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2README}{unitree\+\_\+lidar\+\_\+ros2}{0}
+\end{DoxyItemize}\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md6}{}\doxysection{\texorpdfstring{2. Coordinate System Definition}{2. Coordinate System Definition}}\label{md_src_2unilidar__sdk2_2README_autotoc_md6}
+  
+
+The coordinate system of this Li\+DAR is defined as shown in the above figure, which meets the definition of a right-\/handed coordinate system. Let the Li\+DAR point cloud coordinate system be L, and the IMU coordinate system be I.
+
+The origin of the Li\+DAR point cloud coordinate system is located at the center of the bottom mounting surface of the Li\+DAR. Its +X-\/axis is opposite to the direction of the bottom cable outlet, its +Y-\/axis is obtained by rotating the +X-\/axis counterclockwise by 90 degrees, and its +Z-\/axis is perpendicular to the bottom surface.
+
+The three coordinate axes of the IMU coordinate system are parallel to the corresponding coordinate axes of the point cloud coordinate system, and the two only have a translation of the origin position. The origin of the IMU coordinate system in the Li\+DAR point cloud coordinate system is (in meters)\+: \mbox{[}-\/0.\+007698, -\/0.\+014655, 0.\+00667\mbox{]}.
+
+According to the standard transformation matrix method, the pose transformation from the Li\+DAR point cloud coordinate system L to the IMU coordinate system I is\+:
+
+\$\$ T\+\_\+\{LI\} = \textbackslash{}begin\{bmatrix\} 1 \& 0 \& 0 \& -\/0.\+007698 \textbackslash{} 0 \& 1 \& 0 \& -\/0.\+014655 \textbackslash{} 0 \& 0 \& 1 \& 0.\+00667 \textbackslash{} 0 \& 0 \& 0 \& 1 \textbackslash{} \textbackslash{}end\{bmatrix\} \$\$\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md7}{}\doxysection{\texorpdfstring{3. C++ SDK}{3. C++ SDK}}\label{md_src_2unilidar__sdk2_2README_autotoc_md7}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md8}{}\doxysubsection{\texorpdfstring{3.\+1 Compilation}{3.1 Compilation}}\label{md_src_2unilidar__sdk2_2README_autotoc_md8}
+You can compile the sample programs of this project according to the standard compilation method of cmake projects\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ unitree\_lidar\_sdk}
+\DoxyCodeLine{}
+\DoxyCodeLine{mkdir\ build}
+\DoxyCodeLine{}
+\DoxyCodeLine{cd\ build}
+\DoxyCodeLine{}
+\DoxyCodeLine{cmake\ ..\ \&\&\ make\ -\/j2}
+
+\end{DoxyCode}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md9}{}\doxysubsection{\texorpdfstring{3.\+2 Configuring Work Mode}{3.2 Configuring Work Mode}}\label{md_src_2unilidar__sdk2_2README_autotoc_md9}
+The Li\+DAR can be configured in various working modes by default, including standard FOV or wide-\/angle FOV, 3D mode or 2D mode, IMU enabled or disabled, Ethernet or serial connection, etc.
+
+We can configure the working mode through the host computer, or we can also configure the working mode through the following interface in {\ttfamily \doxylink{unitree__lidar__sdk_8h}{unitree\+\_\+lidar\+\_\+sdk.\+h}}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{virtual\ void\ setLidarWorkMode(uint32\_t\ mode)\ =\ 0;}
+
+\end{DoxyCode}
+
+
+Setting the working mode is implemented through a {\ttfamily uint32\+\_\+t} integer variable, with each bit corresponding to the switching of a function. According to the bit position from low to high, the corresponding functions for positions 0 or 1 are shown in the following table\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Bit Position   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value 0   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value 1    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Bit Position   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value 0   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value 1    }\\\cline{1-4}
+\endhead
+0   &Switch between standard FOV and wide-\/angle FOV   &Standard FOV (180°)   &Wide-\/angle FOV (192°)    \\\cline{1-4}
+1   &Switch between 3D and 2D measurement modes   &3D measurement mode   &2D measurement mode    \\\cline{1-4}
+2   &Enable or disable IMU   &Enable IMU   &Disable IMU    \\\cline{1-4}
+3   &Switch between Ethernet mode and serial mode   &Ethernet mode   &Serial mode    \\\cline{1-4}
+4   &Switch between lidar power-\/on default start mode   &Power on and start automatically   &Power on and wait for start command without rotation    \\\cline{1-4}
+5-\/31   &Reserved   &Reserved   &Reserved   \\\cline{1-4}
+\end{longtabu}
+
+
+The common usage mode is standard FOV + 3D measurement + enable IMU + power on self-\/start, which means these bit positions are all kept at 0. We only need to determine whether to use Ethernet connection mode or serial connection mode. For example, in the following sample program,
+\begin{DoxyItemize}
+\item If using Ethernet connection mode, configure the work mode to 0 (i.\+e., all bit positions of the integer variable are equal to 0)
+\item If using serial connection mode, configure the work mode to 8 (i.\+e., the third bit position of the integer variable is equal to 1, and the other 0-\/31 bit positions are all equal to 0)
+\end{DoxyItemize}
+
+The default factory lidar work mode is 0, i.\+e., Ethernet communication mode.\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md10}{}\doxysubsection{\texorpdfstring{3.\+3 Running with Ethernet}{3.3 Running with Ethernet}}\label{md_src_2unilidar__sdk2_2README_autotoc_md10}
+The sample program for running the Li\+DAR with Ethernet connection is\+: {\ttfamily \doxylink{example__lidar__udp_8cpp}{example\+\_\+lidar\+\_\+udp.\+cpp}}.
+
+First, connect your Li\+DAR to the computer with an Ethernet cable, then confirm that the corresponding network card of your computer is configured to the default target IP address of the Li\+DAR\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{192.168.1.2}
+
+\end{DoxyCode}
+
+
+Then, run the sample program\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{../bin/example\_lidar\_udp}
+
+\end{DoxyCode}
+
+
+The sample output is as follows\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ ../bin/example\_lidar\_udp\ }
+\DoxyCodeLine{Unilidar\ initialization\ succeed!}
+\DoxyCodeLine{set\ Lidar\ work\ mode\ to:\ 0}
+\DoxyCodeLine{lidar\ hardware\ version\ =\ 1.1.1.1}
+\DoxyCodeLine{lidar\ firmware\ version\ =\ 2.3.3.0}
+\DoxyCodeLine{lidar\ sdk\ version\ =\ 2.0.2}
+\DoxyCodeLine{stop\ lidar\ rotation\ ...}
+\DoxyCodeLine{start\ lidar\ rotation\ ...}
+\DoxyCodeLine{dirty\ percentage\ =\ 1.616020\ \%}
+\DoxyCodeLine{time\ delay\ (second)\ =\ 0.001880}
+\DoxyCodeLine{An\ IMU\ msg\ is\ parsed!}
+\DoxyCodeLine{\ \ \ \ system\ stamp\ =\ 1730191291.3044135571}
+\DoxyCodeLine{\ \ \ \ seq\ =\ 87,\ stamp\ =\ 1730191291.304411172}
+\DoxyCodeLine{\ \ \ \ quaternion\ (x,\ y,\ z,\ w)\ =\ [-\/0.3645,\ 0.0077,\ 0.0099,\ 0.9293]}
+\DoxyCodeLine{\ \ \ \ angular\_velocity\ (x,\ y,\ z)\ =\ [0.0209,\ -\/0.0644,\ 0.0146]}
+\DoxyCodeLine{\ \ \ \ linear\_acceleration\ (x,\ y,\ z)\ =\ [0.2215,\ 0.3537,\ 9.5822]}
+\DoxyCodeLine{An\ IMU\ msg\ is\ parsed!}
+\DoxyCodeLine{\ \ \ \ system\ stamp\ =\ 1730191291.3070139885}
+\DoxyCodeLine{\ \ \ \ seq\ =\ 88,\ stamp\ =\ 1730191291.307010650}
+\DoxyCodeLine{\ \ \ \ quaternion\ (x,\ y,\ z,\ w)\ =\ [-\/0.3646,\ 0.0077,\ 0.0099,\ 0.9293]}
+\DoxyCodeLine{\ \ \ \ angular\_velocity\ (x,\ y,\ z)\ =\ [0.0086,\ -\/0.0039,\ 0.0122]}
+\DoxyCodeLine{\ \ \ \ linear\_acceleration\ (x,\ y,\ z)\ =\ [0.1608,\ 0.3222,\ 9.7098]}
+\DoxyCodeLine{A\ Cloud\ msg\ is\ parsed!\ }
+\DoxyCodeLine{\ \ \ \ stamp\ =\ 1730724860.502892,\ id\ =\ 32}
+\DoxyCodeLine{\ \ \ \ cloud\ size\ \ =\ 5205,\ ringNum\ =\ 18}
+\DoxyCodeLine{\ \ \ \ first\ 10\ points\ (x,y,z,intensity,time,ring)\ =\ }
+\DoxyCodeLine{\ \ \ \ \ \ (1.554845,\ -\/1.070981,\ 0.000000,\ 0.000000,\ 0.000000,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.645649,\ -\/1.132876,\ 0.020923,\ 0.000000,\ 0.000008,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.698396,\ -\/1.168516,\ 0.043183,\ 0.000000,\ 0.000015,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.981559,\ -\/1.362552,\ 0.075574,\ 0.000000,\ 0.000023,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.981164,\ -\/1.361497,\ 0.100753,\ 0.000000,\ 0.000031,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.942685,\ -\/1.334285,\ 0.123513,\ 0.000000,\ 0.000039,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.602043,\ -\/1.099691,\ 0.122253,\ 0.000000,\ 0.000046,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.612709,\ -\/1.106375,\ 0.143620,\ 0.000000,\ 0.000054,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.616608,\ -\/1.108412,\ 0.164594,\ 0.000000,\ 0.000062,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (1.619501,\ -\/1.109757,\ 0.185582,\ 0.000000,\ 0.000069,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ ...}
+
+\end{DoxyCode}
+
+
+If you need to modify the default IP address of the Li\+DAR, you can refer to the user manual to use our host computer to make the changes.\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md11}{}\doxysubsection{\texorpdfstring{3.\+4 Running with Serial Port}{3.4 Running with Serial Port}}\label{md_src_2unilidar__sdk2_2README_autotoc_md11}
+Note that the Li\+DAR is shipped with Ethernet communication mode by default. If you have not yet switched the communication mode to serial communication mode, you will need to use an Ethernet connection to communicate with the Li\+DAR first, so that you can then switch its communication method to serial communication mode. You can use our host computer to make the switch, or you can also refer to section \mbox{[}4.\+2\mbox{]}, use the default Ethernet communication example program {\ttfamily \doxylink{example__lidar__udp_8cpp}{example\+\_\+lidar\+\_\+udp.\+cpp}} to communicate with the lidar first, and set the lidar work mode to serial communication mode ({\ttfamily work\+Mode=8}), then power off and restart the Li\+DAR.
+
+After confirming that the current Li\+DAR is in serial communication mode, we connect the Li\+DAR to the computer using a serial cable, and then confirm the serial port name of the Li\+DAR, which defaults to the following value\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{"{}/dev/ttyACM0"{}}
+
+\end{DoxyCode}
+
+
+You can also modify the default serial port name and correspondingly modify it in the example code {\ttfamily \doxylink{example__lidar__serial_8cpp}{example\+\_\+lidar\+\_\+serial.\+cpp}}.
+
+After compiling, you can run the example program\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{../bin/example\_lidar\_serial}
+
+\end{DoxyCode}
+
+
+The sample output is as follows\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$\ ../bin/example\_lidar\_serial}
+\DoxyCodeLine{Unilidar\ initialization\ succeed!}
+\DoxyCodeLine{set\ Lidar\ work\ mode\ to:\ 0}
+\DoxyCodeLine{lidar\ hardware\ version\ =\ 1.1.1.1}
+\DoxyCodeLine{lidar\ firmware\ version\ =\ 2.3.3.0}
+\DoxyCodeLine{lidar\ sdk\ version\ =\ 2.0.2}
+\DoxyCodeLine{stop\ lidar\ rotation\ ...}
+\DoxyCodeLine{start\ lidar\ rotation\ ...}
+\DoxyCodeLine{dirty\ percentage\ =\ 1.363776\ \%}
+\DoxyCodeLine{time\ delay\ (second)\ =\ 0.002044}
+\DoxyCodeLine{An\ IMU\ msg\ is\ parsed!}
+\DoxyCodeLine{\ \ \ \ system\ stamp\ =\ 1730191291.3044135571}
+\DoxyCodeLine{\ \ \ \ seq\ =\ 87,\ stamp\ =\ 1730191291.304411172}
+\DoxyCodeLine{\ \ \ \ quaternion\ (x,\ y,\ z,\ w)\ =\ [-\/0.3645,\ 0.0077,\ 0.0099,\ 0.9293]}
+\DoxyCodeLine{\ \ \ \ angular\_velocity\ (x,\ y,\ z)\ =\ [0.0209,\ -\/0.0644,\ 0.0146]}
+\DoxyCodeLine{\ \ \ \ linear\_acceleration\ (x,\ y,\ z)\ =\ [0.2215,\ 0.3537,\ 9.5822]}
+\DoxyCodeLine{An\ IMU\ msg\ is\ parsed!}
+\DoxyCodeLine{\ \ \ \ system\ stamp\ =\ 1730191291.3070139885}
+\DoxyCodeLine{\ \ \ \ seq\ =\ 88,\ stamp\ =\ 1730191291.307010650}
+\DoxyCodeLine{\ \ \ \ quaternion\ (x,\ y,\ z,\ w)\ =\ [-\/0.3646,\ 0.0077,\ 0.0099,\ 0.9293]}
+\DoxyCodeLine{\ \ \ \ angular\_velocity\ (x,\ y,\ z)\ =\ [0.0086,\ -\/0.0039,\ 0.0122]}
+\DoxyCodeLine{\ \ \ \ linear\_acceleration\ (x,\ y,\ z)\ =\ [0.1608,\ 0.3222,\ 9.7098]}
+\DoxyCodeLine{A\ Cloud\ msg\ is\ parsed!\ }
+\DoxyCodeLine{\ \ \ \ stamp\ =\ 1730724860.419490,\ id\ =\ 31}
+\DoxyCodeLine{\ \ \ \ cloud\ size\ \ =\ 5217,\ ringNum\ =\ 18}
+\DoxyCodeLine{\ \ \ \ first\ 10\ points\ (x,y,z,intensity,time,ring)\ =\ }
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.447932,\ 0.172502,\ 0.000000,\ 0.000000,\ 0.000000,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.442354,\ 0.170217,\ 0.004964,\ 0.000000,\ 0.000008,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.443261,\ 0.170429,\ 0.009948,\ 0.000000,\ 0.000015,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.445051,\ 0.170981,\ 0.014983,\ 0.000000,\ 0.000023,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.443060,\ 0.170079,\ 0.019891,\ 0.000000,\ 0.000031,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.442887,\ 0.169877,\ 0.024860,\ 0.000000,\ 0.000039,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.442665,\ 0.169655,\ 0.029825,\ 0.000000,\ 0.000046,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.447052,\ 0.171199,\ 0.035154,\ 0.000000,\ 0.000054,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.442076,\ 0.169157,\ 0.039747,\ 0.000000,\ 0.000062,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ (-\/0.446358,\ 0.170658,\ 0.045172,\ 0.000000,\ 0.000069,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ ...}
+
+\end{DoxyCode}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md12}{}\doxysection{\texorpdfstring{4. How to Use the ROS Package}{4. How to Use the ROS Package}}\label{md_src_2unilidar__sdk2_2README_autotoc_md12}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md13}{}\doxysubsection{\texorpdfstring{4.\+1 Dependencies}{4.1 Dependencies}}\label{md_src_2unilidar__sdk2_2README_autotoc_md13}
+Dependencies include {\ttfamily PCL} and {\ttfamily ROS}.
+
+We have verified that this package can successfully run in the following environment\+:
+\begin{DoxyItemize}
+\item {\ttfamily Ubuntu 20.\+04}
+\item {\ttfamily ROS noetic}
+\item {\ttfamily PCL-\/1.\+10}
+\item {\ttfamily unitree\+\_\+lidar\+\_\+sdk}
+\end{DoxyItemize}
+
+It is recommended that you configure an environment like this to run the package.\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md14}{}\doxysubsection{\texorpdfstring{4.\+2 Configuration}{4.2 Configuration}}\label{md_src_2unilidar__sdk2_2README_autotoc_md14}
+The default communication method for the Li\+DAR is Ethernet mode. If you need to modify the working mode, you need to change the corresponding parameters in the configuration file. The path to the configuration file is\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{unitree\_lidar\_ros/src/unitree\_lidar\_ros/config/config.yaml}
+
+\end{DoxyCode}
+
+
+If you have special needs, such as changing the cloud topic name or IMU topic name, you can also configure them in the configuration file.
+
+The default cloud topic and its coordinate system name are\+:
+\begin{DoxyItemize}
+\item Topic name\+: "{}unilidar/cloud"{}
+\item Coordinate system\+: "{}unilidar\+\_\+lidar"{}
+\end{DoxyItemize}
+
+The default IMU topic and its coordinate system name are\+:
+\begin{DoxyItemize}
+\item Topic name\+: "{}unilidar/imu"{}
+\item Coordinate system\+: "{}unilidar\+\_\+imu"{}
+\end{DoxyItemize}\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md15}{}\doxysubsection{\texorpdfstring{4.\+3 Compilation}{4.3 Compilation}}\label{md_src_2unilidar__sdk2_2README_autotoc_md15}
+Compile\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ unitree\_lidar\_ros}
+\DoxyCodeLine{}
+\DoxyCodeLine{catkin\_make}
+
+\end{DoxyCode}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md16}{}\doxysubsection{\texorpdfstring{4.\+4 Running}{4.4 Running}}\label{md_src_2unilidar__sdk2_2README_autotoc_md16}
+Run\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{source\ devel/setup.bash}
+\DoxyCodeLine{}
+\DoxyCodeLine{roslaunch\ unitree\_lidar\_ros\ run.launch}
+
+\end{DoxyCode}
+
+
+In the Rviz window, you will see our Li\+DAR point cloud as follows\+:
+
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md17}{}\doxysection{\texorpdfstring{5. How to Use the ROS2 Package}{5. How to Use the ROS2 Package}}\label{md_src_2unilidar__sdk2_2README_autotoc_md17}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md18}{}\doxysubsection{\texorpdfstring{5.\+1 Dependencies}{5.1 Dependencies}}\label{md_src_2unilidar__sdk2_2README_autotoc_md18}
+Dependencies include {\ttfamily PCL} and {\ttfamily ROS2}.
+
+We have verified that this package can successfully run in the following environment\+:
+\begin{DoxyItemize}
+\item {\ttfamily Ubuntu 20.\+04}
+\item {\ttfamily ROS2 foxy}
+\item {\ttfamily PCL-\/1.\+10}
+\item {\ttfamily unitree\+\_\+lidar\+\_\+sdk}
+\end{DoxyItemize}
+
+It is recommended that you configure an environment like this to run the package.\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md19}{}\doxysubsection{\texorpdfstring{5.\+2 Configuration}{5.2 Configuration}}\label{md_src_2unilidar__sdk2_2README_autotoc_md19}
+The default communication method for the Li\+DAR is Ethernet mode. If you need to modify the working mode, you need to change the corresponding parameters in the configuration file. The path to the configuration file is\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{unitree\_lidar\_ros2/src/unitree\_lidar\_ros2/launch/launch.py}
+
+\end{DoxyCode}
+
+
+If you have special needs, such as changing the cloud topic name or IMU topic name, you can also configure them in the configuration file.
+
+The default cloud topic and its coordinate system name are\+:
+\begin{DoxyItemize}
+\item Topic name\+: "{}unilidar/cloud"{}
+\item Coordinate system\+: "{}unilidar\+\_\+lidar"{}
+\end{DoxyItemize}
+
+The default IMU topic and its coordinate system name are\+:
+\begin{DoxyItemize}
+\item Topic name\+: "{}unilidar/imu"{}
+\item Coordinate system\+: "{}unilidar\+\_\+imu"{}
+\end{DoxyItemize}\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md20}{}\doxysubsection{\texorpdfstring{5.\+3 Compilation}{5.3 Compilation}}\label{md_src_2unilidar__sdk2_2README_autotoc_md20}
+Compile\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ unilidar\_sdk/unitree\_lidar\_ros2}
+\DoxyCodeLine{}
+\DoxyCodeLine{colcon\ build}
+
+\end{DoxyCode}
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md21}{}\doxysubsection{\texorpdfstring{5.\+4 Running}{5.4 Running}}\label{md_src_2unilidar__sdk2_2README_autotoc_md21}
+Run\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{source\ install/setup.bash}
+\DoxyCodeLine{}
+\DoxyCodeLine{ros2\ launch\ unitree\_lidar\_ros2\ launch.py}
+
+\end{DoxyCode}
+
+
+In the Rviz window, you will see our Li\+DAR point cloud as follows\+:
+
+\hypertarget{md_src_2unilidar__sdk2_2README_autotoc_md22}{}\doxysection{\texorpdfstring{6. How to Parse Raw Data Packets}{6. How to Parse Raw Data Packets}}\label{md_src_2unilidar__sdk2_2README_autotoc_md22}
+If you wish to parse the raw Ethernet or serial port data to obtain point cloud and IMU data, you can refer to our custom communication protocol for parsing.
+
+Specifically, you can refer to our user manual, as well as the following header files under {\ttfamily unitree\+\_\+lidar\+\_\+sdk}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{unitree\_lidar\_protocol.h}
+\DoxyCodeLine{unitree\_lidar\_utilities.h}
+
+\end{DoxyCode}
+ 

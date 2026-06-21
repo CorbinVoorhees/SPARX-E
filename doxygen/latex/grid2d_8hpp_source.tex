@@ -1,0 +1,60 @@
+\doxysection{grid2d.\+hpp}
+\hypertarget{grid2d_8hpp_source}{}\label{grid2d_8hpp_source}\index{src/autonomy/src/grid2d.hpp@{src/autonomy/src/grid2d.hpp}}
+\mbox{\hyperlink{grid2d_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_GRID\_2D\_\_}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_GRID\_2D\_\_}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{planning_8hpp}{planning.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00009}00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplanning__module}{planning\_module}}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00011}\mbox{\hyperlink{classplanning__module_1_1grid2d}{00011}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplanning__module_1_1grid2d}{grid2d}}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00012}00012\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00014}00014\ \ \ \ \ \ \ \ \ std::unique\_ptr<datapoint[]>\ data;}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00015}00015\ \ \ \ \ \ \ \ \ uint32\_t\ rows;}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00016}00016\ \ \ \ \ \ \ \ \ uint32\_t\ cols;}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplanning__module_1_1grid2d}{grid2d}}(uint32\_t\ r,\ uint32\_t\ c,}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ *elevation,}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ *illumination,}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ *\mbox{\hyperlink{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef}{is\_obstacle}});}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00025}\mbox{\hyperlink{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}{index}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2<U>}}\ \&c)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00026}00026\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(c.\mbox{\hyperlink{structplanning__module_1_1Vec2_acbde3df5c1bf3c805625fc37c8a1e207}{y}})\ *\ this-\/>cols\ +\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(c.\mbox{\hyperlink{structplanning__module_1_1Vec2_ab930145b0554e80da39024286b66cd02}{x}});}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00030}\mbox{\hyperlink{classplanning__module_1_1grid2d_a88c1be82adac4467f5804fadcbfd40b4}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ \mbox{\hyperlink{classplanning__module_1_1grid2d_a88c1be82adac4467f5804fadcbfd40b4}{coord\_from\_index}}(\textcolor{keyword}{const}\ uint32\_t\ idx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00031}00031\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(idx\ \%\ this-\/>cols),}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(idx\ /\ this-\/>cols)\};}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00037}\mbox{\hyperlink{classplanning__module_1_1grid2d_acd3f8a1119df25683818582971e41273}{00037}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}}\ \&\mbox{\hyperlink{classplanning__module_1_1grid2d_acd3f8a1119df25683818582971e41273}{operator[]}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2<U>}}\ \&c)\ \{\ \textcolor{keywordflow}{return}\ data[\mbox{\hyperlink{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}{index}}(c)];\ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00038}\mbox{\hyperlink{classplanning__module_1_1grid2d_a444f1d93b083423c8c1d2876ea4b2b29}{00038}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}}\ \&\mbox{\hyperlink{classplanning__module_1_1grid2d_a444f1d93b083423c8c1d2876ea4b2b29}{operator[]}}(\textcolor{keyword}{const}\ uint32\_t\ idx)\ \{\ \textcolor{keywordflow}{return}\ data[idx];\ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00041}\mbox{\hyperlink{classplanning__module_1_1grid2d_ada6125092203f7b8d9bd923d6ac59646}{00041}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}}\ \&\mbox{\hyperlink{classplanning__module_1_1grid2d_ada6125092203f7b8d9bd923d6ac59646}{operator[]}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2<U>}}\ \&c)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ data[\mbox{\hyperlink{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}{index}}(c)];\ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00042}\mbox{\hyperlink{classplanning__module_1_1grid2d_aa66a89f42679910800f874c027af30c8}{00042}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}}\ \&\mbox{\hyperlink{classplanning__module_1_1grid2d_aa66a89f42679910800f874c027af30c8}{operator[]}}(\textcolor{keyword}{const}\ uint32\_t\ idx)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ data[idx];\ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00044}\mbox{\hyperlink{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef}{is\_obstacle}}(\mbox{\hyperlink{structplanning__module_1_1Vec2}{coordi}}\ c)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ data[\mbox{\hyperlink{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}{index}}(c)].is\_obstacle;\ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00046}\mbox{\hyperlink{classplanning__module_1_1grid2d_a2bca7acbef30590cb23c6199b753277b}{00046}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ std::pair<uint32\_t,\ uint32\_t>\ \mbox{\hyperlink{classplanning__module_1_1grid2d_a2bca7acbef30590cb23c6199b753277b}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \{this-\/>rows,\ this-\/>cols\};\ \}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reset\ planner\ state\ (g,\ rhs,\ heap\_index,\ has\_visited)\ without\ clobbering}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ elevation/illumination/obstacle\ data.\ Useful\ between\ replans.}}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1grid2d_a350997b2699a2e8c4cd5db89ddf48206}{reset\_search\_state}}();}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00051}00051\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00052}00052\ \};}
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{grid2d_8hpp_source_l00054}00054\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

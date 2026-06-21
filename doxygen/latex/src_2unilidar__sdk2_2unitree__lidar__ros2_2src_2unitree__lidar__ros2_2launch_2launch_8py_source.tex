@@ -1,0 +1,55 @@
+\doxysection{launch.\+py}
+\hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source}{}\label{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source}\index{src/unilidar\_sdk2/unitree\_lidar\_ros2/src/unitree\_lidar\_ros2/launch/launch.py@{src/unilidar\_sdk2/unitree\_lidar\_ros2/src/unitree\_lidar\_ros2/launch/launch.py}}
+\mbox{\hyperlink{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00001}00001\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00002}00002\ \textcolor{keyword}{import}\ subprocess}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00004}00004\ \textcolor{keyword}{from}\ launch\ \textcolor{keyword}{import}\ LaunchDescription}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00005}00005\ \textcolor{keyword}{from}\ launch\_ros.actions\ \textcolor{keyword}{import}\ Node}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00007}00007\ \textcolor{keyword}{def\ }generate\_launch\_description():}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00008}00008\ \ \ \ \ \textcolor{comment}{\#\ Run\ unitree\ lidar}}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00009}00009\ \ \ \ \ node1\ =\ Node(}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'unitree\_lidar\_ros2'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'unitree\_lidar\_ros2\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'unitree\_lidar\_ros2\_node'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ output=\textcolor{stringliteral}{'screen'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ parameters=\ [}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'initialize\_type'}:\ 2\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'work\_mode'}:\ 0\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'use\_system\_timestamp'}:\ \textcolor{keyword}{True}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'range\_min'}:\ 0.0\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'range\_max'}:\ 100.0\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'cloud\_scan\_num'}:\ 18\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'serial\_port'}:\ \textcolor{stringliteral}{'/dev/ttyACM1'}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'baudrate'}:\ 4000000\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'lidar\_port'}:\ 6101\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'lidar\_ip'}:\ \textcolor{stringliteral}{'192.168.1.62'}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'local\_port'}:\ 6201\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'local\_ip'}:\ \textcolor{stringliteral}{'192.168.1.2'}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'cloud\_frame'}:\ \textcolor{stringliteral}{"{}unilidar\_lidar"{}}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'cloud\_topic'}:\ \textcolor{stringliteral}{"{}unilidar/cloud"{}}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'imu\_frame'}:\ \textcolor{stringliteral}{"{}unilidar\_imu"{}}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'imu\_topic'}:\ \textcolor{stringliteral}{"{}unilidar/imu"{}}\},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00036}00036\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00038}00038\ \ \ \ \ \textcolor{comment}{\#\ Run\ Rviz}}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00039}00039\ \ \ \ \ package\_path\ =\ subprocess.check\_output([\textcolor{stringliteral}{'ros2'},\ \textcolor{stringliteral}{'pkg'},\ \textcolor{stringliteral}{'prefix'},\ \textcolor{stringliteral}{'unitree\_lidar\_ros2'}]).decode(\textcolor{stringliteral}{'utf-\/8'}).rstrip()}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00040}00040\ \ \ \ \ rviz\_config\_file\ =\ os.path.join(package\_path,\ \textcolor{stringliteral}{'share'},\ \textcolor{stringliteral}{'unitree\_lidar\_ros2'},\ \textcolor{stringliteral}{'view.rviz'})}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00041}00041\ \ \ \ \ print(\textcolor{stringliteral}{"{}rviz\_config\_file\ =\ "{}}\ +\ rviz\_config\_file)}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00042}00042\ \ \ \ \ rviz\_node\ =\ Node(}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ package=\textcolor{stringliteral}{'rviz2'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ executable=\textcolor{stringliteral}{'rviz2'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{'rviz2'},}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ arguments=[\textcolor{stringliteral}{'-\/d'},\ rviz\_config\_file],}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ output=\textcolor{stringliteral}{'log'}}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00048}00048\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{src_2unilidar__sdk2_2unitree__lidar__ros2_2src_2unitree__lidar__ros2_2launch_2launch_8py_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{return}\ LaunchDescription([node1,\ rviz\_node])}
+
+\end{DoxyCode}

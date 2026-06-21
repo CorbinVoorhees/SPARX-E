@@ -1,0 +1,128 @@
+\doxysection{arduino\+\_\+bridge.\+hpp}
+\hypertarget{arduino__bridge_8hpp_source}{}\label{arduino__bridge_8hpp_source}\index{src/arduino\_bridge/include/arduino\_bridge/arduino\_bridge.hpp@{src/arduino\_bridge/include/arduino\_bridge/arduino\_bridge.hpp}}
+\mbox{\hyperlink{arduino__bridge_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_ARDUINO\_BRIDGE\_\_}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_ARDUINO\_BRIDGE\_\_}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <termios.h>}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <cerrno>}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}rclcpp/rclcpp.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/string.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00022}\mbox{\hyperlink{classArduinoBridge}{00022}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classArduinoBridge}{ArduinoBridge}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00023}00023\ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00024}00024\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00026}00026\ \ \ \ \ rclcpp::Subscription<std\_msgs::msg::String>::SharedPtr\ arduino\_subscription;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{int}\ serial\_fd\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00028}00028\ \ \ \ \ std::string\ serial\_port;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{int}\ baud\_rate;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{void}\ open\_serial\_port()}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00035}00035\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ serial\_fd\ =\ open(serial\_port.c\_str(),\ O\_RDWR\ |\ O\_NOCTTY\ |\ O\_SYNC);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (serial\_fd\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Error\ opening\ serial\ port\ \%s:\ \%s"{}},\ serial\_port.c\_str(),\ strerror(errno));}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }termios\ tty;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ memset(\&tty,\ 0,\ \textcolor{keyword}{sizeof}\ tty);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tcgetattr(serial\_fd,\ \&tty)\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Error\ from\ tcgetattr:\ \%s"{}},\ std::strerror(errno));}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ close(serial\_fd);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ serial\_fd\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ speed\_t\ speed\ =\ B115200;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (baud\_rate\ ==\ 9600)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ speed\ =\ B9600;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (baud\_rate\ ==\ 57600)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ speed\ =\ B57600;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (baud\_rate\ ==\ 15200)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ speed\ =\ B115200;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ cfsetospeed(\&tty,\ speed);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ cfsetispeed(\&tty,\ speed);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ tty.c\_cflag\ =\ (tty.c\_cflag\ \&\ \string~CSIZE)\ |\ CS8;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ tty.c\_iflag\ \&=\ \string~IGNBRK;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ tty.c\_lflag\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ tty.c\_oflag\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ tty.c\_cc[VMIN]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ tty.c\_cc[VTIME]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ tty.c\_iflag\ \&=\ \string~(IXON\ |\ IXOFF\ |\ IXANY);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ tty.c\_cflag\ |=\ (CLOCAL\ |\ CREAD);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ tty.c\_cflag\ \&=\ \string~(PARENB\ |\ PARODD);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ tty.c\_cflag\ \&=\ \string~CSTOPB;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ tty.c\_cflag\ \&=\ \string~CRTSCTS;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tcsetattr(serial\_fd,\ TCSANOW,\ \&tty)\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Error\ from\ tcsetattr:\ \%s"{}},\ std::strerror(errno));}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ close(serial\_fd);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ serial\_fd\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Serial\ port\ \%s\ opened\ at\ baud\ rate\ \%d"{}},\ serial\_port.c\_str(),\ baud\_rate);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ sleep(3);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00087}00087\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ Callback\ function\ that\ is\ called\ whenever\ a\ message\ is\ published\ to\ the\ arduino\ command\ topic,\ sends\ the\ command\ to\ the\ arduino\ via\ serial}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00090}00090\ \ \ \ \ \textcolor{keywordtype}{void}\ arduino\_command\_callback(\textcolor{keyword}{const}\ std\_msgs::msg::String::SharedPtr\ msg)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00091}00091\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (serial\_fd\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Serial\ port\ not\ open.\ Cannot\ send\ command."{}});}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sets\ up\ string\ to\ be\ sent\ an\ appends\ a\ new\ line\ for\ arduino\ parsing}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ std::string\ command\ =\ msg-\/>data;}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ command.append(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ ssize\_t\ bytes\_written\ =\ write(serial\_fd,\ command.c\_str(),\ command.size());}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ tcdrain(serial\_fd);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytes\_written\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Error\ writing\ to\ serial\ port:\ \%s"{}},\ strerror(errno));}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00106}00106\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00108}00108\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00118}\mbox{\hyperlink{classArduinoBridge_a56605ad34d27baf30757717d5d319cb4}{00118}}\ \ \ \ \ \mbox{\hyperlink{classArduinoBridge_a56605ad34d27baf30757717d5d319cb4}{ArduinoBridge}}()\ :\ Node(\textcolor{stringliteral}{"{}arduino\_bridge\_node"{}})}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00119}00119\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Allows\ different\ baud\ rate\ and\ serial\ port\ to\ be\ set\ up\ during\ launch\ if\ desired}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ this-\/>declare\_parameter<std::string>(\textcolor{stringliteral}{"{}serial\_port"{}},\ \textcolor{stringliteral}{"{}/dev/ttyACM0"{}});}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ this-\/>declare\_parameter<int>(\textcolor{stringliteral}{"{}baud\_rate"{}},\ 115200);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ serial\_port\ =\ this-\/>get\_parameter(\textcolor{stringliteral}{"{}serial\_port"{}}).as\_string();}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ baud\_rate\ =\ this-\/>get\_parameter(\textcolor{stringliteral}{"{}baud\_rate"{}}).as\_int();}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Opens\ the\ serial\ port}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ open\_serial\_port();}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Subscription\ that\ pulls\ any\ message\ pushed\ into\ the\ arduino\ command\ topic}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ arduino\_subscription\ =\ this-\/>create\_subscription<std\_msgs::msg::String>(}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/arduino\_cmd"{}},}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&ArduinoBridge::arduino\_command\_callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00134}00134\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00136}\mbox{\hyperlink{classArduinoBridge_a20aa90d502eae4de9e8b3090f4271a38}{00136}}\ \ \ \ \ \mbox{\hyperlink{classArduinoBridge_a20aa90d502eae4de9e8b3090f4271a38}{\string~ArduinoBridge}}()}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00137}00137\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (serial\_fd\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ close(serial\_fd);}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00142}00142\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00143}00143\ \};}
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{arduino__bridge_8hpp_source_l00145}00145\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

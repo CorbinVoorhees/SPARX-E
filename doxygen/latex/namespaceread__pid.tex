@@ -1,0 +1,140 @@
+\doxysection{read\+\_\+pid Namespace Reference}
+\hypertarget{namespaceread__pid}{}\label{namespaceread__pid}\index{read\_pid@{read\_pid}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceread__pid_a8f3eef88416508223ffa16694d29aa15}{output\+\_\+file}} = "{}fuckthisshit.\+csv"{}
+\item 
+str \mbox{\hyperlink{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}{serial\+\_\+port}} = \textquotesingle{}/dev/tty\+ACM0\textquotesingle{}
+\item 
+int \mbox{\hyperlink{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}{baud\+\_\+rate}} = 115200
+\item 
+\mbox{\hyperlink{namespaceread__pid_abb00880aafd02adb639d4abcfcaa04bd}{ser}} = serial.\+Serial(\mbox{\hyperlink{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}{serial\+\_\+port}}, baudrate=\mbox{\hyperlink{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}{baud\+\_\+rate}}, timeout=2)
+\item 
+\mbox{\hyperlink{namespaceread__pid_a58c1217dbb6a5ac84df41dff3ff5e109}{mode}}
+\item 
+bool \mbox{\hyperlink{namespaceread__pid_ab2e04dab56a4b02c17f81fca41f3a0cf}{test}} = False
+\item 
+\mbox{\hyperlink{namespaceread__pid_a1ea801d7d91597308aa09da87cfb940b}{start}} = time.\+time()
+\item 
+\mbox{\hyperlink{namespaceread__pid_ad228e07109487899b348050a19d46f27}{line}} = ser.\+read(4096)
+\item 
+list \mbox{\hyperlink{namespaceread__pid_a5b8cac3b41860a57ae18f95bd5126dec}{data}} = \mbox{[}i.\+split("{},"{}) \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887}{for}} i in \mbox{\hyperlink{namespaceread__pid_ad228e07109487899b348050a19d46f27}{line}}\mbox{]}
+\item 
+\mbox{\hyperlink{namespaceread__pid_a4c0807b41c38bfdfea168da3615d7625}{writer}} = csv.\+writer(file1)
+\item 
+list \mbox{\hyperlink{namespaceread__pid_a3725faf812738011949ea16923f37520}{title}} = \mbox{[}"{}FL"{}, "{}FR"{}, "{}BL"{}, "{}BR"{}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}\label{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28} 
+\index{read\_pid@{read\_pid}!baud\_rate@{baud\_rate}}
+\index{baud\_rate@{baud\_rate}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{baud\_rate}{baud\_rate}}
+{\footnotesize\ttfamily int read\+\_\+pid.\+baud\+\_\+rate = 115200}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00012}{12}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_a5b8cac3b41860a57ae18f95bd5126dec}\label{namespaceread__pid_a5b8cac3b41860a57ae18f95bd5126dec} 
+\index{read\_pid@{read\_pid}!data@{data}}
+\index{data@{data}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily read\+\_\+pid.\+data = \mbox{[}i.\+split("{},"{}) \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887}{for}} i in \mbox{\hyperlink{namespaceread__pid_ad228e07109487899b348050a19d46f27}{line}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00030}{30}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_ad228e07109487899b348050a19d46f27}\label{namespaceread__pid_ad228e07109487899b348050a19d46f27} 
+\index{read\_pid@{read\_pid}!line@{line}}
+\index{line@{line}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{line}{line}}
+{\footnotesize\ttfamily read\+\_\+pid.\+line = ser.\+read(4096)}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00024}{24}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_a58c1217dbb6a5ac84df41dff3ff5e109}\label{namespaceread__pid_a58c1217dbb6a5ac84df41dff3ff5e109} 
+\index{read\_pid@{read\_pid}!mode@{mode}}
+\index{mode@{mode}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily read\+\_\+pid.\+mode}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00015}{15}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_a8f3eef88416508223ffa16694d29aa15}\label{namespaceread__pid_a8f3eef88416508223ffa16694d29aa15} 
+\index{read\_pid@{read\_pid}!output\_file@{output\_file}}
+\index{output\_file@{output\_file}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{output\_file}{output\_file}}
+{\footnotesize\ttfamily read\+\_\+pid.\+output\+\_\+file = "{}fuckthisshit.\+csv"{}}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00009}{9}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_abb00880aafd02adb639d4abcfcaa04bd}\label{namespaceread__pid_abb00880aafd02adb639d4abcfcaa04bd} 
+\index{read\_pid@{read\_pid}!ser@{ser}}
+\index{ser@{ser}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{ser}{ser}}
+{\footnotesize\ttfamily read\+\_\+pid.\+ser = serial.\+Serial(\mbox{\hyperlink{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}{serial\+\_\+port}}, baudrate=\mbox{\hyperlink{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}{baud\+\_\+rate}}, timeout=2)}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00014}{14}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}\label{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7} 
+\index{read\_pid@{read\_pid}!serial\_port@{serial\_port}}
+\index{serial\_port@{serial\_port}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{serial\_port}{serial\_port}}
+{\footnotesize\ttfamily str read\+\_\+pid.\+serial\+\_\+port = \textquotesingle{}/dev/tty\+ACM0\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00011}{11}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_a1ea801d7d91597308aa09da87cfb940b}\label{namespaceread__pid_a1ea801d7d91597308aa09da87cfb940b} 
+\index{read\_pid@{read\_pid}!start@{start}}
+\index{start@{start}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{start}{start}}
+{\footnotesize\ttfamily read\+\_\+pid.\+start = time.\+time()}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00019}{19}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_ab2e04dab56a4b02c17f81fca41f3a0cf}\label{namespaceread__pid_ab2e04dab56a4b02c17f81fca41f3a0cf} 
+\index{read\_pid@{read\_pid}!test@{test}}
+\index{test@{test}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{test}{test}}
+{\footnotesize\ttfamily bool read\+\_\+pid.\+test = False}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00018}{18}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_a3725faf812738011949ea16923f37520}\label{namespaceread__pid_a3725faf812738011949ea16923f37520} 
+\index{read\_pid@{read\_pid}!title@{title}}
+\index{title@{title}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{title}{title}}
+{\footnotesize\ttfamily list read\+\_\+pid.\+title = \mbox{[}"{}FL"{}, "{}FR"{}, "{}BL"{}, "{}BR"{}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00046}{46}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+
+\Hypertarget{namespaceread__pid_a4c0807b41c38bfdfea168da3615d7625}\label{namespaceread__pid_a4c0807b41c38bfdfea168da3615d7625} 
+\index{read\_pid@{read\_pid}!writer@{writer}}
+\index{writer@{writer}!read\_pid@{read\_pid}}
+\doxysubsubsection{\texorpdfstring{writer}{writer}}
+{\footnotesize\ttfamily read\+\_\+pid.\+writer = csv.\+writer(file1)}
+
+
+
+Definition at line \mbox{\hyperlink{read__pid_8py_source_l00033}{33}} of file \mbox{\hyperlink{read__pid_8py_source}{read\+\_\+pid.\+py}}.
+

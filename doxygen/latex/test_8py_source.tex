@@ -1,0 +1,31 @@
+\doxysection{test.\+py}
+\hypertarget{test_8py_source}{}\label{test_8py_source}\index{src/nav\_filters/src/test.py@{src/nav\_filters/src/test.py}}
+\mbox{\hyperlink{test_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00001}\mbox{\hyperlink{namespacetest}{00001}}\ \textcolor{keyword}{import}\ csv}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00002}00002\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00003}00003\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00004}00004\ \textcolor{keyword}{from}\ scipy.stats\ \textcolor{keyword}{import}\ chi2}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00005}00005\ \textcolor{keyword}{from}\ scipy.spatial.transform\ \textcolor{keyword}{import}\ Rotation\ \textcolor{keyword}{as}\ R}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00007}\mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{00007}}\ estimations\ =\ np.loadtxt(\textcolor{stringliteral}{"{}output.csv"{}},\ delimiter=\textcolor{stringliteral}{"{},"{}},usecols=np.linspace(0,\ 25,\ 25,\ dtype=int))}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00009}\mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{00009}}\ x\ =\ estimations[:,\ 0]}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00010}\mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{00010}}\ y\ =\ estimations[:,\ 1]}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00011}\mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{00011}}\ quat\ =\ estimations[:,\ 6:10]}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00012}\mbox{\hyperlink{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}{00012}}\ eul\ =\ R.from\_quat(quat).as\_euler(\textcolor{stringliteral}{'xyz'},\ degrees=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00014}\mbox{\hyperlink{namespacetest_aab35dc833fa812fbf1fe41130f743fde}{00014}}\ yaw\ =\ eul[:,2]\ \%\ (2*\ np.pi)\ +\ np.pi}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00016}00016\ plt.figure()}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00017}00017\ plt.plot(y)}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00019}00019\ plt.figure()}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00020}00020\ plt.plot(np.sin(yaw),\ np.cos(yaw))}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00021}00021\ plt.title(\textcolor{stringliteral}{"{}Yaw"{}})}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00022}00022\ plt.axis(\textcolor{stringliteral}{'equal'})}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00024}00024\ plt.show()}
+\DoxyCodeLine{\Hypertarget{test_8py_source_l00025}00025\ }
+
+\end{DoxyCode}

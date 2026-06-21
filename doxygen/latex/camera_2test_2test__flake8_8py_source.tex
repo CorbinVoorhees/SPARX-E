@@ -1,0 +1,31 @@
+\doxysection{test\+\_\+flake8.\+py}
+\hypertarget{camera_2test_2test__flake8_8py_source}{}\label{camera_2test_2test__flake8_8py_source}\index{src/camera/test/test\_flake8.py@{src/camera/test/test\_flake8.py}}
+\mbox{\hyperlink{camera_2test_2test__flake8_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00001}00001\ \textcolor{comment}{\#\ Copyright\ 2017\ Open\ Source\ Robotics\ Foundation,\ Inc.}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00002}00002\ \textcolor{comment}{\#}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00003}00003\ \textcolor{comment}{\#\ Licensed\ under\ the\ Apache\ License,\ Version\ 2.0\ (the\ "{}License"{});}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00004}00004\ \textcolor{comment}{\#\ you\ may\ not\ use\ this\ file\ except\ in\ compliance\ with\ the\ License.}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00005}00005\ \textcolor{comment}{\#\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00006}00006\ \textcolor{comment}{\#}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00007}00007\ \textcolor{comment}{\#\ \ \ \ \ http://www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00008}00008\ \textcolor{comment}{\#}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00009}00009\ \textcolor{comment}{\#\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00010}00010\ \textcolor{comment}{\#\ distributed\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00011}00011\ \textcolor{comment}{\#\ WITHOUT\ WARRANTIES\ OR\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00012}00012\ \textcolor{comment}{\#\ See\ the\ License\ for\ the\ specific\ language\ governing\ permissions\ and}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00013}00013\ \textcolor{comment}{\#\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00015}00015\ \textcolor{keyword}{from}\ ament\_flake8.main\ \textcolor{keyword}{import}\ main\_with\_errors}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00016}00016\ \textcolor{keyword}{import}\ pytest}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00019}00019\ \textcolor{preprocessor}{@pytest.mark.flake8}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00020}00020\ \textcolor{preprocessor}{@pytest.mark.linter}}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00021}00021\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacetest__flake8}{test\_flake8}}()\ -\/>\ None:}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00022}00022\ \ \ \ \ rc,\ errors\ =\ main\_with\_errors(argv=[])}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{assert}\ rc\ ==\ 0,\ \(\backslash\)}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Found\ \%d\ code\ style\ errors\ /\ warnings:\(\backslash\)n'}\ \%\ len(errors)\ +\ \(\backslash\)}
+\DoxyCodeLine{\Hypertarget{camera_2test_2test__flake8_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'\(\backslash\)n'}.join(errors)}
+
+\end{DoxyCode}

@@ -1,0 +1,9 @@
+<map id="build/lidar_processor/rosidl_generator_c/lidar_processor/msg/detail/obstacle__description.c" name="build/lidar_processor/rosidl_generator_c/lidar_processor/msg/detail/obstacle__description.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="163,5,387,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,213,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,77,153,118,150,113,218,73"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="237,130,312,155"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="277,75,277,116,272,116,272,75"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="337,130,407,155"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="310,73,353,118,349,122,306,77"/>
+</map>

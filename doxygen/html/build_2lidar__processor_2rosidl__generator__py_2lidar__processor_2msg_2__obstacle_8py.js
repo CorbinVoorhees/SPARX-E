@@ -1,0 +1,5 @@
+var build_2lidar__processor_2rosidl__generator__py_2lidar__processor_2msg_2__obstacle_8py =
+[
+    [ "lidar_processor.msg._obstacle.Metaclass_Obstacle", "classlidar__processor_1_1msg_1_1__obstacle_1_1Metaclass__Obstacle.html", "classlidar__processor_1_1msg_1_1__obstacle_1_1Metaclass__Obstacle" ],
+    [ "lidar_processor.msg._obstacle.Obstacle", "classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html", "classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle" ]
+];

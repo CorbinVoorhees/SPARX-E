@@ -1,0 +1,22 @@
+\doxysection{src/nav\+\_\+filters/src/test.py File Reference}
+\hypertarget{test_8py}{}\label{test_8py}\index{src/nav\_filters/src/test.py@{src/nav\_filters/src/test.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacetest}{test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{test.\+estimations}} = np.\+loadtxt("{}output.\+csv"{}, delimiter="{},"{},usecols=np.\+linspace(0, 25, 25, dtype=int))
+\item 
+\mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{test.\+x}} = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 0\mbox{]}
+\item 
+\mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{test.\+y}} = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 1\mbox{]}
+\item 
+\mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{test.\+quat}} = \mbox{\hyperlink{namespacetest_a56d94160cb56bd6f53ec2c2f6082c889}{estimations}}\mbox{[}\+:, 6\+:10\mbox{]}
+\item 
+\mbox{\hyperlink{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}{test.\+eul}} = R.\+from\+\_\+quat(\mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}).as\+\_\+euler(\textquotesingle{}xyz\textquotesingle{}, degrees=False)
+\item 
+\mbox{\hyperlink{namespacetest_aab35dc833fa812fbf1fe41130f743fde}{test.\+yaw}} = \mbox{\hyperlink{namespacetest_a0f5261a366aa17b03c2c7dd5af995400}{eul}}\mbox{[}\+:,2\mbox{]} \% (2\texorpdfstring{$\ast$}{*} np.\+pi) + np.\+pi
+\end{DoxyCompactItemize}

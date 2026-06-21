@@ -1,0 +1,302 @@
+\doxysection{install/lidar\+\_\+processor/include/lidar\+\_\+processor/lidar\+\_\+processor/msg/detail/obstacle\+\_\+\+\_\+functions.c File Reference}
+\hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c}{}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c}\index{install/lidar\_processor/include/lidar\_processor/lidar\_processor/msg/detail/obstacle\_\_functions.c@{install/lidar\_processor/include/lidar\_processor/lidar\_processor/msg/detail/obstacle\_\_functions.c}}
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/detail/obstacle\+\_\+\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}rcutils/allocator.\+h"{}}\newline
+Include dependency graph for obstacle\+\_\+\+\_\+functions.\+c\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ab90bf8e90cb48be249a543b342f11f46}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+init}} (\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Initialize msg/\+Obstacle message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_acf72df0c1553e6d855b0cc60f8379762}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+fini}} (\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Finalize msg/\+Obstacle message. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ac2b1d0933daf68142966bca100e7a6ca}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+are\+\_\+equal}} (const \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}rhs)
+\begin{DoxyCompactList}\small\item\em Check for msg/\+Obstacle message equality. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a1aacf8ce36bc42d8ba8cf52434e2d23a}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+copy}} (const \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}input, \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Copy a msg/\+Obstacle message. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a7c7e305c372f9b4c59fad19556b75108}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+create}} (void)
+\begin{DoxyCompactList}\small\item\em Create msg/\+Obstacle message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_aba608f2a86727dcd8d4e47c842975034}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+destroy}} (\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}msg)
+\begin{DoxyCompactList}\small\item\em Destroy msg/\+Obstacle message. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a6c1d1bc6feaee9725e566b48eda85508}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+init}} (\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}array, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Initialize array of msg/\+Obstacle messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a2be9c047749f4cec9b4750a1b8ddc4fa}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+fini}} (\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}array)
+\begin{DoxyCompactList}\small\item\em Finalize array of msg/\+Obstacle messages. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a93caf7684b8140e8a2ef77d623fd987d}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+create}} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Create array of msg/\+Obstacle messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a4f319693ae7629f4325c59e35e59e811}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+destroy}} (\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}array)
+\begin{DoxyCompactList}\small\item\em Destroy array of msg/\+Obstacle messages. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ac497092c9b5eba69acf457d3ff6f4f0e}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+are\+\_\+equal}} (const \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}lhs, const \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}rhs)
+\begin{DoxyCompactList}\small\item\em Check for msg/\+Obstacle message array equality. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ad07cbf6b6f01bbe1c52e4a0b6e7f41ff}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+copy}} (const \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}input, \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Copy an array of msg/\+Obstacle messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ac2b1d0933daf68142966bca100e7a6ca}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ac2b1d0933daf68142966bca100e7a6ca} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_are\_equal@{lidar\_processor\_\_msg\_\_Obstacle\_\_are\_equal}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_are\_equal@{lidar\_processor\_\_msg\_\_Obstacle\_\_are\_equal}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_are\_equal()}{lidar\_processor\_\_msg\_\_Obstacle\_\_are\_equal()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+are\+\_\+equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{const \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Check for msg/\+Obstacle message equality. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em lhs} & The message on the left hand size of the equality operator. \\
+\hline
+\mbox{\texttt{ in}}  & {\em rhs} & The message on the right hand size of the equality operator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if messages are equal, otherwise false. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00036}{36}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a1aacf8ce36bc42d8ba8cf52434e2d23a}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a1aacf8ce36bc42d8ba8cf52434e2d23a} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_copy@{lidar\_processor\_\_msg\_\_Obstacle\_\_copy}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_copy@{lidar\_processor\_\_msg\_\_Obstacle\_\_copy}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_copy()}{lidar\_processor\_\_msg\_\_Obstacle\_\_copy()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+copy (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{input,  }\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{output }\end{DoxyParamCaption})}
+
+
+
+Copy a msg/\+Obstacle message. 
+
+This functions performs a deep copy, as opposed to the shallow copy that plain assignment yields.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & The source message pointer. \\
+\hline
+\mbox{\texttt{ out}}  & {\em output} & The target message pointer, which must have been initialized before calling this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, or false if either pointer is null or memory allocation fails. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00057}{57}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a7c7e305c372f9b4c59fad19556b75108}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a7c7e305c372f9b4c59fad19556b75108} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_create@{lidar\_processor\_\_msg\_\_Obstacle\_\_create}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_create@{lidar\_processor\_\_msg\_\_Obstacle\_\_create}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_create()}{lidar\_processor\_\_msg\_\_Obstacle\_\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*} lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+create (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create msg/\+Obstacle message. 
+
+It allocates the memory for the message, sets the memory to zero, and calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a92db22c2de4b8214ac4ce29d2a7b316c}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+init()}. \begin{DoxyReturn}{Returns}
+The pointer to the initialized message if successful, otherwise NULL 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00076}{76}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_aba608f2a86727dcd8d4e47c842975034}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_aba608f2a86727dcd8d4e47c842975034} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_destroy@{lidar\_processor\_\_msg\_\_Obstacle\_\_destroy}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_destroy@{lidar\_processor\_\_msg\_\_Obstacle\_\_destroy}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_destroy()}{lidar\_processor\_\_msg\_\_Obstacle\_\_destroy()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{msg }\end{DoxyParamCaption})}
+
+
+
+Destroy msg/\+Obstacle message. 
+
+It calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a7b53abb22a7d41f421470697e03fe416}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+fini()} and frees the memory of the message. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em msg} & The allocated message pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00093}{93}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_acf72df0c1553e6d855b0cc60f8379762}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_acf72df0c1553e6d855b0cc60f8379762} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_fini@{lidar\_processor\_\_msg\_\_Obstacle\_\_fini}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_fini@{lidar\_processor\_\_msg\_\_Obstacle\_\_fini}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_fini()}{lidar\_processor\_\_msg\_\_Obstacle\_\_fini()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+fini (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{msg }\end{DoxyParamCaption})}
+
+
+
+Finalize msg/\+Obstacle message. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em msg} & The allocated message pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00026}{26}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ab90bf8e90cb48be249a543b342f11f46}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ab90bf8e90cb48be249a543b342f11f46} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_init@{lidar\_processor\_\_msg\_\_Obstacle\_\_init}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_init@{lidar\_processor\_\_msg\_\_Obstacle\_\_init}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_init()}{lidar\_processor\_\_msg\_\_Obstacle\_\_init()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle}} \texorpdfstring{$\ast$}{*}}]{msg }\end{DoxyParamCaption})}
+
+
+
+Initialize msg/\+Obstacle message. 
+
+If the init function is called twice for the same message without calling fini inbetween previously allocated memory will be leaked. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em msg} & The previously allocated message pointer. Fields without a default value will not be initialized by this function. You might want to call memset(msg, 0, sizeof( lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle )) before or use \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a0965b70e57e63e746eb9dc4d75bbb4bd}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+create()} to allocate and initialize the message. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if initialization was successful, otherwise false 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00015}{15}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ac497092c9b5eba69acf457d3ff6f4f0e}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ac497092c9b5eba69acf457d3ff6f4f0e} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_are\_equal@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_are\_equal}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_are\_equal@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_are\_equal}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_are\_equal()}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_are\_equal()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+are\+\_\+equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{lhs,  }\item[{const \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Check for msg/\+Obstacle message array equality. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em lhs} & The message array on the left hand size of the equality operator. \\
+\hline
+\mbox{\texttt{ in}}  & {\em rhs} & The message array on the right hand size of the equality operator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if message arrays are equal in size and content, otherwise false. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00193}{193}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ad07cbf6b6f01bbe1c52e4a0b6e7f41ff}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_ad07cbf6b6f01bbe1c52e4a0b6e7f41ff} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_copy@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_copy}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_copy@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_copy}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_copy()}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_copy()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+copy (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{input,  }\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{output }\end{DoxyParamCaption})}
+
+
+
+Copy an array of msg/\+Obstacle messages. 
+
+This functions performs a deep copy, as opposed to the shallow copy that plain assignment yields.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & The source array pointer. \\
+\hline
+\mbox{\texttt{ out}}  & {\em output} & The target array pointer, which must have been initialized before calling this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, or false if either pointer is null or memory allocation fails. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00210}{210}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a93caf7684b8140e8a2ef77d623fd987d}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a93caf7684b8140e8a2ef77d623fd987d} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_create@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_create}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_create@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_create}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_create()}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*} lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+create (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Create array of msg/\+Obstacle messages. 
+
+It allocates the memory for the array and calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a4e040a7736238121fe7d5eab42aa5ae0}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+init()}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em size} & The size / capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The pointer to the initialized array if successful, otherwise NULL 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00167}{167}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a4f319693ae7629f4325c59e35e59e811}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a4f319693ae7629f4325c59e35e59e811} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_destroy@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_destroy}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_destroy@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_destroy}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_destroy()}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_destroy()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{array }\end{DoxyParamCaption})}
+
+
+
+Destroy array of msg/\+Obstacle messages. 
+
+It calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a3e798b050d0f9e4c1458108fedd262d8}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+fini()} on the array, and frees the memory of the array. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em array} & The initialized array pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00183}{183}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a2be9c047749f4cec9b4750a1b8ddc4fa}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a2be9c047749f4cec9b4750a1b8ddc4fa} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini()}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_fini()}}
+{\footnotesize\ttfamily void lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+fini (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{array }\end{DoxyParamCaption})}
+
+
+
+Finalize array of msg/\+Obstacle messages. 
+
+It calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a7b53abb22a7d41f421470697e03fe416}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+fini()} for each element of the array and frees the memory for the number of elements. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em array} & The initialized array pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00141}{141}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+
+\Hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a6c1d1bc6feaee9725e566b48eda85508}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_a6c1d1bc6feaee9725e566b48eda85508} 
+\index{obstacle\_\_functions.c@{obstacle\_\_functions.c}!lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init}}
+\index{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init@{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init}!obstacle\_\_functions.c@{obstacle\_\_functions.c}}
+\doxysubsubsection{\texorpdfstring{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init()}{lidar\_processor\_\_msg\_\_Obstacle\_\_Sequence\_\_init()}}
+{\footnotesize\ttfamily bool lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlidar__processor____msg____Obstacle____Sequence}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+\+Sequence}} \texorpdfstring{$\ast$}{*}}]{array,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Initialize array of msg/\+Obstacle messages. 
+
+It allocates the memory for the number of elements and calls \doxylink{build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2obstacle____functions_8h_a92db22c2de4b8214ac4ce29d2a7b316c}{lidar\+\_\+processor\+\_\+\+\_\+msg\+\_\+\+\_\+\+Obstacle\+\_\+\+\_\+init()} for each element of the array. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em array} & The allocated array pointer. \\
+\hline
+\mbox{\texttt{ in}}  & {\em size} & The size / capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if initialization was successful, otherwise false If the array pointer is valid and the size is zero it is guaranteed 
+\end{DoxyReturn}
+\hypertarget{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8h_autotoc_md1}{}\doxysubsection{\texorpdfstring{to return true.}{to return true.}}\label{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8h_autotoc_md1}
+
+
+Definition at line \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source_l00104}{104}} of file \mbox{\hyperlink{install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2obstacle____functions_8c_source}{obstacle\+\_\+\+\_\+functions.\+c}}.
+

@@ -1,0 +1,151 @@
+\doxysection{planning\+\_\+module\+::grid2d Class Reference}
+\hypertarget{classplanning__module_1_1grid2d}{}\label{classplanning__module_1_1grid2d}\index{planning\_module::grid2d@{planning\_module::grid2d}}
+
+
+{\ttfamily \#include $<$grid2d.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classplanning__module_1_1grid2d_ade66ea7471ac444b30068fc831b8be7e}{grid2d}} (uint32\+\_\+t r, uint32\+\_\+t c, const float \texorpdfstring{$\ast$}{*}elevation, const float \texorpdfstring{$\ast$}{*}illumination, const bool \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef}{is\+\_\+obstacle}})
+\item 
+{\footnotesize template$<$typename U $>$ }\\constexpr uint32\+\_\+t \mbox{\hyperlink{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}{index}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&c) const
+\item 
+constexpr \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} \mbox{\hyperlink{classplanning__module_1_1grid2d_a88c1be82adac4467f5804fadcbfd40b4}{coord\+\_\+from\+\_\+index}} (const uint32\+\_\+t idx) const
+\item 
+{\footnotesize template$<$typename U $>$ }\\\mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& \mbox{\hyperlink{classplanning__module_1_1grid2d_acd3f8a1119df25683818582971e41273}{operator\mbox{[}$\,$\mbox{]}}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&c)
+\item 
+\mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& \mbox{\hyperlink{classplanning__module_1_1grid2d_a444f1d93b083423c8c1d2876ea4b2b29}{operator\mbox{[}$\,$\mbox{]}}} (const uint32\+\_\+t idx)
+\item 
+{\footnotesize template$<$typename U $>$ }\\const \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& \mbox{\hyperlink{classplanning__module_1_1grid2d_ada6125092203f7b8d9bd923d6ac59646}{operator\mbox{[}$\,$\mbox{]}}} (const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&c) const
+\item 
+const \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& \mbox{\hyperlink{classplanning__module_1_1grid2d_aa66a89f42679910800f874c027af30c8}{operator\mbox{[}$\,$\mbox{]}}} (const uint32\+\_\+t idx) const
+\item 
+bool \mbox{\hyperlink{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef}{is\+\_\+obstacle}} (\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} c) const
+\item 
+constexpr std\+::pair$<$ uint32\+\_\+t, uint32\+\_\+t $>$ \mbox{\hyperlink{classplanning__module_1_1grid2d_a2bca7acbef30590cb23c6199b753277b}{size}} () const
+\item 
+void \mbox{\hyperlink{classplanning__module_1_1grid2d_a350997b2699a2e8c4cd5db89ddf48206}{reset\+\_\+search\+\_\+state}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00011}{11}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classplanning__module_1_1grid2d_ade66ea7471ac444b30068fc831b8be7e}\label{classplanning__module_1_1grid2d_ade66ea7471ac444b30068fc831b8be7e} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!grid2d@{grid2d}}
+\index{grid2d@{grid2d}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{grid2d()}{grid2d()}}
+{\footnotesize\ttfamily planning\+\_\+module\+::grid2d\+::grid2d (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{r,  }\item[{uint32\+\_\+t}]{c,  }\item[{const float \texorpdfstring{$\ast$}{*}}]{elevation,  }\item[{const float \texorpdfstring{$\ast$}{*}}]{illumination,  }\item[{const bool \texorpdfstring{$\ast$}{*}}]{is\+\_\+obstacle }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{grid2d_8cpp_source}{grid2d.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classplanning__module_1_1grid2d_a88c1be82adac4467f5804fadcbfd40b4}\label{classplanning__module_1_1grid2d_a88c1be82adac4467f5804fadcbfd40b4} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!coord\_from\_index@{coord\_from\_index}}
+\index{coord\_from\_index@{coord\_from\_index}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{coord\_from\_index()}{coord\_from\_index()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}} planning\+\_\+module\+::grid2d\+::coord\+\_\+from\+\_\+index (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{idx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00030}{30}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb}\label{classplanning__module_1_1grid2d_a5ec4a742042644dde736a6ed471e80fb} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!index@{index}}
+\index{index@{index}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{index()}{index()}}
+{\footnotesize\ttfamily template$<$typename U $>$ \\
+constexpr uint32\+\_\+t planning\+\_\+module\+::grid2d\+::index (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{c }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00025}{25}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef}\label{classplanning__module_1_1grid2d_a66428dc1ab833da8333bedd62a54b2ef} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!is\_obstacle@{is\_obstacle}}
+\index{is\_obstacle@{is\_obstacle}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{is\_obstacle()}{is\_obstacle()}}
+{\footnotesize\ttfamily bool planning\+\_\+module\+::grid2d\+::is\+\_\+obstacle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceplanning__module_ad410d32f272aa777be4b492679690181}{coordi}}}]{c }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00044}{44}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_a444f1d93b083423c8c1d2876ea4b2b29}\label{classplanning__module_1_1grid2d_a444f1d93b083423c8c1d2876ea4b2b29} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& planning\+\_\+module\+::grid2d\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00038}{38}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_aa66a89f42679910800f874c027af30c8}\label{classplanning__module_1_1grid2d_aa66a89f42679910800f874c027af30c8} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& planning\+\_\+module\+::grid2d\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{idx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00042}{42}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_acd3f8a1119df25683818582971e41273}\label{classplanning__module_1_1grid2d_acd3f8a1119df25683818582971e41273} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename U $>$ \\
+\mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& planning\+\_\+module\+::grid2d\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00037}{37}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_ada6125092203f7b8d9bd923d6ac59646}\label{classplanning__module_1_1grid2d_ada6125092203f7b8d9bd923d6ac59646} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename U $>$ \\
+const \mbox{\hyperlink{structplanning__module_1_1datapoint}{datapoint}} \& planning\+\_\+module\+::grid2d\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structplanning__module_1_1Vec2}{Vec2}}$<$ U $>$ \&}]{c }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00041}{41}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_a350997b2699a2e8c4cd5db89ddf48206}\label{classplanning__module_1_1grid2d_a350997b2699a2e8c4cd5db89ddf48206} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!reset\_search\_state@{reset\_search\_state}}
+\index{reset\_search\_state@{reset\_search\_state}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{reset\_search\_state()}{reset\_search\_state()}}
+{\footnotesize\ttfamily void planning\+\_\+module\+::grid2d\+::reset\+\_\+search\+\_\+state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{grid2d_8cpp_source}{grid2d.\+cpp}}.
+
+\Hypertarget{classplanning__module_1_1grid2d_a2bca7acbef30590cb23c6199b753277b}\label{classplanning__module_1_1grid2d_a2bca7acbef30590cb23c6199b753277b} 
+\index{planning\_module::grid2d@{planning\_module::grid2d}!size@{size}}
+\index{size@{size}!planning\_module::grid2d@{planning\_module::grid2d}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily constexpr std\+::pair$<$ uint32\+\_\+t, uint32\+\_\+t $>$ planning\+\_\+module\+::grid2d\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{grid2d_8hpp_source_l00046}{46}} of file \mbox{\hyperlink{grid2d_8hpp_source}{grid2d.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/autonomy/src/\mbox{\hyperlink{grid2d_8hpp}{grid2d.\+hpp}}\item 
+src/autonomy/src/\mbox{\hyperlink{grid2d_8cpp}{grid2d.\+cpp}}\end{DoxyCompactItemize}

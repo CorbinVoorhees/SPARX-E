@@ -1,0 +1,113 @@
+\doxysection{trajectories.\+hpp}
+\hypertarget{trajectories_8hpp_source}{}\label{trajectories_8hpp_source}\index{src/autonomy/src/trajectories.hpp@{src/autonomy/src/trajectories.hpp}}
+\mbox{\hyperlink{trajectories_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spline_8h}{spline.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spline__testcase_8hpp}{spline\_testcase.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00007}00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceplanning__module}{planning\_module}}\ \{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00009}\mbox{\hyperlink{classplanning__module_1_1Trajectory}{00009}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplanning__module_1_1Trajectory}{Trajectory}}\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00010}00010\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00011}00011\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00012}\mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{00012}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}}\ =\ 0.0005;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00014}\mbox{\hyperlink{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}{00014}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}{mahalanobis}}(\textcolor{keyword}{const}\ Eigen::Matrix2d\ \&cov,\ \textcolor{keyword}{const}\ Eigen::Vector2d\ \&center,\ \textcolor{keyword}{const}\ Eigen::Vector2d\ \&r)\ \{\textcolor{keywordflow}{return}\ (r\ -\/\ center).transpose()\ *\ cov.inverse()\ *\ (r\ -\/\ center);\}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00016}\mbox{\hyperlink{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}{00016}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ std::optional<Eigen::VectorXd>\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}{evaluate\_at}}(\textcolor{keywordtype}{double}\ t)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00018}\mbox{\hyperlink{classplanning__module_1_1Trajectory_a9165657ca3b286a5941d1974560532a4}{00018}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a9165657ca3b286a5941d1974560532a4}{curr\_time}}()\ final\ \{\textcolor{keywordflow}{return}\ idx;\ \};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00019}\mbox{\hyperlink{classplanning__module_1_1Trajectory_a8c80270684d1270ad7006e313ab96691}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a8c80270684d1270ad7006e313ab96691}{add\_time}}()\ final\ \{idx\ +=\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}};\ \}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00021}\mbox{\hyperlink{classplanning__module_1_1Trajectory_a363e09212341cf310073dc97c080886f}{00021}}\ \ \ \ \ \ \ \ \ std::optional<Eigen::Vector2d>\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_a363e09212341cf310073dc97c080886f}{linesearch}}(Eigen::Vector2d\ \&center,\ Eigen::Matrix2d\ \&cov,\ \textcolor{keywordtype}{double}\ t\_init)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00022}00022\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ find\ the\ intersection\ point\ using\ mahalanobis}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ t\{t\_init,0\};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(t[0]\ <=\ 1)}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ eval\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}{evaluate\_at}}(t[0]);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!eval.has\_value())\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}{mahalanobis}}(cov,center,eval.value().head<2>())\ <=\ 9.0)\ \textcolor{keywordflow}{break};\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t[0]\ +=\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ t[1]\ =\ t[0]\ +\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(t[1]\ <=\ 1)}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ eval\ =\ this-\/>\mbox{\hyperlink{classplanning__module_1_1Trajectory_a8d16cd54fcdf437a90913b2c9fca933c}{evaluate\_at}}(t[1]);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!eval.has\_value())\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classplanning__module_1_1Trajectory_a1a8c140a7fe715d98343d88c57bdd1ce}{mahalanobis}}(cov,center,eval.value().head<2>())\ >\ 9.0)\ \textcolor{keywordflow}{break};\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t[1]\ +=\ \mbox{\hyperlink{classplanning__module_1_1Trajectory_aec3515d7a402984c11d45c05f209c263}{dt}};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ idx\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00048}00048\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00050}\mbox{\hyperlink{classplanning__module_1_1NominalTrajectory}{00050}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplanning__module_1_1NominalTrajectory}{NominalTrajectory}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classplanning__module_1_1Trajectory}{Trajectory}}\ \{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00052}\mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_af2ee9ab825bdb770e19c462ba6f2709e}{00052}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_af2ee9ab825bdb770e19c462ba6f2709e}{NominalTrajectory}}(\mbox{\hyperlink{classspline__testcase}{spline\_testcase}}\ sp)\ :\ spl(std::move(sp))\ \{\}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00055}\mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_ab1d41eeb8d9f391443a41245e1e54900}{00055}}\ \ \ \ \ \ \ \ \ std::optional<Eigen::VectorXd>\ \mbox{\hyperlink{classplanning__module_1_1NominalTrajectory_ab1d41eeb8d9f391443a41245e1e54900}{evaluate\_at}}(\textcolor{keywordtype}{double}\ t)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t\ >\ 1.0)\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ pos;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!spl.\mbox{\hyperlink{classspline__testcase_a1d6aafdd4ff0e7a69269285670b1d13f}{eval\_at}}(t,\ pos))\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ xdot;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ spl.\mbox{\hyperlink{classspline__testcase_a1d6aafdd4ff0e7a69269285670b1d13f}{eval\_at}}(t,\ xdot,\ 1);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2d\ xdotdot;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ spl.\mbox{\hyperlink{classspline__testcase_a1d6aafdd4ff0e7a69269285670b1d13f}{eval\_at}}(t,\ xdotdot,\ 2);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yaw\ =\ std::atan2(xdot[1],\ xdot[0]);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yawdot\ =\ (pow(cos(yaw),\ 2)\ /\ xdot[0])\ *\ (xdotdot[1]\ -\/\ xdotdot[0]\ *\ tan(yaw));}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ state(6);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ state<<\ pos,\ xdot,\ yaw,\ yawdot;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ state;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00076}00076\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classspline__testcase}{spline\_testcase}}\ spl;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00078}00078\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00080}\mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory}{00080}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory}{ReplannedTrajectory}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classplanning__module_1_1Trajectory}{Trajectory}}\ \{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00081}00081\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00082}\mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory_ad629a8aa2d0ad146800a9388aaab5bf9}{00082}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory_ad629a8aa2d0ad146800a9388aaab5bf9}{ReplannedTrajectory}}(tk::spline\ x,\ tk::spline\ y,\ \textcolor{keywordtype}{double}\ start\_t,\ \textcolor{keywordtype}{double}\ end\_t)}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ :\ x\_spline(std::move(x)),\ y\_spline(std::move(y)),\ t0(t0),\ t1(t1)\ \{\}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00085}\mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory_a94a79a0ef4d804ec0c81962b39b98bb2}{00085}}\ \ \ \ \ \ \ \ \ std::optional<Eigen::VectorXd>\ \mbox{\hyperlink{classplanning__module_1_1ReplannedTrajectory_a94a79a0ef4d804ec0c81962b39b98bb2}{evaluate\_at}}(\textcolor{keywordtype}{double}\ t)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t\ <\ t0\ ||\ t\ >\ t1)\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ state(6);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xdot\ =\ x\_spline.deriv(1,\ t);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ydot\ =\ y\_spline.deriv(1,\ t);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yaw\ =\ std::atan2(ydot,\ xdot);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xdotdot\ =\ x\_spline.deriv(2,\ t);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ydotdot\ =\ y\_spline.deriv(2,\ t);}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yawdot\ =\ (pow(cos(yaw),\ 2)\ /\ xdot)\ *\ (ydotdot\ -\/\ xdotdot\ *\ tan(yaw));}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ state\ <<\ x\_spline(t),\ y\_spline(t),\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw,\ xdot,\ ydot,\ yawdot;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ state;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00102}00102\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ tk::spline\ x\_spline,\ y\_spline;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ t0,\ t1;}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00105}00105\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{trajectories_8hpp_source_l00107}00107\ \};}
+
+\end{DoxyCode}

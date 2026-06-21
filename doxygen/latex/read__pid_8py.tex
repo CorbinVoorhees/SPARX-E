@@ -1,0 +1,32 @@
+\doxysection{read\+\_\+pid.\+py File Reference}
+\hypertarget{read__pid_8py}{}\label{read__pid_8py}\index{read\_pid.py@{read\_pid.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceread__pid}{read\+\_\+pid}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceread__pid_a8f3eef88416508223ffa16694d29aa15}{read\+\_\+pid.\+output\+\_\+file}} = "{}fuckthisshit.\+csv"{}
+\item 
+str \mbox{\hyperlink{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}{read\+\_\+pid.\+serial\+\_\+port}} = \textquotesingle{}/dev/tty\+ACM0\textquotesingle{}
+\item 
+int \mbox{\hyperlink{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}{read\+\_\+pid.\+baud\+\_\+rate}} = 115200
+\item 
+\mbox{\hyperlink{namespaceread__pid_abb00880aafd02adb639d4abcfcaa04bd}{read\+\_\+pid.\+ser}} = serial.\+Serial(\mbox{\hyperlink{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}{serial\+\_\+port}}, baudrate=\mbox{\hyperlink{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}{baud\+\_\+rate}}, timeout=2)
+\item 
+\mbox{\hyperlink{namespaceread__pid_a58c1217dbb6a5ac84df41dff3ff5e109}{read\+\_\+pid.\+mode}}
+\item 
+bool \mbox{\hyperlink{namespaceread__pid_ab2e04dab56a4b02c17f81fca41f3a0cf}{read\+\_\+pid.\+test}} = False
+\item 
+\mbox{\hyperlink{namespaceread__pid_a1ea801d7d91597308aa09da87cfb940b}{read\+\_\+pid.\+start}} = time.\+time()
+\item 
+\mbox{\hyperlink{namespaceread__pid_ad228e07109487899b348050a19d46f27}{read\+\_\+pid.\+line}} = ser.\+read(4096)
+\item 
+list \mbox{\hyperlink{namespaceread__pid_a5b8cac3b41860a57ae18f95bd5126dec}{read\+\_\+pid.\+data}} = \mbox{[}i.\+split("{},"{}) \mbox{\hyperlink{unitree__lidar__sdk__pcl_8h_a43fa7120321c770f797e477cfc0d3887}{for}} i in \mbox{\hyperlink{namespaceread__pid_ad228e07109487899b348050a19d46f27}{line}}\mbox{]}
+\item 
+\mbox{\hyperlink{namespaceread__pid_a4c0807b41c38bfdfea168da3615d7625}{read\+\_\+pid.\+writer}} = csv.\+writer(file1)
+\item 
+list \mbox{\hyperlink{namespaceread__pid_a3725faf812738011949ea16923f37520}{read\+\_\+pid.\+title}} = \mbox{[}"{}FL"{}, "{}FR"{}, "{}BL"{}, "{}BR"{}\mbox{]}
+\end{DoxyCompactItemize}

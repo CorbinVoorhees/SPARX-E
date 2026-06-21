@@ -1,0 +1,58 @@
+\doxysection{read\+\_\+pid.\+py}
+\hypertarget{read__pid_8py_source}{}\label{read__pid_8py_source}\mbox{\hyperlink{read__pid_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00001}\mbox{\hyperlink{namespaceread__pid}{00001}}\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00002}00002\ \textcolor{keyword}{import}\ serial}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00003}00003\ \textcolor{keyword}{import}\ csv}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00004}00004\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00005}00005\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00006}00006\ \textcolor{keyword}{import}\ time}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00007}00007\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00009}\mbox{\hyperlink{namespaceread__pid_a8f3eef88416508223ffa16694d29aa15}{00009}}\ output\_file\ =\ \textcolor{stringliteral}{"{}fuckthisshit.csv"{}}}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00011}\mbox{\hyperlink{namespaceread__pid_ab15ca2e92619a1be26ecce80928f0ed7}{00011}}\ serial\_port\ =\ \textcolor{stringliteral}{'/dev/ttyACM0'}}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00012}\mbox{\hyperlink{namespaceread__pid_a53bddd36e93798bd636ad4d8abbe2f28}{00012}}\ baud\_rate\ =\ 115200}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00014}\mbox{\hyperlink{namespaceread__pid_abb00880aafd02adb639d4abcfcaa04bd}{00014}}\ ser\ =\ serial.Serial(serial\_port,\ baudrate=baud\_rate,\ timeout=2)}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00015}\mbox{\hyperlink{namespaceread__pid_a58c1217dbb6a5ac84df41dff3ff5e109}{00015}}\ \textcolor{keyword}{with}\ open(output\_file,\ mode=\textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ file1:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00018}\mbox{\hyperlink{namespaceread__pid_ab2e04dab56a4b02c17f81fca41f3a0cf}{00018}}\ test\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00019}\mbox{\hyperlink{namespaceread__pid_a1ea801d7d91597308aa09da87cfb940b}{00019}}\ start\ =\ time.time()}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00020}00020\ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{while}\ time.time()\ -\/\ start\ <\ 60:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ test:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00024}\mbox{\hyperlink{namespaceread__pid_ad228e07109487899b348050a19d46f27}{00024}}\ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ ser.read(4096)}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ test\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ line\ =\ ser.read(4096).decode().strip()[:-\/4].split(\textcolor{stringliteral}{'\(\backslash\)r\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ line\ =\ line[5:-\/5]}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ line:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00030}\mbox{\hyperlink{namespaceread__pid_a5b8cac3b41860a57ae18f95bd5126dec}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ data\ =\ [i.split(\textcolor{stringliteral}{"{},"{}})\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ line]}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(data):}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(output\_file,\ mode=\textcolor{stringliteral}{'a'})\ \textcolor{keyword}{as}\ file1:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00033}\mbox{\hyperlink{namespaceread__pid_a4c0807b41c38bfdfea168da3615d7625}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer\ =\ csv.writer(file1)}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ data:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.writerow(i)}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}FUCK\ THIS\ SHIT"{}})}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}there's\ no\ data\ here\ fucker"{}})}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00040}00040\ \textcolor{keywordflow}{except}\ KeyboardInterrupt:}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00041}00041\ \ \ \ \ print(\textcolor{stringliteral}{"{}hey\ why'd\ you\ stop"{}})}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00042}00042\ ser.close()}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00043}00043\ data\ =\ np.loadtxt(output\_file,\ delimiter=\textcolor{stringliteral}{"{},"{}}).T}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00044}00044\ print(np.shape(data))}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00046}\mbox{\hyperlink{namespaceread__pid_a3725faf812738011949ea16923f37520}{00046}}\ title\ =\ [\textcolor{stringliteral}{"{}FL"{}},\ \textcolor{stringliteral}{"{}FR"{}},\ \textcolor{stringliteral}{"{}BL"{}},\ \textcolor{stringliteral}{"{}BR"{}}]}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00047}00047\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(len(data)):}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00048}00048\ \ \ \ \ plt.plot(data[i])}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00049}00049\ plt.legend(title)}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00050}00050\ plt.show()}
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{read__pid_8py_source_l00053}00053\ }
+
+\end{DoxyCode}

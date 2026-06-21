@@ -1,0 +1,44 @@
+\doxysection{test\+\_\+mpi.\+c}
+\hypertarget{test__mpi_8c_source}{}\label{test__mpi_8c_source}\index{src/build/lidar\_processor/CMakeFiles/CMakeScratch/TryCompile-\/QaV63E/test\_mpi.c@{src/build/lidar\_processor/CMakeFiles/CMakeScratch/TryCompile-\/QaV63E/test\_mpi.c}}
+\mbox{\hyperlink{test__mpi_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <mpi.h>}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00003}00003\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00004}00004\ \textcolor{preprocessor}{\#\ \ include\ <cstdio>}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00005}00005\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00006}00006\ \textcolor{preprocessor}{\#\ \ include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00007}00007\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00009}00009\ \textcolor{preprocessor}{\#if\ defined(MPI\_VERSION)\ \&\&\ defined(MPI\_SUBVERSION)}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00010}00010\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ mpiver\_str[]\ =\ \{\ \textcolor{charliteral}{'I'},\ \textcolor{charliteral}{'N'},}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'F'},\ \textcolor{charliteral}{'O'},}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{':'},\ \textcolor{charliteral}{'M'},}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'P'},\ \textcolor{charliteral}{'I'},}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'-\/'},\ \textcolor{charliteral}{'V'},}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'R'},}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'['},\ (\textcolor{charliteral}{'0'}\ +\ MPI\_VERSION),}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'.'},\ (\textcolor{charliteral}{'0'}\ +\ MPI\_SUBVERSION),}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{']'},\ \textcolor{charliteral}{'\(\backslash\)0'}\ \};}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00019}00019\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00021}\mbox{\hyperlink{test__mpi_8c_a0ddf1224851353fc92bfbff6f499fa97}{00021}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}*\ argv[])}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00023}00023\ \textcolor{preprocessor}{\#if\ defined(MPI\_VERSION)\ \&\&\ defined(MPI\_SUBVERSION)}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00024}00024\ \textcolor{preprocessor}{\#\ \ ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00025}00025\ \ \ std::puts(mpiver\_str);}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00026}00026\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00027}00027\ \ \ puts(mpiver\_str);}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00028}00028\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00029}00029\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00030}00030\ \textcolor{preprocessor}{\#ifdef\ TEST\_MPI\_MPICXX}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00031}00031\ \ \ MPI::MPI\_Init(\&argc,\ \&argv);}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00032}00032\ \ \ MPI::MPI\_Finalize();}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00033}00033\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00034}00034\ \ \ MPI\_Init(\&argc,\ \&argv);}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00035}00035\ \ \ MPI\_Finalize();}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00036}00036\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00037}00037\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{test__mpi_8c_source_l00038}00038\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,4 @@
+var structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Obstacle__type__support__ids__t =
+[
+    [ "typesupport_identifier", "structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Obstacle__type__support__ids__t.html#a61020c9b9aeec2292d8fa3aa240942b5", null ]
+];

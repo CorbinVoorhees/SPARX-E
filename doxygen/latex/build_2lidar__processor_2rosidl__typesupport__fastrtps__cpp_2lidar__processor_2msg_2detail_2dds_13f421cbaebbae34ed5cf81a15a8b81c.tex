@@ -1,0 +1,63 @@
+\doxysection{build/lidar\+\_\+processor/rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp/lidar\+\_\+processor/msg/detail/dds\+\_\+fastrtps/obstacle\+\_\+\+\_\+type\+\_\+support.cpp File Reference}
+\hypertarget{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c}{}\label{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c}\index{build/lidar\_processor/rosidl\_typesupport\_fastrtps\_cpp/lidar\_processor/msg/detail/dds\_fastrtps/obstacle\_\_type\_support.cpp@{build/lidar\_processor/rosidl\_typesupport\_fastrtps\_cpp/lidar\_processor/msg/detail/dds\_fastrtps/obstacle\_\_type\_support.cpp}}
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/detail/obstacle\+\_\+\+\_\+rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp.\+hpp"{}}\newline
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/detail/obstacle\+\_\+\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}lidar\+\_\+processor/msg/detail/obstacle\+\_\+\+\_\+struct.\+hpp"{}}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include "{}rosidl\+\_\+typesupport\+\_\+cpp/message\+\_\+type\+\_\+support.\+hpp"{}}\newline
+{\ttfamily \#include "{}rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp/identifier.\+hpp"{}}\newline
+{\ttfamily \#include "{}rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp/message\+\_\+type\+\_\+support.\+h"{}}\newline
+{\ttfamily \#include "{}rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp/message\+\_\+type\+\_\+support\+\_\+decl.\+hpp"{}}\newline
+{\ttfamily \#include "{}rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp/serialization\+\_\+helpers.\+hpp"{}}\newline
+{\ttfamily \#include "{}rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp/wstring\+\_\+conversion.\+hpp"{}}\newline
+{\ttfamily \#include "{}fastcdr/\+Cdr.\+h"{}}\newline
+Include dependency graph for obstacle\+\_\+\+\_\+type\+\_\+support.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacelidar__processor}{lidar\+\_\+processor}}
+\item 
+namespace \mbox{\hyperlink{namespacelidar__processor_1_1msg}{lidar\+\_\+processor.\+msg}}
+\item 
+namespace \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp}}
+\item 
+namespace \mbox{\hyperlink{namespacerosidl__typesupport__fastrtps__cpp}{rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_ac46b97d213f2e40b51ca96ca626817bd}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::cdr\+\_\+serialize}} (const \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\+\_\+processor\+::msg\+::\+Obstacle}} \&, eprosima\+::fastcdr\+::\+Cdr \&)
+\item 
+bool \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_a361d43a555590cc840c8266ecc682c6e}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::cdr\+\_\+deserialize}} (eprosima\+::fastcdr\+::\+Cdr \&, \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\+\_\+processor\+::msg\+::\+Obstacle}} \&)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_a593b30c5e422cca1eaa7fda8a74c7a81}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::get\+\_\+serialized\+\_\+size}} (const \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\+\_\+processor\+::msg\+::\+Obstacle}} \&, size\+\_\+t current\+\_\+alignment)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_a3d3f77e15a411fcb3859ffa02ff624f7}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::max\+\_\+serialized\+\_\+size\+\_\+\+Obstacle}} (bool \&full\+\_\+bounded, bool \&is\+\_\+plain, size\+\_\+t current\+\_\+alignment)
+\item 
+bool \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_a398ecfa24d0faa2b147945dbdd951e17}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::cdr\+\_\+serialize\+\_\+key}} (const \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\+\_\+processor\+::msg\+::\+Obstacle}} \&, eprosima\+::fastcdr\+::\+Cdr \&)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_a7416598a3abc99084adaf3e7c1f4523e}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::get\+\_\+serialized\+\_\+size\+\_\+key}} (const \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\+\_\+processor\+::msg\+::\+Obstacle}} \&, size\+\_\+t current\+\_\+alignment)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp_a4cc2e8c2f48ebfbdcef2552d86039569}{lidar\+\_\+processor\+::msg\+::typesupport\+\_\+fastrtps\+\_\+cpp\+::max\+\_\+serialized\+\_\+size\+\_\+key\+\_\+\+Obstacle}} (bool \&full\+\_\+bounded, bool \&is\+\_\+plain, size\+\_\+t current\+\_\+alignment)
+\item 
+template$<$$>$ \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2rosidl__type065135fc838bfdc55d5db7a8fb08531c_a464a1e6ce35e349e2d7522e5e5ae9a4d}{ROSIDL\+\_\+\+TYPESUPPORT\+\_\+\+FASTRTPS\+\_\+\+CPP\+\_\+\+EXPORT\+\_\+lidar\+\_\+processor}} const rosidl\+\_\+message\+\_\+type\+\_\+support\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespacerosidl__typesupport__fastrtps__cpp_aca8934c59a2f5ce69c534cc84abdfcbc}{rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp\+::get\+\_\+message\+\_\+type\+\_\+support\+\_\+handle$<$ lidar\+\_\+processor\+::msg\+::\+Obstacle $>$}} ()
+\item 
+const rosidl\+\_\+message\+\_\+type\+\_\+support\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c_abf6b86671cc4fa393e596c0c339a3060}{ROSIDL\+\_\+\+TYPESUPPORT\+\_\+\+INTERFACE\+\_\+\+\_\+\+MESSAGE\+\_\+\+SYMBOL\+\_\+\+NAME}} (rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp, lidar\+\_\+processor, msg, Obstacle)()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c_abf6b86671cc4fa393e596c0c339a3060}\label{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c_abf6b86671cc4fa393e596c0c339a3060} 
+\index{obstacle\_\_type\_support.cpp@{obstacle\_\_type\_support.cpp}!ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME@{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME}}
+\index{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME@{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME}!obstacle\_\_type\_support.cpp@{obstacle\_\_type\_support.cpp}}
+\doxysubsubsection{\texorpdfstring{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME()}{ROSIDL\_TYPESUPPORT\_INTERFACE\_\_MESSAGE\_SYMBOL\_NAME()}}
+{\footnotesize\ttfamily const rosidl\+\_\+message\+\_\+type\+\_\+support\+\_\+t \texorpdfstring{$\ast$}{*} ROSIDL\+\_\+\+TYPESUPPORT\+\_\+\+INTERFACE\+\_\+\+\_\+\+MESSAGE\+\_\+\+SYMBOL\+\_\+\+NAME (\begin{DoxyParamCaption}\item[{rosidl\+\_\+typesupport\+\_\+fastrtps\+\_\+cpp}]{,  }\item[{lidar\+\_\+processor}]{,  }\item[{msg}]{,  }\item[{Obstacle}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c_source_l00345}{345}} of file \mbox{\hyperlink{build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_13f421cbaebbae34ed5cf81a15a8b81c_source}{obstacle\+\_\+\+\_\+type\+\_\+support.\+cpp}}.
+

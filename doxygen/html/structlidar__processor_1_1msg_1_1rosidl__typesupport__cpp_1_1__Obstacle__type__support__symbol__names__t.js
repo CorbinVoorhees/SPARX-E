@@ -1,0 +1,4 @@
+var structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Obstacle__type__support__symbol__names__t =
+[
+    [ "symbol_name", "structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Obstacle__type__support__symbol__names__t.html#a7f5ab07da295cd54c534874f9f3f2e80", null ]
+];

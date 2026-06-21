@@ -1,0 +1,390 @@
+\doxysection{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh Namespace Reference}
+\hypertarget{namespace__local__setup__util__sh}{}\label{namespace__local__setup__util__sh}\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a1b27fc72a79bb06ff30ee558df7ccaa2}{main}} (argv=sys.\+argv\mbox{[}1\+:\mbox{]})
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a17f3daa3929265d30126185112346420}{get\+\_\+packages}} (prefix\+\_\+path, merged\+\_\+install)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a1dc880913fbf3811b97917d105bfac0c}{add\+\_\+package\+\_\+runtime\+\_\+dependencies}} (path, packages)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a7c96a239f502a9af226e66b77351bf22}{order\+\_\+packages}} (packages)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_ae93d0090312417828df666d69c27a687}{reduce\+\_\+cycle\+\_\+set}} (packages)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a83a7c4ed6fc94d15e63e3d97bb681a1c}{\+\_\+include\+\_\+comments}} ()
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a284e2747df04e986a1f0c1ba9b83ffa6}{get\+\_\+commands}} (pkg\+\_\+name, prefix, primary\+\_\+extension, additional\+\_\+extension)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a3c719e21e412f8a95bb1dabe10f5a280}{process\+\_\+dsv\+\_\+file}} (dsv\+\_\+path, prefix, primary\+\_\+extension=None, additional\+\_\+extension=None)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a27c02efedb83ca6054d1034877461722}{handle\+\_\+dsv\+\_\+types\+\_\+except\+\_\+source}} (type\+\_\+, remainder, prefix)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a53b6439e6265033b49a01162401b5b0e}{\+\_\+append\+\_\+unique\+\_\+value}} (name, value)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_ac84a17f33b3577663243954615f2dca3}{\+\_\+prepend\+\_\+unique\+\_\+value}} (name, value)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_ac50017f79bc2b2787f674b58a2b47362}{\+\_\+remove\+\_\+ending\+\_\+separators}} ()
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a52e81419e1dac5e4d2df19c2af0ea47f}{\+\_\+set}} (name, value)
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a70e35ff4abbd80263516d27c8e09a983}{\+\_\+set\+\_\+if\+\_\+unset}} (name, value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_acfdfd3d3869f5cbfb8824105dc24c38d}{FORMAT\+\_\+\+STR\+\_\+\+COMMENT\+\_\+\+LINE}} = \textquotesingle{}\# \{comment\}\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a29c36c07078b8578f6503f83664acefa}{FORMAT\+\_\+\+STR\+\_\+\+SET\+\_\+\+ENV\+\_\+\+VAR}} = \textquotesingle{}export \{name\}="{}\{value\}"{}\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_adf57924f1362c6bf90a1c0a4026ddce6}{FORMAT\+\_\+\+STR\+\_\+\+USE\+\_\+\+ENV\+\_\+\+VAR}} = \textquotesingle{}\$\{name\}\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a043d90a82a879c6cee8160b6901bb037}{FORMAT\+\_\+\+STR\+\_\+\+INVOKE\+\_\+\+SCRIPT}} = \textquotesingle{}COLCON\+\_\+\+CURRENT\+\_\+\+PREFIX="{}\{prefix\}"{} \+\_\+colcon\+\_\+prefix\+\_\+sh\+\_\+source\+\_\+script "{}\{script\+\_\+path\}"{}\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a6894a255d8b5f5c42aaca189da2a5acb}{FORMAT\+\_\+\+STR\+\_\+\+REMOVE\+\_\+\+LEADING\+\_\+\+SEPARATOR}} = \textquotesingle{}if \mbox{[} "{}\$(echo -\/n \$\{name\} \texorpdfstring{$\vert$}{|} head -\/c 1)"{} = "{}\+:"{} \mbox{]}; then export \{name\}=\$\{\{\{name\}\#?\}\} ; fi\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a409113f1059ba8134f6b9a7c5f3e1d6b}{FORMAT\+\_\+\+STR\+\_\+\+REMOVE\+\_\+\+TRAILING\+\_\+\+SEPARATOR}} = \textquotesingle{}if \mbox{[} "{}\$(echo -\/n \$\{name\} \texorpdfstring{$\vert$}{|} tail -\/c 1)"{} = "{}\+:"{} \mbox{]}; then export \{name\}=\$\{\{\{name\}\%?\}\} ; fi\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a2f274909f5a84ec6e9ef83a6928ae3e4}{DSV\+\_\+\+TYPE\+\_\+\+APPEND\+\_\+\+NON\+\_\+\+DUPLICATE}} = \textquotesingle{}append-\/non-\/duplicate\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a64588c97095b89bd6a20623289a37051}{DSV\+\_\+\+TYPE\+\_\+\+PREPEND\+\_\+\+NON\+\_\+\+DUPLICATE}} = \textquotesingle{}prepend-\/non-\/duplicate\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a1aed77c074b12d2ab6c11fb16dc01cfc}{DSV\+\_\+\+TYPE\+\_\+\+PREPEND\+\_\+\+NON\+\_\+\+DUPLICATE\+\_\+\+IF\+\_\+\+EXISTS}} = \textquotesingle{}prepend-\/non-\/duplicate-\/if-\/exists\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_ab3adaba61d9af99e2c3ae68f64e00a49}{DSV\+\_\+\+TYPE\+\_\+\+SET}} = \textquotesingle{}set\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_abd1e85db4deba9dd4ec1bc97c41e4744}{DSV\+\_\+\+TYPE\+\_\+\+SET\+\_\+\+IF\+\_\+\+UNSET}} = \textquotesingle{}set-\/if-\/unset\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespace__local__setup__util__sh_a641c7643fae0080e426bedec13be1490}{DSV\+\_\+\+TYPE\+\_\+\+SOURCE}} = \textquotesingle{}source\textquotesingle{}
+\item 
+dict \mbox{\hyperlink{namespace__local__setup__util__sh_a4671fbb6038d6bc762ef0d125249acca}{env\+\_\+state}} = \{\}
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a33c8846fcbbb8b254bd1bb1564a82282}{rc}} = \mbox{\hyperlink{namespace__local__setup__util__sh_a1b27fc72a79bb06ff30ee558df7ccaa2}{main}}()
+\item 
+\mbox{\hyperlink{namespace__local__setup__util__sh_a8a4c43c0327926319dae62ac05e08b1d}{file}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace__local__setup__util__sh_a53b6439e6265033b49a01162401b5b0e}\label{namespace__local__setup__util__sh_a53b6439e6265033b49a01162401b5b0e} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!\_append\_unique\_value@{\_append\_unique\_value}}
+\index{\_append\_unique\_value@{\_append\_unique\_value}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{\_append\_unique\_value()}{\_append\_unique\_value()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+append\+\_\+unique\+\_\+value (\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00322}{322}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a83a7c4ed6fc94d15e63e3d97bb681a1c}\label{namespace__local__setup__util__sh_a83a7c4ed6fc94d15e63e3d97bb681a1c} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!\_include\_comments@{\_include\_comments}}
+\index{\_include\_comments@{\_include\_comments}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{\_include\_comments()}{\_include\_comments()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+include\+\_\+comments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00176}{176}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_ac84a17f33b3577663243954615f2dca3}\label{namespace__local__setup__util__sh_ac84a17f33b3577663243954615f2dca3} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!\_prepend\_unique\_value@{\_prepend\_unique\_value}}
+\index{\_prepend\_unique\_value@{\_prepend\_unique\_value}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{\_prepend\_unique\_value()}{\_prepend\_unique\_value()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+prepend\+\_\+unique\+\_\+value (\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00344}{344}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_ac50017f79bc2b2787f674b58a2b47362}\label{namespace__local__setup__util__sh_ac50017f79bc2b2787f674b58a2b47362} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!\_remove\_ending\_separators@{\_remove\_ending\_separators}}
+\index{\_remove\_ending\_separators@{\_remove\_ending\_separators}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{\_remove\_ending\_separators()}{\_remove\_ending\_separators()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+remove\+\_\+ending\+\_\+separators (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00367}{367}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a52e81419e1dac5e4d2df19c2af0ea47f}\label{namespace__local__setup__util__sh_a52e81419e1dac5e4d2df19c2af0ea47f} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!\_set@{\_set}}
+\index{\_set@{\_set}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{\_set()}{\_set()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+set (\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00384}{384}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a70e35ff4abbd80263516d27c8e09a983}\label{namespace__local__setup__util__sh_a70e35ff4abbd80263516d27c8e09a983} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!\_set\_if\_unset@{\_set\_if\_unset}}
+\index{\_set\_if\_unset@{\_set\_if\_unset}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{\_set\_if\_unset()}{\_set\_if\_unset()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+set\+\_\+if\+\_\+unset (\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00392}{392}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a1dc880913fbf3811b97917d105bfac0c}\label{namespace__local__setup__util__sh_a1dc880913fbf3811b97917d105bfac0c} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!add\_package\_runtime\_dependencies@{add\_package\_runtime\_dependencies}}
+\index{add\_package\_runtime\_dependencies@{add\_package\_runtime\_dependencies}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{add\_package\_runtime\_dependencies()}{add\_package\_runtime\_dependencies()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+add\+\_\+package\+\_\+runtime\+\_\+dependencies (\begin{DoxyParamCaption}\item[{}]{path,  }\item[{}]{packages }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Check the path and if it exists extract the packages runtime dependencies.
+
+:param Path path: The resource file containing the runtime dependencies
+:param dict packages: A mapping from package names to the sets of runtime
+  dependencies to add to
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00108}{108}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a284e2747df04e986a1f0c1ba9b83ffa6}\label{namespace__local__setup__util__sh_a284e2747df04e986a1f0c1ba9b83ffa6} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!get\_commands@{get\_commands}}
+\index{get\_commands@{get\_commands}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{get\_commands()}{get\_commands()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+get\+\_\+commands (\begin{DoxyParamCaption}\item[{}]{pkg\+\_\+name,  }\item[{}]{prefix,  }\item[{}]{primary\+\_\+extension,  }\item[{}]{additional\+\_\+extension }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00182}{182}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a17f3daa3929265d30126185112346420}\label{namespace__local__setup__util__sh_a17f3daa3929265d30126185112346420} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!get\_packages@{get\_packages}}
+\index{get\_packages@{get\_packages}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{get\_packages()}{get\_packages()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+get\+\_\+packages (\begin{DoxyParamCaption}\item[{}]{prefix\+\_\+path,  }\item[{}]{merged\+\_\+install }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Find packages based on colcon-specific files created during installation.
+
+:param Path prefix_path: The install prefix path of all packages
+:param bool merged_install: The flag if the packages are all installed
+  directly in the prefix or if each package is installed in a subdirectory
+  named after the package
+:returns: A mapping from the package name to the set of runtime
+  dependencies
+:rtype: dict
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00062}{62}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a27c02efedb83ca6054d1034877461722}\label{namespace__local__setup__util__sh_a27c02efedb83ca6054d1034877461722} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!handle\_dsv\_types\_except\_source@{handle\_dsv\_types\_except\_source}}
+\index{handle\_dsv\_types\_except\_source@{handle\_dsv\_types\_except\_source}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{handle\_dsv\_types\_except\_source()}{handle\_dsv\_types\_except\_source()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+handle\+\_\+dsv\+\_\+types\+\_\+except\+\_\+source (\begin{DoxyParamCaption}\item[{}]{type\+\_\+,  }\item[{}]{remainder,  }\item[{}]{prefix }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00264}{264}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a1b27fc72a79bb06ff30ee558df7ccaa2}\label{namespace__local__setup__util__sh_a1b27fc72a79bb06ff30ee558df7ccaa2} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!main@{main}}
+\index{main@{main}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+main (\begin{DoxyParamCaption}\item[{}]{argv = {\ttfamily sys.argv\mbox{[}1\+:\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00026}{26}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a7c96a239f502a9af226e66b77351bf22}\label{namespace__local__setup__util__sh_a7c96a239f502a9af226e66b77351bf22} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!order\_packages@{order\_packages}}
+\index{order\_packages@{order\_packages}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{order\_packages()}{order\_packages()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+order\+\_\+packages (\begin{DoxyParamCaption}\item[{}]{packages }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Order packages topologically.
+
+:param dict packages: A mapping from package name to the set of runtime
+  dependencies
+:returns: The package names
+:rtype: list
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00121}{121}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a3c719e21e412f8a95bb1dabe10f5a280}\label{namespace__local__setup__util__sh_a3c719e21e412f8a95bb1dabe10f5a280} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!process\_dsv\_file@{process\_dsv\_file}}
+\index{process\_dsv\_file@{process\_dsv\_file}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{process\_dsv\_file()}{process\_dsv\_file()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+process\+\_\+dsv\+\_\+file (\begin{DoxyParamCaption}\item[{}]{dsv\+\_\+path,  }\item[{}]{prefix,  }\item[{}]{primary\+\_\+extension = {\ttfamily None},  }\item[{}]{additional\+\_\+extension = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00191}{191}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_ae93d0090312417828df666d69c27a687}\label{namespace__local__setup__util__sh_ae93d0090312417828df666d69c27a687} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!reduce\_cycle\_set@{reduce\_cycle\_set}}
+\index{reduce\_cycle\_set@{reduce\_cycle\_set}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{reduce\_cycle\_set()}{reduce\_cycle\_set()}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+reduce\+\_\+cycle\+\_\+set (\begin{DoxyParamCaption}\item[{}]{packages }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reduce the set of packages to the ones part of the circular dependency.
+
+:param dict packages: A mapping from package name to the set of runtime
+  dependencies which is modified in place
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00151}{151}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace__local__setup__util__sh_a2f274909f5a84ec6e9ef83a6928ae3e4}\label{namespace__local__setup__util__sh_a2f274909f5a84ec6e9ef83a6928ae3e4} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!DSV\_TYPE\_APPEND\_NON\_DUPLICATE@{DSV\_TYPE\_APPEND\_NON\_DUPLICATE}}
+\index{DSV\_TYPE\_APPEND\_NON\_DUPLICATE@{DSV\_TYPE\_APPEND\_NON\_DUPLICATE}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{DSV\_TYPE\_APPEND\_NON\_DUPLICATE}{DSV\_TYPE\_APPEND\_NON\_DUPLICATE}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+APPEND\+\_\+\+NON\+\_\+\+DUPLICATE = \textquotesingle{}append-\/non-\/duplicate\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00018}{18}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a64588c97095b89bd6a20623289a37051}\label{namespace__local__setup__util__sh_a64588c97095b89bd6a20623289a37051} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!DSV\_TYPE\_PREPEND\_NON\_DUPLICATE@{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE}}
+\index{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE@{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE}{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+PREPEND\+\_\+\+NON\+\_\+\+DUPLICATE = \textquotesingle{}prepend-\/non-\/duplicate\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00019}{19}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a1aed77c074b12d2ab6c11fb16dc01cfc}\label{namespace__local__setup__util__sh_a1aed77c074b12d2ab6c11fb16dc01cfc} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!DSV\_TYPE\_PREPEND\_NON\_DUPLICATE\_IF\_EXISTS@{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE\_IF\_EXISTS}}
+\index{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE\_IF\_EXISTS@{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE\_IF\_EXISTS}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE\_IF\_EXISTS}{DSV\_TYPE\_PREPEND\_NON\_DUPLICATE\_IF\_EXISTS}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+PREPEND\+\_\+\+NON\+\_\+\+DUPLICATE\+\_\+\+IF\+\_\+\+EXISTS = \textquotesingle{}prepend-\/non-\/duplicate-\/if-\/exists\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00020}{20}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_ab3adaba61d9af99e2c3ae68f64e00a49}\label{namespace__local__setup__util__sh_ab3adaba61d9af99e2c3ae68f64e00a49} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!DSV\_TYPE\_SET@{DSV\_TYPE\_SET}}
+\index{DSV\_TYPE\_SET@{DSV\_TYPE\_SET}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{DSV\_TYPE\_SET}{DSV\_TYPE\_SET}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+SET = \textquotesingle{}set\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00021}{21}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_abd1e85db4deba9dd4ec1bc97c41e4744}\label{namespace__local__setup__util__sh_abd1e85db4deba9dd4ec1bc97c41e4744} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!DSV\_TYPE\_SET\_IF\_UNSET@{DSV\_TYPE\_SET\_IF\_UNSET}}
+\index{DSV\_TYPE\_SET\_IF\_UNSET@{DSV\_TYPE\_SET\_IF\_UNSET}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{DSV\_TYPE\_SET\_IF\_UNSET}{DSV\_TYPE\_SET\_IF\_UNSET}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+SET\+\_\+\+IF\+\_\+\+UNSET = \textquotesingle{}set-\/if-\/unset\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00022}{22}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a641c7643fae0080e426bedec13be1490}\label{namespace__local__setup__util__sh_a641c7643fae0080e426bedec13be1490} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!DSV\_TYPE\_SOURCE@{DSV\_TYPE\_SOURCE}}
+\index{DSV\_TYPE\_SOURCE@{DSV\_TYPE\_SOURCE}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{DSV\_TYPE\_SOURCE}{DSV\_TYPE\_SOURCE}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+SOURCE = \textquotesingle{}source\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00023}{23}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a4671fbb6038d6bc762ef0d125249acca}\label{namespace__local__setup__util__sh_a4671fbb6038d6bc762ef0d125249acca} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!env\_state@{env\_state}}
+\index{env\_state@{env\_state}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{env\_state}{env\_state}}
+{\footnotesize\ttfamily dict \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+env\+\_\+state = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00319}{319}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a8a4c43c0327926319dae62ac05e08b1d}\label{namespace__local__setup__util__sh_a8a4c43c0327926319dae62ac05e08b1d} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!file@{file}}
+\index{file@{file}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{file}{file}}
+{\footnotesize\ttfamily \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+file}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00405}{405}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_acfdfd3d3869f5cbfb8824105dc24c38d}\label{namespace__local__setup__util__sh_acfdfd3d3869f5cbfb8824105dc24c38d} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!FORMAT\_STR\_COMMENT\_LINE@{FORMAT\_STR\_COMMENT\_LINE}}
+\index{FORMAT\_STR\_COMMENT\_LINE@{FORMAT\_STR\_COMMENT\_LINE}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{FORMAT\_STR\_COMMENT\_LINE}{FORMAT\_STR\_COMMENT\_LINE}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+COMMENT\+\_\+\+LINE = \textquotesingle{}\# \{comment\}\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00011}{11}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a043d90a82a879c6cee8160b6901bb037}\label{namespace__local__setup__util__sh_a043d90a82a879c6cee8160b6901bb037} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!FORMAT\_STR\_INVOKE\_SCRIPT@{FORMAT\_STR\_INVOKE\_SCRIPT}}
+\index{FORMAT\_STR\_INVOKE\_SCRIPT@{FORMAT\_STR\_INVOKE\_SCRIPT}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{FORMAT\_STR\_INVOKE\_SCRIPT}{FORMAT\_STR\_INVOKE\_SCRIPT}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+INVOKE\+\_\+\+SCRIPT = \textquotesingle{}COLCON\+\_\+\+CURRENT\+\_\+\+PREFIX="{}\{prefix\}"{} \+\_\+colcon\+\_\+prefix\+\_\+sh\+\_\+source\+\_\+script "{}\{script\+\_\+path\}"{}\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00014}{14}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a6894a255d8b5f5c42aaca189da2a5acb}\label{namespace__local__setup__util__sh_a6894a255d8b5f5c42aaca189da2a5acb} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!FORMAT\_STR\_REMOVE\_LEADING\_SEPARATOR@{FORMAT\_STR\_REMOVE\_LEADING\_SEPARATOR}}
+\index{FORMAT\_STR\_REMOVE\_LEADING\_SEPARATOR@{FORMAT\_STR\_REMOVE\_LEADING\_SEPARATOR}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{FORMAT\_STR\_REMOVE\_LEADING\_SEPARATOR}{FORMAT\_STR\_REMOVE\_LEADING\_SEPARATOR}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+REMOVE\+\_\+\+LEADING\+\_\+\+SEPARATOR = \textquotesingle{}if \mbox{[} "{}\$(echo -\/n \$\{name\} \texorpdfstring{$\vert$}{|} head -\/c 1)"{} = "{}\+:"{} \mbox{]}; then export \{name\}=\$\{\{\{name\}\#?\}\} ; fi\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00015}{15}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a409113f1059ba8134f6b9a7c5f3e1d6b}\label{namespace__local__setup__util__sh_a409113f1059ba8134f6b9a7c5f3e1d6b} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!FORMAT\_STR\_REMOVE\_TRAILING\_SEPARATOR@{FORMAT\_STR\_REMOVE\_TRAILING\_SEPARATOR}}
+\index{FORMAT\_STR\_REMOVE\_TRAILING\_SEPARATOR@{FORMAT\_STR\_REMOVE\_TRAILING\_SEPARATOR}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{FORMAT\_STR\_REMOVE\_TRAILING\_SEPARATOR}{FORMAT\_STR\_REMOVE\_TRAILING\_SEPARATOR}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+REMOVE\+\_\+\+TRAILING\+\_\+\+SEPARATOR = \textquotesingle{}if \mbox{[} "{}\$(echo -\/n \$\{name\} \texorpdfstring{$\vert$}{|} tail -\/c 1)"{} = "{}\+:"{} \mbox{]}; then export \{name\}=\$\{\{\{name\}\%?\}\} ; fi\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00016}{16}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a29c36c07078b8578f6503f83664acefa}\label{namespace__local__setup__util__sh_a29c36c07078b8578f6503f83664acefa} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!FORMAT\_STR\_SET\_ENV\_VAR@{FORMAT\_STR\_SET\_ENV\_VAR}}
+\index{FORMAT\_STR\_SET\_ENV\_VAR@{FORMAT\_STR\_SET\_ENV\_VAR}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{FORMAT\_STR\_SET\_ENV\_VAR}{FORMAT\_STR\_SET\_ENV\_VAR}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+SET\+\_\+\+ENV\+\_\+\+VAR = \textquotesingle{}export \{name\}="{}\{value\}"{}\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00012}{12}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_adf57924f1362c6bf90a1c0a4026ddce6}\label{namespace__local__setup__util__sh_adf57924f1362c6bf90a1c0a4026ddce6} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!FORMAT\_STR\_USE\_ENV\_VAR@{FORMAT\_STR\_USE\_ENV\_VAR}}
+\index{FORMAT\_STR\_USE\_ENV\_VAR@{FORMAT\_STR\_USE\_ENV\_VAR}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{FORMAT\_STR\_USE\_ENV\_VAR}{FORMAT\_STR\_USE\_ENV\_VAR}}
+{\footnotesize\ttfamily str \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+USE\+\_\+\+ENV\+\_\+\+VAR = \textquotesingle{}\$\{name\}\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00013}{13}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
+\Hypertarget{namespace__local__setup__util__sh_a33c8846fcbbb8b254bd1bb1564a82282}\label{namespace__local__setup__util__sh_a33c8846fcbbb8b254bd1bb1564a82282} 
+\index{\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}!rc@{rc}}
+\index{rc@{rc}!\_local\_setup\_util\_sh@{\_local\_setup\_util\_sh}}
+\doxysubsubsection{\texorpdfstring{rc}{rc}}
+{\footnotesize\ttfamily int \+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+rc = \mbox{\hyperlink{namespace__local__setup__util__sh_a1b27fc72a79bb06ff30ee558df7ccaa2}{main}}()}
+
+
+
+Definition at line \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source_l00403}{403}} of file \mbox{\hyperlink{install_2__local__setup__util__sh_8py_source}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+py}}.
+
