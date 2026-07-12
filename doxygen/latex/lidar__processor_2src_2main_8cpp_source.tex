@@ -33,9 +33,9 @@
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00029}00029\ }
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00030}00030\ \textcolor{preprocessor}{\#include\ <rclcpp/rclcpp.hpp>}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00031}00031\ \textcolor{preprocessor}{\#include\ <sensor\_msgs/msg/point\_cloud2.hpp>}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00032}00032\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/env.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00033}00033\ \textcolor{preprocessor}{\#include\ "{}lidar\_processor/msg/obstacle.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00034}00034\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/msg/odometry.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00032}00032\ \textcolor{preprocessor}{\#include\ <lidar\_processor/msg/env.hpp>}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00033}00033\ \textcolor{preprocessor}{\#include\ <lidar\_processor/msg/obstacle.hpp>}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00034}00034\ \textcolor{preprocessor}{\#include\ <nav\_msgs/msg/odometry.hpp>}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00035}00035\ }
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00036}00036\ \textcolor{preprocessor}{\#include\ <pcl\_conversions/pcl\_conversions.h>}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00037}00037\ \textcolor{preprocessor}{\#include\ <pcl/point\_cloud.h>}}
@@ -49,473 +49,471 @@
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00045}00045\ }
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00046}00046\ \textcolor{preprocessor}{\#include\ <cmath>}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00047}00047\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00048}00048\ \textcolor{preprocessor}{\#include\ <limits>}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00049}00049\ \textcolor{preprocessor}{\#include\ <fstream>}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00050}00050\ \textcolor{preprocessor}{\#include\ <sstream>}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <chrono>}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00052}00052\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00048}00048\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00049}00049\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00050}00050\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00052}00052\ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00053}00053\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00054}00054\ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00056}\mbox{\hyperlink{classLidarObstacleProcessor}{00056}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classLidarObstacleProcessor}{LidarObstacleProcessor}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00057}00057\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00058}\mbox{\hyperlink{classLidarObstacleProcessor_a901c87c2f532133e638c3da2153ce638}{00058}}\ \ \ \ \ \mbox{\hyperlink{classLidarObstacleProcessor_a901c87c2f532133e638c3da2153ce638}{LidarObstacleProcessor}}()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ :\ Node(\textcolor{stringliteral}{"{}lidar\_obstacle\_processor"{}})}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00060}00060\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ raw\_cloud\_lidar\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00064}00064\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ accumulated\_cloud\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00068}00068\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ cloud\_body\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00072}00072\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ filtered\_cloud\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00076}00076\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ kd\_tree\_\ =\ pcl::search::KdTree<pcl::PointXYZ>::Ptr(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::search::KdTree<pcl::PointXYZ>}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00054}\mbox{\hyperlink{classLidarObstacleProcessor}{00054}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classLidarObstacleProcessor}{LidarObstacleProcessor}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00055}00055\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00056}\mbox{\hyperlink{classLidarObstacleProcessor_a901c87c2f532133e638c3da2153ce638}{00056}}\ \ \ \ \ \mbox{\hyperlink{classLidarObstacleProcessor_a901c87c2f532133e638c3da2153ce638}{LidarObstacleProcessor}}()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ :\ Node(\textcolor{stringliteral}{"{}lidar\_obstacle\_processor"{}})}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00058}00058\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ raw\_cloud\_lidar\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ accumulated\_cloud\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ cloud\_body\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ filtered\_cloud\_\ =\ pcl::PointCloud<pcl::PointXYZ>::Ptr(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::PointCloud<pcl::PointXYZ>}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ kd\_tree\_\ =\ pcl::search::KdTree<pcl::PointXYZ>::Ptr(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ pcl::search::KdTree<pcl::PointXYZ>}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ R\_body\_lidar\_\ =\ computeMountRotation();}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00080}00080\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ R\_body\_lidar\_\ =\ computeMountRotation();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00082}00082\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Connects\ to\ LiDAR\ data\ stream}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ subscription\_\ =\ this-\/>create\_subscription<sensor\_msgs::msg::PointCloud2>(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/unilidar/cloud"{}},}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&LidarObstacleProcessor::pointCloudCallback,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::placeholders::\_1}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00093}00093\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ publication\_\ =\ this-\/>create\_publisher<lidar\_processor::msg::Env>(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/obstacles"{}},\ 10}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00097}00097\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Timer\ to\ process\ the\ accumulated\ cloud\ and\ write\ CSV\ every\ 0.5\ seconds\ (500ms)}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ processing\_timer\_\ =\ this-\/>create\_wall\_timer(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ 2000ms,\ std::bind(\&LidarObstacleProcessor::timerCallback,\ \textcolor{keyword}{this})}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00102}00102\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ this-\/>estimation\_subscription\ =\ this-\/>create\_subscription<nav\_msgs::msg::Odometry>(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/trans\_est"{}},\ 10,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&LidarObstacleProcessor::estimation\_callback,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::placeholders::\_1}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00112}00112\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}LidarObstacleProcessor\ started."{}});}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00114}00114\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00115}00115\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00116}\mbox{\hyperlink{classLidarObstacleProcessor_a390691efc9f3e2943d02d2f6ee6ab16e}{00116}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLidarObstacleProcessor_a390691efc9f3e2943d02d2f6ee6ab16e}{process}}()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00117}00117\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cloud\_body\_-\/>empty())\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_WARN(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}No\ point\ cloud\ data\ stored\ yet."{}});}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00122}00122\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ filterPoints();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ buildKdTree();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ computeObstacleClusters();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ computeGaussianCosts();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00127}00127\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ RCLCPP\_INFO(}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>get\_logger(),}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Processed\ accumulated\ cloud:\ raw=\%zu,\ filtered=\%zu,\ obstacles=\%zu"{}},}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ cloud\_body\_-\/>size(),}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>size(),}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ obstacles\_.size()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00135}00135\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00136}00136\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00137}00137\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{keyword}{struct\ }Obstacle\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ Eigen::Vector2f\ center\_xy;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ height;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sigma;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ Eigen::Matrix2f\ covariance;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ Eigen::Matrix2f\ inv\_covariance;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ amplitude;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ num\_points;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00146}00146\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Connects\ to\ LiDAR\ data\ stream}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ subscription\_\ =\ this-\/>create\_subscription<sensor\_msgs::msg::PointCloud2>(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/unilidar/cloud"{}},}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&LidarObstacleProcessor::pointCloudCallback,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::placeholders::\_1}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ publication\_\ =\ this-\/>create\_publisher<lidar\_processor::msg::Env>(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/obstacles"{}},\ 10}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Timer\ to\ process\ the\ accumulated\ cloud\ and\ write\ CSV\ every\ 0.5\ seconds\ (500ms)}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ processing\_timer\_\ =\ this-\/>create\_wall\_timer(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ 2000ms,\ std::bind(\&LidarObstacleProcessor::timerCallback,\ \textcolor{keyword}{this})}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ this-\/>estimation\_subscription\ =\ this-\/>create\_subscription<nav\_msgs::msg::Odometry>(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/trans\_est"{}},\ 10,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&LidarObstacleProcessor::estimation\_callback,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::placeholders::\_1}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}LidarObstacleProcessor\ started."{}});}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00112}00112\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00114}\mbox{\hyperlink{classLidarObstacleProcessor_a390691efc9f3e2943d02d2f6ee6ab16e}{00114}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLidarObstacleProcessor_a390691efc9f3e2943d02d2f6ee6ab16e}{process}}()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00115}00115\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cloud\_body\_-\/>empty())\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_WARN(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}No\ point\ cloud\ data\ stored\ yet."{}});}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ filterPoints();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ buildKdTree();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ computeObstacleClusters();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ computeGaussianCosts();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ RCLCPP\_INFO(}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>get\_logger(),}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Processed\ accumulated\ cloud:\ raw=\%zu,\ filtered=\%zu,\ obstacles=\%zu"{}},}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ cloud\_body\_-\/>size(),}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>size(),}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ obstacles\_.size()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00133}00133\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00135}00135\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00136}00136\ \ \ \ \ \textcolor{keyword}{struct\ }Obstacle\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ Eigen::Vector2f\ center\_xy;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ height;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sigma;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ Eigen::Matrix2f\ covariance;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ Eigen::Matrix2f\ inv\_covariance;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ amplitude;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ num\_points;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00144}00144\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{comment}{//\ PARAMETERS}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00147}00147\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00148}00148\ \ \ \ \ \textcolor{comment}{//\ PARAMETERS}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00148}00148\ \ \ \ \ \textcolor{keywordtype}{float}\ mount\_offset\_angle\_rad\_\ =\ -\/0.27f;}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00149}00149\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00150}00150\ \ \ \ \ \textcolor{keywordtype}{float}\ mount\_offset\_angle\_rad\_\ =\ -\/0.27f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00151}00151\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00152}00152\ \ \ \ \ \textcolor{keywordtype}{float}\ min\_x\_\ =\ 0.05f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00153}00153\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_x\_\ =\ 2.0f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_abs\_y\_\ =\ 2.0f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00155}00155\ \ \ \ \ \textcolor{keywordtype}{float}\ min\_z\_\ =\ 0.0f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_z\_\ =\ 2.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00150}00150\ \ \ \ \ \textcolor{keywordtype}{float}\ min\_x\_\ =\ 0.05f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00151}00151\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_x\_\ =\ 2.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00152}00152\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_abs\_y\_\ =\ 2.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00153}00153\ \ \ \ \ \textcolor{keywordtype}{float}\ min\_z\_\ =\ 0.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_z\_\ =\ 2.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordtype}{float}\ ground\_threshold\_\ =\ 0.1f;\ }
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00157}00157\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00158}00158\ \ \ \ \ \textcolor{keywordtype}{float}\ ground\_threshold\_\ =\ 0.1f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00159}00159\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00160}00160\ \ \ \ \ \textcolor{keywordtype}{float}\ cluster\_tolerance\_\ =\ 0.2f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00161}00161\ \ \ \ \ \textcolor{keywordtype}{int}\ min\_cluster\_size\_\ =\ 10;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00162}00162\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_cluster\_size\_\ =\ 2000;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00163}00163\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00164}00164\ \ \ \ \ \textcolor{keywordtype}{float}\ base\_sigma\_\ =\ 0.40f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00165}00165\ \ \ \ \ \textcolor{keywordtype}{float}\ sigma\_per\_height\_\ =\ 0.50f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00166}00166\ \ \ \ \ \textcolor{keywordtype}{float}\ base\_amplitude\_\ =\ 1.0f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00167}00167\ \ \ \ \ \textcolor{keywordtype}{float}\ amplitude\_per\_height\_\ =\ 5.0f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00158}00158\ \ \ \ \ \textcolor{keywordtype}{float}\ cluster\_tolerance\_\ =\ 0.2f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00159}00159\ \ \ \ \ \textcolor{keywordtype}{int}\ min\_cluster\_size\_\ =\ 10;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00160}00160\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_cluster\_size\_\ =\ 2000;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00162}00162\ \ \ \ \ \textcolor{keywordtype}{float}\ base\_sigma\_\ =\ 0.40f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00163}00163\ \ \ \ \ \textcolor{keywordtype}{float}\ sigma\_per\_height\_\ =\ 0.50f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00164}00164\ \ \ \ \ \textcolor{keywordtype}{float}\ base\_amplitude\_\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00165}00165\ \ \ \ \ \textcolor{keywordtype}{float}\ amplitude\_per\_height\_\ =\ 5.0f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00167}00167\ \ \ \ \ \textcolor{comment}{//\ STORED\ DATA}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00168}00168\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00169}00169\ \ \ \ \ \textcolor{comment}{//\ STORED\ DATA}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00170}00170\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00171}00171\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ raw\_cloud\_lidar\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00172}00172\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ accumulated\_cloud\_;\ \textcolor{comment}{//\ New\ buffer\ for\ accumulating\ points}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00173}00173\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ cloud\_body\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00174}00174\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ filtered\_cloud\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00175}00175\ \ \ \ \ pcl::search::KdTree<pcl::PointXYZ>::Ptr\ kd\_tree\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00176}00176\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00177}00177\ \ \ \ \ std::vector<Obstacle>\ obstacles\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00178}00178\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00179}00179\ \ \ \ \ std::mutex\ cloud\_mutex\_;\ \ \ \ \ \textcolor{comment}{//\ Mutex\ to\ protect\ read/writes\ to\ accumulated\_cloud\_}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00180}00180\ \ \ \ \ std::mutex\ obstacles\_mutex\_;\ \textcolor{comment}{//\ Mutex\ to\ protect\ read/writes\ to\ obstacles\_}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00169}00169\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ raw\_cloud\_lidar\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00170}00170\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ accumulated\_cloud\_;\ \textcolor{comment}{//\ New\ buffer\ for\ accumulating\ points}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00171}00171\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ cloud\_body\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00172}00172\ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>::Ptr\ filtered\_cloud\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00173}00173\ \ \ \ \ pcl::search::KdTree<pcl::PointXYZ>::Ptr\ kd\_tree\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00175}00175\ \ \ \ \ std::vector<Obstacle>\ obstacles\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00176}00176\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00177}00177\ \ \ \ \ std::mutex\ cloud\_mutex\_;\ \ \ \ \ \textcolor{comment}{//\ Mutex\ to\ protect\ read/writes\ to\ accumulated\_cloud\_}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00178}00178\ \ \ \ \ std::mutex\ obstacles\_mutex\_;\ \textcolor{comment}{//\ Mutex\ to\ protect\ read/writes\ to\ obstacles\_}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00180}00180\ \ \ \ \ Eigen::Matrix3f\ R\_body\_lidar\_;}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00181}00181\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00182}00182\ \ \ \ \ Eigen::Matrix3f\ R\_body\_lidar\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00183}00183\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00184}00184\ \ \ \ \ rclcpp::Subscription<sensor\_msgs::msg::PointCloud2>::SharedPtr\ subscription\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00185}00185\ \ \ \ \ rclcpp::Publisher<lidar\_processor::msg::Env>::SharedPtr\ publication\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00186}00186\ \ \ \ \ rclcpp::TimerBase::SharedPtr\ processing\_timer\_;\ \textcolor{comment}{//\ Timer\ object}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00187}00187\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00188}00188\ \ \ \ \ \textcolor{comment}{//\ get\ a\ nav\_filters\ object}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00189}00189\ \ \ \ \ rclcpp::Subscription<nav\_msgs::msg::Odometry>::SharedPtr\ estimation\_subscription;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00190}00190\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00191}00191\ \ \ \ \ \textcolor{comment}{//\ callback}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00192}00192\ \ \ \ \ std::mutex\ estimation\_mutex;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00193}00193\ \ \ \ \ Eigen::Vector3d\ pos;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00194}00194\ \ \ \ \ Eigen::Vector3d\ orientation;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00195}00195\ \ \ \ \ Eigen::Vector3d\ velocity;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00196}00196\ \ \ \ \ \textcolor{keywordtype}{void}\ estimation\_callback(\textcolor{keyword}{const}\ nav\_msgs::msg::Odometry::SharedPtr\ est\_msg)}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00197}00197\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lg(estimation\_mutex);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ current\ position,\ orientation,\ velocity.\ }}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ est\_msg-\/>pose.pose;\ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ pos[0]\ =\ p.position.x;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ pos[1]\ =\ p.position.y;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ pos[2]\ =\ p.position.z;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ the\ orientation}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ \mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}(p.orientation.w,\ p.orientation.x,\ p.orientation.y,\ p.orientation.z);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MY\_PI\ =\ 3.141592653589793238462643383279502884;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ R\ =\ \mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}.toRotationMatrix();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{roll}}\ =\ std::atan2(R(2,\ 1),\ R(2,\ 2));}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ s\ =\ -\/R(2,\ 0);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pitch\ =\ (std::abs(s)\ >=\ 1.0)\ ?\ std::copysign(MY\_PI\ /\ 2.0,\ s)\ :\ std::asin(s);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{yaw}}\ =\ std::atan2(R(1,\ 0),\ R(0,\ 0));}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ orientation[0]\ =\ \mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{roll}};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ orientation[1]\ =\ pitch;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ orientation[2]\ =\ \mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{yaw}};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00218}00218\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ velos}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}\ =\ est\_msg-\/>twist.twist;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ velocity[0]\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}.linear.x;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ velocity[1]\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}.linear.y;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ velocity[2]\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}.linear.z;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00224}00224\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00225}00225\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00226}00226\ \ \ \ \ \textcolor{comment}{//\ CALLBACK\ -\/\ raw\ ROS\ data\ to\ XYZ}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00227}00227\ \ \ \ \ \textcolor{keywordtype}{void}\ pointCloudCallback(\textcolor{keyword}{const}\ sensor\_msgs::msg::PointCloud2::SharedPtr\ msg)}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00228}00228\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ raw\_cloud\_lidar\_-\/>clear();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ pcl::fromROSMsg(*msg,\ *raw\_cloud\_lidar\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00231}00231\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Process\ transformations\ outside\ the\ lock\ to\ minimize\ blocking}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>\ temp\_cloud;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00234}00234\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p\_lidar\ :\ raw\_cloud\_lidar\_-\/>points)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f\ p\_L(p\_lidar.x,\ p\_lidar.y,\ p\_lidar.z);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f\ p\_B\ =\ R\_body\_lidar\_\ *\ p\_L;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00238}00238\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ pcl::PointXYZ\ p\_body;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ p\_body.x\ =\ p\_B.x();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ p\_body.y\ =\ p\_B.y();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ p\_body.z\ =\ p\_B.z();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00243}00243\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ temp\_cloud.points.push\_back(p\_body);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00246}00246\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lock\ mutex\ and\ append\ the\ newly\ transformed\ points\ to\ the\ accumulator}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(cloud\_mutex\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ *accumulated\_cloud\_\ +=\ temp\_cloud;\ \textcolor{comment}{//\ PCL\ supports\ direct\ point\ cloud\ concatenation}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>width\ =\ accumulated\_cloud\_-\/>points.size();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>height\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>is\_dense\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00255}00255\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00182}00182\ \ \ \ \ rclcpp::Subscription<sensor\_msgs::msg::PointCloud2>::SharedPtr\ subscription\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00183}00183\ \ \ \ \ rclcpp::Publisher<lidar\_processor::msg::Env>::SharedPtr\ publication\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00184}00184\ \ \ \ \ rclcpp::TimerBase::SharedPtr\ processing\_timer\_;\ \textcolor{comment}{//\ Timer\ object}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00186}00186\ \ \ \ \ \textcolor{comment}{//\ get\ a\ nav\_filters\ object}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00187}00187\ \ \ \ \ rclcpp::Subscription<nav\_msgs::msg::Odometry>::SharedPtr\ estimation\_subscription;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00189}00189\ \ \ \ \ \textcolor{comment}{//\ callback}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00190}00190\ \ \ \ \ std::mutex\ estimation\_mutex;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00191}00191\ \ \ \ \ Eigen::Vector3d\ pos;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00192}00192\ \ \ \ \ Eigen::Vector3d\ orientation;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00193}00193\ \ \ \ \ Eigen::Vector3d\ velocity;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00194}00194\ \ \ \ \ \textcolor{keywordtype}{void}\ estimation\_callback(\textcolor{keyword}{const}\ nav\_msgs::msg::Odometry::SharedPtr\ est\_msg)}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00195}00195\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lg(estimation\_mutex);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ current\ position,\ orientation,\ velocity.\ }}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}\ =\ est\_msg-\/>pose.pose;\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ pos[0]\ =\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.position.x;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ pos[1]\ =\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.position.y;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ pos[2]\ =\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.position.z;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ the\ orientation}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ \mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}(\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.orientation.w,\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.orientation.x,\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.orientation.y,\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.orientation.z);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MY\_PI\ =\ 3.141592653589793238462643383279502884;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ R\ =\ \mbox{\hyperlink{namespacetest_af71d7cd0d297c3f033e3b16701f2e6de}{quat}}.toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{roll}}\ =\ std::atan2(R(2,\ 1),\ R(2,\ 2));}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ s\ =\ -\/R(2,\ 0);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pitch\ =\ (std::abs(s)\ >=\ 1.0)\ ?\ std::copysign(MY\_PI\ /\ 2.0,\ s)\ :\ std::asin(s);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{yaw}}\ =\ std::atan2(R(1,\ 0),\ R(0,\ 0));}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ orientation[0]\ =\ \mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{roll}};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ orientation[1]\ =\ pitch;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ orientation[2]\ =\ \mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{yaw}};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ velos}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}\ =\ est\_msg-\/>twist.twist;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ velocity[0]\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}.linear.x;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ velocity[1]\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}.linear.y;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ velocity[2]\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{t}}.linear.z;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00222}00222\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00224}00224\ \ \ \ \ \textcolor{comment}{//\ CALLBACK\ -\/\ raw\ ROS\ data\ to\ XYZ}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00225}00225\ \ \ \ \ \textcolor{keywordtype}{void}\ pointCloudCallback(\textcolor{keyword}{const}\ sensor\_msgs::msg::PointCloud2::SharedPtr\ msg)}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00226}00226\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ raw\_cloud\_lidar\_-\/>clear();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ pcl::fromROSMsg(*msg,\ *raw\_cloud\_lidar\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Process\ transformations\ outside\ the\ lock\ to\ minimize\ blocking}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ pcl::PointCloud<pcl::PointXYZ>\ temp\_cloud;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p\_lidar\ :\ raw\_cloud\_lidar\_-\/>points)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f\ p\_L(p\_lidar.x,\ p\_lidar.y,\ p\_lidar.z);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f\ p\_B\ =\ R\_body\_lidar\_\ *\ p\_L;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ pcl::PointXYZ\ p\_body;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ p\_body.x\ =\ p\_B.x();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ p\_body.y\ =\ p\_B.y();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ p\_body.z\ =\ p\_B.z();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ temp\_cloud.points.push\_back(p\_body);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lock\ mutex\ and\ append\ the\ newly\ transformed\ points\ to\ the\ accumulator}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(cloud\_mutex\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ *accumulated\_cloud\_\ +=\ temp\_cloud;\ \textcolor{comment}{//\ PCL\ supports\ direct\ point\ cloud\ concatenation}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>width\ =\ accumulated\_cloud\_-\/>points.size();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>height\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>is\_dense\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00253}00253\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00255}00255\ \ \ \ \ \textcolor{comment}{//\ TIMER\ CALLBACK\ -\/\ Processes\ the\ accumulated\ cloud\ and\ writes\ to\ CSV\ at\ 2Hz}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00256}00256\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00257}00257\ \ \ \ \ \textcolor{comment}{//\ TIMER\ CALLBACK\ -\/\ Processes\ the\ accumulated\ cloud\ and\ writes\ to\ CSV\ at\ 2Hz}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00258}00258\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00259}00259\ \ \ \ \ \textcolor{keywordtype}{void}\ timerCallback()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00260}00260\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1.\ Grab\ the\ accumulated\ data\ safely}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(cloud\_mutex\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (accumulated\_cloud\_-\/>empty())\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ No\ data\ arrived\ in\ the\ last\ 0.5s,\ skip\ processing}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00268}00268\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ the\ accumulated\ data\ into\ the\ processing\ cloud}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ *cloud\_body\_\ =\ *accumulated\_cloud\_;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ the\ accumulator\ to\ start\ fresh\ for\ the\ next\ 0.5\ seconds}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>clear();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>width\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>height\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00277}00277\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2.\ Process\ the\ collated\ 0.5\ seconds\ worth\ of\ data}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classLidarObstacleProcessor_a390691efc9f3e2943d02d2f6ee6ab16e}{process}}();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00280}00280\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3.\ Write\ results\ to\ CSV\ safely}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00284}00284\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ storage;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ fuckass(\textcolor{stringliteral}{"{}fuck\_gemini.csv"{}},\ std::ios::out\ |\ std::ios::trunc);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00287}00287\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!fuckass.is\_open())\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Failed\ to\ open\ output\ file!"{}});}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00292}00292\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ i\ :\ obstacles\_)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ i.center\_xy.x()\ <<\ \textcolor{stringliteral}{"{},"{}}\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.center\_xy.y()\ <<\ \textcolor{stringliteral}{"{},"{}}\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(0,\ 0)\ <<\ \textcolor{stringliteral}{"{},"{}}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(0,\ 1)\ <<\ \textcolor{stringliteral}{"{},"{}}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(1,\ 0)\ <<\ \textcolor{stringliteral}{"{},"{}}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(1,\ 1);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ pos[0]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ \ pos[1]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ \ pos[2]\ ;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ orientation[0]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ orientation[1]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ orientation[2];}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ velocity[0]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ velocity[1]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ velocity[2];}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00304}00304\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00307}00307\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ fuckass\ <<\ storage.str();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ fuckass.close();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ publish\_obstacles();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00312}00312\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00257}00257\ \ \ \ \ \textcolor{keywordtype}{void}\ timerCallback()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00258}00258\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1.\ Grab\ the\ accumulated\ data\ safely}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(cloud\_mutex\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (accumulated\_cloud\_-\/>empty())\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ No\ data\ arrived\ in\ the\ last\ 0.5s,\ skip\ processing}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00266}00266\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ the\ accumulated\ data\ into\ the\ processing\ cloud}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ *cloud\_body\_\ =\ *accumulated\_cloud\_;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ the\ accumulator\ to\ start\ fresh\ for\ the\ next\ 0.5\ seconds}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>clear();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>width\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ accumulated\_cloud\_-\/>height\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2.\ Process\ the\ collated\ 0.5\ seconds\ worth\ of\ data}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classLidarObstacleProcessor_a390691efc9f3e2943d02d2f6ee6ab16e}{process}}();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3.\ Write\ results\ to\ CSV\ safely}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ storage;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ fuckass(\textcolor{stringliteral}{"{}fuck\_gemini.csv"{}},\ std::ios::out\ |\ std::ios::trunc);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!fuckass.is\_open())\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_ERROR(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Failed\ to\ open\ output\ file!"{}});}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ i\ :\ obstacles\_)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ i.center\_xy.x()\ <<\ \textcolor{stringliteral}{"{},"{}}\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.center\_xy.y()\ <<\ \textcolor{stringliteral}{"{},"{}}\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(0,\ 0)\ <<\ \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(0,\ 1)\ <<\ \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(1,\ 0)\ <<\ \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ i.covariance(1,\ 1);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ pos[0]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ \ pos[1]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ \ pos[2]\ ;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ orientation[0]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ orientation[1]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ orientation[2];}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ velocity[0]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ velocity[1]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ velocity[2];}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ fuckass\ <<\ storage.str();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ fuckass.close();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ publish\_obstacles();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00310}00310\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00312}00312\ \ \ \ \ \textcolor{comment}{//\ Rotation\ helper}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00313}00313\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00314}00314\ \ \ \ \ \textcolor{comment}{//\ Rotation\ helper}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00315}00315\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00316}00316\ \ \ \ \ Eigen::Matrix3f\ computeMountRotation()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00317}00317\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ Eigen::Matrix3f\ R\_yaw;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00319}00319\ \ \ \ \ \ \ \ \ R\_yaw\ <<\ std::cos(mount\_offset\_angle\_rad\_),\ -\/std::sin(mount\_offset\_angle\_rad\_),\ 0.0f,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sin(mount\_offset\_angle\_rad\_),\ \ std::cos(mount\_offset\_angle\_rad\_),\ 0.0f,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1.0f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00322}00322\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ Eigen::Matrix3f\ R\_upside\_down;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ R\_upside\_down\ <<\ 1.0f,\ \ 0.0f,\ \ 0.0f,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ -\/1.0f,\ \ 0.0f,}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ 0.0f,\ -\/1.0f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00327}00327\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ R\_yaw\ *\ R\_upside\_down;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00329}00329\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00314}00314\ \ \ \ \ Eigen::Matrix3f\ computeMountRotation()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00315}00315\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00316}00316\ \ \ \ \ \ \ \ \ Eigen::Matrix3f\ R\_yaw;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00317}00317\ \ \ \ \ \ \ \ \ R\_yaw\ <<\ std::cos(mount\_offset\_angle\_rad\_),\ -\/std::sin(mount\_offset\_angle\_rad\_),\ 0.0f,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sin(mount\_offset\_angle\_rad\_),\ \ std::cos(mount\_offset\_angle\_rad\_),\ 0.0f,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1.0f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ Eigen::Matrix3f\ R\_upside\_down;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00322}00322\ \ \ \ \ \ \ \ \ R\_upside\_down\ <<\ 1.0f,\ \ 0.0f,\ \ 0.0f,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ -\/1.0f,\ \ 0.0f,}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ 0.0f,\ -\/1.0f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00325}00325\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ R\_yaw\ *\ R\_upside\_down;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00327}00327\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00328}00328\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00329}00329\ \ \ \ \ \textcolor{comment}{//\ FILTERING\ STUFF}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00330}00330\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00331}00331\ \ \ \ \ \textcolor{comment}{//\ FILTERING\ STUFF}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00332}00332\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00333}00333\ \ \ \ \ \textcolor{keywordtype}{void}\ filterPoints()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00334}00334\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00335}00335\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>clear();\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00336}00336\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ projector\_height\ =\ 4.0f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rover\_height\ =\ 0.245f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ground\_z\ =\ -\/rover\_height;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00340}00340\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p\ :\ cloud\_body\_-\/>points)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(p.x)\ ||\ !std::isfinite(p.y)\ ||\ !std::isfinite(p.z))\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00345}00345\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p.x\ <\ min\_x\_\ ||\ p.x\ >\ max\_x\_)\ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(p.y)\ >\ max\_abs\_y\_)\ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00348}00348\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p.z\ <=\ (ground\_z\ +\ ground\_threshold\_))\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00331}00331\ \ \ \ \ \textcolor{keywordtype}{void}\ filterPoints()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00332}00332\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00333}00333\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>clear();\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ projector\_height\ =\ 4.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rover\_height\ =\ 0.245f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ground\_z\ =\ -\/rover\_height;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p\ :\ cloud\_body\_-\/>points)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.x)\ ||\ !std::isfinite(\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.y)\ ||\ !std::isfinite(\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z))\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.x\ <\ min\_x\_\ ||\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.x\ >\ max\_x\_)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.y)\ >\ max\_abs\_y\_)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z\ <=\ (ground\_z\ +\ ground\_threshold\_))\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z\ >\ projector\_height)\ \textcolor{keywordflow}{continue};}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00352}00352\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p.z\ >\ projector\_height)\ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00354}00354\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p.z\ >\ 1.0f)\ \{\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_WARN(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}High\ point\ detected:\ z=\%.2f"{}},\ p.z);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00358}00358\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>points.push\_back(p);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00361}00361\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00362}00362\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>width\ =\ filtered\_cloud\_-\/>points.size();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00363}00363\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>height\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00364}00364\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>is\_dense\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00365}00365\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00366}00366\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00367}00367\ \ \ \ \ \textcolor{keywordtype}{void}\ buildKdTree()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00368}00368\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filtered\_cloud\_-\/>empty())\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00372}00372\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00373}00373\ \ \ \ \ \ \ \ \ kd\_tree\_-\/>setInputCloud(filtered\_cloud\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00374}00374\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z\ >\ 1.0f)\ \{\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_WARN(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}High\ point\ detected:\ z=\%.2f"{}},\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00356}00356\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>points.push\_back(p);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>width\ =\ filtered\_cloud\_-\/>points.size();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00361}00361\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>height\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00362}00362\ \ \ \ \ \ \ \ \ filtered\_cloud\_-\/>is\_dense\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00363}00363\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00364}00364\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00365}00365\ \ \ \ \ \textcolor{keywordtype}{void}\ buildKdTree()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00366}00366\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filtered\_cloud\_-\/>empty())\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00371}00371\ \ \ \ \ \ \ \ \ kd\_tree\_-\/>setInputCloud(filtered\_cloud\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00372}00372\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00374}00374\ \ \ \ \ \textcolor{comment}{//\ Clustering}}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00375}00375\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00376}00376\ \ \ \ \ \textcolor{comment}{//\ Clustering}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00377}00377\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00378}00378\ \ \ \ \ \textcolor{keywordtype}{void}\ computeObstacleClusters()}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00379}00379\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filtered\_cloud\_-\/>empty())\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ obstacles\_.clear();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00385}00385\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00386}00386\ \ \ \ \ \ \ \ \ std::vector<pcl::PointIndices>\ cluster\_indices;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00387}00387\ \ \ \ \ \ \ \ \ pcl::EuclideanClusterExtraction<pcl::PointXYZ>\ ec;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00388}00388\ \ \ \ \ \ \ \ \ ec.setClusterTolerance(cluster\_tolerance\_);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00389}00389\ \ \ \ \ \ \ \ \ ec.setMinClusterSize(min\_cluster\_size\_);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00390}00390\ \ \ \ \ \ \ \ \ ec.setMaxClusterSize(max\_cluster\_size\_);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00391}00391\ \ \ \ \ \ \ \ \ ec.setSearchMethod(kd\_tree\_);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00392}00392\ \ \ \ \ \ \ \ \ ec.setInputCloud(filtered\_cloud\_);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00393}00393\ \ \ \ \ \ \ \ \ ec.extract(cluster\_indices);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00394}00394\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ temporarily,\ so\ we\ hold\ the\ lock\ for\ as\ little\ time\ as\ possible}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00396}00396\ \ \ \ \ \ \ \ \ std::vector<Obstacle>\ new\_obstacles;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00397}00397\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ cluster\ :\ cluster\_indices)\ \{\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacelidar__processor_1_1msg_a454e27dd210c04620ab8b8acbf7385b5}{Obstacle}}\ obs;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy\ =\ Eigen::Vector2f(0.0f,\ 0.0f);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ obs.height\ =\ -\/std::numeric\_limits<float>::infinity();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ obs.num\_points\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(cluster.indices.size());}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00403}00403\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ idx\ :\ cluster.indices)\ \{\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p\ =\ filtered\_cloud\_-\/>points[idx];\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00406}00406\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy.x()\ +=\ p.x;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy.y()\ +=\ p.y;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00409}00409\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p.z\ >\ obs.height)\ \{\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obs.height\ =\ p.z;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00376}00376\ \ \ \ \ \textcolor{keywordtype}{void}\ computeObstacleClusters()}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00377}00377\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (filtered\_cloud\_-\/>empty())\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ obstacles\_.clear();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00384}00384\ \ \ \ \ \ \ \ \ std::vector<pcl::PointIndices>\ cluster\_indices;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00385}00385\ \ \ \ \ \ \ \ \ pcl::EuclideanClusterExtraction<pcl::PointXYZ>\ ec;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00386}00386\ \ \ \ \ \ \ \ \ ec.setClusterTolerance(cluster\_tolerance\_);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00387}00387\ \ \ \ \ \ \ \ \ ec.setMinClusterSize(min\_cluster\_size\_);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00388}00388\ \ \ \ \ \ \ \ \ ec.setMaxClusterSize(max\_cluster\_size\_);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00389}00389\ \ \ \ \ \ \ \ \ ec.setSearchMethod(kd\_tree\_);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00390}00390\ \ \ \ \ \ \ \ \ ec.setInputCloud(filtered\_cloud\_);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00391}00391\ \ \ \ \ \ \ \ \ ec.extract(cluster\_indices);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00392}00392\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ temporarily,\ so\ we\ hold\ the\ lock\ for\ as\ little\ time\ as\ possible}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00394}00394\ \ \ \ \ \ \ \ \ std::vector<Obstacle>\ new\_obstacles;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ cluster\ :\ cluster\_indices)\ \{\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacelidar__processor_1_1msg_a454e27dd210c04620ab8b8acbf7385b5}{Obstacle}}\ obs;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy\ =\ Eigen::Vector2f(0.0f,\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ obs.height\ =\ -\/std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ obs.num\_points\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(cluster.indices.size());}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ idx\ :\ cluster.indices)\ \{\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}\ =\ filtered\_cloud\_-\/>points[idx];\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy.x()\ +=\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.x;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy.y()\ +=\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.y;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z\ >\ obs.height)\ \{\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obs.height\ =\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy\ /=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(obs.num\_points);\ }
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00414}00414\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ obs.center\_xy\ /=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(obs.num\_points);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix2f\ cov\ =\ Eigen::Matrix2f::Zero();}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00416}00416\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix2f\ cov\ =\ Eigen::Matrix2f::Zero();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00418}00418\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ idx\ :\ cluster.indices)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p\ =\ filtered\_cloud\_-\/>points[idx];}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00421}00421\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2f\ d;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d\ <<\ p.x\ -\/\ obs.center\_xy.x(),}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.y\ -\/\ obs.center\_xy.y();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00425}00425\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cov\ +=\ d\ *\ d.transpose();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ idx\ :\ cluster.indices)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}\ =\ filtered\_cloud\_-\/>points[idx];}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00419}00419\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2f\ d;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d\ <<\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.x\ -\/\ obs.center\_xy.x(),}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.y\ -\/\ obs.center\_xy.y();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00423}00423\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cov\ +=\ d\ *\ d.transpose();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00426}00426\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ /=\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(obs.num\_points)\ -\/\ 1);}
 \DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00428}00428\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ /=\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(obs.num\_points)\ -\/\ 1);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00430}00430\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ min\_sigma\ =\ 0.25f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ +=\ Eigen::Matrix2f::Identity()\ *\ min\_sigma\ *\ min\_sigma;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00433}00433\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ obs.covariance\ =\ cov;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ obs.inv\_covariance\ =\ cov.inverse();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ obs.amplitude\ =\ base\_amplitude\_\ *\ (1.0f\ +\ 0.10f\ *\ obs.height);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00437}00437\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ new\_obstacles.push\_back(obs);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00440}00440\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lock\ mutex,\ update\ real\ container\ safely}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ obstacles\_\ =\ std::move(new\_obstacles);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00446}00446\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00447}00447\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00448}00448\ \ \ \ \ \textcolor{keywordtype}{void}\ computeGaussianCosts()\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00449}00449\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00450}00450\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ obs\ :\ obstacles\_)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ obs.amplitude\ =\ base\_amplitude\_\ *\ (1.0f\ +\ 0.10f\ *\ obs.height);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00453}00453\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00454}00454\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00455}00455\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00456}00456\ \ \ \ \ \textcolor{keywordtype}{float}\ gaussianCostAtPoint(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)\textcolor{keyword}{\ const\ }}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00457}00457\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ total\_cost\ =\ 0.0f;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00459}00459\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00460}00460\ \ \ \ \ \ \ \ \ Eigen::Vector2f\ p;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00461}00461\ \ \ \ \ \ \ \ \ p\ <<\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}},\ \mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{y}};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00462}00462\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ obs\ :\ obstacles\_)\ \{\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2f\ d\ =\ p\ -\/\ obs.center\_xy;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ exponent\ =\ -\/0.5f\ *\ d.transpose()\ *\ obs.inv\_covariance\ *\ d;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cost\ =\ obs.amplitude\ *\ std::exp(exponent);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ total\_cost\ +=\ cost;\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00469}00469\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ total\_cost;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00471}00471\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00472}00472\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00473}00473\ \ \ \ \ \textcolor{keywordtype}{float}\ pathCostStraightLine(\textcolor{keywordtype}{float}\ heading\_rad,\ \textcolor{keywordtype}{float}\ path\_length)\textcolor{keyword}{\ const}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00474}00474\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ num\_samples\ =\ 50;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ total\_cost\ =\ 0.0f;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00477}00477\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ num\_samples;\ i++)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ path\_length\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(i)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(num\_samples);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}}\ =\ s\ *\ std::cos(heading\_rad);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{y}}\ =\ s\ *\ std::sin(heading\_rad);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00482}00482\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ total\_cost\ +=\ gaussianCostAtPoint(x,\ y);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00484}00484\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00485}00485\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ total\_cost;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00487}00487\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00488}00488\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00489}00489\ \ \ \ \ \textcolor{keywordtype}{void}\ publish\_obstacles()\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ message\ =\ \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__env_1_1Env}{lidar\_processor::msg::Env}}();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00491}00491\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Obstacle\ obs\ :\ obstacles\_)\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\_processor::msg::Obstacle}}\ item;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_a88e0e1235994a99bedd0d2e4124c6670}{center}}[0]\ =\ obs.center\_xy.x();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_a88e0e1235994a99bedd0d2e4124c6670}{center}}[1]\ =\ obs.center\_xy.y();}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_a806292fbdce92959d692b0ab7209d333}{covariance}}[0]\ =\ obs.covariance(0,\ 0);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_a806292fbdce92959d692b0ab7209d333}{covariance}}[1]\ =\ obs.covariance(0,\ 1);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_a806292fbdce92959d692b0ab7209d333}{covariance}}[2]\ =\ obs.covariance(1,\ 0);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_a806292fbdce92959d692b0ab7209d333}{covariance}}[3]\ =\ obs.covariance(1,\ 1);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ message.environment.push\_back(item);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00502}00502\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00503}00503\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00504}00504\ \ \ \ \ \ \ \ \ this-\/>publication\_-\/>publish(message);}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00505}00505\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00506}00506\ \};}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00507}00507\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00508}\mbox{\hyperlink{lidar__processor_2src_2main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00508}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00509}00509\ \{}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00510}00510\ \ \ \ \ rclcpp::init(argc,\ argv);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00511}00511\ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ std::make\_shared<LidarObstacleProcessor>();\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00512}00512\ \ \ \ \ rclcpp::spin(node);\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00513}00513\ \ \ \ \ rclcpp::shutdown();\ }
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00514}00514\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00515}00515\ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ min\_sigma\ =\ 0.25f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ +=\ Eigen::Matrix2f::Identity()\ *\ min\_sigma\ *\ min\_sigma;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00431}00431\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ obs.covariance\ =\ cov;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ obs.inv\_covariance\ =\ cov.inverse();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ obs.amplitude\ =\ base\_amplitude\_\ *\ (1.0f\ +\ 0.10f\ *\ obs.height);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00435}00435\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ new\_obstacles.push\_back(obs);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00438}00438\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lock\ mutex,\ update\ real\ container\ safely}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ obstacles\_\ =\ std::move(new\_obstacles);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00444}00444\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00446}00446\ \ \ \ \ \textcolor{keywordtype}{void}\ computeGaussianCosts()\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00447}00447\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00448}00448\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(obstacles\_mutex\_);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ obs\ :\ obstacles\_)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ obs.amplitude\ =\ base\_amplitude\_\ *\ (1.0f\ +\ 0.10f\ *\ obs.height);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00452}00452\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00453}00453\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00454}00454\ \ \ \ \ \textcolor{keywordtype}{float}\ gaussianCostAtPoint(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)\textcolor{keyword}{\ const\ }}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00455}00455\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ total\_cost\ =\ 0.0f;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00457}00457\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00458}00458\ \ \ \ \ \ \ \ \ Eigen::Vector2f\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}\ <<\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}},\ \mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{y}};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00460}00460\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ obs\ :\ obstacles\_)\ \{\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector2f\ d\ =\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}\ -\/\ obs.center\_xy;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ exponent\ =\ -\/0.5f\ *\ d.transpose()\ *\ obs.inv\_covariance\ *\ d;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cost\ =\ obs.amplitude\ *\ std::exp(exponent);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ total\_cost\ +=\ cost;\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ total\_cost;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00469}00469\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00470}00470\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00471}00471\ \ \ \ \ \textcolor{keywordtype}{float}\ pathCostStraightLine(\textcolor{keywordtype}{float}\ heading\_rad,\ \textcolor{keywordtype}{float}\ path\_length)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00472}00472\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ num\_samples\ =\ 50;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ total\_cost\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00475}00475\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ num\_samples;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ path\_length\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(i)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(num\_samples);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}}\ =\ s\ *\ std::cos(heading\_rad);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespacetest_a8e35cd41a1bbd5493b663b19c9df1d1d}{y}}\ =\ s\ *\ std::sin(heading\_rad);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00480}00480\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ total\_cost\ +=\ gaussianCostAtPoint(x,\ y);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00482}00482\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00483}00483\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00484}00484\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ total\_cost;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00485}00485\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00486}00486\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00487}00487\ \ \ \ \ \textcolor{keywordtype}{void}\ publish\_obstacles()\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ message\ =\ \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__env_1_1Env}{lidar\_processor::msg::Env}}();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Obstacle\ obs\ :\ obstacles\_)\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle}{lidar\_processor::msg::Obstacle}}\ item;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_ad1d0cdd392d2d045382727541a85f6d5}{center}}[0]\ =\ obs.center\_xy.x();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_ad1d0cdd392d2d045382727541a85f6d5}{center}}[1]\ =\ obs.center\_xy.y();}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_aa7487782dbe2f677628225c53d1ab0bf}{covariance}}[0]\ =\ obs.covariance(0,\ 0);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_aa7487782dbe2f677628225c53d1ab0bf}{covariance}}[1]\ =\ obs.covariance(0,\ 1);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_aa7487782dbe2f677628225c53d1ab0bf}{covariance}}[2]\ =\ obs.covariance(1,\ 0);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ item.\mbox{\hyperlink{classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle_aa7487782dbe2f677628225c53d1ab0bf}{covariance}}[3]\ =\ obs.covariance(1,\ 1);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ message.environment.push\_back(item);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00500}00500\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00501}00501\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00502}00502\ \ \ \ \ \ \ \ \ this-\/>publication\_-\/>publish(message);}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00503}00503\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00504}00504\ \};}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00505}00505\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00506}\mbox{\hyperlink{lidar__processor_2src_2main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00506}}\ \textcolor{keywordtype}{int}\ main(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00507}00507\ \{}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00508}00508\ \ \ \ \ rclcpp::init(argc,\ argv);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00509}00509\ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ std::make\_shared<LidarObstacleProcessor>();\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00510}00510\ \ \ \ \ rclcpp::spin(node);\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00511}00511\ \ \ \ \ rclcpp::shutdown();\ }
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00512}00512\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{lidar__processor_2src_2main_8cpp_source_l00513}00513\ \}}
 
 \end{DoxyCode}

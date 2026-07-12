@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -138,54 +147,59 @@ $(document).ready(function(){initNavTree('unitree__lidar__sdk__pcl_8h_source.htm
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;Eigen/Core&gt;</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;Eigen/Geometry&gt;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &quot;<a class="code" href="unitree__lidar__sdk_8h.html">unitree_lidar_sdk.h</a>&quot;</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceunilidar__sdk2.html">unilidar_sdk2</a>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="foldopen" id="foldopen00049" data-start="{" data-end="};">
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="structPointType.html">   49</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structPointType.html">PointType</a></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    PCL_ADD_POINT4D</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    PCL_ADD_INTENSITY</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">   53</a></span>    std::uint16_t <a class="code hl_variable" href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">ring</a>;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">   54</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">time</a>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    EIGEN_MAKE_ALIGNED_OPERATOR_NEW</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#aafcaf9041d92a869b42334a0e073b536">   56</a></span>} <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#aafcaf9041d92a869b42334a0e073b536">EIGEN_ALIGN16</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;<a class="code" href="unitree__lidar__sdk_8h.html">unitree_lidar_sdk.h</a>&gt;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceunilidar__sdk2.html">unilidar_sdk2</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="};">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structPointType.html">   48</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structPointType.html">PointType</a></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    PCL_ADD_POINT4D</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    PCL_ADD_INTENSITY</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">   52</a></span>    std::uint16_t <a class="code hl_variable" href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">ring</a>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">   53</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">time</a>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    EIGEN_MAKE_ALIGNED_OPERATOR_NEW</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#aafcaf9041d92a869b42334a0e073b536">   55</a></span>} <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#aafcaf9041d92a869b42334a0e073b536">EIGEN_ALIGN16</a>;</div>
 </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a0f9d9b2c53e052049b0ae4240ffb9b55">   57</a></span><a class="code hl_function" href="unitree__lidar__sdk__pcl_8h.html#a0f9d9b2c53e052049b0ae4240ffb9b55">POINT_CLOUD_REGISTER_POINT_STRUCT</a>(<a class="code hl_struct" href="structPointType.html">PointType</a>,</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                                  (<span class="keywordtype">float</span>, x, x)(<span class="keywordtype">float</span>, y, y)(<span class="keywordtype">float</span>, z, z)(<span class="keywordtype">float</span>, intensity, intensity)(std::uint16_t, ring, ring)(<span class="keywordtype">float</span>, time, time))</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>PCL_INSTANTIATE(VoxelGrid, <a class="code hl_struct" href="structPointType.html">PointType</a>)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>PCL_INSTANTIATE(KdTree, <a class="code hl_struct" href="structPointType.html">PointType</a>)</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>PCL_INSTANTIATE(RadiusOutlierRemoval, <a class="code hl_struct" href="structPointType.html">PointType</a>)</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                                  (<span class="keywordtype">float</span>, x, x)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                                  (<span class="keywordtype">float</span>, y, y)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                                  (<span class="keywordtype">float</span>, z, z)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                                  (<span class="keywordtype">float</span>, intensity, intensity)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                                  (std::uint16_t, ring, ring)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                                  (<span class="keywordtype">float</span>, time, time))</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">   70</a></span>void transformUnitreeCloudToPCL(const <a class="code hl_struct" href="structunilidar__sdk2_1_1PointCloudUnitree.html">PointCloudUnitree</a> &amp;cloudIn, pcl::PointCloud&lt;<a class="code hl_struct" href="structPointType.html">PointType</a>&gt;::Ptr <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a>)</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>{</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a>-&gt;clear();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">   73</a></span>    <a class="code hl_struct" href="structPointType.html">PointType</a> <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>;</div>
-<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a43fa7120321c770f797e477cfc0d3887">   74</a></span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; cloudIn.points.size(); i++)</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.x = cloudIn.points[i].x;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.y = cloudIn.points[i].y;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.z = cloudIn.points[i].z;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.intensity = cloudIn.points[i].intensity;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.<a class="code hl_variable" href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">time</a> = cloudIn.points[i].time;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.<a class="code hl_variable" href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">ring</a> = cloudIn.points[i].ring;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a>-&gt;push_back(<a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>PCL_INSTANTIATE(VoxelGrid, <a class="code hl_struct" href="structPointType.html">PointType</a>)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>PCL_INSTANTIATE(KdTree, <a class="code hl_struct" href="structPointType.html">PointType</a>)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>PCL_INSTANTIATE(RadiusOutlierRemoval, <a class="code hl_struct" href="structPointType.html">PointType</a>)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">   75</a></span>void transformUnitreeCloudToPCL(const <a class="code hl_struct" href="structunilidar__sdk2_1_1PointCloudUnitree.html">PointCloudUnitree</a> &amp;cloudIn, pcl::PointCloud&lt;<a class="code hl_struct" href="structPointType.html">PointType</a>&gt;::Ptr <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a>)</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>{</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a>-&gt;clear();</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">   78</a></span>    <a class="code hl_struct" href="structPointType.html">PointType</a> <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>;</div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="}">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="unitree__lidar__sdk__pcl_8h.html#a43fa7120321c770f797e477cfc0d3887">   79</a></span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; cloudIn.points.size(); i++)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.x = cloudIn.points[i].x;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.y = cloudIn.points[i].y;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.z = cloudIn.points[i].z;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.intensity = cloudIn.points[i].intensity;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.<a class="code hl_variable" href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">time</a> = cloudIn.points[i].time;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>.<a class="code hl_variable" href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">ring</a> = cloudIn.points[i].ring;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a>-&gt;push_back(<a class="code hl_variable" href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a>);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
 </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
 <div class="ttc" id="anamespaceunilidar__sdk2_html"><div class="ttname"><a href="namespaceunilidar__sdk2.html">unilidar_sdk2</a></div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__protocol_8h_source.html#l00013">unitree_lidar_protocol.h:13</a></div></div>
-<div class="ttc" id="astructPointType_html"><div class="ttname"><a href="structPointType.html">PointType</a></div><div class="ttdoc">PCL Point Type.</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00049">unitree_lidar_sdk_pcl.h:50</a></div></div>
-<div class="ttc" id="astructPointType_html_a174ef211a58a2113461f4e92c7a7d2f0"><div class="ttname"><a href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">PointType::ring</a></div><div class="ttdeci">PCL_ADD_POINT4D PCL_ADD_INTENSITY std::uint16_t ring</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00053">unitree_lidar_sdk_pcl.h:53</a></div></div>
-<div class="ttc" id="astructPointType_html_a9d5120fded7b3ef792f4c2ac03128430"><div class="ttname"><a href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">PointType::time</a></div><div class="ttdeci">float time</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00054">unitree_lidar_sdk_pcl.h:54</a></div></div>
-<div class="ttc" id="astructunilidar__sdk2_1_1PointCloudUnitree_html"><div class="ttname"><a href="structunilidar__sdk2_1_1PointCloudUnitree.html">unilidar_sdk2::PointCloudUnitree</a></div><div class="ttdoc">Point Cloud Type.</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__utilities_8h_source.html#l00062">unitree_lidar_utilities.h:63</a></div></div>
+<div class="ttc" id="astructPointType_html"><div class="ttname"><a href="structPointType.html">PointType</a></div><div class="ttdoc">PCL Point Type.</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00048">unitree_lidar_sdk_pcl.h:49</a></div></div>
+<div class="ttc" id="astructPointType_html_a174ef211a58a2113461f4e92c7a7d2f0"><div class="ttname"><a href="structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0">PointType::ring</a></div><div class="ttdeci">PCL_ADD_POINT4D PCL_ADD_INTENSITY std::uint16_t ring</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00052">unitree_lidar_sdk_pcl.h:52</a></div></div>
+<div class="ttc" id="astructPointType_html_a9d5120fded7b3ef792f4c2ac03128430"><div class="ttname"><a href="structPointType.html#a9d5120fded7b3ef792f4c2ac03128430">PointType::time</a></div><div class="ttdeci">float time</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00053">unitree_lidar_sdk_pcl.h:53</a></div></div>
+<div class="ttc" id="astructunilidar__sdk2_1_1PointCloudUnitree_html"><div class="ttname"><a href="structunilidar__sdk2_1_1PointCloudUnitree.html">unilidar_sdk2::PointCloudUnitree</a></div><div class="ttdoc">Point Cloud Type.</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__utilities_8h_source.html#l00057">unitree_lidar_utilities.h:58</a></div></div>
 <div class="ttc" id="aunitree__lidar__sdk_8h_html"><div class="ttname"><a href="unitree__lidar__sdk_8h.html">unitree_lidar_sdk.h</a></div></div>
 <div class="ttc" id="aunitree__lidar__sdk__pcl_8h_html_a0f9d9b2c53e052049b0ae4240ffb9b55"><div class="ttname"><a href="unitree__lidar__sdk__pcl_8h.html#a0f9d9b2c53e052049b0ae4240ffb9b55">POINT_CLOUD_REGISTER_POINT_STRUCT</a></div><div class="ttdeci">POINT_CLOUD_REGISTER_POINT_STRUCT(PointType,(float, x, x)(float, y, y)(float, z, z)(float, intensity, intensity)(std::uint16_t, ring, ring)(float, time, time)) void transformUnitreeCloudToPCL(const PointCloudUnitree &amp;cloudIn</div><div class="ttdoc">Transform a Unitree cloud to PCL cloud.</div></div>
-<div class="ttc" id="aunitree__lidar__sdk__pcl_8h_html_a7372474de898495b1847327162588b4c"><div class="ttname"><a href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a></div><div class="ttdeci">PointType pt</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00073">unitree_lidar_sdk_pcl.h:73</a></div></div>
-<div class="ttc" id="aunitree__lidar__sdk__pcl_8h_html_a939d7116d4ba19c75c746b10c53688e5"><div class="ttname"><a href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a></div><div class="ttdeci">pcl::PointCloud&lt; PointType &gt;::Ptr cloudOut</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00070">unitree_lidar_sdk_pcl.h:71</a></div></div>
+<div class="ttc" id="aunitree__lidar__sdk__pcl_8h_html_a7372474de898495b1847327162588b4c"><div class="ttname"><a href="unitree__lidar__sdk__pcl_8h.html#a7372474de898495b1847327162588b4c">pt</a></div><div class="ttdeci">PointType pt</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00078">unitree_lidar_sdk_pcl.h:78</a></div></div>
+<div class="ttc" id="aunitree__lidar__sdk__pcl_8h_html_a939d7116d4ba19c75c746b10c53688e5"><div class="ttname"><a href="unitree__lidar__sdk__pcl_8h.html#a939d7116d4ba19c75c746b10c53688e5">cloudOut</a></div><div class="ttdeci">pcl::PointCloud&lt; PointType &gt;::Ptr cloudOut</div><div class="ttdef"><b>Definition</b> <a href="unitree__lidar__sdk__pcl_8h_source.html#l00075">unitree_lidar_sdk_pcl.h:76</a></div></div>
 <div class="ttc" id="aunitree__lidar__sdk__pcl_8h_html_aafcaf9041d92a869b42334a0e073b536"><div class="ttname"><a href="unitree__lidar__sdk__pcl_8h.html#aafcaf9041d92a869b42334a0e073b536">EIGEN_ALIGN16</a></div><div class="ttdeci">struct PointType EIGEN_ALIGN16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

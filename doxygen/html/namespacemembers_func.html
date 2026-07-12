@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -103,7 +112,10 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 
 <h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
 <li>add_package_runtime_dependencies()&#160;:&#160;<a class="el" href="namespace__local__setup__util__sh.html#a1dc880913fbf3811b97917d105bfac0c">_local_setup_util_sh</a></li>
+<li>add_time_window()&#160;:&#160;<a class="el" href="namespaceplot__common.html#abca2c9a0d1d436f948ef30660b8f6198">plot_common</a></li>
 <li>animate()&#160;:&#160;<a class="el" href="namespaceplotshit.html#a7d563ce3b9375e6bdccc8ae4c7a87fbb">plotshit</a></li>
+<li>apply_mag_calibration()&#160;:&#160;<a class="el" href="namespacecalibrate.html#ae15a415a08ff01cebcad91bf2fdc0b97">calibrate</a></li>
+<li>arduino_serial_loop()&#160;:&#160;<a class="el" href="namespaceuwb__gatewayd.html#aad05863a67c2259a824ac14b9e1094d8">uwb_gatewayd</a></li>
 <li>assign_function__Env__environment()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a094529e814e86bc34c3d68fe8e83d509">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>assign_function__Obstacle__center()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#ac0bd960d0a3e2ba9c63d8bbfd808e936">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>assign_function__Obstacle__covariance()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a4f3d5a306460aa2ecac503cf66ae97c1">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
@@ -114,6 +126,7 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>build()&#160;:&#160;<a class="el" href="namespacelidar__processor.html#a5d51f5426c565964e136698051db8aaf">lidar_processor</a></li>
 <li>build&lt;::lidar_processor::msg::Env &gt;()&#160;:&#160;<a class="el" href="namespacelidar__processor.html#ae0a95f5287ffc9fa77d967bcd06719f5">lidar_processor</a></li>
 <li>build&lt;::lidar_processor::msg::Obstacle &gt;()&#160;:&#160;<a class="el" href="namespacelidar__processor.html#ab0ea78fce94ab837401b13c059d091d7">lidar_processor</a></li>
+<li>build_arg_parser()&#160;:&#160;<a class="el" href="namespaceuwb__gatewayd.html#ac506ed9aa289c7a6a6824263ab65a953">uwb_gatewayd</a></li>
 </ul>
 
 
@@ -121,6 +134,9 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>cdr_deserialize()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp.html#a361d43a555590cc840c8266ecc682c6e">lidar_processor::msg::typesupport_fastrtps_cpp</a></li>
 <li>cdr_serialize()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp.html#ac46b97d213f2e40b51ca96ca626817bd">lidar_processor::msg::typesupport_fastrtps_cpp</a></li>
 <li>cdr_serialize_key()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp.html#a398ecfa24d0faa2b147945dbdd951e17">lidar_processor::msg::typesupport_fastrtps_cpp</a></li>
+<li>clean()&#160;:&#160;<a class="el" href="namespaceplot__attitude.html#aa491ccf07611bf2dc21f5f41f9bbcf32">plot_attitude</a>, <a class="el" href="namespaceplot__gains.html#a6b97e0c7de76aa6a0d4770c1b84d19a8">plot_gains</a>, <a class="el" href="namespaceplot__position.html#a48b55fb96a805f875bb0a772bced1352">plot_position</a></li>
+<li>clean_numeric()&#160;:&#160;<a class="el" href="namespacealigndata.html#a84794670d2eb2c15cee55667fdaa48ec">aligndata</a></li>
+<li>coverage()&#160;:&#160;<a class="el" href="namespacelive__magcal.html#a7e195d99e08b6b6e0fe4062054e05864">live_magcal</a></li>
 <li>crc32()&#160;:&#160;<a class="el" href="namespaceunilidar__sdk2.html#ac6bb362ccc5a5a72af19266c26406710">unilidar_sdk2</a></li>
 <li>createUnitreeLidarReader()&#160;:&#160;<a class="el" href="namespaceunilidar__sdk2.html#aabf1d7a4981ee03b10c9ded43c03f063">unilidar_sdk2</a></li>
 </ul>
@@ -133,8 +149,10 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 
 
 <h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
+<li>enable_quit_key()&#160;:&#160;<a class="el" href="namespaceplot__common.html#a7140dacc909855ff0d23cb1ec9ee5528">plot_common</a></li>
 <li>Env_fini_function()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a1567f5d1ecbeb104eab16ed0e3837a44">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>Env_init_function()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a2c6d43f462a86801bb890c5095db6bb3">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
+<li>extract()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a359014eba4f3470167d1803073c0a2ec">calibrate</a>, <a class="el" href="namespaceplot__sensors.html#ade9013ec96a004a5e2c03ac548ac36b7">plot_sensors</a></li>
 </ul>
 
 
@@ -142,7 +160,7 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>fetch_function__Env__environment()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a667c27ece89a5e6c412c520b62143231">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>fetch_function__Obstacle__center()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a2a4f669cbed93129ec2bd256d1a51508">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>fetch_function__Obstacle__covariance()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#ac85f52e9b35c494d1af95a0a6b142aee">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
-<li>float_eq()&#160;:&#160;<a class="el" href="namespaceplanning__module.html#a7c2d51cae71646b1e354d1a546f5198a">planning_module</a></li>
+<li>fit_ellipsoid()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a693ba1a97e67e93f1557c45e05d836af">calibrate</a></li>
 </ul>
 
 
@@ -169,8 +187,25 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 </ul>
 
 
+<h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
+<li>integrate_body_rates()&#160;:&#160;<a class="el" href="namespacealigndata.html#afc1da51b103a24d4d8316ea8e8a7f93f">aligndata</a></li>
+</ul>
+
+
+<h3><a id="index_l" name="index_l"></a>- l -</h3><ul>
+<li>load_accel_q0()&#160;:&#160;<a class="el" href="namespaceplot__sensors.html#a6c1ac87b81f4b7d43aa8249b8a23059e">plot_sensors</a></li>
+<li>load_atag()&#160;:&#160;<a class="el" href="namespaceplot__attitude.html#ad0a6f26039a1f455857273d769e2ac75">plot_attitude</a></li>
+<li>load_bias()&#160;:&#160;<a class="el" href="namespaceplot__sensors.html#af7179fdd3be6bd8eeedea0e7c4981db6">plot_sensors</a></li>
+<li>load_csv()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a35cd52347e13938fd66bdbd9e12d0bf7">calibrate</a>, <a class="el" href="namespaceplot__attitude.html#aa35b99445892e7ff07ee3ebd048e998c">plot_attitude</a>, <a class="el" href="namespaceplot__gains.html#a93ce55afacb1912fa62e2b55a1a54c90">plot_gains</a>, <a class="el" href="namespaceplot__position.html#a1b5d46b9f81ef817c7215e508d678b0b">plot_position</a>, <a class="el" href="namespaceplot__sensors.html#a8ceb6e96a17a617dfddf55503b17a556">plot_sensors</a></li>
+<li>load_exact_csv()&#160;:&#160;<a class="el" href="namespacealigndata.html#a3016df21efad1e446d77d9b5cc844974">aligndata</a></li>
+<li>load_qorvo_uci()&#160;:&#160;<a class="el" href="namespaceuwb__gatewayd.html#a440a29626ff7697aa1da40260c73945c">uwb_gatewayd</a></li>
+<li>load_trans_accel()&#160;:&#160;<a class="el" href="namespaceplot__sensors.html#af6ccea4f7a1656dbe7c42d0e482b1404">plot_sensors</a></li>
+</ul>
+
+
 <h3><a id="index_m" name="index_m"></a>- m -</h3><ul>
-<li>main()&#160;:&#160;<a class="el" href="namespace__local__setup__util__sh.html#a1b27fc72a79bb06ff30ee558df7ccaa2">_local_setup_util_sh</a>, <a class="el" href="namespacecamera_1_1main.html#a50387eb8277d20ef26b40bb8c5d3b910">camera.main</a>, <a class="el" href="namespacestatus__updater_1_1main.html#a2eab7f66c2478a5c07f6cdf55b029c1f">status_updater.main</a></li>
+<li>main()&#160;:&#160;<a class="el" href="namespace__local__setup__util__sh.html#a1b27fc72a79bb06ff30ee558df7ccaa2">_local_setup_util_sh</a>, <a class="el" href="namespacecalibrate.html#a3be6ce6312a1951cc5ec0e33d011bb6d">calibrate</a>, <a class="el" href="namespacecamera_1_1main.html#a50387eb8277d20ef26b40bb8c5d3b910">camera.main</a>, <a class="el" href="namespacedriver.html#a7855634d04f6ad72a7fa02eba7e41dfb">driver</a>, <a class="el" href="namespacelive__magcal.html#af096435e34fb7eef68133f8d92b9cad2">live_magcal</a>, <a class="el" href="namespaceplot__attitude.html#a4b18984779fe0e2ca49df4174c776b3f">plot_attitude</a>, <a class="el" href="namespaceplot__gains.html#a897e9d7db13048dcf2943361df1161f8">plot_gains</a>, <a class="el" href="namespaceplot__position.html#a32ceb461eca65872bbf7bcb100b0d34c">plot_position</a>, <a class="el" href="namespaceplot__sensors.html#a42a46c549f13682633c38c5cde78faf9">plot_sensors</a>, <a class="el" href="namespacestatus__updater_1_1main.html#a2eab7f66c2478a5c07f6cdf55b029c1f">status_updater.main</a>, <a class="el" href="namespaceuwb__gatewayd.html#a2443c753fef3c28a15a618824e3aff86">uwb_gatewayd</a></li>
+<li>matrices_to_unwrapped_rpy()&#160;:&#160;<a class="el" href="namespacealigndata.html#abdfda1157e067388fb941b91d0035ae7">aligndata</a></li>
 <li>max_serialized_size_Env()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp.html#ab3c45b2a3d31069ad3e08300d5f5ad2e">lidar_processor::msg::typesupport_fastrtps_cpp</a></li>
 <li>max_serialized_size_key_Env()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp.html#a4419c2cd34cf763a61d2a2484460388c">lidar_processor::msg::typesupport_fastrtps_cpp</a></li>
 <li>max_serialized_size_key_Obstacle()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1typesupport__fastrtps__cpp.html#a4cc2e8c2f48ebfbdcef2552d86039569">lidar_processor::msg::typesupport_fastrtps_cpp</a></li>
@@ -188,25 +223,41 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>Obstacle_fini_function()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#aca52fb1ea8e34120094a2663c4a15a98">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>Obstacle_init_function()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a3388325ade72978a580bff9582fa8257">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>order_packages()&#160;:&#160;<a class="el" href="namespace__local__setup__util__sh.html#a7c96a239f502a9af226e66b77351bf22">_local_setup_util_sh</a></li>
+<li>overlay_bias()&#160;:&#160;<a class="el" href="namespaceplot__sensors.html#a56e89c5948868568d0262e44009e11a6">plot_sensors</a></li>
 </ul>
 
 
 <h3><a id="index_p" name="index_p"></a>- p -</h3><ul>
+<li>parse_int_auto()&#160;:&#160;<a class="el" href="namespaceuwb__gatewayd.html#a79ec8a445b70bd5e7ebee935a0cc54c9">uwb_gatewayd</a></li>
+<li>parse_mac_list()&#160;:&#160;<a class="el" href="namespaceuwb__gatewayd.html#a6e5db04b53e9cf5a1ffb149328c50881">uwb_gatewayd</a></li>
 <li>parseFromPacketPointCloud2D()&#160;:&#160;<a class="el" href="namespaceunilidar__sdk2.html#a877d2bb701aeb90e47b089ba145722f1">unilidar_sdk2</a></li>
 <li>parseFromPacketToPointCloud()&#160;:&#160;<a class="el" href="namespaceunilidar__sdk2.html#a49fb1dfcea9586d7f57697ebfd84b059">unilidar_sdk2</a></li>
 <li>plot_covariance_ellipse()&#160;:&#160;<a class="el" href="namespaceplotshit.html#a727f70b113a85d93e980414a31086b3c">plotshit</a></li>
+<li>plot_group()&#160;:&#160;<a class="el" href="namespaceplot__gains.html#add892e5fb069496fb5bfa0a847614102">plot_gains</a></li>
+<li>plot_one()&#160;:&#160;<a class="el" href="namespacedriver.html#ae3356acd479fd25843a8b737e00ea7fa">driver</a></li>
+<li>plot_psd()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a534a18074e94c06cb388feae3505cf4f">calibrate</a></li>
 <li>process_dsv_file()&#160;:&#160;<a class="el" href="namespace__local__setup__util__sh.html#a3c719e21e412f8a95bb1dabe10f5a280">_local_setup_util_sh</a></li>
 </ul>
 
 
 <h3><a id="index_r" name="index_r"></a>- r -</h3><ul>
+<li>read_mag()&#160;:&#160;<a class="el" href="namespacelive__magcal.html#aeb1b11250c709e0d4a17308d7b083b9a">live_magcal</a></li>
+<li>recommend_cutoff()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a6b0e263f3d73e3a53e7369543057e183">calibrate</a></li>
+<li>recommend_sensor_cutoff()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a1df9c062b61661b2a2942756b425e9e7">calibrate</a></li>
 <li>reduce_cycle_set()&#160;:&#160;<a class="el" href="namespace__local__setup__util__sh.html#ae93d0090312417828df666d69c27a687">_local_setup_util_sh</a></li>
+<li>rel_time()&#160;:&#160;<a class="el" href="namespaceplot__sensors.html#aa650ca6095fa6a89e4040c9a573cc0d0">plot_sensors</a></li>
+<li>relative_rotations()&#160;:&#160;<a class="el" href="namespacealigndata.html#a57bdc7d751912351de09aa7f949333a5">aligndata</a></li>
+<li>require_cols()&#160;:&#160;<a class="el" href="namespacedriver.html#aa64e7bd43badc82b6a7eb6cab875b857">driver</a></li>
+<li>require_columns()&#160;:&#160;<a class="el" href="namespacealigndata.html#a0a6a950a1d396d153ec7ccc715fbb7bf">aligndata</a></li>
 <li>resize_function__Env__environment()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#ad43eba090d8a12115252289d9477e7dc">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME()&#160;:&#160;<a class="el" href="namespacerosidl__typesupport__cpp.html#a4e21fd5cfdd0cb4bfcd7a11aef3c2c4d">rosidl_typesupport_cpp</a></li>
+<li>rotate_vecs()&#160;:&#160;<a class="el" href="namespaceplot__position.html#adbe3154fd6b9235d80b5770eb744ca71">plot_position</a></li>
 </ul>
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
+<li>save_filter_cutoffs()&#160;:&#160;<a class="el" href="namespacecalibrate.html#a45b56b2c7d3ded4d5e19915e31cb5ce3">calibrate</a></li>
+<li>save_mag_calibration()&#160;:&#160;<a class="el" href="namespacecalibrate.html#ae0bd9ea7283cff8feb6d7173a757362c">calibrate</a></li>
 <li>size_function__Env__environment()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#adfade64e3533028b803c1e1a70749903">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>size_function__Obstacle__center()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#ad7dce1261167c627eee68a1ae3c108f3">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
 <li>size_function__Obstacle__covariance()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#a7a1c1a897f853763090a64c2b8f908bc">lidar_processor::msg::rosidl_typesupport_introspection_cpp</a></li>
@@ -219,14 +270,25 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>test_mypy()&#160;:&#160;<a class="el" href="namespacetest__mypy.html#a3b062b75f4fe3540102d3db5b8644c11">test_mypy</a></li>
 <li>test_pep257()&#160;:&#160;<a class="el" href="namespacetest__pep257.html#a3c96d80564a2387a2d1755c75f56943f">test_pep257</a></li>
 <li>test_xmllint()&#160;:&#160;<a class="el" href="namespacetest__xmllint.html#a575bcb89c718207d4685128536a80406">test_xmllint</a></li>
-<li>to_block_style_yaml()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#aa349c65b1de09d3157caacd0262de0d5">lidar_processor.msg</a></li>
-<li>to_flow_style_yaml()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#a8886c97af8ea38acba8e32cd6cf54e49">lidar_processor.msg</a></li>
-<li>to_yaml()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#a51bb3144d5fbc37ca2620b8c407dae34">lidar_processor.msg</a>, <a class="el" href="namespacerosidl__generator__traits.html#a992f606547a1d7dd609274ea8256cc5b">rosidl_generator_traits</a></li>
+<li>to_block_style_yaml()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#aa349c65b1de09d3157caacd0262de0d5">lidar_processor::msg</a></li>
+<li>to_flow_style_yaml()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#a8886c97af8ea38acba8e32cd6cf54e49">lidar_processor::msg</a></li>
+<li>to_yaml()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#a51bb3144d5fbc37ca2620b8c407dae34">lidar_processor::msg</a>, <a class="el" href="namespacerosidl__generator__traits.html#a992f606547a1d7dd609274ea8256cc5b">rosidl_generator_traits</a></li>
+</ul>
+
+
+<h3><a id="index_u" name="index_u"></a>- u -</h3><ul>
+<li>update_time_shift()&#160;:&#160;<a class="el" href="namespacealigndata.html#a110bc2423a371fbc34496f1d91de4a28">aligndata</a></li>
 </ul>
 
 
 <h3><a id="index_v" name="index_v"></a>- v -</h3><ul>
-<li>verbatim()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#a49ad033368419e595e2d6bfc269230b5">lidar_processor.msg</a></li>
+<li>verbatim()&#160;:&#160;<a class="el" href="namespacelidar__processor_1_1msg.html#a49ad033368419e595e2d6bfc269230b5">lidar_processor::msg</a></li>
+<li>verdict_text()&#160;:&#160;<a class="el" href="namespacelive__magcal.html#ab37acc60acbdf90cd361740bebbc3211">live_magcal</a></li>
+</ul>
+
+
+<h3><a id="index_z" name="index_z"></a>- z -</h3><ul>
+<li>zero_to_first_nonzero()&#160;:&#160;<a class="el" href="namespaceplot__attitude.html#ab69d8df6d5a03c948571794a5e85481f">plot_attitude</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

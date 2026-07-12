@@ -1,64 +1,91 @@
-\doxysection{src/nav\+\_\+filters/src/ekf.hpp File Reference}
-\hypertarget{ekf_8hpp}{}\label{ekf_8hpp}\index{src/nav\_filters/src/ekf.hpp@{src/nav\_filters/src/ekf.hpp}}
-{\ttfamily \#include "{}Eigen/\+Dense"{}}\newline
-{\ttfamily \#include $<$iostream$>$}\newline
-{\ttfamily \#include $<$fstream$>$}\newline
+\doxysection{src/nav\+\_\+filters/include/nav\+\_\+filters/ekf.hpp File Reference}
+\hypertarget{ekf_8hpp}{}\label{ekf_8hpp}\index{src/nav\_filters/include/nav\_filters/ekf.hpp@{src/nav\_filters/include/nav\_filters/ekf.hpp}}
+{\ttfamily \#include "{}ISensor.\+hpp"{}}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
 Include dependency graph for ekf.\+hpp\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ekf_8hpp__incl}
+\end{center}
+\end{figure}
 This graph shows which files directly or indirectly include this file\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{ekf_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}
+\item 
+struct \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{ekf\+::\+EKF\+::snapshot}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceekf}{ekf}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\+Clock}} = std\+::chrono\+::steady\+\_\+clock
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{ekf_8hpp_aa03ef056b2faac861333846f6651f1ed}{rotational\+\_\+mekf}} (const Eigen\+::\+Quaterniond \&q\+\_\+est\+\_\+triad, const Eigen\+::\+Vector3d \&w\+\_\+gyro, const Eigen\+::\+Vector\+Xd \&prior\+\_\+state, const Eigen\+::\+Matrix$<$ double, 6, 6 $>$ \&prior\+\_\+P, double dt, double sigma\+\_\+gyro, Eigen\+::\+Matrix$<$ double, 6, 6 $>$ \&P, Eigen\+::\+Vector\+Xd \&mekf\+\_\+out)
+Eigen\+::\+Matrix3d \mbox{\hyperlink{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc}{skew}} (const Eigen\+::\+Vector3d \&v)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{ekf_8hpp_a4bc11e0a1899ec4ee9415102f8cbc5c8}{translational\+\_\+ekf}} (const Eigen\+::\+Vector\+Xd \&IMU\+\_\+const, const float\+\_\+t range\+\_\+const, const float\+\_\+t range\+\_\+rate\+\_\+const, const Eigen\+::\+Vector3d \&orientation\+\_\+estimate, const Eigen\+::\+Vector\+Xd \&u, const Eigen\+::\+Vector\+Xd \&prior\+\_\+location, const Eigen\+::\+Matrix\+Xd \&prior\+\_\+P, const Eigen\+::\+Matrix\+Xd \&rot\+\_\+P, double dt, Eigen\+::\+Matrix$<$ double, 15, 15 $>$ \&P, Eigen\+::\+Vector\+Xd \&state\+\_\+hat)
+const Eigen\+::\+Vector3d \mbox{\hyperlink{ekf_8hpp_af19c968b28d79f66a1a4976c7d299ef5}{grav\+\_\+vec}} \{0.\+0, 0.\+0, 9.\+81\}
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Typedef Documentation}
+\Hypertarget{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}\label{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5} 
+\index{ekf.hpp@{ekf.hpp}!SteadyClock@{SteadyClock}}
+\index{SteadyClock@{SteadyClock}!ekf.hpp@{ekf.hpp}}
+\doxysubsubsection{\texorpdfstring{SteadyClock}{SteadyClock}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\+Clock}} =  std\+::chrono\+::steady\+\_\+clock}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00017}{17}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+
+
 \doxysubsection{Function Documentation}
-\Hypertarget{ekf_8hpp_aa03ef056b2faac861333846f6651f1ed}\label{ekf_8hpp_aa03ef056b2faac861333846f6651f1ed} 
-\index{ekf.hpp@{ekf.hpp}!rotational\_mekf@{rotational\_mekf}}
-\index{rotational\_mekf@{rotational\_mekf}!ekf.hpp@{ekf.hpp}}
-\doxysubsubsection{\texorpdfstring{rotational\_mekf()}{rotational\_mekf()}}
-{\footnotesize\ttfamily void rotational\+\_\+mekf (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Quaterniond \&}]{q\+\_\+est\+\_\+triad,  }\item[{const Eigen\+::\+Vector3d \&}]{w\+\_\+gyro,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{prior\+\_\+state,  }\item[{const Eigen\+::\+Matrix$<$ double, 6, 6 $>$ \&}]{prior\+\_\+P,  }\item[{double}]{dt,  }\item[{double}]{sigma\+\_\+gyro,  }\item[{Eigen\+::\+Matrix$<$ double, 6, 6 $>$ \&}]{P,  }\item[{Eigen\+::\+Vector\+Xd \&}]{mekf\+\_\+out }\end{DoxyParamCaption})}
+\Hypertarget{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc}\label{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc} 
+\index{ekf.hpp@{ekf.hpp}!skew@{skew}}
+\index{skew@{skew}!ekf.hpp@{ekf.hpp}}
+\doxysubsubsection{\texorpdfstring{skew()}{skew()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d skew (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3d \&}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00007}{7}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
-
-\Hypertarget{ekf_8hpp_a4bc11e0a1899ec4ee9415102f8cbc5c8}\label{ekf_8hpp_a4bc11e0a1899ec4ee9415102f8cbc5c8} 
-\index{ekf.hpp@{ekf.hpp}!translational\_ekf@{translational\_ekf}}
-\index{translational\_ekf@{translational\_ekf}!ekf.hpp@{ekf.hpp}}
-\doxysubsubsection{\texorpdfstring{translational\_ekf()}{translational\_ekf()}}
-{\footnotesize\ttfamily void translational\+\_\+ekf (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector\+Xd \&}]{IMU\+\_\+const,  }\item[{const float\+\_\+t}]{range\+\_\+const,  }\item[{const float\+\_\+t}]{range\+\_\+rate\+\_\+const,  }\item[{const Eigen\+::\+Vector3d \&}]{orientation\+\_\+estimate,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{u,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{prior\+\_\+location,  }\item[{const Eigen\+::\+Matrix\+Xd \&}]{prior\+\_\+P,  }\item[{const Eigen\+::\+Matrix\+Xd \&}]{rot\+\_\+P,  }\item[{double}]{dt,  }\item[{Eigen\+::\+Matrix$<$ double, 15, 15 $>$ \&}]{P,  }\item[{Eigen\+::\+Vector\+Xd \&}]{state\+\_\+hat }\end{DoxyParamCaption})}
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00012}{12}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
 
 
-\begin{DoxyParams}{Parameters}
-{\em IMU\+\_\+const} & \\
-\hline
-{\em range\+\_\+const} & \\
-\hline
-{\em range\+\_\+rate\+\_\+const} & \\
-\hline
-{\em orientation\+\_\+estimate} & \\
-\hline
-{\em u} & \\
-\hline
-{\em prior\+\_\+location} & \\
-\hline
-{\em prior\+\_\+P} & \\
-\hline
-{\em rot\+\_\+P} & \\
-\hline
-{\em dt} & \\
-\hline
-{\em P} & \\
-\hline
-{\em state\+\_\+hat} & \\
-\hline
-\end{DoxyParams}
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{ekf_8hpp_af19c968b28d79f66a1a4976c7d299ef5}\label{ekf_8hpp_af19c968b28d79f66a1a4976c7d299ef5} 
+\index{ekf.hpp@{ekf.hpp}!grav\_vec@{grav\_vec}}
+\index{grav\_vec@{grav\_vec}!ekf.hpp@{ekf.hpp}}
+\doxysubsubsection{\texorpdfstring{grav\_vec}{grav\_vec}}
+{\footnotesize\ttfamily const Eigen\+::\+Vector3d grav\+\_\+vec \{0.\+0, 0.\+0, 9.\+81\}\hspace{0.3cm}{\ttfamily [inline]}}
 
 
-Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00114}{114}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00011}{11}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
 

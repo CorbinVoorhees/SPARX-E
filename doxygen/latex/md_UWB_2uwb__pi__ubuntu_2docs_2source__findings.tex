@@ -1,0 +1,38 @@
+\chapter{Source findings from uploaded Qorvo files}
+\hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings}{}\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings}\index{Source findings from uploaded Qorvo files@{Source findings from uploaded Qorvo files}}
+\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md54}%
+\Hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md54}%
+ These are the implementation-\/relevant findings used by the starter code and to-\/do list.\hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md55}{}\doxysection{\texorpdfstring{Range is available}{Range is available}}\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md55}
+{\ttfamily SDK/\+Documentation/uwb-\/stack/uwb-\/uci-\/messages-\/api-\/\+R12.\+7.\+0-\/405.\+pdf}, section 5.\+7, states that {\ttfamily SESSION\+\_\+\+INFO\+\_\+\+NTF} sends ranging results to the host. The TWR measurement table includes {\ttfamily Distance} as a 2-\/octet field.
+
+The SDK Python parser confirms this in\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{SDK/Tools/uwb-\/qorvo-\/tools/lib/uwb-\/uci/uci/qorvo\_msg.py}
+
+\end{DoxyCode}
+
+
+{\ttfamily Ranging\+Twr\+Data.\+\_\+\+\_\+init\+\_\+\+\_\+()} parses\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{self.distance\ =\ float(b.pop\_uint(2))\ \ \textcolor{comment}{\#\ distance\ in\ cm}}
+
+\end{DoxyCode}
+\hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md56}{}\doxysection{\texorpdfstring{Range rate is not directly available}{Range rate is not directly available}}\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md56}
+The same TWR measurement parser and UCI message table include distance, AoA, RSSI, NLoS, status, and slot index, but no range-\/rate/radial-\/velocity field. The starter gateway therefore computes range rate on the Pi from successive valid distance samples and marks it as derived.\hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md57}{}\doxysection{\texorpdfstring{Default Fi\+Ra settings}{Default FiRa settings}}\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md57}
+{\ttfamily SDK/\+Documentation/\+Developer\+Manual/\+DWM3001\+CDK\+\_\+\+Developer\+\_\+\+Manual\+\_\+\+QM33\+SDK-\/1.\+1.\+1.\+pdf}, section 7.\+6.\+2, shows the default commands\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{INITF\ -\/CHAN=9\ -\/PRFSET=BPRF4\ -\/SLOT=2400\ -\/BLOCK=200\ -\/ROUND=25\ -\/RRU=DSTWR\ -\/ID=42\ -\/VUPPER=01:02:03:04:05:06:07:08\ -\/ADDR=0\ -\/PADDR=1}
+\DoxyCodeLine{RESPF\ -\/CHAN=9\ -\/PRFSET=BPRF4\ -\/SLOT=2400\ -\/BLOCK=200\ -\/ROUND=25\ -\/RRU=DSTWR\ -\/ID=42\ -\/VUPPER=01:02:03:04:05:06:07:08\ -\/ADDR=1\ -\/PADDR=0}
+
+\end{DoxyCode}
+
+
+The starter gateway uses these same defaults through the UCI app config API.\hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md58}{}\doxysection{\texorpdfstring{UCI firmware is the correct integration point}{UCI firmware is the correct integration point}}\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md58}
+The Developer Manual says the UCI project provides a way to fully control the Fi\+Ra UWB stack over the UCI interface, and the UCI task transfers UCI messages from UART/\+USB to the UWB stack at runtime.\hypertarget{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md59}{}\doxysection{\texorpdfstring{Low-\/level DW3xxx driver porting is not the first choice here}{Low-level DW3xxx driver porting is not the first choice here}}\label{md_UWB_2uwb__pi__ubuntu_2docs_2source__findings_autotoc_md59}
+{\ttfamily DW3\+XXX\+\_\+\+Software\+\_\+\+API\+\_\+\+Guide\+\_\+4p12.\+pdf} explains that the low-\/level driver expects platform functions like {\ttfamily writetospi()}, {\ttfamily readfromspi()}, {\ttfamily decamutexon()}, {\ttfamily decamutexoff()}, and an interrupt path that calls {\ttfamily dwt\+\_\+isr()}. It also warns that the driver APIs are not re-\/entrant except for the interrupt-\/handling provisions. Since the Pi is available and the UWB board is connected over USB/\+UART, the UCI stack is the cleaner integration path. 

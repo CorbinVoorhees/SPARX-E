@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[]) {
   rclcpp::init(argc, argv);
-  auto node = std::make_shared<nav::NavigationNode>();
+  auto node = std::make_shared<nav::NavNode>();
   rclcpp::spin(node);
   rclcpp::shutdown();
   return 0;

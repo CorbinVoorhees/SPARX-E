@@ -1,0 +1,69 @@
+\doxysection{plot\+\_\+common Namespace Reference}
+\hypertarget{namespaceplot__common}{}\label{namespaceplot__common}\index{plot\_common@{plot\_common}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceplot__common_a7140dacc909855ff0d23cb1ec9ee5528}{enable\+\_\+quit\+\_\+key}} (\texorpdfstring{$\ast$}{*}figs)
+\item 
+\mbox{\hyperlink{namespaceplot__common_abca2c9a0d1d436f948ef30660b8f6198}{add\+\_\+time\+\_\+window}} (fig, time\+\_\+axes, t, label=\textquotesingle{}Time window(s)\textquotesingle{}, slider\+\_\+rect=(0.\+15, 0.\+015, 0.\+70, 0.\+02), reserve\+\_\+bottom=0.\+11)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespaceplot__common_a6428d101b10f0d25a912bbabf08299cb}{\+\_\+\+HAS\+\_\+\+RANGE}} = True
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Shared interactivity helpers for the analysis plot scripts.
+
+Provides:
+  - enable_quit_key(*figs): press 'q' in any window to close everything.
+  - add_time_window(fig, time_axes, t): a RangeSlider to view/zoom a section
+    of time by setting the shared x-limits of the given time-series axes.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceplot__common_abca2c9a0d1d436f948ef30660b8f6198}\label{namespaceplot__common_abca2c9a0d1d436f948ef30660b8f6198} 
+\index{plot\_common@{plot\_common}!add\_time\_window@{add\_time\_window}}
+\index{add\_time\_window@{add\_time\_window}!plot\_common@{plot\_common}}
+\doxysubsubsection{\texorpdfstring{add\_time\_window()}{add\_time\_window()}}
+{\footnotesize\ttfamily plot\+\_\+common.\+add\+\_\+time\+\_\+window (\begin{DoxyParamCaption}\item[{}]{fig,  }\item[{}]{time\+\_\+axes,  }\item[{}]{t,  }\item[{}]{label = {\ttfamily \textquotesingle{}Time~window~(s)\textquotesingle{}},  }\item[{}]{slider\+\_\+rect = {\ttfamily (0.15,~0.015,~0.70,~0.02)},  }\item[{}]{reserve\+\_\+bottom = {\ttfamily 0.11} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Add a slider that restricts the visible time span of `time_axes`.
+
+fig          : the figure to attach the slider to.
+time_axes    : iterable of Axes whose x-axis is time (seconds). All are
+               driven together; axes that share an x-axis update as one.
+t            : the time array (used only for its min/max bounds).
+Returns the slider so the caller can keep a reference alive.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__common_8py_source_l00030}{30}} of file \mbox{\hyperlink{plot__common_8py_source}{plot\+\_\+common.\+py}}.
+
+\Hypertarget{namespaceplot__common_a7140dacc909855ff0d23cb1ec9ee5528}\label{namespaceplot__common_a7140dacc909855ff0d23cb1ec9ee5528} 
+\index{plot\_common@{plot\_common}!enable\_quit\_key@{enable\_quit\_key}}
+\index{enable\_quit\_key@{enable\_quit\_key}!plot\_common@{plot\_common}}
+\doxysubsubsection{\texorpdfstring{enable\_quit\_key()}{enable\_quit\_key()}}
+{\footnotesize\ttfamily plot\+\_\+common.\+enable\+\_\+quit\+\_\+key (\begin{DoxyParamCaption}\item[{\texorpdfstring{$\ast$}{*}}]{figs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Press 'q' (or Escape) in any figure to close all windows and quit.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__common_8py_source_l00019}{19}} of file \mbox{\hyperlink{plot__common_8py_source}{plot\+\_\+common.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceplot__common_a6428d101b10f0d25a912bbabf08299cb}\label{namespaceplot__common_a6428d101b10f0d25a912bbabf08299cb} 
+\index{plot\_common@{plot\_common}!\_HAS\_RANGE@{\_HAS\_RANGE}}
+\index{\_HAS\_RANGE@{\_HAS\_RANGE}!plot\_common@{plot\_common}}
+\doxysubsubsection{\texorpdfstring{\_HAS\_RANGE}{\_HAS\_RANGE}}
+{\footnotesize\ttfamily bool plot\+\_\+common.\+\_\+\+HAS\+\_\+\+RANGE = True\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__common_8py_source_l00013}{13}} of file \mbox{\hyperlink{plot__common_8py_source}{plot\+\_\+common.\+py}}.
+

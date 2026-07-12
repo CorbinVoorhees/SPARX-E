@@ -7,89 +7,90 @@
 \DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00003}00003\ \textcolor{comment}{***********************************************************************/}}
 \DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00004}00004\ }
 \DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00005}00005\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{unitree__lidar__utilities_8h}{unitree\_lidar\_utilities.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00007}00007\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00008}00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\_sdk2}}\{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00009}00009\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00013}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{00013}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{UnitreeLidarReader}}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00014}00014\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00015}00015\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00016}00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00022}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86}{00022}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86}{initializeSerial}}(}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ std::string\ port\ =\ \textcolor{stringliteral}{"{}/dev/ttyACM0"{}},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ uint32\_t\ baudrate\ =\ 4000000,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ uint16\_t\ cloud\_scan\_num\ =\ 18,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00029}00029\ \ \ \ \ )\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00034}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}{00034}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}{initializeUDP}}(}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ lidar\_port\ =\ 6101,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ std::string\ lidar\_ip\ =\ \textcolor{stringliteral}{"{}192.168.1.62"{}},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ local\_port\ =\ 6201,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ std::string\ local\_ip\ =\ \textcolor{stringliteral}{"{}192.168.1.2"{}},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ uint16\_t\ cloud\_scan\_num\ =\ 18,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00043}00043\ \ \ \ \ )\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00044}00044\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00048}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615}{00048}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615}{closeSerial}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00049}00049\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00053}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60}{00053}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60}{closeUDP}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00054}00054\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00065}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{00065}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{runParse}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00066}00066\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00070}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c}{00070}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c}{clearBuffer}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00071}00071\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00072}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208}{00072}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{LidarPointDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208}{getLidarPointDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00073}00073\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00074}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33}{00074}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2DPointDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33}{getLidar2DPointDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00075}00075\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00076}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e}{00076}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuDataPacket}{LidarImuDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e}{getLidarImuDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00077}00077\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00078}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a}{00078}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarVersionDataPacket}{LidarVersionDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a}{getLidarVersionDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00079}00079\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00083}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}{00083}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}{getPointCloud}}(\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloud)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00084}00084\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00088}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}{00088}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}{getImuData}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData}{LidarImuData}}\ \&imu)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00089}00089\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00093}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}{00093}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}{getVersionOfSDK}}(std::string\ \&version)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00094}00094\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00098}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}{00098}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}{getVersionOfLidarFirmware}}(std::string\ \&version)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00099}00099\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00103}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}{00103}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}{getVersionOfLidarHardware}}(std::string\ \&version)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00104}00104\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00108}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}{00108}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}{getTimeDelay}}(\textcolor{keywordtype}{double}\ \&delay)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00109}00109\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00114}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}{00114}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}{getDirtyPercentage}}(\textcolor{keywordtype}{float}\ \&percentage)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00115}00115\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00120}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906}{00120}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906}{sendUserCtrlCmd}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarUserCtrlCmd}{LidarUserCtrlCmd}}\ cmd)=\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00121}00121\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00125}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1}{00125}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1}{setLidarWorkMode}}(uint32\_t\ mode)\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00126}00126\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00132}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd}{00132}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd}{syncLidarTimeStamp}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00133}00133\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00137}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7}{00137}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7}{resetLidar}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00138}00138\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00142}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}{00142}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}{stopLidarRotation}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00143}00143\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00147}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}{00147}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}{startLidarRotation}}()\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00148}00148\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00153}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}{00153}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}{setLidarIpAddressConfig}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig}{LidarIpAddressConfig}}\ config)\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00154}00154\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00159}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a}{00159}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a}{setLidarMacAddressConfig}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarMacAddressConfig}{LidarMacAddressConfig}}\ config)\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00160}00160\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00164}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e}{00164}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e}{getBufferCachedSize}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00165}00165\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00169}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4}{00169}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4}{getBufferReadSize}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00170}00170\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00171}00171\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00172}00172\ \};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00173}00173\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00178}\mbox{\hyperlink{namespaceunilidar__sdk2_aabf1d7a4981ee03b10c9ded43c03f063}{00178}}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{UnitreeLidarReader}}\ *\mbox{\hyperlink{namespaceunilidar__sdk2_aabf1d7a4981ee03b10c9ded43c03f063}{createUnitreeLidarReader}}();}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00179}00179\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00180}00180\ \}\ \textcolor{comment}{//\ end\ of\ namespace\ unilidar\_sdk2}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{unitree__lidar__utilities_8h}{unitree\_lidar\_utilities.h}}>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00009}00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\_sdk2}}\{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00014}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{00014}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{UnitreeLidarReader}}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00017}00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00023}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86}{00023}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a45994c102408c764da9c188225ac2d86}{initializeSerial}}(}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ std::string\ port\ =\ \textcolor{stringliteral}{"{}/dev/ttyACM0"{}},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ uint32\_t\ baudrate\ =\ 4000000,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ uint16\_t\ cloud\_scan\_num\ =\ 18,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00030}00030\ \ \ \ \ )\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00035}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}{00035}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a09fb290cf7f7cd810659922988d37508}{initializeUDP}}(}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ lidar\_port\ =\ 6101,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ std::string\ lidar\_ip\ =\ \textcolor{stringliteral}{"{}192.168.1.62"{}},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ local\_port\ =\ 6201,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ std::string\ local\_ip\ =\ \textcolor{stringliteral}{"{}192.168.1.2"{}},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ uint16\_t\ cloud\_scan\_num\ =\ 18,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00044}00044\ \ \ \ \ )\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00049}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615}{00049}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1d0ed70e524508587328642dca1d4615}{closeSerial}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00054}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60}{00054}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec05370f444d3c843cdae0cb60903c60}{closeUDP}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00066}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{00066}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a454fad5aae39147d72fb69c7a053f623}{runParse}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00071}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c}{00071}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acd6f6892d178437e07da1bddea2c437c}{clearBuffer}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00073}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208}{00073}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{LidarPointDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9516e6867f76b90fc9b21d4197ddb208}{getLidarPointDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00075}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33}{00075}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2DPointDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9f52a3779425d40d2c2361524ddf7f33}{getLidar2DPointDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00077}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e}{00077}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuDataPacket}{LidarImuDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0c4cc476db28d1bae793d1d85135462e}{getLidarImuDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00079}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a}{00079}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarVersionDataPacket}{LidarVersionDataPacket}}\ \&\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a2980cdd2162cdbdf03bb2e1d4d7fa20a}{getLidarVersionDataPacket}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00084}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}{00084}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1ec77958cf66b68361b5430f467e6110}{getPointCloud}}(\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloud)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00089}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}{00089}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_afe6c1b59cfe3ade4b7e9655632ccc510}{getImuData}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarImuData}{LidarImuData}}\ \&imu)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00094}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}{00094}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_acedb0e4ead8d821c17f259c802d35a55}{getVersionOfSDK}}(std::string\ \&version)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00099}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}{00099}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aef385b4f6c3ce45e7183bac510690931}{getVersionOfLidarFirmware}}(std::string\ \&version)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00104}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}{00104}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9b75a019c477d7bb27f65cc16562297d}{getVersionOfLidarHardware}}(std::string\ \&version)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00109}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}{00109}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a4021b28956a67128ed36eea8a06c2c65}{getTimeDelay}}(\textcolor{keywordtype}{double}\ \&delay)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00115}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}{00115}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a417e9cf7b137b74dbbe1796651e7853c}{getDirtyPercentage}}(\textcolor{keywordtype}{float}\ \&percentage)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00121}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906}{00121}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a74bd89ba04ff43fee00ef2e6edf0d906}{sendUserCtrlCmd}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarUserCtrlCmd}{LidarUserCtrlCmd}}\ cmd)=\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00126}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1}{00126}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a223069310de716ba08c308bda8378ac1}{setLidarWorkMode}}(uint32\_t\ mode)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00133}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd}{00133}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a8b54301f16ae96c64d4ab870182251fd}{syncLidarTimeStamp}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00138}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7}{00138}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a0bc9b5b2b7228cc7b23075e2819706b7}{resetLidar}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00143}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}{00143}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae979e5d0cfac69292da10d43bccb6fc0}{stopLidarRotation}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00148}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}{00148}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a1bb718b28c30fd90e67281e65e4199cf}{startLidarRotation}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00154}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}{00154}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aec49decde2a6f4165fdd86cb5d73a5fc}{setLidarIpAddressConfig}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarIpAddressConfig}{LidarIpAddressConfig}}\ config)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00160}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a}{00160}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_aaf312247602e81171fff18f89754b99a}{setLidarMacAddressConfig}}(\mbox{\hyperlink{structunilidar__sdk2_1_1LidarMacAddressConfig}{LidarMacAddressConfig}}\ config)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00165}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e}{00165}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_a9532f643bfaeff6edfaed679a1634d5e}{getBufferCachedSize}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00170}\mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4}{00170}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader_ae8017e57be29911685fd673684119dd4}{getBufferReadSize}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00172}00172\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00173}00173\ \};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00179}\mbox{\hyperlink{namespaceunilidar__sdk2_aabf1d7a4981ee03b10c9ded43c03f063}{00179}}\ \mbox{\hyperlink{classunilidar__sdk2_1_1UnitreeLidarReader}{UnitreeLidarReader}}\ *\mbox{\hyperlink{namespaceunilidar__sdk2_aabf1d7a4981ee03b10c9ded43c03f063}{createUnitreeLidarReader}}();}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__sdk_8h_source_l00181}00181\ \}\ \textcolor{comment}{//\ end\ of\ namespace\ unilidar\_sdk2}}
 
 \end{DoxyCode}

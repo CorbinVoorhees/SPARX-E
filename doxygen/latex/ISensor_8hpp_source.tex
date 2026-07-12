@@ -1,0 +1,259 @@
+\doxysection{ISensor.\+hpp}
+\hypertarget{ISensor_8hpp_source}{}\label{ISensor_8hpp_source}\index{src/nav\_filters/include/nav\_filters/ISensor.hpp@{src/nav\_filters/include/nav\_filters/ISensor.hpp}}
+\mbox{\hyperlink{ISensor_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ ISENSOR\_HPP}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ ISENSOR\_HPP}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../../utils.h"{}}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00013}\mbox{\hyperlink{ISensor_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{00013}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{SteadyClock}}\ =\ std::chrono::steady\_clock;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00014}\mbox{\hyperlink{ISensor_8hpp_a4b284582bfcb4d83e286d2e3cc72d4f4}{00014}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{ISensor_8hpp_a4b284582bfcb4d83e286d2e3cc72d4f4}{CorrectFn}}\ =}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00015}00015\ \ \ \ \ std::function<void(\textcolor{keyword}{const}\ Eigen::MatrixXd\ \&H,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ \&r)>;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00021}\mbox{\hyperlink{namespaceSensor}{00021}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceSensor}{Sensor}}\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00022}\mbox{\hyperlink{classSensor_1_1ISensor}{00022}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSensor_1_1ISensor}{ISensor}}\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00023}00023\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00028}\mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{00028}}\ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ \mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\_mtx}};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00029}\mbox{\hyperlink{classSensor_1_1ISensor_ade3a3504bf0f9e703747611a71946290}{00029}}\ \ \ std::string\ \mbox{\hyperlink{classSensor_1_1ISensor_ade3a3504bf0f9e703747611a71946290}{id}};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00030}00030\ \ \ \textcolor{comment}{//\ this\ is\ constant\ over\ the\ entire\ runtime\ (sensor\ characteristic)}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00031}\mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{00031}}\ \ \ Eigen::MatrixXd\ \mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00033}00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00034}\mbox{\hyperlink{classSensor_1_1ISensor_a075c36841ff105415d5746ea7bbe8223}{00034}}\ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classSensor_1_1ISensor_a075c36841ff105415d5746ea7bbe8223}{\string~ISensor}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00036}\mbox{\hyperlink{classSensor_1_1ISensor_a82c53082cb22a8c24e13c8f9b68c1383}{00036}}\ \ \ \textcolor{keyword}{virtual}\ Eigen::MatrixXd\ \mbox{\hyperlink{classSensor_1_1ISensor_a82c53082cb22a8c24e13c8f9b68c1383}{get\_R}}()\ final\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d}{WITH\_SH\_LOCK}}(this-\/>data\_mtx)\ \textcolor{keywordflow}{return}\ this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00038}00038\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00039}\mbox{\hyperlink{classSensor_1_1ISensor_a5fff5a0febbe7a943a9d5acc66ee20d0}{00039}}\ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classSensor_1_1ISensor_a5fff5a0febbe7a943a9d5acc66ee20d0}{get\_id}}()\ final\ \{\ \textcolor{keywordflow}{return}\ this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_ade3a3504bf0f9e703747611a71946290}{id}};\ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00040}00040\ \};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00042}\mbox{\hyperlink{classSensor_1_1SensorHook}{00042}}\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSensor_1_1SensorHook}{SensorHook}}\ final\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00043}00043\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00044}\mbox{\hyperlink{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}{00044}}\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}{SensorSnapshotFunction}}\ =\ std::function<void(}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00045}00045\ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ \&data,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,\ SteadyClock::time\_point\ t)>;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00047}\mbox{\hyperlink{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}{00047}}\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}{InitializeFunction}}\ =}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00048}00048\ \ \ \ \ \ \ std::function<void(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<T>}}\ \&)>;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00049}\mbox{\hyperlink{classSensor_1_1SensorHook_ac30d7f6f6ac226eba2aff62163a2b6c7}{00049}}\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classSensor_1_1SensorHook_ac30d7f6f6ac226eba2aff62163a2b6c7}{NoInitialize}}\ =}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00050}00050\ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<T>}}\ \&)\ \{\};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00052}00052\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00053}00053\ \ \ std::string\ id;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00054}00054\ \ \ std::vector<SensorSnapshotFunction>\ snap\_bindings;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00055}00055\ \ \ std::vector<InitializeFunction>\ init\_bindings;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00057}00057\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00058}\mbox{\hyperlink{classSensor_1_1SensorHook_aaa4bc13fed89e78370ef27d6fbf35996}{00058}}\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classSensor_1_1SensorHook_aaa4bc13fed89e78370ef27d6fbf35996}{SensorHook}}(std::string\ id\_in)\ :\ id(id\_in)\ \{\}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00060}\mbox{\hyperlink{classSensor_1_1SensorHook_abc079090c1125aede65bcff4aeaf6f36}{00060}}\ \ \ \textcolor{keyword}{const}\ std::string\ \&\mbox{\hyperlink{classSensor_1_1SensorHook_abc079090c1125aede65bcff4aeaf6f36}{get\_id}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ this-\/>id;\ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00061}\mbox{\hyperlink{classSensor_1_1SensorHook_a7764b1bf3894646e6aab84d5342bf3ec}{00061}}\ \ \ std::string\ \&\mbox{\hyperlink{classSensor_1_1SensorHook_a7764b1bf3894646e6aab84d5342bf3ec}{get\_id}}()\ \{\ \textcolor{keywordflow}{return}\ this-\/>id;\ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00063}\mbox{\hyperlink{classSensor_1_1SensorHook_aa70f0b0305e82b21428804668e47e751}{00063}}\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSensor_1_1SensorHook_aa70f0b0305e82b21428804668e47e751}{bind}}(\mbox{\hyperlink{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}{SensorSnapshotFunction}}\ fn,\ \mbox{\hyperlink{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}{InitializeFunction}}\ init\_fn)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00064}00064\ \ \ \ \ snap\_bindings.emplace\_back(fn);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00065}00065\ \ \ \ \ init\_bindings.emplace\_back(init\_fn);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00066}00066\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00068}\mbox{\hyperlink{classSensor_1_1SensorHook_a528092e4ad8bcc48c057460d07ef05dc}{00068}}\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSensor_1_1SensorHook_a528092e4ad8bcc48c057460d07ef05dc}{initialize}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<T>}}\ \&prod)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&binding\ :\ init\_bindings)}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00071}00071\ \ \ \ \ \ \ binding(prod);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00073}00073\ \ \ \ \ init\_bindings.clear();}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00074}00074\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00076}\mbox{\hyperlink{classSensor_1_1SensorHook_ac5b8348625087f6e9403986128c5f44d}{00076}}\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSensor_1_1SensorHook_ac5b8348625087f6e9403986128c5f44d}{emit}}(\textcolor{keyword}{const}\ T\ \&z,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,\ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&binding\ :\ snap\_bindings)}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00078}00078\ \ \ \ \ \ \ binding(z,\ R,\ t);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00079}00079\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00080}00080\ \};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00082}\mbox{\hyperlink{classSensor_1_1SensorTable}{00082}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSensor_1_1SensorTable}{SensorTable}}\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00083}00083\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00084}00084\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{class\ }SensorContainer\ final\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSensor_1_1ISensor}{ISensor}}\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00085}00085\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00086}00086\ \ \ \ \ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<T>}}\ prod;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00087}00087\ \ \ \ \ uint32\_t\ min\_samples;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ calibrated\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00090}00090\ \ \ \ \ std::shared\_ptr<SensorHook<T>>\ hook;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00092}00092\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00093}00093\ \ \ \ \ SensorContainer(\textcolor{keyword}{const}\ T\ \&init,\ uint32\_t\ min\_samples\_in,\ std::string\ id\_in)}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ :\ prod\{init\},\ min\_samples(min\_samples\_in),}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ hook(std::make\_shared<\mbox{\hyperlink{classSensor_1_1SensorHook}{SensorHook<T>}}>(id\_in))\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00096}00096\ \ \ \ \ \ \ this-\/>\textcolor{keywordtype}{id}\ =\ id\_in;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00097}00097\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ get\_mean(T\ \&mean)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00100}00100\ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d}{WITH\_SH\_LOCK}}(this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\_mtx}})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00102}00102\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>is\_ready())}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00105}00105\ \ \ \ \ \ \ mean\ =\ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{get\_mean}}();}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00106}00106\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00107}00107\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00109}00109\ \ \ \ \ std::shared\_ptr<SensorHook<T>>\ get\_hook()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ hook;\ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00110}00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_ready()\ \{\ \textcolor{keywordflow}{return}\ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a14451d533050e8d39db9d767cdd4cb23}{get\_count}}()\ >\ min\_samples;\ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_spike\_rejection(\mbox{\hyperlink{structSpikeRejectConfig}{SpikeRejectConfig}}\ cfg)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00113}00113\ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46}{WITH\_UQ\_LOCK}}(this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\_mtx}})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00114}00114\ \ \ \ \ \ \ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a5578a9308aa1165aead945b63975f957}{set\_spike\_rejection}}(cfg);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00115}00115\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00117}00117\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\textcolor{keyword}{const}\ T\ \&data,}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ sample\_time\ =\ SteadyClock::now())\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00119}00119\ \ \ \ \ \ \ T\ z;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00120}00120\ \ \ \ \ \ \ SteadyClock::time\_point\ t;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00122}00122\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46}{WITH\_UQ\_LOCK}}(this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\_mtx}})\ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a28da574b34d09dd19ebfaf9241c2c5cb}{put}}(data,\ sample\_time);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>is\_ready())}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_arithmetic\_v<T>)}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}}\ =\ Eigen::MatrixXd::Constant(1,\ 1,\ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a2f17280a9002cc03a2dffdc19b97d7d4}{get\_variance}}());}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}}\ =\ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a2f17280a9002cc03a2dffdc19b97d7d4}{get\_variance}}().asDiagonal();}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>calibrated)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ this-\/>calibrated\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ this-\/>hook-\/>initialize(this-\/>prod);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a2add729ca058e50676157ac1a84fe2c6}{get\_latest}}(z,\ t);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00140}00140\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00141}00141\ \ \ \ \ \ \ hook-\/>emit(z,\ this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}},\ t);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00142}00142\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordtype}{bool}\ get(T\ \&data,\ SteadyClock::time\_point\ \&t)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00145}00145\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ with\ the\ fast\ read\ lock\ if\ i\ have\ the\ data\ and\ return}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d}{WITH\_SH\_LOCK}}(this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\_mtx}})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>is\_ready())}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>calibrated)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a2add729ca058e50676157ac1a84fe2c6}{get\_latest}}(data,\ t);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00156}00156\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00157}00157\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ guess\ i\ dont...\ have\ to\ do\ the\ slow\ unique\ locking\ and\ update\ the}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ information}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46}{WITH\_UQ\_LOCK}}(this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\_mtx}})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>is\_ready())}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>calibrated)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}}\ =\ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a2f17280a9002cc03a2dffdc19b97d7d4}{get\_variance}}().asDiagonal();}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ this-\/>calibrated\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ this-\/>prod.\mbox{\hyperlink{classFilteredSampleProducer_a2add729ca058e50676157ac1a84fe2c6}{get\_latest}}(data,\ t);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00172}00172\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00173}00173\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00174}00174\ \ \ \};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00176}00176\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ std::shared\_ptr<ISensor>>}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00177}00177\ \ \ \ \ \ \ hashtable;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00178}00178\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::shared\_mutex\ table\_mtx;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00180}00180\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::shared\_ptr<ISensor>\ find\_in\_table(\textcolor{keyword}{const}\ std::string\ \&\textcolor{keywordtype}{id})\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00181}00181\ \ \ \ \ \mbox{\hyperlink{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d}{WITH\_SH\_LOCK}}(SensorTable::table\_mtx)}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00182}00182\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ SensorTable::hashtable.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ ==\ SensorTable::hashtable.end())\ ?\ nullptr\ :\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00185}00185\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00187}00187\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00188}\mbox{\hyperlink{classSensor_1_1SensorTable_acdb5edfb4ed2ccef7b058bbd47c03bef}{00188}}\ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_acdb5edfb4ed2ccef7b058bbd47c03bef}{SensorTable}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00190}\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{00190}}\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{get\_mean}}(std::string\ \textcolor{keywordtype}{id},\ T\ \&data)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00191}00191\ \ \ \ \ \textcolor{keyword}{auto}\ container\ =\ std::static\_pointer\_cast<SensorContainer<T>>(}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ SensorTable::find\_in\_table(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00193}00193\ \ \ \ \ \textcolor{keywordflow}{if}\ (container\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00194}00194\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00196}00196\ \ \ \ \ \textcolor{keywordflow}{return}\ container-\/>get\_mean(data);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00197}00197\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00199}00199\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00200}\mbox{\hyperlink{classSensor_1_1SensorTable_a14af95afac149a38f774df2512a76d66}{00200}}\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<SensorHook<T>>\ \mbox{\hyperlink{classSensor_1_1SensorTable_a14af95afac149a38f774df2512a76d66}{get\_hook}}(std::string\ \textcolor{keywordtype}{id})\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00201}00201\ \ \ \ \ \textcolor{keyword}{auto}\ container\ =\ std::static\_pointer\_cast<SensorContainer<T>>(}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ SensorTable::find\_in\_table(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{if}\ (container\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00204}00204\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{return}\ container-\/>get\_hook();}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00207}00207\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00209}00209\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00210}\mbox{\hyperlink{classSensor_1_1SensorTable_a5ac5eb8caf6eb2f1f7d486ca3e793875}{00210}}\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSensor_1_1SensorTable_a5ac5eb8caf6eb2f1f7d486ca3e793875}{set\_spike\_rejection}}(std::string\ \textcolor{keywordtype}{id},\ \mbox{\hyperlink{structSpikeRejectConfig}{SpikeRejectConfig}}\ cfg)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00211}00211\ \ \ \ \ \textcolor{keyword}{auto}\ container\ =\ std::static\_pointer\_cast<SensorContainer<T>>(}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ SensorTable::find\_in\_table(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00213}00213\ \ \ \ \ \textcolor{keywordflow}{if}\ (container\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00214}00214\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00216}00216\ \ \ \ \ container-\/>set\_spike\_rejection(cfg);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00217}00217\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00219}00219\ \ \ \textcolor{comment}{//\ template\ <typename\ T>}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00220}00220\ \ \ \textcolor{comment}{//\ static\ void\ set\_filter(std::string\ id,\ BiquadCoeffs\ c)\ \{}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00221}00221\ \ \ \textcolor{comment}{//\ \ \ auto\ container\ =\ std::static\_pointer\_cast<SensorContainer<T>>(}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00222}00222\ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ SensorTable::find\_in\_table(id));}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00223}00223\ \ \ \textcolor{comment}{//\ \ \ if\ (container\ ==\ nullptr)}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00224}00224\ \ \ \textcolor{comment}{//\ \ \ \ \ return;}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00225}00225\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00226}00226\ \ \ \textcolor{comment}{//\ \ \ container-\/>set\_filter(c);}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00227}00227\ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00229}\mbox{\hyperlink{classSensor_1_1SensorTable_a017075c54dd51963f336395f8e82831a}{00229}}\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSensor_1_1SensorTable_a017075c54dd51963f336395f8e82831a}{is\_ready}}(std::string\ \textcolor{keywordtype}{id})\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00230}00230\ \ \ \ \ \textcolor{keyword}{auto}\ container\ =\ std::static\_pointer\_cast<SensorContainer<T>>(}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ SensorTable::find\_in\_table(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00232}00232\ \ \ \ \ \textcolor{keywordflow}{if}\ (container\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00233}00233\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{return}\ container-\/>is\_ready();}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00236}00236\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00238}00238\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00239}\mbox{\hyperlink{classSensor_1_1SensorTable_a711b7191b6968d703be9c79cb039c0b7}{00239}}\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSensor_1_1SensorTable_a711b7191b6968d703be9c79cb039c0b7}{register\_sensor}}(\textcolor{keyword}{const}\ T\ \&init,\ uint32\_t\ min\_samples,}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ id\_in)\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00241}00241\ \ \ \ \ \mbox{\hyperlink{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46}{WITH\_UQ\_LOCK}}(SensorTable::table\_mtx)}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00242}00242\ \ \ \ \ SensorTable::hashtable[id\_in]\ =}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ std::make\_shared<SensorContainer<T>>(init,\ min\_samples,\ id\_in);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00244}00244\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00246}00246\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00247}\mbox{\hyperlink{classSensor_1_1SensorTable_a85f9dfdbe0c49da43103011f5fdb5c38}{00247}}\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSensor_1_1SensorTable_a85f9dfdbe0c49da43103011f5fdb5c38}{put}}(\textcolor{keyword}{const}\ std::string\ \&\textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ T\ \&data,}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ sample\_time\ =\ SteadyClock::now())\ \{}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00250}00250\ \ \ \ \ \textcolor{keyword}{auto}\ container\ =\ std::static\_pointer\_cast<SensorContainer<T>>(}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ SensorTable::find\_in\_table(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00252}00252\ \ \ \ \ \textcolor{keywordflow}{if}\ (container\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00253}00253\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00255}00255\ \ \ \ \ container-\/>put(data,\ sample\_time);}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00256}00256\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00257}00257\ \};}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00258}00258\ \};\ \textcolor{comment}{//\ namespace\ Sensor}}
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{ISensor_8hpp_source_l00260}00260\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

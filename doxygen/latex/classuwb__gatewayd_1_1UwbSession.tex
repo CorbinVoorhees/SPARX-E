@@ -1,0 +1,167 @@
+\doxysection{uwb\+\_\+gatewayd.\+Uwb\+Session Class Reference}
+\hypertarget{classuwb__gatewayd_1_1UwbSession}{}\label{classuwb__gatewayd_1_1UwbSession}\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a213fdfc35042422430e85fd0190d4a52}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, argparse.\+Namespace \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}, \mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore}{Range\+Store}} \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}{store}})
+\item 
+None \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6f2cecc87de00392f6c8328f02de55f8}{start}} (self)
+\item 
+None \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a4f63f209823e57d4f74c66ed73b49ee8}{stop}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}
+\item 
+\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}{store}}
+\item 
+\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}
+\item 
+\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\+\_\+handle}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a4d426e0792d1613a68f8f0d28ba3409a}{\+\_\+handle\+\_\+range\+\_\+ntf}} (self, bytes payload)
+\item 
+list\mbox{[}tuple\mbox{]} \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a112fac0a696bc7eb0575d7dafaed7d68}{\+\_\+build\+\_\+app\+\_\+configs}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c}{\+\_\+started}}
+\item 
+\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_af56972eb718b3a8d8f6628d6402fc8b2}{\+\_\+handle\+\_\+range\+\_\+ntf}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00208}{208}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_a213fdfc35042422430e85fd0190d4a52}\label{classuwb__gatewayd_1_1UwbSession_a213fdfc35042422430e85fd0190d4a52} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None uwb\+\_\+gatewayd.\+Uwb\+Session.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{argparse.\+Namespace}]{args,  }\item[{\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore}{Range\+Store}}}]{store }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00209}{209}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_a112fac0a696bc7eb0575d7dafaed7d68}\label{classuwb__gatewayd_1_1UwbSession_a112fac0a696bc7eb0575d7dafaed7d68} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!\_build\_app\_configs@{\_build\_app\_configs}}
+\index{\_build\_app\_configs@{\_build\_app\_configs}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{\_build\_app\_configs()}{\_build\_app\_configs()}}
+{\footnotesize\ttfamily  list\mbox{[}tuple\mbox{]} uwb\+\_\+gatewayd.\+Uwb\+Session.\+\_\+build\+\_\+app\+\_\+configs (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00225}{225}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_a4d426e0792d1613a68f8f0d28ba3409a}\label{classuwb__gatewayd_1_1UwbSession_a4d426e0792d1613a68f8f0d28ba3409a} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!\_handle\_range\_ntf@{\_handle\_range\_ntf}}
+\index{\_handle\_range\_ntf@{\_handle\_range\_ntf}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{\_handle\_range\_ntf()}{\_handle\_range\_ntf()}}
+{\footnotesize\ttfamily  None uwb\+\_\+gatewayd.\+Uwb\+Session.\+\_\+handle\+\_\+range\+\_\+ntf (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{bytes}]{payload }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00216}{216}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_a6f2cecc87de00392f6c8328f02de55f8}\label{classuwb__gatewayd_1_1UwbSession_a6f2cecc87de00392f6c8328f02de55f8} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!start@{start}}
+\index{start@{start}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily  None uwb\+\_\+gatewayd.\+Uwb\+Session.\+start (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00266}{266}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_a4f63f209823e57d4f74c66ed73b49ee8}\label{classuwb__gatewayd_1_1UwbSession_a4f63f209823e57d4f74c66ed73b49ee8} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!stop@{stop}}
+\index{stop@{stop}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily  None uwb\+\_\+gatewayd.\+Uwb\+Session.\+stop (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00291}{291}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_af56972eb718b3a8d8f6628d6402fc8b2}\label{classuwb__gatewayd_1_1UwbSession_af56972eb718b3a8d8f6628d6402fc8b2} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!\_handle\_range\_ntf@{\_handle\_range\_ntf}}
+\index{\_handle\_range\_ntf@{\_handle\_range\_ntf}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{\_handle\_range\_ntf}{\_handle\_range\_ntf}}
+{\footnotesize\ttfamily uwb\+\_\+gatewayd.\+Uwb\+Session.\+\_\+handle\+\_\+range\+\_\+ntf\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00268}{268}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c}\label{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!\_started@{\_started}}
+\index{\_started@{\_started}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{\_started}{\_started}}
+{\footnotesize\ttfamily uwb\+\_\+gatewayd.\+Uwb\+Session.\+\_\+started\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00214}{214}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}\label{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!args@{args}}
+\index{args@{args}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily uwb\+\_\+gatewayd.\+Uwb\+Session.\+args}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00210}{210}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}\label{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!client@{client}}
+\index{client@{client}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{client}{client}}
+{\footnotesize\ttfamily uwb\+\_\+gatewayd.\+Uwb\+Session.\+client}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00212}{212}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}\label{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!session\_handle@{session\_handle}}
+\index{session\_handle@{session\_handle}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{session\_handle}{session\_handle}}
+{\footnotesize\ttfamily uwb\+\_\+gatewayd.\+Uwb\+Session.\+session\+\_\+handle}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00276}{276}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+\Hypertarget{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}\label{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae} 
+\index{uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}!store@{store}}
+\index{store@{store}!uwb\_gatewayd.UwbSession@{uwb\_gatewayd.UwbSession}}
+\doxysubsubsection{\texorpdfstring{store}{store}}
+{\footnotesize\ttfamily uwb\+\_\+gatewayd.\+Uwb\+Session.\+store}
+
+
+
+Definition at line \mbox{\hyperlink{uwb__gatewayd_8py_source_l00211}{211}} of file \mbox{\hyperlink{uwb__gatewayd_8py_source}{uwb\+\_\+gatewayd.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+UWB/uwb\+\_\+pi\+\_\+ubuntu/bin/\mbox{\hyperlink{uwb__gatewayd_8py}{uwb\+\_\+gatewayd.\+py}}\end{DoxyCompactItemize}

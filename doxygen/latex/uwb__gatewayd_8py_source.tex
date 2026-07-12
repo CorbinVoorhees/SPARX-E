@@ -1,0 +1,410 @@
+\doxysection{uwb\+\_\+gatewayd.\+py}
+\hypertarget{uwb__gatewayd_8py_source}{}\label{uwb__gatewayd_8py_source}\index{UWB/uwb\_pi\_ubuntu/bin/uwb\_gatewayd.py@{UWB/uwb\_pi\_ubuntu/bin/uwb\_gatewayd.py}}
+\mbox{\hyperlink{uwb__gatewayd_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00001}\mbox{\hyperlink{namespaceuwb__gatewayd}{00001}}\ \textcolor{comment}{\#!/usr/bin/env\ python3}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00002}00002\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00003}00003\ \textcolor{stringliteral}{Pi-\/side\ UWB\ gateway\ for\ Qorvo\ DWM3001CDK\ UCI\ firmware.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00004}00004\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00005}00005\ \textcolor{stringliteral}{-\/\ Controls\ a\ DWM3001CDK\ over\ Qorvo\ UCI\ on\ USB/UART.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00006}00006\ \textcolor{stringliteral}{-\/\ Starts\ a\ FiRa\ DS-\/TWR\ deferred\ ranging\ session.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00007}00007\ \textcolor{stringliteral}{-\/\ Stores\ the\ latest\ range\ sample\ from\ SESSION\_INFO\_NTF.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00008}00008\ \textcolor{stringliteral}{-\/\ Answers\ Arduino\ serial\ commands\ such\ as\ GET\_RANGE.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00010}00010\ \textcolor{stringliteral}{This\ file\ intentionally\ imports\ the\ Qorvo\ SDK\ Python\ UCI\ package\ from\ the\ SDK}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00011}00011\ \textcolor{stringliteral}{source\ tree\ rather\ than\ copying\ Qorvo\ code\ into\ this\ project.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00012}00012\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00014}00014\ \textcolor{keyword}{from}\ \_\_future\_\_\ \textcolor{keyword}{import}\ annotations}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00016}00016\ \textcolor{keyword}{import}\ argparse}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00017}00017\ \textcolor{keyword}{import}\ ast}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00018}00018\ \textcolor{keyword}{import}\ json}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00019}00019\ \textcolor{keyword}{import}\ signal}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00020}00020\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00021}00021\ \textcolor{keyword}{import}\ threading}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00022}00022\ \textcolor{keyword}{import}\ time}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00023}00023\ \textcolor{keyword}{from}\ dataclasses\ \textcolor{keyword}{import}\ dataclass,\ asdict}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00024}00024\ \textcolor{keyword}{from}\ pathlib\ \textcolor{keyword}{import}\ Path}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00025}00025\ \textcolor{keyword}{from}\ typing\ \textcolor{keyword}{import}\ Optional}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00027}00027\ \textcolor{keyword}{import}\ serial}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00030}00030\ \textcolor{comment}{\#\ Qorvo\ UCI\ imports\ are\ loaded\ after\ -\/-\/sdk-\/tools\ is\ known.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00031}\mbox{\hyperlink{namespaceuwb__gatewayd_aff1fb5cf2c642a44a65c15b15aae81eb}{00031}}\ Client\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00032}\mbox{\hyperlink{namespaceuwb__gatewayd_a5e42b421c06c0e063c376e6056bf9ae6}{00032}}\ Status\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00033}\mbox{\hyperlink{namespaceuwb__gatewayd_ade2be994668f8f0a93ab07157d112e82}{00033}}\ SessionType\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00034}\mbox{\hyperlink{namespaceuwb__gatewayd_a171d1a9993b394a5dbdee2fef82600a5}{00034}}\ App\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00035}\mbox{\hyperlink{namespaceuwb__gatewayd_aff7acb72c51164374e194a3a36ce842c}{00035}}\ Gid\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00036}\mbox{\hyperlink{namespaceuwb__gatewayd_a63b19eda47604e66b763ad68d0055e96}{00036}}\ OidRanging\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00037}\mbox{\hyperlink{namespaceuwb__gatewayd_ad72652eb2012ee74f5a418c8aa9f4c04}{00037}}\ RangingData\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00038}\mbox{\hyperlink{namespaceuwb__gatewayd_ae0687655da3a655045673d116f9166fa}{00038}}\ UciComError\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00041}\mbox{\hyperlink{namespaceuwb__gatewayd_a440a29626ff7697aa1da40260c73945c}{00041}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceuwb__gatewayd_a440a29626ff7697aa1da40260c73945c}{load\_qorvo\_uci}}(sdk\_tools:\ str)\ -\/>\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00042}00042\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Add\ the\ SDK\ UWB\ Qorvo\ Tools\ libraries\ to\ sys.path\ and\ import\ UCI\ classes."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{global}\ Client,\ Status,\ SessionType,\ App,\ Gid,\ OidRanging,\ RangingData,\ UciComError}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00045}00045\ \ \ \ \ tools\ =\ Path(sdk\_tools).expanduser().resolve()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00046}00046\ \ \ \ \ uwb\_uci\ =\ tools\ /\ \textcolor{stringliteral}{"{}lib"{}}\ /\ \textcolor{stringliteral}{"{}uwb-\/uci"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00047}00047\ \ \ \ \ uqt\_utils\ =\ tools\ /\ \textcolor{stringliteral}{"{}lib"{}}\ /\ \textcolor{stringliteral}{"{}uqt-\/utils"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ (uwb\_uci\ /\ \textcolor{stringliteral}{"{}uci"{}}).is\_dir():}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ FileNotFoundError(f\textcolor{stringliteral}{"{}Could\ not\ find\ Qorvo\ UCI\ library\ at\ \{uwb\_uci\}"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00051}00051\ \ \ \ \ sys.path.insert(0,\ str(uwb\_uci))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00052}00052\ \ \ \ \ sys.path.insert(0,\ str(uqt\_utils))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00054}00054\ \ \ \ \ \textcolor{comment}{\#\ pylint:\ disable=import-\/error,import-\/outside-\/toplevel,wildcard-\/import,unused-\/wildcard-\/import}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00055}00055\ \ \ \ \ \textcolor{keyword}{from}\ uci\ \textcolor{keyword}{import}\ (\ \ \textcolor{comment}{\#\ type:\ ignore}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ Client\ \textcolor{keyword}{as}\ \_Client,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ Status\ \textcolor{keyword}{as}\ \_Status,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ SessionType\ \textcolor{keyword}{as}\ \_SessionType,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ App\ \textcolor{keyword}{as}\ \_App,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ Gid\ \textcolor{keyword}{as}\ \_Gid,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ OidRanging\ \textcolor{keyword}{as}\ \_OidRanging,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ RangingData\ \textcolor{keyword}{as}\ \_RangingData,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ UciComError\ \textcolor{keyword}{as}\ \_UciComError,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00064}00064\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00066}00066\ \ \ \ \ Client\ =\ \_Client}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00067}00067\ \ \ \ \ Status\ =\ \_Status}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00068}00068\ \ \ \ \ SessionType\ =\ \_SessionType}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00069}00069\ \ \ \ \ App\ =\ \_App}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00070}00070\ \ \ \ \ Gid\ =\ \_Gid}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00071}00071\ \ \ \ \ OidRanging\ =\ \_OidRanging}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00072}00072\ \ \ \ \ RangingData\ =\ \_RangingData}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00073}00073\ \ \ \ \ UciComError\ =\ \_UciComError}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00076}\mbox{\hyperlink{namespaceuwb__gatewayd_a79ec8a445b70bd5e7ebee935a0cc54c9}{00076}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceuwb__gatewayd_a79ec8a445b70bd5e7ebee935a0cc54c9}{parse\_int\_auto}}(value:\ str\ |\ int)\ -\/>\ int:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(value,\ int):}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{return}\ int(str(value).strip(),\ 0)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00082}\mbox{\hyperlink{namespaceuwb__gatewayd_a6e5db04b53e9cf5a1ffb149328c50881}{00082}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceuwb__gatewayd_a6e5db04b53e9cf5a1ffb149328c50881}{parse\_mac\_list}}(value:\ str)\ -\/>\ list[int]:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00083}00083\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Accept\ '0x1,0x2',\ '[0x1,\ 0x2]',\ or\ '1'."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00084}00084\ \ \ \ \ value\ =\ value.strip()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00085}00085\ \ \ \ \ \textcolor{keywordflow}{if}\ value.startswith(\textcolor{stringliteral}{"{}["{}}):}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ parsed\ =\ ast.literal\_eval(value)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(parsed,\ list):}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}MAC\ list\ must\ be\ a\ list"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ [\mbox{\hyperlink{namespaceuwb__gatewayd_a79ec8a445b70bd5e7ebee935a0cc54c9}{parse\_int\_auto}}(x)\ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ parsed]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00090}00090\ \ \ \ \ \textcolor{keywordflow}{return}\ [\mbox{\hyperlink{namespaceuwb__gatewayd_a79ec8a445b70bd5e7ebee935a0cc54c9}{parse\_int\_auto}}(x)\ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ value.split(\textcolor{stringliteral}{"{},"{}})\ \textcolor{keywordflow}{if}\ x.strip()]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00093}00093\ \textcolor{preprocessor}{@dataclass}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00094}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample}{00094}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample}{RangeSample}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00095}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a4972c5e3faa0149a313c05e0ac36a7fd}{00095}}\ \ \ \ \ ok:\ bool}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00096}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a089bafe694f0266cb31905c4835c895e}{00096}}\ \ \ \ \ peer:\ str}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00097}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a99c6280d915b9baaa3409053e3de5419}{00097}}\ \ \ \ \ seq:\ int}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00098}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_ae332d9fed22bbb47cbb5434438d5f186}{00098}}\ \ \ \ \ session\_handle:\ int}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00099}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a3f27ed33851b31694260478ba84c5f45}{00099}}\ \ \ \ \ range\_cm:\ Optional[int]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00100}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a2f2ca052be08aa64b1e3e83236b840a7}{00100}}\ \ \ \ \ range\_m:\ Optional[float]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00101}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a784ffa60a3186487202c01adcf45d2ea}{00101}}\ \ \ \ \ range\_rate\_mps:\ Optional[float]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00102}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a64b08103efd403b4b6290147cbba7bd7}{00102}}\ \ \ \ \ range\_rate\_valid:\ bool}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00103}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a3409837adf8dd703680858d7698c8336}{00103}}\ \ \ \ \ rate\_source:\ str}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00104}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_ada88edb56bf1e0a4a3831811afd7577d}{00104}}\ \ \ \ \ age\_ms:\ int}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00105}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a404b5f67e058c3ee407636c13b441dc9}{00105}}\ \ \ \ \ status:\ str}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00106}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_aafb6f2d55e4822c53975d8dba465a450}{00106}}\ \ \ \ \ nlos:\ Optional[bool]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00107}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a3fcfcccab5a3a6feb7e600fcb8397b60}{00107}}\ \ \ \ \ rssi\_dbm:\ Optional[float]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00108}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample_a4b29b10197072baa2916523a96b89643}{00108}}\ \ \ \ \ host\_time\_ns:\ int}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00111}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore}{00111}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore}{RangeStore}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00112}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a30537c860ceaad97d4caaf2e006fa6aa}{00112}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a30537c860ceaad97d4caaf2e006fa6aa}{\_\_init\_\_}}(self,\ stale\_ms:\ int\ =\ 600,\ alpha:\ float\ =\ 0.35)\ -\/>\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00113}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af78e8a6c10cd9a33558847348c2a7477}{00113}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af78e8a6c10cd9a33558847348c2a7477}{\_lock}}\ =\ threading.Lock()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ self.\_latest:\ dict[str,\ RangeSample]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ self.\_prev\_range\_m:\ dict[str,\ float]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ self.\_prev\_time\_ns:\ dict[str,\ int]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ self.\_smoothed\_rate:\ dict[str,\ float]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00118}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a6576c6010fe91b20560c3cf6db79d764}{00118}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a6576c6010fe91b20560c3cf6db79d764}{stale\_ms}}\ =\ stale\_ms}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00119}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a61ab224e39f4d2817ed6bf24b59c2ca6}{00119}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a61ab224e39f4d2817ed6bf24b59c2ca6}{alpha}}\ =\ alpha}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00121}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a67b2282d4a2de37130a9c16a99b37c9b}{00121}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a67b2282d4a2de37130a9c16a99b37c9b}{update\_from\_ranging\_data}}(self,\ data)\ -\/>\ None:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ now\_ns\ =\ time.monotonic\_ns()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af78e8a6c10cd9a33558847348c2a7477}{\_lock}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ meas\ \textcolor{keywordflow}{in}\ getattr(data,\ \textcolor{stringliteral}{"{}meas"{}},\ []):}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ peer\ =\ getattr(meas,\ \textcolor{stringliteral}{"{}mac\_add"{}},\ \textcolor{stringliteral}{"{}unknown"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ status\_obj\ =\ getattr(meas,\ \textcolor{stringliteral}{"{}status"{}},\ \textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ status\_name\ =\ getattr(status\_obj,\ \textcolor{stringliteral}{"{}name"{}},\ str(status\_obj))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ good\ =\ bool(status\_obj\ ==\ Status.Ok)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distance\_cm\ =\ getattr(meas,\ \textcolor{stringliteral}{"{}distance"{}},\ \textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_cm\ =\ int(round(float(distance\_cm)))\ \textcolor{keywordflow}{if}\ distance\_cm\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_m\ =\ (range\_cm\ /\ 100.0)\ \textcolor{keywordflow}{if}\ range\_cm\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rate\_mps:\ Optional[float]\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rate\_valid\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ good\ \textcolor{keywordflow}{and}\ range\_m\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{and}\ peer\ \textcolor{keywordflow}{in}\ self.\_prev\_range\_m:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\_s\ =\ (now\_ns\ -\/\ self.\_prev\_time\_ns[peer])\ /\ 1\_000\_000\_000.0}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ 0.02\ <=\ dt\_s\ <=\ 2.0:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_rate\ =\ (range\_m\ -\/\ self.\_prev\_range\_m[peer])\ /\ dt\_s}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev\_rate\ =\ self.\_smoothed\_rate.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af2328024bb7ab4eb61c1a97c491a4e2a}{get}}(peer,\ raw\_rate)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rate\_mps\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a61ab224e39f4d2817ed6bf24b59c2ca6}{alpha}}\ *\ raw\_rate\ +\ (1.0\ -\/\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a61ab224e39f4d2817ed6bf24b59c2ca6}{alpha}})\ *\ prev\_rate}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_smoothed\_rate[peer]\ =\ rate\_mps}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rate\_valid\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ good\ \textcolor{keywordflow}{and}\ range\_m\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_range\_m[peer]\ =\ range\_m}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_time\_ns[peer]\ =\ now\_ns}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sample\ =\ \mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample}{RangeSample}}(}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ok=good,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ peer=peer,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seq=int(getattr(data,\ \textcolor{stringliteral}{"{}idx"{}},\ -\/1)),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session\_handle=int(getattr(data,\ \textcolor{stringliteral}{"{}session\_handle"{}},\ -\/1)),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_cm=range\_cm,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_m=range\_m,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_rate\_mps=rate\_mps,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_rate\_valid=rate\_valid,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rate\_source=\textcolor{stringliteral}{"{}derived\_delta\_range\_over\_delta\_time"{}},}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ age\_ms=0,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ status=status\_name,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nlos=bool(getattr(meas,\ \textcolor{stringliteral}{"{}nlos"{}},\ \textcolor{keyword}{False}))\ \textcolor{keywordflow}{if}\ hasattr(meas,\ \textcolor{stringliteral}{"{}nlos"{}})\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rssi\_dbm=float(getattr(meas,\ \textcolor{stringliteral}{"{}rssi"{}}))\ \textcolor{keywordflow}{if}\ hasattr(meas,\ \textcolor{stringliteral}{"{}rssi"{}})\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ host\_time\_ns=now\_ns,}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_latest[peer]\ =\ sample}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00167}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af2328024bb7ab4eb61c1a97c491a4e2a}{00167}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af2328024bb7ab4eb61c1a97c491a4e2a}{get}}(self,\ peer:\ Optional[str]\ =\ \textcolor{keywordtype}{None})\ -\/>\ RangeSample\ |\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ now\_ns\ =\ time.monotonic\_ns()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af78e8a6c10cd9a33558847348c2a7477}{\_lock}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\_latest:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ peer\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Return\ newest\ sample.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sample\ =\ max(self.\_latest.values(),\ key=\textcolor{keyword}{lambda}\ x:\ x.host\_time\_ns)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sample\ =\ self.\_latest.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af2328024bb7ab4eb61c1a97c491a4e2a}{get}}(peer)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sample\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ age\_ms\ =\ int((now\_ns\ -\/\ sample.host\_time\_ns)\ /\ 1\_000\_000.0)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ asdict(sample)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ d[\textcolor{stringliteral}{"{}age\_ms"{}}]\ =\ age\_ms}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ d[\textcolor{stringliteral}{"{}ok"{}}]\ =\ bool(sample.ok\ \textcolor{keywordflow}{and}\ age\_ms\ <=\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a6576c6010fe91b20560c3cf6db79d764}{stale\_ms}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ age\_ms\ >\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_a6576c6010fe91b20560c3cf6db79d764}{stale\_ms}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[\textcolor{stringliteral}{"{}status"{}}]\ =\ \textcolor{stringliteral}{"{}STALE\_RANGE"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classuwb__gatewayd_1_1RangeSample}{RangeSample}}(**d)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00187}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_ae27114466cc7dc7d13ad40c5dda47312}{00187}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_ae27114466cc7dc7d13ad40c5dda47312}{as\_json\_line}}(self,\ peer:\ Optional[str]\ =\ \textcolor{keywordtype}{None})\ -\/>\ str:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ sample\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af2328024bb7ab4eb61c1a97c491a4e2a}{get}}(peer)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sample\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ json.dumps(\{\textcolor{stringliteral}{"{}ok"{}}:\ \textcolor{keyword}{False},\ \textcolor{stringliteral}{"{}error"{}}:\ \textcolor{stringliteral}{"{}NO\_RANGE"{}},\ \textcolor{stringliteral}{"{}rate\_source"{}}:\ \textcolor{stringliteral}{"{}derived"{}}\})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ json.dumps(asdict(sample),\ separators=(\textcolor{stringliteral}{"{},"{}},\ \textcolor{stringliteral}{"{}:"{}}))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00193}\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_afa16c93ed9c2b8ece67540bc2df78c9d}{00193}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_afa16c93ed9c2b8ece67540bc2df78c9d}{as\_text\_line}}(self,\ peer:\ Optional[str]\ =\ \textcolor{keywordtype}{None})\ -\/>\ str:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ sample\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore_af2328024bb7ab4eb61c1a97c491a4e2a}{get}}(peer)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sample\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RANGE\ ok=0\ error=NO\_RANGE"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ sample.ok:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f\textcolor{stringliteral}{"{}RANGE\ ok=0\ error=\{sample.status\}\ peer=\{sample.peer\}\ age\_ms=\{sample.age\_ms\}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ rate\ =\ \textcolor{stringliteral}{"{}nan"{}}\ \textcolor{keywordflow}{if}\ sample.range\_rate\_mps\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ f\textcolor{stringliteral}{"{}\{sample.range\_rate\_mps:.3f\}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}RANGE\ ok=1\ peer=\{sample.peer\}\ seq=\{sample.seq\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}range\_cm=\{sample.range\_cm\}\ range\_m=\{sample.range\_m:.3f\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}rate\_mps=\{rate\}\ rate\_valid=\{int(sample.range\_rate\_valid)\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}age\_ms=\{sample.age\_ms\}\ status=\{sample.status\}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00208}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession}{00208}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession}{UwbSession}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00209}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a213fdfc35042422430e85fd0190d4a52}{00209}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a213fdfc35042422430e85fd0190d4a52}{\_\_init\_\_}}(self,\ args:\ argparse.Namespace,\ store:\ RangeStore)\ -\/>\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00210}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{00210}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}\ =\ args}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00211}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}{00211}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}{store}}\ =\ store}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00212}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{00212}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}}:\ Optional[int]\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00214}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c}{00214}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c}{\_started}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00216}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a4d426e0792d1613a68f8f0d28ba3409a}{00216}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_af56972eb718b3a8d8f6628d6402fc8b2}{\_handle\_range\_ntf}}(self,\ payload:\ bytes)\ -\/>\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ data\ =\ \mbox{\hyperlink{namespaceuwb__gatewayd_ad72652eb2012ee74f5a418c8aa9f4c04}{RangingData}}(payload)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}{store}}.update\_from\_ranging\_data(data)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.print\_ranges:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac9faf1edbed70300692fa93b4df23dae}{store}}.as\_text\_line(),\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00222}00222\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ exc:\ \ \textcolor{comment}{\#\ keep\ daemon\ alive\ on\ malformed\ notifications}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}WARN:\ could\ not\ decode\ ranging\ notification:\ \{exc\}"{}},\ file=sys.stderr,\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00225}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a112fac0a696bc7eb0575d7dafaed7d68}{00225}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a112fac0a696bc7eb0575d7dafaed7d68}{\_build\_app\_configs}}(self)\ -\/>\ list[tuple]:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ controlee\ =\ bool(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.controlee)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ mac\ =\ \mbox{\hyperlink{namespaceuwb__gatewayd_a79ec8a445b70bd5e7ebee935a0cc54c9}{parse\_int\_auto}}(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.mac\ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.mac\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ (\textcolor{stringliteral}{"{}0x1"{}}\ \textcolor{keywordflow}{if}\ controlee\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}0x0"{}}))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ dests\ =\ \mbox{\hyperlink{namespaceuwb__gatewayd_a6e5db04b53e9cf5a1ffb149328c50881}{parse\_mac\_list}}(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.dest\_mac\ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.dest\_mac\ \textcolor{keywordflow}{else}\ (\textcolor{stringliteral}{"{}0x0"{}}\ \textcolor{keywordflow}{if}\ controlee\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}0x1"{}}))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.node\ ==\ \textcolor{stringliteral}{"{}onetomany"{}}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.n\_controlees\ <\ len(dests):}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.n\_controlees\ =\ len(dests)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00233}00233\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Values\ match\ Qorvo\ run\_fira\_twr\ defaults\ and\ the\ DWM3001CDK\ CLI\ defaults:}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ DS-\/TWR\ deferred,\ channel\ 9,\ BPRF4,\ SP3,\ slot\ 2400\ RSTU,\ block\ 200\ ms,}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ 25\ slots\ per\ ranging\ round,\ static\ STS,\ 64-\/symbol\ STS.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ configs\ =\ [}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ (App.DeviceType,\ 0\ \textcolor{keywordflow}{if}\ controlee\ \textcolor{keywordflow}{else}\ 1),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ (App.DeviceRole,\ 0\ \textcolor{keywordflow}{if}\ controlee\ \textcolor{keywordflow}{else}\ 1),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ (App.MultiNodeMode,\ 1\ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.node\ ==\ \textcolor{stringliteral}{"{}onetomany"{}}\ \textcolor{keywordflow}{else}\ 0),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ (App.RangingRoundUsage,\ 2),\ \ \textcolor{comment}{\#\ DS-\/TWR\ deferred}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ (App.DeviceMacAddress,\ mac),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ (App.DstMacAddress,\ dests),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ (App.ChannelNumber,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.channel),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ (App.ScheduleMode,\ 1),\ \ \textcolor{comment}{\#\ time\ scheduled}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ (App.StsConfig,\ 0),\ \ \textcolor{comment}{\#\ static\ STS}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ (App.RframeConfig,\ 3),\ \ \textcolor{comment}{\#\ SP3}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ (App.ResultReportConfig,\ 1),\ \ \textcolor{comment}{\#\ ToF/range\ report\ requested}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ (App.VendorId,\ 0x0708),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ (App.StaticStsIv,\ 0x060504030201),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ (App.AoaResultReq,\ 0),\ \ \textcolor{comment}{\#\ disabled;\ enable\ later\ only\ if\ needed}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ (App.UwbInitiationTime,\ 0),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ (App.PreambleCodeIndex,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.preamble\_idx),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ (App.SfdId,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.sfd),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ (App.SlotDuration,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.slot\_duration\_rstu),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ (App.RangingInterval,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.ranging\_interval\_ms),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ (App.SlotsPerRr,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.slots\_per\_rr),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ (App.MaxNumberOfMeasurements,\ 0),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ (App.HoppingMode,\ 0),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ (App.RssiReporting,\ 1),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ (App.BlockStrideLength,\ 0),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ (App.StsLength,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.sts\_length),\ \ \textcolor{comment}{\#\ 1\ =\ 64\ symbols}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ (App.NumberOfControlees,\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.n\_controlees),}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ configs}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00266}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6f2cecc87de00392f6c8328f02de55f8}{00266}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6f2cecc87de00392f6c8328f02de55f8}{start}}(self)\ -\/>\ None:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00267}00267\ \ \ \ \ \ \ \ \ notif\_handlers\ =\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00268}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_af56972eb718b3a8d8f6628d6402fc8b2}{00268}}\ \ \ \ \ \ \ \ \ \ \ \ \ (Gid.Ranging,\ OidRanging.Start):\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_af56972eb718b3a8d8f6628d6402fc8b2}{\_handle\_range\_ntf}}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a4d426e0792d1613a68f8f0d28ba3409a}{\_handle\_range\_ntf}},}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00270}00270\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}\ =\ \mbox{\hyperlink{namespaceuwb__gatewayd_aff1fb5cf2c642a44a65c15b15aae81eb}{Client}}(port=self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.uwb\_port,\ notif\_handlers=notif\_handlers)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00272}00272\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}UWB:\ initializing\ session\ \{self.args.session\_id\}\ on\ \{self.args.uwb\_port\}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ rts,\ session\_handle\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}.session\_init(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.session\_id,\ SessionType.Ranging)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ rts\ !=\ Status.Ok:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(f\textcolor{stringliteral}{"{}session\_init\ failed:\ \{rts.name\}\ (\{rts\})"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00276}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{00276}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}}\ =\ session\_handle\ \textcolor{keywordflow}{if}\ session\_handle\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aefb5bc5631b260b397163b80e1edad5c}{args}}.session\_id}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00278}00278\ \ \ \ \ \ \ \ \ configs\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a112fac0a696bc7eb0575d7dafaed7d68}{\_build\_app\_configs}}()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00279}00279\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}UWB:\ setting\ FiRa\ config\ for\ session\ handle\ \{self.session\_handle\}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00280}00280\ \ \ \ \ \ \ \ \ rts,\ msg\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}.session\_set\_app\_config(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}},\ configs)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00281}00281\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ rts\ !=\ Status.Ok:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(f\textcolor{stringliteral}{"{}session\_set\_app\_config\ failed:\ \{rts.name\}\ (\{rts\})\(\backslash\)n\{msg\}"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00284}00284\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}UWB:\ starting\ ranging"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00285}00285\ \ \ \ \ \ \ \ \ rts\ =\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}.ranging\_start(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ rts\ !=\ Status.Ok:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(f\textcolor{stringliteral}{"{}ranging\_start\ failed:\ \{rts.name\}\ (\{rts\})"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00288}00288\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c}{\_started}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00289}00289\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}UWB:\ ranging\ started"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00291}\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a4f63f209823e57d4f74c66ed73b49ee8}{00291}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a4f63f209823e57d4f74c66ed73b49ee8}{stop}}(self)\ -\/>\ None:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00292}00292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00294}00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_ac27221cb003acd340d1ec44dbcc9109c}{\_started}}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}UWB:\ stopping\ ranging"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}.ranging\_stop(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00298}00298\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ exc:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}WARN:\ ranging\_stop\ failed:\ \{exc\}"{}},\ file=sys.stderr,\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00300}00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}UWB:\ deinitializing\ session"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}.session\_deinit(self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_a6a36d22f4bce28b625ae27e22bc64550}{session\_handle}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00304}00304\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ exc:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}WARN:\ session\_deinit\ failed:\ \{exc\}"{}},\ file=sys.stderr,\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00306}00306\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession_aaebf6ccb58b0ee0a86c20542cb039ca1}{client}}.close()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00308}00308\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00312}\mbox{\hyperlink{namespaceuwb__gatewayd_aad05863a67c2259a824ac14b9e1094d8}{00312}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceuwb__gatewayd_aad05863a67c2259a824ac14b9e1094d8}{arduino\_serial\_loop}}(args:\ argparse.Namespace,\ store:\ RangeStore,\ stop\_event:\ threading.Event)\ -\/>\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00313}00313\ \ \ \ \ \textcolor{keywordflow}{if}\ args.no\_arduino\_port\ \textcolor{keywordflow}{or}\ \textcolor{keywordflow}{not}\ args.arduino\_port:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00314}00314\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Arduino\ serial\ API\ disabled;\ running\ UWB\ session\ only."{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00315}00315\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ stop\_event.is\_set():}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ time.sleep(0.25)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00317}00317\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00319}00319\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Arduino\ API:\ opening\ \{args.arduino\_port\}\ at\ \{args.arduino\_baud\}\ baud"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00320}00320\ \ \ \ \ \textcolor{keyword}{with}\ serial.Serial(args.arduino\_port,\ args.arduino\_baud,\ timeout=0.2,\ write\_timeout=1.0)\ \textcolor{keyword}{as}\ ser:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00321}00321\ \ \ \ \ \ \ \ \ time.sleep(2.0)\ \ \textcolor{comment}{\#\ Arduino\ boards\ often\ reset\ when\ the\ serial\ port\ opens.}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00322}00322\ \ \ \ \ \ \ \ \ ser.reset\_input\_buffer()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00323}00323\ \ \ \ \ \ \ \ \ ser.write(b\textcolor{stringliteral}{"{}READY\ UWB\_GATEWAY\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00324}00324\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ stop\_event.is\_set():}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ raw\ =\ ser.readline()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ raw:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ raw.decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ errors=\textcolor{stringliteral}{"{}replace"{}}).strip()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ line:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ parts\ =\ line.split()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ cmd\ =\ parts[0].upper()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ peer\ =\ parts[1]\ \textcolor{keywordflow}{if}\ len(parts)\ >\ 1\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cmd\ \textcolor{keywordflow}{in}\ \{\textcolor{stringliteral}{"{}R"{}},\ \textcolor{stringliteral}{"{}GET"{}},\ \textcolor{stringliteral}{"{}GET\_RANGE"{}},\ \textcolor{stringliteral}{"{}RANGE?"{}}\}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ response\ =\ store.as\_json\_line(peer)\ \textcolor{keywordflow}{if}\ args.json\_to\_arduino\ \textcolor{keywordflow}{else}\ store.as\_text\_line(peer)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}STATUS"{}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ response\ =\ store.as\_json\_line(peer)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}HELP"{}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ response\ =\ \textcolor{stringliteral}{"{}CMDS\ GET\_RANGE\ [peer],\ STATUS\ [peer],\ HELP"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ response\ =\ f\textcolor{stringliteral}{"{}ERR\ unknown\_command=\{cmd\}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ ser.write((response\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}).encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00350}\mbox{\hyperlink{namespaceuwb__gatewayd_ac506ed9aa289c7a6a6824263ab65a953}{00350}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceuwb__gatewayd_ac506ed9aa289c7a6a6824263ab65a953}{build\_arg\_parser}}()\ -\/>\ argparse.ArgumentParser:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00351}00351\ \ \ \ \ parser\ =\ argparse.ArgumentParser(description=\textcolor{stringliteral}{"{}DWM3001CDK\ UCI-\/to-\/Arduino\ range\ gateway"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00352}00352\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/sdk-\/tools"{}},\ default=\textcolor{stringliteral}{"{}\string~/qorvo/SDK/Tools/uwb-\/qorvo-\/tools"{}},\ help=\textcolor{stringliteral}{"{}Path\ to\ SDK/Tools/uwb-\/qorvo-\/tools"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00353}00353\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/uwb-\/port"{}},\ required=\textcolor{keyword}{True},\ help=\textcolor{stringliteral}{"{}DWM3001CDK\ UCI\ serial\ port,\ preferably\ /dev/serial/by-\/id/..."{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00354}00354\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/arduino-\/port"{}},\ help=\textcolor{stringliteral}{"{}Arduino-\/side\ serial\ link,\ preferably\ /dev/serial/by-\/id/..."{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00355}00355\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/no-\/arduino-\/port"{}},\ action=\textcolor{stringliteral}{"{}store\_true"{}},\ help=\textcolor{stringliteral}{"{}Run\ UWB\ session\ only;\ useful\ for\ the\ responder/ground\ station"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00356}00356\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/arduino-\/baud"{}},\ type=int,\ default=115200)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00357}00357\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/json-\/to-\/arduino"{}},\ action=\textcolor{stringliteral}{"{}store\_true"{}},\ help=\textcolor{stringliteral}{"{}Reply\ to\ Arduino\ with\ compact\ JSON\ instead\ of\ text"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00358}00358\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/controlee"{}},\ action=\textcolor{stringliteral}{"{}store\_true"{}},\ help=\textcolor{stringliteral}{"{}Run\ as\ responder/controlee\ instead\ of\ initiator/controller"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00359}00359\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/session-\/id"{}},\ type=\textcolor{keyword}{lambda}\ x:\ int(x,\ 0),\ default=42)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00360}00360\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/mac"{}},\ help=\textcolor{stringliteral}{"{}Local\ short\ MAC\ address,\ e.g.\ 0x0\ for\ initiator\ or\ 0x1\ for\ responder"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00361}00361\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/dest-\/mac"{}},\ help=\textcolor{stringliteral}{"{}Destination\ short\ MAC\ list,\ e.g.\ 0x1\ or\ 0x1,0x2"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00362}00362\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/node"{}},\ choices=[\textcolor{stringliteral}{"{}unicast"{}},\ \textcolor{stringliteral}{"{}onetomany"{}}],\ default=\textcolor{stringliteral}{"{}unicast"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00363}00363\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/n-\/controlees"{}},\ type=int,\ default=1)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00364}00364\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/channel"{}},\ type=int,\ default=9)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00365}00365\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/slot-\/duration-\/rstu"{}},\ type=int,\ default=2400,\ help=\textcolor{stringliteral}{"{}2400\ RSTU\ is\ 2\ ms\ in\ the\ SDK\ examples"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00366}00366\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/ranging-\/interval-\/ms"{}},\ type=int,\ default=200)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00367}00367\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/slots-\/per-\/rr"{}},\ type=int,\ default=25)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00368}00368\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/preamble-\/idx"{}},\ type=int,\ default=10)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00369}00369\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/sfd"{}},\ type=int,\ default=2)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00370}00370\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/sts-\/length"{}},\ type=int,\ choices=[0,\ 1,\ 2],\ default=1,\ help=\textcolor{stringliteral}{"{}0=32\ symbols,\ 1=64\ symbols,\ 2=128\ symbols"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00371}00371\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/stale-\/ms"{}},\ type=int,\ default=600)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00372}00372\ \ \ \ \ parser.add\_argument(\textcolor{stringliteral}{"{}-\/-\/print-\/ranges"{}},\ action=\textcolor{stringliteral}{"{}store\_true"{}},\ help=\textcolor{stringliteral}{"{}Also\ print\ decoded\ range\ notifications\ on\ Pi\ stdout"{}})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00373}00373\ \ \ \ \ \textcolor{keywordflow}{return}\ parser}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00376}\mbox{\hyperlink{namespaceuwb__gatewayd_a2443c753fef3c28a15a618824e3aff86}{00376}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceuwb__gatewayd_a2443c753fef3c28a15a618824e3aff86}{main}}()\ -\/>\ int:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00377}00377\ \ \ \ \ args\ =\ \mbox{\hyperlink{namespaceuwb__gatewayd_ac506ed9aa289c7a6a6824263ab65a953}{build\_arg\_parser}}().parse\_args()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00378}00378\ \ \ \ \ \mbox{\hyperlink{namespaceuwb__gatewayd_a440a29626ff7697aa1da40260c73945c}{load\_qorvo\_uci}}(args.sdk\_tools)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00379}00379\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00380}00380\ \ \ \ \ store\ =\ \mbox{\hyperlink{classuwb__gatewayd_1_1RangeStore}{RangeStore}}(stale\_ms=args.stale\_ms)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00381}00381\ \ \ \ \ stop\_event\ =\ threading.Event()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00382}00382\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00383}00383\ \ \ \ \ \textcolor{keyword}{def\ }request\_stop(signum,\ frame):\ \ \textcolor{comment}{\#\ noqa:\ ARG001}}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00384}00384\ \ \ \ \ \ \ \ \ stop\_event.set()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00386}00386\ \ \ \ \ signal.signal(signal.SIGINT,\ request\_stop)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00387}00387\ \ \ \ \ signal.signal(signal.SIGTERM,\ request\_stop)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00389}00389\ \ \ \ \ session\ =\ \mbox{\hyperlink{classuwb__gatewayd_1_1UwbSession}{UwbSession}}(args,\ store)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00390}00390\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00391}00391\ \ \ \ \ \ \ \ \ session.start()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00392}00392\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceuwb__gatewayd_aad05863a67c2259a824ac14b9e1094d8}{arduino\_serial\_loop}}(args,\ store,\ stop\_event)}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00393}00393\ \ \ \ \ \textcolor{keywordflow}{except}\ KeyboardInterrupt:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ stop\_event.set()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00395}00395\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ exc:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}ERROR:\ \{exc\}"{}},\ file=sys.stderr,\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00397}00397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00398}00398\ \ \ \ \ \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00399}00399\ \ \ \ \ \ \ \ \ session.stop()}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00400}00400\ \ \ \ \ \textcolor{keywordflow}{return}\ 0}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00402}00402\ }
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00403}00403\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{uwb__gatewayd_8py_source_l00404}00404\ \ \ \ \ \textcolor{keywordflow}{raise}\ SystemExit(\mbox{\hyperlink{namespaceuwb__gatewayd_a2443c753fef3c28a15a618824e3aff86}{main}}())}
+
+\end{DoxyCode}

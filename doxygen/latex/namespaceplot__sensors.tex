@@ -1,0 +1,217 @@
+\doxysection{plot\+\_\+sensors Namespace Reference}
+\hypertarget{namespaceplot__sensors}{}\label{namespaceplot__sensors}\index{plot\_sensors@{plot\_sensors}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_a8ceb6e96a17a617dfddf55503b17a556}{load\+\_\+csv}} (base)
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_af7179fdd3be6bd8eeedea0e7c4981db6}{load\+\_\+bias}} (base, cols)
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_af6ccea4f7a1656dbe7c42d0e482b1404}{load\+\_\+trans\+\_\+accel}} (base)
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_a6c1ac87b81f4b7d43aa8249b8a23059e}{load\+\_\+accel\+\_\+q0}} (base)
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_a56e89c5948868568d0262e44009e11a6}{overlay\+\_\+bias}} (axes3, sub, bias\+\_\+data, unbiased\+\_\+label=\textquotesingle{}unbiased\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}} (df, sensor\+\_\+type)
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\+\_\+time}} (sub)
+\item 
+\mbox{\hyperlink{namespaceplot__sensors_a42a46c549f13682633c38c5cde78faf9}{main}} (\mbox{\hyperlink{namespaceplot__sensors_a557e6c91e1f597ac7d121ee87cf23209}{csv\+\_\+path}}=\mbox{\hyperlink{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}{SENSORS\+\_\+\+CSV}}, \mbox{\hyperlink{namespaceplot__sensors_a81e673d43e1cbf3db1a7c11f5995d6ee}{mekf\+\_\+path}}=\mbox{\hyperlink{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}{MEKF\+\_\+\+CSV}}, \mbox{\hyperlink{namespaceplot__sensors_acecf9844d774566bdeb810cedc5c1313}{trans\+\_\+path}}=\mbox{\hyperlink{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}{TRANS\+\_\+\+CSV}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespaceplot__sensors_a245a41a4727cceefe43ed33994905b9c}{\+\_\+\+HAS\+\_\+\+CALIB}} = True
+\item 
+str \mbox{\hyperlink{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}{SENSORS\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}{MEKF\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+mekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}{TRANS\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+ekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}
+\item 
+int \mbox{\hyperlink{namespaceplot__sensors_a557e6c91e1f597ac7d121ee87cf23209}{csv\+\_\+path}} = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}{SENSORS\+\_\+\+CSV}}
+\item 
+int \mbox{\hyperlink{namespaceplot__sensors_a81e673d43e1cbf3db1a7c11f5995d6ee}{mekf\+\_\+path}} = sys.\+argv\mbox{[}2\mbox{]} if len(sys.\+argv) $>$ 2 else \mbox{\hyperlink{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}{MEKF\+\_\+\+CSV}}
+\item 
+int \mbox{\hyperlink{namespaceplot__sensors_acecf9844d774566bdeb810cedc5c1313}{trans\+\_\+path}} = sys.\+argv\mbox{[}3\mbox{]} if len(sys.\+argv) $>$ 3 else \mbox{\hyperlink{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}{TRANS\+\_\+\+CSV}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}\label{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7} 
+\index{plot\_sensors@{plot\_sensors}!extract@{extract}}
+\index{extract@{extract}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{extract()}{extract()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+extract (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{sensor\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00138}{138}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a6c1ac87b81f4b7d43aa8249b8a23059e}\label{namespaceplot__sensors_a6c1ac87b81f4b7d43aa8249b8a23059e} 
+\index{plot\_sensors@{plot\_sensors}!load\_accel\_q0@{load\_accel\_q0}}
+\index{load\_accel\_q0@{load\_accel\_q0}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{load\_accel\_q0()}{load\_accel\_q0()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+load\+\_\+accel\+\_\+q0 (\begin{DoxyParamCaption}\item[{}]{base }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return (t_abs, a_q0 Nx3, bias_q0 Nx3) from the TRANS-EKF log.
+
+a_q0 = raw accel rotated into the q0 frame (done in nav_node), bias_q0 is
+the accel bias state (already q0). unbiased = a_q0 - bias_q0 should sit at
+the inertial gravity (grav_ref) at rest and stay put during pure rotation.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00086}{86}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_af7179fdd3be6bd8eeedea0e7c4981db6}\label{namespaceplot__sensors_af7179fdd3be6bd8eeedea0e7c4981db6} 
+\index{plot\_sensors@{plot\_sensors}!load\_bias@{load\_bias}}
+\index{load\_bias@{load\_bias}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{load\_bias()}{load\_bias()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+load\+\_\+bias (\begin{DoxyParamCaption}\item[{}]{base,  }\item[{}]{cols }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return (t_abs, bias Nx3) from a filter CSV, or None if unavailable.
+
+Absolute (steady-clock) time is kept so the bias can be interpolated onto
+the raw sensor timestamps, which share the same clock.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00034}{34}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a8ceb6e96a17a617dfddf55503b17a556}\label{namespaceplot__sensors_a8ceb6e96a17a617dfddf55503b17a556} 
+\index{plot\_sensors@{plot\_sensors}!load\_csv@{load\_csv}}
+\index{load\_csv@{load\_csv}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{load\_csv()}{load\_csv()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+load\+\_\+csv (\begin{DoxyParamCaption}\item[{}]{base }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00027}{27}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_af6ccea4f7a1656dbe7c42d0e482b1404}\label{namespaceplot__sensors_af6ccea4f7a1656dbe7c42d0e482b1404} 
+\index{plot\_sensors@{plot\_sensors}!load\_trans\_accel@{load\_trans\_accel}}
+\index{load\_trans\_accel@{load\_trans\_accel}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{load\_trans\_accel()}{load\_trans\_accel()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+load\+\_\+trans\+\_\+accel (\begin{DoxyParamCaption}\item[{}]{base }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return (t_abs, ax_raw Nx3, ba_body Nx3) from the TRANS-EKF log.
+
+ax_raw (body-frame raw accel) and ba_body (accel bias already rotated into
+the body frame in nav_node) live on the same rows, so unbiased = raw-ba_body
+needs no interpolation. Returns None if the log/columns aren't present.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00057}{57}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a42a46c549f13682633c38c5cde78faf9}\label{namespaceplot__sensors_a42a46c549f13682633c38c5cde78faf9} 
+\index{plot\_sensors@{plot\_sensors}!main@{main}}
+\index{main@{main}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+main (\begin{DoxyParamCaption}\item[{}]{csv\+\_\+path = {\ttfamily \mbox{\hyperlink{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}{SENSORS\+\_\+\+CSV}}},  }\item[{}]{mekf\+\_\+path = {\ttfamily \mbox{\hyperlink{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}{MEKF\+\_\+\+CSV}}},  }\item[{}]{trans\+\_\+path = {\ttfamily \mbox{\hyperlink{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}{TRANS\+\_\+\+CSV}}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00156}{156}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a56e89c5948868568d0262e44009e11a6}\label{namespaceplot__sensors_a56e89c5948868568d0262e44009e11a6} 
+\index{plot\_sensors@{plot\_sensors}!overlay\_bias@{overlay\_bias}}
+\index{overlay\_bias@{overlay\_bias}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{overlay\_bias()}{overlay\_bias()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+overlay\+\_\+bias (\begin{DoxyParamCaption}\item[{}]{axes3,  }\item[{}]{sub,  }\item[{}]{bias\+\_\+data,  }\item[{}]{unbiased\+\_\+label = {\ttfamily \textquotesingle{}unbiased\textquotesingle{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Overlay bias estimate + unbiased (raw - bias) on 3 per-axis raw subplots.
+
+axes3      : the three Axes (x, y, z) already showing the raw trace.
+sub        : the raw sensor dataframe (has absolute 'time' + v0/v1/v2).
+bias_data  : (t_abs, bias Nx3) from load_bias, or None (then no-op).
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00115}{115}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}\label{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0} 
+\index{plot\_sensors@{plot\_sensors}!rel\_time@{rel\_time}}
+\index{rel\_time@{rel\_time}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{rel\_time()}{rel\_time()}}
+{\footnotesize\ttfamily plot\+\_\+sensors.\+rel\+\_\+time (\begin{DoxyParamCaption}\item[{}]{sub }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00149}{149}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceplot__sensors_a245a41a4727cceefe43ed33994905b9c}\label{namespaceplot__sensors_a245a41a4727cceefe43ed33994905b9c} 
+\index{plot\_sensors@{plot\_sensors}!\_HAS\_CALIB@{\_HAS\_CALIB}}
+\index{\_HAS\_CALIB@{\_HAS\_CALIB}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{\_HAS\_CALIB}{\_HAS\_CALIB}}
+{\footnotesize\ttfamily bool plot\+\_\+sensors.\+\_\+\+HAS\+\_\+\+CALIB = True\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00016}{16}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a557e6c91e1f597ac7d121ee87cf23209}\label{namespaceplot__sensors_a557e6c91e1f597ac7d121ee87cf23209} 
+\index{plot\_sensors@{plot\_sensors}!csv\_path@{csv\_path}}
+\index{csv\_path@{csv\_path}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{csv\_path}{csv\_path}}
+{\footnotesize\ttfamily int plot\+\_\+sensors.\+csv\+\_\+path = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}{SENSORS\+\_\+\+CSV}}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00408}{408}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}\label{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b} 
+\index{plot\_sensors@{plot\_sensors}!MEKF\_CSV@{MEKF\_CSV}}
+\index{MEKF\_CSV@{MEKF\_CSV}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{MEKF\_CSV}{MEKF\_CSV}}
+{\footnotesize\ttfamily str plot\+\_\+sensors.\+MEKF\+\_\+\+CSV = \textquotesingle{}../sparxe\+\_\+mekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00023}{23}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a81e673d43e1cbf3db1a7c11f5995d6ee}\label{namespaceplot__sensors_a81e673d43e1cbf3db1a7c11f5995d6ee} 
+\index{plot\_sensors@{plot\_sensors}!mekf\_path@{mekf\_path}}
+\index{mekf\_path@{mekf\_path}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{mekf\_path}{mekf\_path}}
+{\footnotesize\ttfamily int plot\+\_\+sensors.\+mekf\+\_\+path = sys.\+argv\mbox{[}2\mbox{]} if len(sys.\+argv) $>$ 2 else \mbox{\hyperlink{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}{MEKF\+\_\+\+CSV}}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00409}{409}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}\label{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f} 
+\index{plot\_sensors@{plot\_sensors}!SENSORS\_CSV@{SENSORS\_CSV}}
+\index{SENSORS\_CSV@{SENSORS\_CSV}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{SENSORS\_CSV}{SENSORS\_CSV}}
+{\footnotesize\ttfamily str plot\+\_\+sensors.\+SENSORS\+\_\+\+CSV = \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00020}{20}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}\label{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc} 
+\index{plot\_sensors@{plot\_sensors}!TRANS\_CSV@{TRANS\_CSV}}
+\index{TRANS\_CSV@{TRANS\_CSV}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{TRANS\_CSV}{TRANS\_CSV}}
+{\footnotesize\ttfamily str plot\+\_\+sensors.\+TRANS\+\_\+\+CSV = \textquotesingle{}../sparxe\+\_\+ekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00024}{24}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+
+\Hypertarget{namespaceplot__sensors_acecf9844d774566bdeb810cedc5c1313}\label{namespaceplot__sensors_acecf9844d774566bdeb810cedc5c1313} 
+\index{plot\_sensors@{plot\_sensors}!trans\_path@{trans\_path}}
+\index{trans\_path@{trans\_path}!plot\_sensors@{plot\_sensors}}
+\doxysubsubsection{\texorpdfstring{trans\_path}{trans\_path}}
+{\footnotesize\ttfamily int plot\+\_\+sensors.\+trans\+\_\+path = sys.\+argv\mbox{[}3\mbox{]} if len(sys.\+argv) $>$ 3 else \mbox{\hyperlink{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}{TRANS\+\_\+\+CSV}}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__sensors_8py_source_l00410}{410}} of file \mbox{\hyperlink{plot__sensors_8py_source}{plot\+\_\+sensors.\+py}}.
+

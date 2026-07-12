@@ -1,7 +1,6 @@
 <map id="lidar_processor.msg._obstacle.Metaclass_Obstacle" name="lidar_processor.msg._obstacle.Metaclass_Obstacle">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,79,224,119"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="89,5,140,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,44,102,78,96,79,95,44"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="117,44,117,79,112,79,112,44"/>
-<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="134,44,133,79,128,78,129,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,44,110,78,104,79,104,44"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="126,44,125,79,120,78,120,44"/>
 </map>

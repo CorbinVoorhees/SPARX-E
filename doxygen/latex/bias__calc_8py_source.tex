@@ -1,14 +1,14 @@
 \doxysection{bias\+\_\+calc.\+py}
-\hypertarget{bias__calc_8py_source}{}\label{bias__calc_8py_source}\index{src/nav\_filters/src/bias\_calc.py@{src/nav\_filters/src/bias\_calc.py}}
+\hypertarget{bias__calc_8py_source}{}\label{bias__calc_8py_source}\index{scripts/bias\_calc.py@{scripts/bias\_calc.py}}
 \mbox{\hyperlink{bias__calc_8py}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00001}\mbox{\hyperlink{namespacebias__calc}{00001}}\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00002}00002\ \textcolor{keyword}{import}\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{matplotlib.pyplot}}\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00002}00002\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00003}00003\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00004}00004\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00005}\mbox{\hyperlink{namespacebias__calc_a2fa2b52b8ab13dbc04c24ab3cfd1bbac}{00005}}\ log\_file\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{pd.read\_csv}}(\textcolor{stringliteral}{'../../../output.csv'})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00005}\mbox{\hyperlink{namespacebias__calc_a2fa2b52b8ab13dbc04c24ab3cfd1bbac}{00005}}\ log\_file\ =\ pd.read\_csv(\textcolor{stringliteral}{'../../../output.csv'})}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00006}00006\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00007}\mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{00007}}\ data\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{log\_file.to\_numpy}}()}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00007}\mbox{\hyperlink{namespacebias__calc_a93bcf09ac9ea8b8ccb8bac7c2875b94b}{00007}}\ data\ =\ log\_file.to\_numpy()}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00008}00008\ }
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00009}\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{00009}}\ t\ =\ data[:,0]}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00010}\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{00010}}\ wroll\ =\ data[:,1]}
@@ -18,34 +18,34 @@
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00014}\mbox{\hyperlink{namespacebias__calc_a720eb9b30be9048d3d70f2e592ac55cf}{00014}}\ ptch\ =\ data[:,5]}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00015}\mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{00015}}\ yaw\ =\ data[:,6]}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00017}\mbox{\hyperlink{namespacebias__calc_a3ad9ba5919a79b990675fd6ef83bb7df}{00017}}\ fig,ax\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plt.subplots}}(3,1)}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00018}00018\ ax[0].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plot}}(t,roll)}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00019}00019\ ax[1].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plot}}(t,ptch)}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00020}00020\ ax[2].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plot}}(t,yaw)}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00017}\mbox{\hyperlink{namespacebias__calc_a3ad9ba5919a79b990675fd6ef83bb7df}{00017}}\ fig,ax\ =\ plt.subplots(3,1)}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00018}00018\ ax[0].plot(t,roll)}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00019}00019\ ax[1].plot(t,ptch)}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00020}00020\ ax[2].plot(t,yaw)}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00021}00021\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00022}00022\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{print}}(f\textcolor{stringliteral}{"{}Roll\ bias\ mean:\ \{np.mean(roll)\}"{}})}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00023}00023\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{print}}(f\textcolor{stringliteral}{"{}Pitch\ bias\ mean:\ \{np.mean(ptch)\}"{}})}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00024}00024\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{print}}(f\textcolor{stringliteral}{"{}Yaw\ bias\ mean:\ \{np.mean(yaw)\}"{}})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00022}00022\ print(f\textcolor{stringliteral}{"{}Roll\ bias\ mean:\ \{np.mean(roll)\}"{}})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00023}00023\ print(f\textcolor{stringliteral}{"{}Pitch\ bias\ mean:\ \{np.mean(ptch)\}"{}})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00024}00024\ print(f\textcolor{stringliteral}{"{}Yaw\ bias\ mean:\ \{np.mean(yaw)\}"{}})}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00025}00025\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00026}\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{00026}}\ dt\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.mean}}(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.diff}}(t))}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00026}\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{00026}}\ dt\ =\ np.mean(np.diff(t))}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00027}00027\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00028}\mbox{\hyperlink{namespacebias__calc_ac3607645434b5c0144d3d99c54216c93}{00028}}\ X\_roll\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.fft.fft}}(wroll\ -\/\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.mean}}(wroll))}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00029}\mbox{\hyperlink{namespacebias__calc_a57a27ae5cae559048cdc83bebc118388}{00029}}\ X\_ptch\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.fft.fft}}(wptch\ -\/\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.mean}}(wptch))}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00030}\mbox{\hyperlink{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4}{00030}}\ X\_yaw\ \ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.fft.fft}}(wyaw\ -\/\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.mean}}(wyaw))}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00028}\mbox{\hyperlink{namespacebias__calc_ac3607645434b5c0144d3d99c54216c93}{00028}}\ X\_roll\ =\ np.fft.fft(wroll\ -\/\ np.mean(wroll))}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00029}\mbox{\hyperlink{namespacebias__calc_a57a27ae5cae559048cdc83bebc118388}{00029}}\ X\_ptch\ =\ np.fft.fft(wptch\ -\/\ np.mean(wptch))}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00030}\mbox{\hyperlink{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4}{00030}}\ X\_yaw\ \ =\ np.fft.fft(wyaw\ -\/\ np.mean(wyaw))}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00031}00031\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00032}\mbox{\hyperlink{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}{00032}}\ freqs\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.fft.fftfreq}}(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{len}}(wroll),\ d=dt)}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00032}\mbox{\hyperlink{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}{00032}}\ freqs\ =\ np.fft.fftfreq(len(wroll),\ d=dt)}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00033}\mbox{\hyperlink{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174}{00033}}\ mask\ =\ freqs\ >=\ 0}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00034}00034\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00035}00035\ fig,ax\ =\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plt.subplots}}(3,1)}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00036}00036\ ax[0].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plot}}(freqs[mask],\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.abs}}(X\_roll)[mask])}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00037}00037\ ax[1].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plot}}(freqs[mask],\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.abs}}(X\_ptch)[mask])}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00038}00038\ ax[2].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plot}}(freqs[mask],\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{np.abs}}(X\_yaw)[mask])}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00035}00035\ fig,ax\ =\ plt.subplots(3,1)}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00036}00036\ ax[0].plot(freqs[mask],\ np.abs(X\_roll)[mask])}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00037}00037\ ax[1].plot(freqs[mask],\ np.abs(X\_ptch)[mask])}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00038}00038\ ax[2].plot(freqs[mask],\ np.abs(X\_yaw)[mask])}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00039}00039\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00040}00040\ ax[0].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{set\_title}}(\textcolor{stringliteral}{"{}Roll\ FFT"{}})}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00041}00041\ ax[1].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{set\_title}}(\textcolor{stringliteral}{"{}Pitch\ FFT"{}})}
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00042}00042\ ax[2].\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{set\_title}}(\textcolor{stringliteral}{"{}Yaw\ FFT"{}})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00040}00040\ ax[0].set\_title(\textcolor{stringliteral}{"{}Roll\ FFT"{}})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00041}00041\ ax[1].set\_title(\textcolor{stringliteral}{"{}Pitch\ FFT"{}})}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00042}00042\ ax[2].set\_title(\textcolor{stringliteral}{"{}Yaw\ FFT"{}})}
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00043}00043\ }
 \DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00044}00044\ }
-\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00045}00045\ \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{plt.show}}()}
+\DoxyCodeLine{\Hypertarget{bias__calc_8py_source_l00045}00045\ plt.show()}
 
 \end{DoxyCode}

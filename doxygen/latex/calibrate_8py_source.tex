@@ -1,0 +1,205 @@
+\doxysection{calibrate.\+py}
+\hypertarget{calibrate_8py_source}{}\label{calibrate_8py_source}\index{analysis/calibrate.py@{analysis/calibrate.py}}
+\mbox{\hyperlink{calibrate_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00001}\mbox{\hyperlink{namespacecalibrate}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00004}00004\ \textcolor{keyword}{import}\ matplotlib}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00005}00005\ matplotlib.use(\textcolor{stringliteral}{'TkAgg'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00007}00007\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00008}00008\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00009}00009\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00010}00010\ \textcolor{keyword}{from}\ scipy.signal\ \textcolor{keyword}{import}\ welch}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00012}\mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{00012}}\ SENSORS\_CSV\ =\ \textcolor{stringliteral}{'../sparxe\_sensors\_raw'}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00013}\mbox{\hyperlink{namespacecalibrate_ae1cd95e66fc97588f692c08e320b65d5}{00013}}\ MAG\_CALIBRATION\_PATH\ =\ \textcolor{stringliteral}{'mag\_calibration.txt'}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00014}\mbox{\hyperlink{namespacecalibrate_a746136a4204ad2981875db27158859cc}{00014}}\ FILTER\_CUTOFFS\_PATH\ =\ \textcolor{stringliteral}{'filter\_cutoffs.txt'}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00015}\mbox{\hyperlink{namespacecalibrate_a0e4ce7a16dba28d17ba7ecd604bc2872}{00015}}\ IMU\_SAMPLE\_RATE\_HZ\ =\ 125.0\ \ \textcolor{comment}{\#\ measured\ from\ real\ gyro/accel/magnm\ logs}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00018}\mbox{\hyperlink{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7}{00018}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7}{load\_csv}}(base):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{raise}\ FileNotFoundError(f\textcolor{stringliteral}{"{}Could\ not\ find\ '\{base\}'\ or\ '\{base\}.csv'."{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00025}\mbox{\hyperlink{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}{00025}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}{extract}}(df,\ sensor\_type):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00026}00026\ \ \ \ \ sub\ =\ df[df[\textcolor{stringliteral}{'type'}]\ ==\ sensor\_type].copy()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00027}00027\ \ \ \ \ sub[\textcolor{stringliteral}{'time'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'time'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00028}00028\ \ \ \ \ sub[\textcolor{stringliteral}{'v0'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v0'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00029}00029\ \ \ \ \ sub[\textcolor{stringliteral}{'v1'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v1'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00030}00030\ \ \ \ \ sub[\textcolor{stringliteral}{'v2'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v2'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00031}00031\ \ \ \ \ sub[\textcolor{stringliteral}{'v3'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v3'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00032}00032\ \ \ \ \ sub\ =\ sub.dropna(subset=[\textcolor{stringliteral}{'time'}]).sort\_values(\textcolor{stringliteral}{'time'}).reset\_index(drop=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{return}\ sub}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00036}\mbox{\hyperlink{namespacecalibrate_a693ba1a97e67e93f1557c45e05d836af}{00036}}\ \textcolor{keyword}{def\ }fit\_ellipsoid(mx,\ my,\ mz):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00037}00037\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ Fit\ an\ ellipsoid\ to\ 3D\ magnetometer\ data\ via\ least\ squares.}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ Returns\ (bias,\ W)\ where\ bias\ is\ the\ hard-\/iron\ offset\ vector\ and\ W}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ is\ the\ 3×3\ soft-\/iron\ correction\ matrix.}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00041}00041\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ Apply\ with:\ m\_cal\ =\ W\ @\ (m\_raw\ -\/\ bias)}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00044}00044\ \ \ \ \ D\ =\ np.column\_stack([}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ mx**2,\ my**2,\ mz**2,}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ 2*mx*my,\ 2*mx*mz,\ 2*my*mz,}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ 2*mx,\ 2*my,\ 2*mz}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00048}00048\ \ \ \ \ ])}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00049}00049\ \ \ \ \ ones\ =\ np.ones(len(mx))}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00050}00050\ \ \ \ \ v,\ \_,\ \_,\ \_\ =\ np.linalg.lstsq(D,\ ones,\ rcond=\textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00052}00052\ \ \ \ \ a,\ b,\ c,\ d,\ e,\ f,\ g,\ h,\ k\ =\ v}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00053}00053\ \ \ \ \ M\ =\ np.array([[a,\ d,\ e],}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [d,\ b,\ f],}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [e,\ f,\ c]])}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00056}00056\ \ \ \ \ n\ =\ np.array([g,\ h,\ k])}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00058}00058\ \ \ \ \ \textcolor{comment}{\#\ Hard-\/iron\ bias:\ center\ of\ the\ fitted\ ellipsoid}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00059}00059\ \ \ \ \ bias\ =\ -\/np.linalg.solve(M,\ n)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00061}00061\ \ \ \ \ \textcolor{comment}{\#\ Normalize\ so\ that\ the\ centered\ ellipsoid\ equation\ equals\ 1}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00062}00062\ \ \ \ \ scale\ =\ 1.0\ +\ n\ @\ np.linalg.solve(M,\ n)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00063}00063\ \ \ \ \ A\_norm\ =\ M\ /\ scale}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00065}00065\ \ \ \ \ \textcolor{comment}{\#\ Soft-\/iron\ W\ maps\ the\ ellipsoid\ to\ a\ unit\ sphere\ via\ W\ =\ A\_norm\string^(1/2)}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00066}00066\ \ \ \ \ eigvals,\ eigvecs\ =\ np.linalg.eigh(A\_norm)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00067}00067\ \ \ \ \ eigvals\ =\ np.maximum(eigvals,\ 0.0)\ \ \ \ \ \ \ \ \textcolor{comment}{\#\ guard\ against\ tiny\ negative\ numerics}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00068}00068\ \ \ \ \ W\ =\ eigvecs\ @\ np.diag(np.sqrt(eigvals))\ @\ eigvecs.T}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00070}00070\ \ \ \ \ \textcolor{comment}{\#\ W\ above\ maps\ calibrated\ output\ onto\ a\ *unit*\ sphere\ —\ rescale\ so\ it}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00071}00071\ \ \ \ \ \textcolor{comment}{\#\ lands\ back\ in\ the\ raw\ data's\ physical\ units\ (Tesla)\ instead.}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00072}00072\ \ \ \ \ raw\ =\ np.column\_stack([mx,\ my,\ mz])}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00073}00073\ \ \ \ \ r0\ =\ np.linalg.norm(raw\ -\/\ bias,\ axis=1).mean()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00074}00074\ \ \ \ \ W\ =\ r0\ *\ W}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00076}00076\ \ \ \ \ \textcolor{keywordflow}{return}\ bias,\ W}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00079}\mbox{\hyperlink{namespacecalibrate_ae15a415a08ff01cebcad91bf2fdc0b97}{00079}}\ \textcolor{keyword}{def\ }apply\_mag\_calibration(mx,\ my,\ mz,\ bias,\ W):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00080}00080\ \ \ \ \ raw\ =\ np.column\_stack([mx,\ my,\ mz])\ -\/\ bias\ \ \ \textcolor{comment}{\#\ hard-\/iron\ correction}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00081}00081\ \ \ \ \ cal\ =\ (W\ @\ raw.T).T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ soft-\/iron\ correction}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{return}\ cal[:,\ 0],\ cal[:,\ 1],\ cal[:,\ 2]}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00085}\mbox{\hyperlink{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c}{00085}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c}{save\_mag\_calibration}}(path,\ bias,\ W):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00086}00086\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ Flat\ text\ format\ consumed\ by\ MEKF::load\_mag\_calibration\ (mekf.hpp):}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ W\ row-\/major\ (9\ numbers),\ then\ bias\ (3\ numbers),\ whitespace-\/separated.}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00090}00090\ \ \ \ \ \textcolor{keyword}{with}\ open(path,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ f:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ row\ \textcolor{keywordflow}{in}\ W:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ f.write(\textcolor{stringliteral}{'\ '}.join(f\textcolor{stringliteral}{'\{v:.9e\}'}\ \textcolor{keywordflow}{for}\ v\ \textcolor{keywordflow}{in}\ row)\ +\ \textcolor{stringliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ f.write(\textcolor{stringliteral}{'\ '}.join(f\textcolor{stringliteral}{'\{v:.9e\}'}\ \textcolor{keywordflow}{for}\ v\ \textcolor{keywordflow}{in}\ bias)\ +\ \textcolor{stringliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00096}\mbox{\hyperlink{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183}{00096}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183}{recommend\_cutoff}}(x,\ fs,\ top\_frac=0.2,\ drop\_factor=3.0,\ fmin\_floor=0.5):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00097}00097\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ Welch\ PSD\ -\/>\ noise\ floor\ =\ median\ PSD\ over\ the\ top\ \`{}top\_frac\`{}\ of\ the}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ band\ -\/>\ cutoff\ =\ first\ frequency\ from\ DC\ where\ the\ PSD\ has\ decayed\ to}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ within\ \`{}drop\_factor\`{}\ of\ that\ floor.}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00102}00102\ \ \ \ \ nperseg\ =\ min(len(x),\ 2048)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00103}00103\ \ \ \ \ f,\ Pxx\ =\ welch(x,\ fs=fs,\ nperseg=nperseg)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00104}00104\ \ \ \ \ n\_top\ =\ max(1,\ int(len(f)\ *\ top\_frac))}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00105}00105\ \ \ \ \ noise\_floor\ =\ np.median(Pxx[-\/n\_top:])}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00106}00106\ \ \ \ \ threshold\ =\ noise\_floor\ *\ drop\_factor}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00107}00107\ \ \ \ \ below\ =\ np.nonzero(Pxx\ <=\ threshold)[0]}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00108}00108\ \ \ \ \ fc\ =\ f[below[0]]\ \textcolor{keywordflow}{if}\ len(below)\ >\ 0\ \textcolor{keywordflow}{else}\ f[-\/1]}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{return}\ max(fc,\ fmin\_floor),\ f,\ Pxx,\ noise\_floor}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00112}\mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{00112}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{recommend\_sensor\_cutoff}}(df,\ sensor\_type,\ fs):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00113}00113\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Per-\/axis\ recommend\_cutoff;\ reports\ the\ max\ across\ the\ 3\ axes}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ (conservative\ —\ a\ too-\/low\ cutoff\ clips\ real\ bandwidth\ on\ the\ noisiest}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ axis,\ which\ is\ worse\ than\ slightly\ under-\/filtering\ the\ quieter\ ones)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00116}00116\ \ \ \ \ sub\ =\ \mbox{\hyperlink{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}{extract}}(df,\ sensor\_type)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{if}\ len(sub)\ <\ 16:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None},\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00120}00120\ \ \ \ \ psd\_data\ =\ []}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00121}00121\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ x\ =\ sub[f\textcolor{stringliteral}{'v\{i\}'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ fc,\ f,\ Pxx,\ floor\ =\ \mbox{\hyperlink{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183}{recommend\_cutoff}}(x,\ fs)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ psd\_data.append((f,\ Pxx,\ floor,\ fc))}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00126}00126\ \ \ \ \ fc\_sensor\ =\ max(d[3]\ \textcolor{keywordflow}{for}\ d\ \textcolor{keywordflow}{in}\ psd\_data)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{return}\ fc\_sensor,\ psd\_data}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00130}\mbox{\hyperlink{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3}{00130}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3}{save\_filter\_cutoffs}}(path,\ fc\_gyro,\ fc\_accel,\ fc\_magnm):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00131}00131\ \ \ \ \ \textcolor{keyword}{with}\ open(path,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ f:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ f.write(f\textcolor{stringliteral}{'\{fc\_gyro:.6f\}\ \{fc\_accel:.6f\}\ \{fc\_magnm:.6f\}\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00135}\mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{00135}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{plot\_psd}}(sensor\_type,\ psd\_data):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00136}00136\ \ \ \ \ fig,\ axes\ =\ plt.subplots(3,\ 1,\ figsize=(12,\ 9),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00137}00137\ \ \ \ \ fig.suptitle(f\textcolor{stringliteral}{'\{sensor\_type\}\ —\ Welch\ PSD\ \&\ recommended\ cutoff'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00138}00138\ \ \ \ \ axis\_labels\ =\ [\textcolor{stringliteral}{'v0'},\ \textcolor{stringliteral}{'v1'},\ \textcolor{stringliteral}{'v2'}]}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00139}00139\ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (f,\ Pxx,\ floor,\ fc)\ \textcolor{keywordflow}{in}\ enumerate(psd\_data):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ axes[i].semilogy(f,\ Pxx,\ linewidth=0.8)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ axes[i].axhline(floor,\ color=\textcolor{stringliteral}{'black'},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'noise\ floor'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ axes[i].axvline(fc,\ color=\textcolor{stringliteral}{'tab:red'},\ linestyle=\textcolor{stringliteral}{':'},\ linewidth=1.2,}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=f\textcolor{stringliteral}{'fc\ =\ \{fc:.2f\}\ Hz'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ axes[i].set\_ylabel(f\textcolor{stringliteral}{'\{axis\_labels[i]\}\ PSD'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ axes[i].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=8)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ axes[i].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00148}00148\ \ \ \ \ axes[2].set\_xlabel(\textcolor{stringliteral}{'Frequency\ (Hz)'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00149}00149\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00152}\mbox{\hyperlink{namespacecalibrate_a3be6ce6312a1951cc5ec0e33d011bb6d}{00152}}\ \textcolor{keyword}{def\ }main(csv\_path=SENSORS\_CSV,\ show\_plots=True):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00153}00153\ \ \ \ \ df\ =\ \mbox{\hyperlink{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7}{load\_csv}}(csv\_path)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'type'}\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ KeyError(\textcolor{stringliteral}{"{}CSV\ missing\ 'type'\ column\ —\ is\ this\ a\ sensors\ raw\ log?"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00157}00157\ \ \ \ \ \textcolor{comment}{\#\ ──\ Magnetometer\ calibration\ ─────────────────────────────────────────────}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00158}00158\ \ \ \ \ magnm\ =\ \mbox{\hyperlink{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}{extract}}(df,\ \textcolor{stringliteral}{'magnm'})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{if}\ len(magnm)\ >=\ 10:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ mx\ =\ magnm[\textcolor{stringliteral}{'v0'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ my\ =\ magnm[\textcolor{stringliteral}{'v1'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ mz\ =\ magnm[\textcolor{stringliteral}{'v2'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ bias,\ W\ =\ fit\_ellipsoid(mx,\ my,\ mz)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Hard-\/iron\ bias\ :\ \{bias\}"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Soft-\/iron\ W\ \ \ \ :\(\backslash\)n\{W\}"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c}{save\_mag\_calibration}}(MAG\_CALIBRATION\_PATH,\ bias,\ W)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Saved\ magnetometer\ calibration\ to\ \{MAG\_CALIBRATION\_PATH\}"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ np.linalg.LinAlgError\ \textcolor{keyword}{as}\ exc:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Ellipsoid\ fit\ failed:\ \{exc\}"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00171}00171\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Not\ enough\ magnetometer\ samples\ for\ calibration\ (need\ >=\ 10)"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00174}00174\ \ \ \ \ \textcolor{comment}{\#\ ──\ Filter\ cutoff\ recommendation\ ─────────────────────────────────────────}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00175}00175\ \ \ \ \ fc\_gyro,\ psd\_gyro\ =\ \mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{recommend\_sensor\_cutoff}}(df,\ \textcolor{stringliteral}{'gyro'},\ IMU\_SAMPLE\_RATE\_HZ)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00176}00176\ \ \ \ \ fc\_accel,\ psd\_accel\ =\ \mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{recommend\_sensor\_cutoff}}(df,\ \textcolor{stringliteral}{'accel'},\ IMU\_SAMPLE\_RATE\_HZ)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00177}00177\ \ \ \ \ fc\_magnm,\ psd\_magnm\ =\ \mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{recommend\_sensor\_cutoff}}(df,\ \textcolor{stringliteral}{'magnm'},\ IMU\_SAMPLE\_RATE\_HZ)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00179}00179\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ (fc\_gyro,\ fc\_accel,\ fc\_magnm):}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3}{save\_filter\_cutoffs}}(FILTER\_CUTOFFS\_PATH,\ fc\_gyro,\ fc\_accel,\ fc\_magnm)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Recommended\ cutoffs\ (Hz):\ gyro=\{fc\_gyro:.2f\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}accel=\{fc\_accel:.2f\}\ magnm=\{fc\_magnm:.2f\}"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Saved\ filter\ cutoffs\ to\ \{FILTER\_CUTOFFS\_PATH\}"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Not\ enough\ samples\ to\ recommend\ filter\ cutoffs\ for\ all\ sensors"{}})}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00187}00187\ \ \ \ \ \textcolor{keywordflow}{if}\ show\_plots:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ psd\_gyro:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{plot\_psd}}(\textcolor{stringliteral}{'gyro'},\ psd\_gyro)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ psd\_accel:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{plot\_psd}}(\textcolor{stringliteral}{'accel'},\ psd\_accel)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ psd\_magnm:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{plot\_psd}}(\textcolor{stringliteral}{'magnm'},\ psd\_magnm)}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ plt.show()}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00197}00197\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{'\_\_main\_\_'}:}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00198}\mbox{\hyperlink{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6}{00198}}\ \ \ \ \ csv\_path\ =\ sys.argv[1]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 1\ \textcolor{keywordflow}{else}\ SENSORS\_CSV}
+\DoxyCodeLine{\Hypertarget{calibrate_8py_source_l00199}00199\ \ \ \ \ main(csv\_path)}
+
+\end{DoxyCode}

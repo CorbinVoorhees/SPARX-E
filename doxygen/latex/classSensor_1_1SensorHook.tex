@@ -1,0 +1,164 @@
+\doxysection{Sensor\+::Sensor\+Hook\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classSensor_1_1SensorHook}{}\label{classSensor_1_1SensorHook}\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+
+
+{\ttfamily \#include $<$ISensor.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}{Sensor\+Snapshot\+Function}} = std\+::function$<$ void(const T \&data, const Eigen\+::\+Matrix\+Xd \&R, Steady\+Clock\+::time\+\_\+point t)$>$
+\item 
+using \mbox{\hyperlink{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}{Initialize\+Function}} = std\+::function$<$ void(const \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ T $>$ \&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSensor_1_1SensorHook_aaa4bc13fed89e78370ef27d6fbf35996}{Sensor\+Hook}} (std\+::string id\+\_\+in)
+\item 
+const std\+::string \& \mbox{\hyperlink{classSensor_1_1SensorHook_abc079090c1125aede65bcff4aeaf6f36}{get\+\_\+id}} () const
+\item 
+std\+::string \& \mbox{\hyperlink{classSensor_1_1SensorHook_a7764b1bf3894646e6aab84d5342bf3ec}{get\+\_\+id}} ()
+\item 
+void \mbox{\hyperlink{classSensor_1_1SensorHook_aa70f0b0305e82b21428804668e47e751}{bind}} (\mbox{\hyperlink{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}{Sensor\+Snapshot\+Function}} fn, \mbox{\hyperlink{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}{Initialize\+Function}} init\+\_\+fn)
+\item 
+void \mbox{\hyperlink{classSensor_1_1SensorHook_a528092e4ad8bcc48c057460d07ef05dc}{initialize}} (const \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ T $>$ \&prod)
+\item 
+void \mbox{\hyperlink{classSensor_1_1SensorHook_ac5b8348625087f6e9403986128c5f44d}{emit}} (const T \&z, const Eigen\+::\+Matrix\+Xd \&R, Steady\+Clock\+::time\+\_\+point t)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classSensor_1_1SensorHook_ac30d7f6f6ac226eba2aff62163a2b6c7}{No\+Initialize}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Sensor\+::\+Sensor\+Hook$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00042}{42}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}\label{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!InitializeFunction@{InitializeFunction}}
+\index{InitializeFunction@{InitializeFunction}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{InitializeFunction}{InitializeFunction}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+using \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::\+Initialize\+Function =  std\+::function$<$void(const \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$T$>$ \&)$>$}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00047}{47}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}\label{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!SensorSnapshotFunction@{SensorSnapshotFunction}}
+\index{SensorSnapshotFunction@{SensorSnapshotFunction}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SensorSnapshotFunction}{SensorSnapshotFunction}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+using \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::\+Sensor\+Snapshot\+Function =  std\+::function$<$void( const T \&data, const Eigen\+::\+Matrix\+Xd \&R, Steady\+Clock\+::time\+\_\+point t)$>$}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00044}{44}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSensor_1_1SensorHook_aaa4bc13fed89e78370ef27d6fbf35996}\label{classSensor_1_1SensorHook_aaa4bc13fed89e78370ef27d6fbf35996} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!SensorHook@{SensorHook}}
+\index{SensorHook@{SensorHook}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SensorHook()}{SensorHook()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::\+Sensor\+Hook (\begin{DoxyParamCaption}\item[{std\+::string}]{id\+\_\+in }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00058}{58}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSensor_1_1SensorHook_aa70f0b0305e82b21428804668e47e751}\label{classSensor_1_1SensorHook_aa70f0b0305e82b21428804668e47e751} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!bind@{bind}}
+\index{bind@{bind}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::bind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSensor_1_1SensorHook_a435b333643cd8d0b94f990c67782742c}{Sensor\+Snapshot\+Function}}}]{fn,  }\item[{\mbox{\hyperlink{classSensor_1_1SensorHook_acabb382a6ee30f450d53923092dcffc9}{Initialize\+Function}}}]{init\+\_\+fn }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00063}{63}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorHook_ac5b8348625087f6e9403986128c5f44d}\label{classSensor_1_1SensorHook_ac5b8348625087f6e9403986128c5f44d} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!emit@{emit}}
+\index{emit@{emit}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{emit()}{emit()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::emit (\begin{DoxyParamCaption}\item[{const T \&}]{z,  }\item[{const Eigen\+::\+Matrix\+Xd \&}]{R,  }\item[{Steady\+Clock\+::time\+\_\+point}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00076}{76}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorHook_a7764b1bf3894646e6aab84d5342bf3ec}\label{classSensor_1_1SensorHook_a7764b1bf3894646e6aab84d5342bf3ec} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!get\_id@{get\_id}}
+\index{get\_id@{get\_id}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_id()}{get\_id()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::string \& \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::get\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00061}{61}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorHook_abc079090c1125aede65bcff4aeaf6f36}\label{classSensor_1_1SensorHook_abc079090c1125aede65bcff4aeaf6f36} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!get\_id@{get\_id}}
+\index{get\_id@{get\_id}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_id()}{get\_id()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const std\+::string \& \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::get\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00060}{60}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorHook_a528092e4ad8bcc48c057460d07ef05dc}\label{classSensor_1_1SensorHook_a528092e4ad8bcc48c057460d07ef05dc} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!initialize@{initialize}}
+\index{initialize@{initialize}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::initialize (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ T $>$ \&}]{prod }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00068}{68}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classSensor_1_1SensorHook_ac30d7f6f6ac226eba2aff62163a2b6c7}\label{classSensor_1_1SensorHook_ac30d7f6f6ac226eba2aff62163a2b6c7} 
+\index{Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}!NoInitialize@{NoInitialize}}
+\index{NoInitialize@{NoInitialize}!Sensor::SensorHook$<$ T $>$@{Sensor::SensorHook$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{NoInitialize}{NoInitialize}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook}}$<$ T $>$\+::\+No\+Initialize\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<T>}}\ \&)\ \{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00049}{49}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{ISensor_8hpp}{ISensor.\+hpp}}\end{DoxyCompactItemize}

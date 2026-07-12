@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['version_20history_0',['Version History',['../md_src_2unilidar__sdk2_2VERSION.html',1,'']]]
+  ['installer_0',['UWB Pi gateway Ubuntu installer',['../md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html',1,'']]]
 ];

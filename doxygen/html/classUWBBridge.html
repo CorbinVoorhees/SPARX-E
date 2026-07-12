@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -95,29 +104,85 @@ $(document).ready(function(){initNavTree('classUWBBridge.html',''); initResizabl
   <div class="headertitle"><div class="title">UWBBridge Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Bridges UWB serial range data into ROS 2 topics.  
+ <a href="classUWBBridge.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="uwb__bridge_8hpp_source.html">uwb_bridge.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for UWBBridge:</div>
 <div class="dyncontent">
 <div class="center"><img src="classUWBBridge__inherit__graph.png" border="0" usemap="#aUWBBridge_inherit__map" alt="Inheritance graph"/></div>
-<!-- MAP 0 -->
+<map name="aUWBBridge_inherit__map" id="aUWBBridge_inherit__map">
+<area shape="rect" title="Bridges UWB serial range data into ROS 2 topics." alt="" coords="9,152,105,177"/>
+<area shape="rect" href="classBridgeBase.html" title="Bridge is a base class that defines serial monitor communication for peripherals that use TTY." alt="" coords="9,79,105,104"/>
+<area shape="poly" title=" " alt="" coords="59,118,59,152,54,152,54,118"/>
+<area shape="rect" title=" " alt="" coords="5,5,108,31"/>
+<area shape="poly" title=" " alt="" coords="59,44,59,79,54,79,54,44"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for UWBBridge:</div>
 <div class="dyncontent">
 <div class="center"><img src="classUWBBridge__coll__graph.png" border="0" usemap="#aUWBBridge_coll__map" alt="Collaboration graph"/></div>
-<!-- MAP 1 -->
+<map name="aUWBBridge_coll__map" id="aUWBBridge_coll__map">
+<area shape="rect" title="Bridges UWB serial range data into ROS 2 topics." alt="" coords="82,168,178,193"/>
+<area shape="rect" href="classBridgeBase.html" title="Bridge is a base class that defines serial monitor communication for peripherals that use TTY." alt="" coords="82,93,178,119"/>
+<area shape="poly" title=" " alt="" coords="133,133,133,168,127,168,127,133"/>
+<area shape="rect" title=" " alt="" coords="5,5,108,31"/>
+<area shape="poly" title=" " alt="" coords="77,39,122,91,118,95,73,43"/>
+<area shape="rect" href="structBridgeBase_1_1Buffer.html" title=" " alt="" coords="132,5,275,31"/>
+<area shape="poly" title=" " alt="" coords="187,43,142,95,138,91,183,39"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8f19e7bc07403a3aa9444cee49c74aaa" id="r_a8f19e7bc07403a3aa9444cee49c74aaa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUWBBridge.html#a8f19e7bc07403a3aa9444cee49c74aaa">UWBBridge</a> ()</td></tr>
+<tr class="memdesc:a8f19e7bc07403a3aa9444cee49c74aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the UWB bridge node.  <br /></td></tr>
 <tr class="separator:a8f19e7bc07403a3aa9444cee49c74aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af02fe7029a28d55e63ff8262e208cb74" id="r_af02fe7029a28d55e63ff8262e208cb74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUWBBridge.html#af02fe7029a28d55e63ff8262e208cb74">~UWBBridge</a> ()</td></tr>
-<tr class="separator:af02fe7029a28d55e63ff8262e208cb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classBridgeBase"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classBridgeBase')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classBridgeBase.html">BridgeBase</a></td></tr>
+<tr class="memitem:a740dab7d5937092e5deb8b0a3c1bb3ed inherit pub_methods_classBridgeBase" id="r_a740dab7d5937092e5deb8b0a3c1bb3ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a740dab7d5937092e5deb8b0a3c1bb3ed">BridgeBase</a> (const <a class="el" href="classBridgeBase.html">BridgeBase</a> &amp;)=delete</td></tr>
+<tr class="separator:a740dab7d5937092e5deb8b0a3c1bb3ed inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5e3461975c69370adcbee6a66369cc6 inherit pub_methods_classBridgeBase" id="r_af5e3461975c69370adcbee6a66369cc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBridgeBase.html">BridgeBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#af5e3461975c69370adcbee6a66369cc6">operator=</a> (const <a class="el" href="classBridgeBase.html">BridgeBase</a> &amp;)=delete</td></tr>
+<tr class="separator:af5e3461975c69370adcbee6a66369cc6 inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfb9c232955e7e1897259734be10fd5a inherit pub_methods_classBridgeBase" id="r_acfb9c232955e7e1897259734be10fd5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBridgeBase.html">BridgeBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#acfb9c232955e7e1897259734be10fd5a">operator=</a> (<a class="el" href="classBridgeBase.html">BridgeBase</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:acfb9c232955e7e1897259734be10fd5a inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb16281ff6ac7c2848754829b683eb79 inherit pub_methods_classBridgeBase" id="r_adb16281ff6ac7c2848754829b683eb79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#adb16281ff6ac7c2848754829b683eb79">BridgeBase</a> (<a class="el" href="classBridgeBase.html">BridgeBase</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:adb16281ff6ac7c2848754829b683eb79 inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3336dab88e1f5c2fed0791f8b507d5e1 inherit pub_methods_classBridgeBase" id="r_a3336dab88e1f5c2fed0791f8b507d5e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a3336dab88e1f5c2fed0791f8b507d5e1">BridgeBase</a> (std::string node_name, std::string serial_port_str, int baud_rate_int, size_t buflen)</td></tr>
+<tr class="memdesc:a3336dab88e1f5c2fed0791f8b507d5e1 inherit pub_methods_classBridgeBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base constructor for Bridges.  <br /></td></tr>
+<tr class="separator:a3336dab88e1f5c2fed0791f8b507d5e1 inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47b98c8c59f5fd96fdba955795c3d83b inherit pub_methods_classBridgeBase" id="r_a47b98c8c59f5fd96fdba955795c3d83b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a47b98c8c59f5fd96fdba955795c3d83b">~BridgeBase</a> ()</td></tr>
+<tr class="separator:a47b98c8c59f5fd96fdba955795c3d83b inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a225a5da44b606264c006589618584662 inherit pub_methods_classBridgeBase" id="r_a225a5da44b606264c006589618584662"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a225a5da44b606264c006589618584662">write_serial</a> (const std_msgs::msg::String::SharedPtr msg)</td></tr>
+<tr class="memdesc:a225a5da44b606264c006589618584662 inherit pub_methods_classBridgeBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic write serial function.  <br /></td></tr>
+<tr class="separator:a225a5da44b606264c006589618584662 inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b530ff07f338dae058913095302498f inherit pub_methods_classBridgeBase" id="r_a4b530ff07f338dae058913095302498f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a4b530ff07f338dae058913095302498f">read_serial</a> ()</td></tr>
+<tr class="memdesc:a4b530ff07f338dae058913095302498f inherit pub_methods_classBridgeBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic read from terminal.  <br /></td></tr>
+<tr class="separator:a4b530ff07f338dae058913095302498f inherit pub_methods_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_classBridgeBase"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classBridgeBase')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classBridgeBase.html">BridgeBase</a></td></tr>
+<tr class="memitem:af8bd2bed2327173d2b8aaf05fb364a22 inherit pro_attribs_classBridgeBase" id="r_af8bd2bed2327173d2b8aaf05fb364a22"><td class="memItemLeft" align="right" valign="top">rclcpp::Subscription&lt; std_msgs::msg::String &gt;::SharedPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#af8bd2bed2327173d2b8aaf05fb364a22">serial_monitor_subscription</a></td></tr>
+<tr class="separator:af8bd2bed2327173d2b8aaf05fb364a22 inherit pro_attribs_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe6ba71fdf93a6b1e068c2422237f2ca inherit pro_attribs_classBridgeBase" id="r_afe6ba71fdf93a6b1e068c2422237f2ca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#afe6ba71fdf93a6b1e068c2422237f2ca">serial_fd</a></td></tr>
+<tr class="separator:afe6ba71fdf93a6b1e068c2422237f2ca inherit pro_attribs_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a316bdd6412a414a77e08c1605f462472 inherit pro_attribs_classBridgeBase" id="r_a316bdd6412a414a77e08c1605f462472"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a316bdd6412a414a77e08c1605f462472">serial_port</a></td></tr>
+<tr class="separator:a316bdd6412a414a77e08c1605f462472 inherit pro_attribs_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41de155823ba40f07bf99843a8eaab92 inherit pro_attribs_classBridgeBase" id="r_a41de155823ba40f07bf99843a8eaab92"><td class="memItemLeft" align="right" valign="top">speed_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a41de155823ba40f07bf99843a8eaab92">baud_rate</a></td></tr>
+<tr class="separator:a41de155823ba40f07bf99843a8eaab92 inherit pro_attribs_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a265dd563033cf843ffa7a753b7acb1 inherit pro_attribs_classBridgeBase" id="r_a5a265dd563033cf843ffa7a753b7acb1"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structBridgeBase_1_1Buffer.html">BridgeBase::Buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a5a265dd563033cf843ffa7a753b7acb1">buf</a></td></tr>
+<tr class="separator:a5a265dd563033cf843ffa7a753b7acb1 inherit pro_attribs_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_attribs_classBridgeBase"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_classBridgeBase')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="classBridgeBase.html">BridgeBase</a></td></tr>
+<tr class="memitem:a6819ff19051ea2c11beaed2ab30a684a inherit pro_static_attribs_classBridgeBase" id="r_a6819ff19051ea2c11beaed2ab30a684a"><td class="memItemLeft" align="right" valign="top">static constexpr char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBridgeBase.html#a6819ff19051ea2c11beaed2ab30a684a">target</a> = '\n'</td></tr>
+<tr class="separator:a6819ff19051ea2c11beaed2ab30a684a inherit pro_static_attribs_classBridgeBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="uwb__bridge_2src_2main_8cpp_source.html#l00010">10</a> of file <a class="el" href="uwb__bridge_2src_2main_8cpp_source.html">main.cpp</a>.</p>
+<div class="textblock"><p>Bridges UWB serial range data into ROS 2 topics. </p>
+
+<p class="definition">Definition at line <a class="el" href="uwb__bridge_8hpp_source.html#l00015">15</a> of file <a class="el" href="uwb__bridge_8hpp_source.html">uwb_bridge.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8f19e7bc07403a3aa9444cee49c74aaa" name="a8f19e7bc07403a3aa9444cee49c74aaa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8f19e7bc07403a3aa9444cee49c74aaa">&#9670;&#160;</a></span>UWBBridge()</h2>
@@ -142,39 +207,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="uwb__bridge_2src_2main_8cpp_source.html#l00013">13</a> of file <a class="el" href="uwb__bridge_2src_2main_8cpp_source.html">main.cpp</a>.</p>
+<p>Constructor for the UWB bridge node. </p>
 
-</div>
-</div>
-<a id="af02fe7029a28d55e63ff8262e208cb74" name="af02fe7029a28d55e63ff8262e208cb74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af02fe7029a28d55e63ff8262e208cb74">&#9670;&#160;</a></span>~UWBBridge()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">UWBBridge::~UWBBridge </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="uwb__bridge_2src_2main_8cpp_source.html#l00031">31</a> of file <a class="el" href="uwb__bridge_2src_2main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uwb__bridge_8hpp_source.html#l00055">55</a> of file <a class="el" href="uwb__bridge_8hpp_source.html">uwb_bridge.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/uwb_bridge/src/<a class="el" href="uwb__bridge_2src_2main_8cpp_source.html">main.cpp</a></li>
+<li>src/bridges/include/bridges/<a class="el" href="uwb__bridge_8hpp_source.html">uwb_bridge.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

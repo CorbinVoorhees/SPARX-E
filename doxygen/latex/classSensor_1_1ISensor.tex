@@ -1,0 +1,101 @@
+\doxysection{Sensor\+::ISensor Class Reference}
+\hypertarget{classSensor_1_1ISensor}{}\label{classSensor_1_1ISensor}\index{Sensor::ISensor@{Sensor::ISensor}}
+
+
+{\ttfamily \#include $<$ISensor.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classSensor_1_1ISensor_a075c36841ff105415d5746ea7bbe8223}{\texorpdfstring{$\sim$}{\string~}\+ISensor}} ()=default
+\item 
+virtual Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classSensor_1_1ISensor_a82c53082cb22a8c24e13c8f9b68c1383}{get\+\_\+R}} () final
+\item 
+virtual std\+::string \mbox{\hyperlink{classSensor_1_1ISensor_a5fff5a0febbe7a943a9d5acc66ee20d0}{get\+\_\+id}} () final
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+mutex \mbox{\hyperlink{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}{data\+\_\+mtx}}
+\item 
+std\+::string \mbox{\hyperlink{classSensor_1_1ISensor_ade3a3504bf0f9e703747611a71946290}{id}}
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}{R}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00022}{22}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSensor_1_1ISensor_a075c36841ff105415d5746ea7bbe8223}\label{classSensor_1_1ISensor_a075c36841ff105415d5746ea7bbe8223} 
+\index{Sensor::ISensor@{Sensor::ISensor}!````~ISensor@{\texorpdfstring{$\sim$}{\string~}ISensor}}
+\index{````~ISensor@{\texorpdfstring{$\sim$}{\string~}ISensor}!Sensor::ISensor@{Sensor::ISensor}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ISensor()}{\string~ISensor()}}
+{\footnotesize\ttfamily virtual Sensor\+::\+ISensor\+::\texorpdfstring{$\sim$}{\string~}\+ISensor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSensor_1_1ISensor_a5fff5a0febbe7a943a9d5acc66ee20d0}\label{classSensor_1_1ISensor_a5fff5a0febbe7a943a9d5acc66ee20d0} 
+\index{Sensor::ISensor@{Sensor::ISensor}!get\_id@{get\_id}}
+\index{get\_id@{get\_id}!Sensor::ISensor@{Sensor::ISensor}}
+\doxysubsubsection{\texorpdfstring{get\_id()}{get\_id()}}
+{\footnotesize\ttfamily virtual std\+::string Sensor\+::\+ISensor\+::get\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00039}{39}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1ISensor_a82c53082cb22a8c24e13c8f9b68c1383}\label{classSensor_1_1ISensor_a82c53082cb22a8c24e13c8f9b68c1383} 
+\index{Sensor::ISensor@{Sensor::ISensor}!get\_R@{get\_R}}
+\index{get\_R@{get\_R}!Sensor::ISensor@{Sensor::ISensor}}
+\doxysubsubsection{\texorpdfstring{get\_R()}{get\_R()}}
+{\footnotesize\ttfamily virtual Eigen\+::\+Matrix\+Xd Sensor\+::\+ISensor\+::get\+\_\+R (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00036}{36}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6}\label{classSensor_1_1ISensor_a5c4db5e791decab2f182758e53250ee6} 
+\index{Sensor::ISensor@{Sensor::ISensor}!data\_mtx@{data\_mtx}}
+\index{data\_mtx@{data\_mtx}!Sensor::ISensor@{Sensor::ISensor}}
+\doxysubsubsection{\texorpdfstring{data\_mtx}{data\_mtx}}
+{\footnotesize\ttfamily std\+::shared\+\_\+mutex Sensor\+::\+ISensor\+::data\+\_\+mtx\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00028}{28}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1ISensor_ade3a3504bf0f9e703747611a71946290}\label{classSensor_1_1ISensor_ade3a3504bf0f9e703747611a71946290} 
+\index{Sensor::ISensor@{Sensor::ISensor}!id@{id}}
+\index{id@{id}!Sensor::ISensor@{Sensor::ISensor}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily std\+::string Sensor\+::\+ISensor\+::id\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00029}{29}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690}\label{classSensor_1_1ISensor_a87961587f3eb5b3ae1325b59f9f7f690} 
+\index{Sensor::ISensor@{Sensor::ISensor}!R@{R}}
+\index{R@{R}!Sensor::ISensor@{Sensor::ISensor}}
+\doxysubsubsection{\texorpdfstring{R}{R}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd Sensor\+::\+ISensor\+::R\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00031}{31}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{ISensor_8hpp}{ISensor.\+hpp}}\end{DoxyCompactItemize}

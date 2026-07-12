@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -97,22 +106,20 @@ $(document).ready(function(){initNavTree('mc__main_8cpp_source.html',''); initRe
   <div class="headertitle"><div class="title">mc_main.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="mc__main_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;../include/motor_commander/smc_node.hpp&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;../include/motor_commander/motor_commander.hpp&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// Responsible for spinning up the MotorCommander node</span></div>
-<div class="foldopen" id="foldopen00006" data-start="{" data-end="}">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="mc__main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">    6</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    rclcpp::init(argc, argv);</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">auto</span> node = std::make_shared&lt;MotorCommander&gt;();</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    rclcpp::spin(node);</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    rclcpp::shutdown();</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>}</div>
+<a href="mc__main_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;<a class="code" href="motor__commander_8hpp.html">motor_commander/motor_commander.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Responsible for spinning up the MotorCommander node</span></div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="mc__main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">    4</a></span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    rclcpp::init(argc, argv);</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">auto</span> node = std::make_shared&lt;MotorCommander&gt;();</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    rclcpp::spin(node);</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    rclcpp::shutdown();</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>}</div>
 </div>
-<div class="ttc" id="abuild_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition</b> <a href="build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c_source.html#l00853">CMakeCCompilerId.c:853</a></div></div>
+<div class="ttc" id="amotor__commander_8hpp_html"><div class="ttname"><a href="motor__commander_8hpp.html">motor_commander.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

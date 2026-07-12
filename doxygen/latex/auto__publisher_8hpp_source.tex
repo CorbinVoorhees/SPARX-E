@@ -1,0 +1,73 @@
+\doxysection{auto\+\_\+publisher.\+hpp}
+\hypertarget{auto__publisher_8hpp_source}{}\label{auto__publisher_8hpp_source}\index{src/nav\_filters/include/nav\_filters/auto\_publisher.hpp@{src/nav\_filters/include/nav\_filters/auto\_publisher.hpp}}
+\mbox{\hyperlink{auto__publisher_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ AUTO\_PUBLISHER\_NODE}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ AUTO\_PUBLISHER\_NODE}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <std\_msgs/msg/int32.hpp>}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <geometry\_msgs/msg/vector3.hpp>}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <rclcpp/rclcpp.hpp>}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00015}\mbox{\hyperlink{classAutoPublisher}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAutoPublisher}{AutoPublisher}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00017}00017\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{comment}{//\ subscriber\ to\ the\ 'start\_navigation'\ topic\ that\ is\ issued\ by\ the\ ground\ station}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00019}00019\ \ \ \ \ \textcolor{comment}{//\ to\ hear\ kill\ instructions.}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00020}00020\ \ \ \ \ rclcpp::Subscription<geometry\_msgs::msg::Vector3>::SharedPtr\ start\_nav\_subscriber;}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{comment}{//\ publisher\ to\ the\ 'nav\_node\_successful'\ topic\ that\ is\ issued\ by\ the\ rover\ on\ successful}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ nav\_node\ instantiation.}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00024}00024\ \ \ \ \ rclcpp::Publisher<std\_msgs::msg::Int32>::SharedPtr\ revival\_status\_publisher;}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordtype}{void}\ start\_navigation\_callback(\textcolor{keyword}{const}\ geometry\_msgs::msg::Vector3::SharedPtr\ msg)}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00032}00032\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ user\ inputs\ <0.0,0.0,0.0>\ (0\ vector),\ then\ issue\ the\ kill\ signal}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pow(msg-\/>x,\ 2)\ +\ pow(msg-\/>y,\ 2)\ +\ pow(msg-\/>z,\ 2)\ <\ 1e-\/3)}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ kill\ the\ node\ internally\ using\ the\ pfkill\ command,\ and\ sending\ it\ to\ the\ system}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ cmd\ =\ \textcolor{stringliteral}{"{}pkill\ -\/f\ nav\_node"{}};}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ status\ =\ std::system(cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ std\_msgs::msg::Int32\ msg;}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ send\ kill\ status\ through\ publisher}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ msg.data\ =\ WEXITSTATUS(status);}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>revival\_status\_publisher-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ otherwise,\ we\ should\ restart\ nav\_node\ with\ the\ following\ parameters}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ as\ a\ necesary\ initialization\ step.}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ cmd\ =\ \textcolor{stringliteral}{"{}ros2\ run\ nav\_filters\ nav\_node\ -\/-\/ros-\/args\ "{}}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/p\ init\_x:="{}}\ +}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(msg-\/>x)\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/p\ init\_y:="{}}\ +}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(msg-\/>y)\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/p\ init\_z:="{}}\ +}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(msg-\/>z)\ +\ \textcolor{stringliteral}{"{}\ \&"{}};}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ again,\ send\ the\ success\ through\ the\ topic.}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ status\ =\ std::system(cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ status\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ std\_msgs::msg::Int32\ msg;}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ msg.data\ =\ WEXITSTATUS(status);}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>revival\_status\_publisher-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00064}00064\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00066}00066\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00073}\mbox{\hyperlink{classAutoPublisher_a3fa16849013acdfdb28e080a873a3377}{00073}}\ \ \ \ \ \mbox{\hyperlink{classAutoPublisher_a3fa16849013acdfdb28e080a873a3377}{AutoPublisher}}()\ :\ Node(\textcolor{stringliteral}{"{}auto\_pub\_node"{}})}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ this-\/>start\_nav\_subscriber\ =\ this-\/>create\_subscription<geometry\_msgs::msg::Vector3>(}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/start\_navigation"{}},}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&AutoPublisher::start\_navigation\_callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ this-\/>revival\_status\_publisher\ =\ this-\/>create\_publisher<std\_msgs::msg::Int32>(}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/nav\_node\_successful"{}},}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ 10);}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00084}00084\ \};}
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{auto__publisher_8hpp_source_l00086}00086\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

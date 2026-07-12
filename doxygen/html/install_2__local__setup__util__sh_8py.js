@@ -13,20 +13,5 @@ var install_2__local__setup__util__sh_8py =
     [ "main", "install_2__local__setup__util__sh_8py.html#a1b27fc72a79bb06ff30ee558df7ccaa2", null ],
     [ "order_packages", "install_2__local__setup__util__sh_8py.html#a7c96a239f502a9af226e66b77351bf22", null ],
     [ "process_dsv_file", "install_2__local__setup__util__sh_8py.html#a3c719e21e412f8a95bb1dabe10f5a280", null ],
-    [ "reduce_cycle_set", "install_2__local__setup__util__sh_8py.html#ae93d0090312417828df666d69c27a687", null ],
-    [ "DSV_TYPE_APPEND_NON_DUPLICATE", "install_2__local__setup__util__sh_8py.html#a2f274909f5a84ec6e9ef83a6928ae3e4", null ],
-    [ "DSV_TYPE_PREPEND_NON_DUPLICATE", "install_2__local__setup__util__sh_8py.html#a64588c97095b89bd6a20623289a37051", null ],
-    [ "DSV_TYPE_PREPEND_NON_DUPLICATE_IF_EXISTS", "install_2__local__setup__util__sh_8py.html#a1aed77c074b12d2ab6c11fb16dc01cfc", null ],
-    [ "DSV_TYPE_SET", "install_2__local__setup__util__sh_8py.html#ab3adaba61d9af99e2c3ae68f64e00a49", null ],
-    [ "DSV_TYPE_SET_IF_UNSET", "install_2__local__setup__util__sh_8py.html#abd1e85db4deba9dd4ec1bc97c41e4744", null ],
-    [ "DSV_TYPE_SOURCE", "install_2__local__setup__util__sh_8py.html#a641c7643fae0080e426bedec13be1490", null ],
-    [ "env_state", "install_2__local__setup__util__sh_8py.html#a4671fbb6038d6bc762ef0d125249acca", null ],
-    [ "file", "install_2__local__setup__util__sh_8py.html#a8a4c43c0327926319dae62ac05e08b1d", null ],
-    [ "FORMAT_STR_COMMENT_LINE", "install_2__local__setup__util__sh_8py.html#acfdfd3d3869f5cbfb8824105dc24c38d", null ],
-    [ "FORMAT_STR_INVOKE_SCRIPT", "install_2__local__setup__util__sh_8py.html#a043d90a82a879c6cee8160b6901bb037", null ],
-    [ "FORMAT_STR_REMOVE_LEADING_SEPARATOR", "install_2__local__setup__util__sh_8py.html#a6894a255d8b5f5c42aaca189da2a5acb", null ],
-    [ "FORMAT_STR_REMOVE_TRAILING_SEPARATOR", "install_2__local__setup__util__sh_8py.html#a409113f1059ba8134f6b9a7c5f3e1d6b", null ],
-    [ "FORMAT_STR_SET_ENV_VAR", "install_2__local__setup__util__sh_8py.html#a29c36c07078b8578f6503f83664acefa", null ],
-    [ "FORMAT_STR_USE_ENV_VAR", "install_2__local__setup__util__sh_8py.html#adf57924f1362c6bf90a1c0a4026ddce6", null ],
-    [ "rc", "install_2__local__setup__util__sh_8py.html#a33c8846fcbbb8b254bd1bb1564a82282", null ]
+    [ "reduce_cycle_set", "install_2__local__setup__util__sh_8py.html#ae93d0090312417828df666d69c27a687", null ]
 ];

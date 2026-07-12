@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -97,28 +106,67 @@ $(document).ready(function(){initNavTree('unitree__lidar__utilities_8h.html','')
   <div class="headertitle"><div class="title">unitree_lidar_utilities.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;fstream&gt;</code><br />
-<code>#include &lt;iomanip&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;deque&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="unitree__lidar__sdk__config_8h_source.html">unitree_lidar_sdk_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="unitree__lidar__protocol_8h_source.html">unitree_lidar_protocol.h</a>&quot;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="unitree__lidar__sdk__config_8h_source.html">unitree_lidar_sdk_config.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="unitree__lidar__protocol_8h_source.html">unitree_lidar_protocol.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for unitree_lidar_utilities.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="unitree__lidar__utilities_8h__incl.png" border="0" usemap="#asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2unitree__lidar__utilities_8h" alt=""/></div>
-<!-- MAP 0 -->
+<map name="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2unitree__lidar__utilities_8h" id="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2unitree__lidar__utilities_8h">
+<area shape="rect" title=" " alt="" coords="151,5,341,60"/>
+<area shape="rect" title=" " alt="" coords="266,181,333,207"/>
+<area shape="poly" title=" " alt="" coords="152,46,91,57,38,75,21,87,11,99,9,114,19,132,33,144,56,154,118,170,189,181,252,187,252,192,188,186,117,176,54,159,31,148,15,135,4,115,6,98,17,83,36,70,89,52,151,41"/>
+<area shape="rect" title=" " alt="" coords="29,108,103,133"/>
+<area shape="poly" title=" " alt="" coords="192,62,103,105,101,100,190,58"/>
+<area shape="rect" title=" " alt="" coords="128,108,191,133"/>
+<area shape="poly" title=" " alt="" coords="221,62,183,100,179,96,218,58"/>
+<area shape="rect" title=" " alt="" coords="215,108,277,133"/>
+<area shape="poly" title=" " alt="" coords="249,60,249,94,243,94,243,60"/>
+<area shape="rect" title=" " alt="" coords="302,108,366,133"/>
+<area shape="poly" title=" " alt="" coords="275,58,314,96,310,100,271,62"/>
+<area shape="rect" href="unitree__lidar__sdk__config_8h.html" title=" " alt="" coords="390,108,582,133"/>
+<area shape="poly" title=" " alt="" coords="320,58,442,101,440,106,318,63"/>
+<area shape="rect" href="unitree__lidar__protocol_8h.html" title=" " alt="" coords="606,108,782,133"/>
+<area shape="poly" title=" " alt="" coords="341,49,621,103,620,108,340,55"/>
+<area shape="poly" title=" " alt="" coords="631,136,346,187,346,182,630,131"/>
+<area shape="rect" title=" " alt="" coords="619,181,681,207"/>
+<area shape="poly" title=" " alt="" coords="689,135,666,171,662,168,684,132"/>
+<area shape="rect" title=" " alt="" coords="705,181,771,207"/>
+<area shape="poly" title=" " alt="" coords="703,132,726,168,721,171,699,135"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="unitree__lidar__utilities_8h__dep__incl.png" border="0" usemap="#asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2unitree__lidar__utilities_8hdep" alt=""/></div>
-<!-- MAP 1 -->
+<map name="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2unitree__lidar__utilities_8hdep" id="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2unitree__lidar__utilities_8hdep">
+<area shape="rect" title=" " alt="" coords="699,5,889,60"/>
+<area shape="rect" href="unitree__lidar__sdk_8h.html" title=" " alt="" coords="699,108,889,163"/>
+<area shape="poly" title=" " alt="" coords="797,74,797,108,791,108,791,74"/>
+<area shape="rect" href="example_8h.html" title=" " alt="" coords="576,218,788,258"/>
+<area shape="poly" title=" " alt="" coords="756,174,705,220,701,216,752,170"/>
+<area shape="rect" href="unitree__lidar__sdk__pcl_8h.html" title=" " alt="" coords="962,211,1151,265"/>
+<area shape="poly" title=" " alt="" coords="876,165,989,208,987,213,874,170"/>
+<area shape="rect" href="example__lidar__serial_8cpp.html" title=" " alt="" coords="5,321,223,375"/>
+<area shape="poly" title=" " alt="" coords="563,258,406,283,235,316,205,323,204,318,233,311,405,278,562,253"/>
+<area shape="rect" href="example__lidar__udp_8cpp.html" title=" " alt="" coords="247,321,464,375"/>
+<area shape="poly" title=" " alt="" coords="613,265,436,323,434,318,611,260"/>
+<area shape="rect" href="set__ip__address_8cpp.html" title=" " alt="" coords="488,321,671,375"/>
+<area shape="poly" title=" " alt="" coords="656,270,606,322,602,319,653,266"/>
+<area shape="rect" href="set__to__serial__mode_8cpp.html" title=" " alt="" coords="695,321,877,375"/>
+<area shape="poly" title=" " alt="" coords="711,266,763,319,759,322,708,269"/>
+<area shape="rect" href="set__to__udp__mode_8cpp.html" title=" " alt="" coords="901,321,1084,375"/>
+<area shape="poly" title=" " alt="" coords="750,260,918,318,916,323,748,265"/>
+<area shape="rect" href="unitree__lidar__ros2_8h.html" title=" " alt="" coords="1109,313,1303,383"/>
+<area shape="poly" title=" " alt="" coords="1106,271,1161,311,1158,315,1103,276"/>
+<area shape="rect" href="unitree__lidar__ros2__node_8cpp.html" title=" " alt="" coords="1115,431,1297,500"/>
+<area shape="poly" title=" " alt="" coords="1209,397,1209,430,1203,430,1203,397"/>
+</map>
 </div>
 </div>
 <p><a href="unitree__lidar__utilities_8h_source.html">Go to the source code of this file.</a></p>

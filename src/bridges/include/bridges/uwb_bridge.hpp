@@ -1,5 +1,4 @@
-#ifndef UWB_BRIDGE_HPP
-#define UWB_BRIDGE_HPP
+#pragma once
 
 #include "bridge.hpp"
 #include <rclcpp/logging.hpp>
@@ -30,7 +29,7 @@ private:
 
     try {
       std_msgs::msg::Float32 msg;
-      
+
       // find "range_m"
       const std::string find_this = "range_m=";
 
@@ -38,9 +37,9 @@ private:
       std::stringstream ss_tknzr(serial_data);
 
       std::string token;
-      while(ss_tknzr >> token)
+      while (ss_tknzr >> token)
         if (token.find(find_this) != std::string::npos)
-            break;
+          break;
 
       msg.data = std::stof(token.substr(find_this.length()));
       uwb_publisher->publish(msg);
@@ -58,8 +57,7 @@ public:
     using namespace std::chrono_literals;
 
     // WALL TIMER PERIOD MUST MATCH THE UWB RATE
-    read_timer = this->create_wall_timer(20ms, std::bind(&UWBBridge::read_uwb, this));
+    read_timer =
+        this->create_wall_timer(20ms, std::bind(&UWBBridge::read_uwb, this));
   }
 };
-
-#endif

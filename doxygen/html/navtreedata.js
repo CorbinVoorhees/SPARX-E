@@ -86,6 +86,23 @@ var NAVTREE =
       [ "v2.0.9 (2025.03.04)", "md_src_2unilidar__sdk2_2VERSION.html#autotoc_md52", null ],
       [ "v2.0.10 (2025.03.10)", "md_src_2unilidar__sdk2_2VERSION.html#autotoc_md53", null ]
     ] ],
+    [ "Source findings from uploaded Qorvo files", "md_UWB_2uwb__pi__ubuntu_2docs_2source__findings.html", [
+      [ "Range is available", "md_UWB_2uwb__pi__ubuntu_2docs_2source__findings.html#autotoc_md55", null ],
+      [ "Range rate is not directly available", "md_UWB_2uwb__pi__ubuntu_2docs_2source__findings.html#autotoc_md56", null ],
+      [ "Default FiRa settings", "md_UWB_2uwb__pi__ubuntu_2docs_2source__findings.html#autotoc_md57", null ],
+      [ "UCI firmware is the correct integration point", "md_UWB_2uwb__pi__ubuntu_2docs_2source__findings.html#autotoc_md58", null ],
+      [ "Low-level DW3xxx driver porting is not the first choice here", "md_UWB_2uwb__pi__ubuntu_2docs_2source__findings.html#autotoc_md59", null ]
+    ] ],
+    [ "UWB Pi gateway Ubuntu installer", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html", [
+      [ "Files you need on the Pi", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md61", null ],
+      [ "Hardware serial requirement for Arduino Serial Monitor output", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md62", null ],
+      [ "One-command install", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md63", null ],
+      [ "What the installer does", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md64", null ],
+      [ "Service commands", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md65", null ],
+      [ "Arduino usage", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md66", null ],
+      [ "Default UWB role/config", "md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY.html#autotoc_md67", null ]
+    ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -121,21 +138,21 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"__env__s_8c_8o_8d.html",
-"build_2lidar__processor_2ament__cmake__python_2lidar__processor_2lidar__processor_2__lidar__proc3aa24276d9c828ccc3c59c0e82c36eb6_source.html",
-"build_2lidar__processor_2rosidl__typesupport__c_2lidar__processor_2msg_2env____type__support_8cpp.html",
-"build_2nav__filters_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c.html#ae5510d82e4946f1656f4969911c54736",
-"classcamera_1_1main_1_1StreamCameraNode.html#a34b6641e38a8d8da3af4be246935127e",
-"classplanning__module_1_1Trajectory.html#a8d16cd54fcdf437a90913b2c9fca933c",
-"dir_3d738cc41a93bcdd41e2cf05e125ec7f.html",
-"env____description_8c_8o_8d.html",
-"install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2env____rosi1e8cb12d16de8748ffd50c67174647af_source.html",
-"install_2lidar__processor_2lib_2python3_812_2site-packages_2lidar__processor_2__lidar__processoreb11d268ec00601173a1ab27a86ae8fa.html#a70d5fb1a52b066630f511ca6a01938e6",
-"namespacelidar__processor_1_1msg_1_1rosidl__typesupport__introspection__cpp.html#aca52fb1ea8e34120094a2663c4a15a98",
-"src_2build_2arduino__bridge_2CMakeFiles_23_828_83_2CompilerIdC_2CMakeCCompilerId_8c.html#a4b0efeb7a5d59313986b3a0390f050f6",
-"src_2install_2__local__setup__util__sh_8py.html#ac50017f79bc2b2787f674b58a2b47362",
-"structlidar__processor_1_1msg_1_1rosidl__typesupport__c_1_1__Obstacle__type__support__symbol__names__t.html#a9f2b3bfdaca6e7f2682467d9f6b91bf4",
-"structunilidar__sdk2_1_1LidarIpAddressConfig.html#aa890a719ebe9ba35f01f747d86828fbf"
+"ISensor_8hpp.html",
+"build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2detail_2env____functions_8h.html#a45bce735f6ba86d2a2745758bace5752",
+"build_2lidar__processor_2rosidl__typesupport__fastrtps__cpp_2lidar__processor_2msg_2detail_2dds_9e3727486083c3759046eecb32c53d94.html#a361d43a555590cc840c8266ecc682c6e",
+"classSensor_1_1SensorTable.html",
+"classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#a08d7a006feef34f84551aef66c61de54",
+"dir_1175457081a8f4c884a22a03dc593dc6.html",
+"env____type__support__c_8cpp.html#ae4c0d0b7b2a92c7f5657676e926c75a0",
+"install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2detail_2env____traits_8hpp.html#a51bb3144d5fbc37ca2620b8c407dae34",
+"install_2status__updater_2lib_2python3_812_2site-packages_2status__updater_2____init_____8py_source.html",
+"namespacealigndata.html#a43ace5d887c5dbe873f8546b642b2e59",
+"namespaceplot__gains.html#aca9816a28fa3ce9170daa1f7a7cef35e",
+"set__ip__address_8cpp_8o_8d.html",
+"structlidar__processor_1_1msg_1_1Obstacle__.html#aa539637e7a70174659c680d503a0b17e",
+"structunilidar__sdk2_1_1LidarMacAddressConfigPacket.html",
+"unitree__lidar__sdk_2CMakeFiles_23_828_83_2CompilerIdCXX_2CMakeCXXCompilerId_8cpp.html#ad1280362da42492bbc11aa78cbf776ad"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

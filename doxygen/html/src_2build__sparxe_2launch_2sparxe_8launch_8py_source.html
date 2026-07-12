@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -114,7 +123,7 @@ $(document).ready(function(){initNavTree('src_2build__sparxe_2launch_2sparxe_8la
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>                    <span class="stringliteral">&#39;spatial-launch.py&#39;</span>,</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                ])</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            ),</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            launch_arguments={<span class="stringliteral">&#39;hub_port&#39;</span>: <span class="stringliteral">&#39;1&#39;</span>}.items()</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            launch_arguments={<span class="stringliteral">&#39;hub_port&#39;</span>: <span class="stringliteral">&#39;0&#39;</span>}.items()</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        ),</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        Node(</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            package=<span class="stringliteral">&#39;imu_filter_madgwick&#39;</span>,</div>
@@ -148,12 +157,12 @@ $(document).ready(function(){initNavTree('src_2build__sparxe_2launch_2sparxe_8la
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            name=<span class="stringliteral">&#39;motor_commander&#39;</span>,</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        ),</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        Node(</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            package=<span class="stringliteral">&#39;arduino_bridge&#39;</span>,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            package=<span class="stringliteral">&#39;bridges&#39;</span>,</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            executable=<span class="stringliteral">&#39;arduino_bridge_node&#39;</span>,</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            name=<span class="stringliteral">&#39;arduino_bridge&#39;</span>,</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        ),</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        Node(</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            package=<span class="stringliteral">&#39;uwb_bridge&#39;</span>,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            package=<span class="stringliteral">&#39;bridges&#39;</span>,</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            executable=<span class="stringliteral">&#39;uwb_bridge_node&#39;</span>,</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            name=<span class="stringliteral">&#39;uwb_bridge&#39;</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        )</div>

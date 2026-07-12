@@ -1,0 +1,26 @@
+\doxysection{src/nav\+\_\+filters/include/nav\+\_\+filters/auto\+\_\+publisher.hpp File Reference}
+\hypertarget{auto__publisher_8hpp}{}\label{auto__publisher_8hpp}\index{src/nav\_filters/include/nav\_filters/auto\_publisher.hpp@{src/nav\_filters/include/nav\_filters/auto\_publisher.hpp}}
+{\ttfamily \#include $<$std\+\_\+msgs/msg/int32.\+hpp$>$}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/msg/vector3.\+hpp$>$}\newline
+{\ttfamily \#include $<$rclcpp/rclcpp.\+hpp$>$}\newline
+Include dependency graph for auto\+\_\+publisher.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{auto__publisher_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{auto__publisher_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classAutoPublisher}{Auto\+Publisher}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classAutoPublisher}{Auto\+Publisher} specifically targets nav\+\_\+node during runtime to kill and restart the Kalman Filter when state estimation has collapsed, or the nav\+\_\+node as failed to start. This was a patch solution before competition to restart the nav\+\_\+node, and also the Kalman Filter, and SHOULD NOT BE USED ANYMORE. \end{DoxyCompactList}\end{DoxyCompactItemize}

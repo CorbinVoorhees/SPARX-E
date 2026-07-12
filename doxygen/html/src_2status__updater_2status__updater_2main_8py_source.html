@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -111,7 +120,7 @@ $(document).ready(function(){initNavTree('src_2status__updater_2status__updater_
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        self.<a class="code hl_variable" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a9c333fbb8870dba51baa8dc1eab2a96c">sparxe_pub</a> = self.create_publisher(Bool, <span class="stringliteral">&#39;/sparxe_status&#39;</span>, 10)</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        self.<a class="code hl_variable" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a1ae81f2323ec7cd45cb8f5cbcb7af72a">camera_pub</a> = self.create_publisher(Bool, <span class="stringliteral">&#39;/camera_status&#39;</span>, 10)</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        self.<a class="code hl_variable" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#acdd5d51b79e532c765663179ec5764c2">arduino_pub</a> = self.create_publisher(Bool, <span class="stringliteral">&#39;/arduino_status&#39;</span>, 10)</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        self.<a class="code hl_variable" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a103e193d8eff3cff5184cc6eaf6c0163">sparxe_pub_timer</a> = self.create_timer(1.0, self.<a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a>)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        self.<a class="code hl_variable" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a103e193d8eff3cff5184cc6eaf6c0163">sparxe_pub_timer</a> = self.create_timer(1.0, self.<a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a06c2b843650bacb5ec395c92d0e71c97">publish_sparxe_status</a>)</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="comment"># Always publishes true since if this function is running it must mean that SPARX launch was successful</span></div>
@@ -120,8 +129,8 @@ $(document).ready(function(){initNavTree('src_2status__updater_2status__updater_
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        msg = Bool()</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        msg.data = <span class="keyword">True</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        self.<a class="code hl_variable" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a9c333fbb8870dba51baa8dc1eab2a96c">sparxe_pub</a>.publish(msg)</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        self.<a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a>()</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        self.<a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a>()</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        self.<a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a29a5274737add72963e7b681ca664c82">publish_camera_status</a>()</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        self.<a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a><a class="code hl_function" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#ae2309fe5517540022360a6a507c155e7">publish_arduino_status</a>()</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 </div>

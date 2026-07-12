@@ -1,0 +1,186 @@
+\doxysection{TRANSEKF Class Reference}
+\hypertarget{classTRANSEKF}{}\label{classTRANSEKF}\index{TRANSEKF@{TRANSEKF}}
+
+
+{\ttfamily \#include $<$trans\+\_\+ekf.\+hpp$>$}
+
+
+
+Inheritance diagram for TRANSEKF\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{classTRANSEKF__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for TRANSEKF\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{classTRANSEKF__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}} \mbox{\hyperlink{classTRANSEKF_a878aabff00330162cb98ebb5531416c8}{get\+\_\+position}} () const
+\item 
+\mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}} \mbox{\hyperlink{classTRANSEKF_acbd87e908da839f93c0b45421b226a0b}{get\+\_\+velocity}} () const
+\item 
+double \mbox{\hyperlink{classTRANSEKF_ac40409d9e2ad3ddaa9af8e29fd344b66}{get\+\_\+bax}} () const
+\item 
+double \mbox{\hyperlink{classTRANSEKF_a3bfb8ff38b739b54a7aea3be77b80ad7}{get\+\_\+mu\+\_\+r}} () const
+\item 
+double \mbox{\hyperlink{classTRANSEKF_a312a2ff4ed52ef27e608db7587935794}{get\+\_\+mu\+\_\+l}} () const
+\item 
+\mbox{\hyperlink{classTRANSEKF_ad6877b662d3689bc844ca58917f20d65}{TRANSEKF}} (Steady\+Clock\+::time\+\_\+point t0, const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classMEKF}{MEKF}} $>$ \&ref)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classekf_1_1EKF_a3f36b75db5c5266f85ab5d22eefd2a8e}{get\+\_\+cov\+\_\+matrix}} () const
+\item 
+virtual \mbox{\hyperlink{classekf_1_1EKF_a44769999a203e1bd5cde84f5a33a3bfd}{\texorpdfstring{$\sim$}{\string~}\+EKF}} ()=default
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a1fb02603b5c59dfd90839e4c1e625a1f}{tick}} (Steady\+Clock\+::time\+\_\+point now)
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a2a4abbe07a27f4f6eb7f5757133f7514}{last\+\_\+gain}} (const std\+::string \&name, Eigen\+::\+Index n) const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a921f95cbea690a28fd17c498e4d1912b}{last\+\_\+innovation}} (const std\+::string \&name, Eigen\+::\+Index m) const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classekf_1_1EKF_a2b55a37be34e719b46aee41fdb08289d}{num\+\_\+steps}} () const
+\item 
+const Eigen\+::\+Matrix\+Xd \& \mbox{\hyperlink{classekf_1_1EKF_a6f013297f3e51f8ab9b7f009db2e42dd}{covariance}} () const
+\item 
+double \mbox{\hyperlink{classekf_1_1EKF_a0e30b789f01959b4109192ec2012c8ec}{last\+\_\+nis}} () const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a2c128fc1ee8f8b2c61be06ed1557aa7e}{get\+\_\+curr\+\_\+state}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classTRANSEKF_ae6d7ebb50f507d9b6b4d4b7a1f4d6054}{should\+\_\+print\+\_\+diagnostic}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Types inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{ekf\+::\+EKF\+::snapshot}} \mbox{\hyperlink{classekf_1_1EKF_a817667abe2ccae1ad9bf7a3e5ff02ef1}{snapshot}}
+\item 
+using \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}} = std\+::function$<$ bool(Eigen\+::\+Matrix\+Xd \&H, Eigen\+::\+Vector\+Xd \&r)$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e}{EKF}} (const Eigen\+::\+Matrix\+Xd \&P0, const Eigen\+::\+Vector\+Xd \&x0, Steady\+Clock\+::time\+\_\+point t0)
+\item 
+\mbox{\hyperlink{classekf_1_1EKF_aadbc06513e883eced7bf225459dac5db}{EKF}} (Eigen\+::\+Index state\+\_\+len, Eigen\+::\+Index cov\+\_\+len, Steady\+Clock\+::time\+\_\+point t)
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\+\_\+task}} (Steady\+Clock\+::time\+\_\+point t, std\+::function$<$ void()$>$ callback)
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\+\_\+correction}} (Steady\+Clock\+::time\+\_\+point t, const Eigen\+::\+Matrix\+Xd \&R, \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}} compute\+\_\+\+Hr, std\+::string name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classekf_1_1EKF_a0fe5aba21fa40cef8d79e96b547547c3}{nis}} = 0.\+0
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00014}{14}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTRANSEKF_ad6877b662d3689bc844ca58917f20d65}\label{classTRANSEKF_ad6877b662d3689bc844ca58917f20d65} 
+\index{TRANSEKF@{TRANSEKF}!TRANSEKF@{TRANSEKF}}
+\index{TRANSEKF@{TRANSEKF}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{TRANSEKF()}{TRANSEKF()}}
+{\footnotesize\ttfamily TRANSEKF\+::\+TRANSEKF (\begin{DoxyParamCaption}\item[{Steady\+Clock\+::time\+\_\+point}]{t0,  }\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classMEKF}{MEKF}} $>$ \&}]{ref }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00157}{157}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTRANSEKF_ac40409d9e2ad3ddaa9af8e29fd344b66}\label{classTRANSEKF_ac40409d9e2ad3ddaa9af8e29fd344b66} 
+\index{TRANSEKF@{TRANSEKF}!get\_bax@{get\_bax}}
+\index{get\_bax@{get\_bax}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{get\_bax()}{get\_bax()}}
+{\footnotesize\ttfamily double TRANSEKF\+::get\+\_\+bax (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00152}{152}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+\Hypertarget{classTRANSEKF_a312a2ff4ed52ef27e608db7587935794}\label{classTRANSEKF_a312a2ff4ed52ef27e608db7587935794} 
+\index{TRANSEKF@{TRANSEKF}!get\_mu\_l@{get\_mu\_l}}
+\index{get\_mu\_l@{get\_mu\_l}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{get\_mu\_l()}{get\_mu\_l()}}
+{\footnotesize\ttfamily double TRANSEKF\+::get\+\_\+mu\+\_\+l (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00154}{154}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+\Hypertarget{classTRANSEKF_a3bfb8ff38b739b54a7aea3be77b80ad7}\label{classTRANSEKF_a3bfb8ff38b739b54a7aea3be77b80ad7} 
+\index{TRANSEKF@{TRANSEKF}!get\_mu\_r@{get\_mu\_r}}
+\index{get\_mu\_r@{get\_mu\_r}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{get\_mu\_r()}{get\_mu\_r()}}
+{\footnotesize\ttfamily double TRANSEKF\+::get\+\_\+mu\+\_\+r (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00153}{153}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+\Hypertarget{classTRANSEKF_a878aabff00330162cb98ebb5531416c8}\label{classTRANSEKF_a878aabff00330162cb98ebb5531416c8} 
+\index{TRANSEKF@{TRANSEKF}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}} TRANSEKF\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00150}{150}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+\Hypertarget{classTRANSEKF_acbd87e908da839f93c0b45421b226a0b}\label{classTRANSEKF_acbd87e908da839f93c0b45421b226a0b} 
+\index{TRANSEKF@{TRANSEKF}!get\_velocity@{get\_velocity}}
+\index{get\_velocity@{get\_velocity}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{get\_velocity()}{get\_velocity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}} TRANSEKF\+::get\+\_\+velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00151}{151}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTRANSEKF_ae6d7ebb50f507d9b6b4d4b7a1f4d6054}\label{classTRANSEKF_ae6d7ebb50f507d9b6b4d4b7a1f4d6054} 
+\index{TRANSEKF@{TRANSEKF}!should\_print\_diagnostic@{should\_print\_diagnostic}}
+\index{should\_print\_diagnostic@{should\_print\_diagnostic}!TRANSEKF@{TRANSEKF}}
+\doxysubsubsection{\texorpdfstring{should\_print\_diagnostic}{should\_print\_diagnostic}}
+{\footnotesize\ttfamily bool TRANSEKF\+::should\+\_\+print\+\_\+diagnostic = true}
+
+
+
+Definition at line \mbox{\hyperlink{trans__ekf_8hpp_source_l00155}{155}} of file \mbox{\hyperlink{trans__ekf_8hpp_source}{trans\+\_\+ekf.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{trans__ekf_8hpp}{trans\+\_\+ekf.\+hpp}}\end{DoxyCompactItemize}

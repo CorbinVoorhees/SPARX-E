@@ -1,0 +1,17 @@
+\doxysection{uwb\+\_\+main.\+cpp}
+\hypertarget{uwb__main_8cpp_source}{}\label{uwb__main_8cpp_source}\index{src/bridges/src/uwb\_main.cpp@{src/bridges/src/uwb\_main.cpp}}
+\mbox{\hyperlink{uwb__main_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{uwb__bridge_8hpp}{bridges/uwb\_bridge.hpp}}>}}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00003}00003\ \textcolor{comment}{//\ Responsible\ for\ spinning\ up\ the\ uwbBridge\ node}}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00004}\mbox{\hyperlink{uwb__main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00004}}\ \textcolor{keywordtype}{int}\ main(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00005}00005\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00006}00006\ \ \ \ \ rclcpp::init(argc,\ argv);}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00007}00007\ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ std::make\_shared<UWBBridge>();}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00008}00008\ \ \ \ \ rclcpp::spin(node);}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00009}00009\ \ \ \ \ rclcpp::shutdown();}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00010}00010\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{uwb__main_8cpp_source_l00011}00011\ \}}
+
+\end{DoxyCode}

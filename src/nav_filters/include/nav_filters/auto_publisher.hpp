@@ -1,5 +1,4 @@
-#ifndef AUTO_PUBLISHER_NODE
-#define AUTO_PUBLISHER_NODE
+#pragma once
 
 #include <std_msgs/msg/int32.hpp>
 #include <geometry_msgs/msg/vector3.hpp>
@@ -82,5 +81,3 @@ public:
             10);
     }
 };
-
-#endif

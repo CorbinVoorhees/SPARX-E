@@ -1,0 +1,411 @@
+\doxysection{mekf.\+hpp}
+\hypertarget{mekf_8hpp_source}{}\label{mekf_8hpp_source}\index{src/nav\_filters/include/nav\_filters/mekf.hpp@{src/nav\_filters/include/nav\_filters/mekf.hpp}}
+\mbox{\hyperlink{mekf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ MEKF\_HPP}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ MEKF\_HPP}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ekf_8hpp}{ekf.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ISensor_8hpp}{nav\_filters/ISensor.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00008}\mbox{\hyperlink{classMEKF}{00008}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMEKF}{MEKF}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classekf_1_1EKF}{ekf::EKF}}\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00009}00009\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00010}00010\ \ \ Eigen::Matrix3d\ Qw;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00011}00011\ \ \ \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}\ gyro\_snapshot;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00012}00012\ \ \ \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}\ control\_snapshot;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00014}00014\ \ \ \textcolor{comment}{//\ gyro\ offset\ =\ startup\ mean,\ subtracted\ as\ a\ plain\ constant\ (no\ online}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00015}00015\ \ \ \textcolor{comment}{//\ bias\ estimation\ in\ the\ state).}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00016}00016\ \ \ Eigen::Vector3d\ bg0\{Eigen::Vector3d::Zero()\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00018}00018\ \ \ \textcolor{comment}{//\ wheel-\/odometry\ yaw,\ integrated\ from\ (wr\ -\/\ wl)\ —\ start-\/relative,\ used\ as\ a}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00019}00019\ \ \ \textcolor{comment}{//\ 1-\/D\ yaw\ aiding\ measurement.\ R\ is\ its\ (slip-\/dependent)\ noise,\ 1x1.}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00020}00020\ \ \ \textcolor{keywordtype}{double}\ yaw\_wheel\{0.0\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00021}00021\ \ \ Eigen::MatrixXd\ R\_yaw\_odo\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00022}00022\ \ \ \ \ \ \ Eigen::MatrixXd::Constant(1,\ 1,\ 0.01)\};\ \textcolor{comment}{//\ (\string~5.7\ deg)\string^2}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00024}00024\ \ \ \textcolor{keyword}{auto}\ q()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}.segment<4>(0);\ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00026}00026\ \ \ \textcolor{keywordtype}{void}\ apply\_error(\textcolor{keyword}{const}\ Eigen::VectorXd\ \&err)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ dtheta\ =\ err.segment<3>(0);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector4d\ o\ =\ q();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00029}00029\ \ \ \ \ Eigen::Quaterniond\ q\_curr(o(0),\ o(1),\ o(2),\ o(3));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00030}00030\ \ \ \ \ Eigen::Quaterniond\ dq(1.0,\ 0.5\ *\ dtheta.x(),\ 0.5\ *\ dtheta.y(),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.5\ *\ dtheta.z());}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00032}00032\ \ \ \ \ Eigen::Quaterniond\ q\_new\ =\ (q\_curr\ *\ dq).normalized();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (q\_new.w()\ <\ 0.0)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00034}00034\ \ \ \ \ \ \ q\_new.coeffs()\ *=\ -\/1.0;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00035}00035\ \ \ \ \ q()\ <<\ q\_new.w(),\ q\_new.x(),\ q\_new.y(),\ q\_new.z();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00036}00036\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00038}00038\ \ \ \textcolor{keywordtype}{void}\ predict(\textcolor{keywordtype}{double}\ dt)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}})}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00040}00040\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00042}00042\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ w\_corr\ =\ gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}\ -\/\ bg0;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00044}00044\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector4d\ o\ =\ q();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00045}00045\ \ \ \ \ Eigen::Quaterniond\ prior\_q(o(0),\ o(1),\ o(2),\ o(3));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00046}00046\ \ \ \ \ Eigen::Quaterniond\ omega(0.0,\ w\_corr.x(),\ w\_corr.y(),\ w\_corr.z());}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00047}00047\ \ \ \ \ Eigen::Quaterniond\ q\_dot;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00048}00048\ \ \ \ \ q\_dot.coeffs()\ =\ 0.5\ *\ (prior\_q\ *\ omega).coeffs();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00049}00049\ \ \ \ \ Eigen::Quaterniond\ q\_pred;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00050}00050\ \ \ \ \ q\_pred.coeffs()\ =\ prior\_q.coeffs()\ +\ q\_dot.coeffs()\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00051}00051\ \ \ \ \ q\_pred.normalize();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (q\_pred.w()\ <\ 0.0)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00053}00053\ \ \ \ \ \ \ q\_pred.coeffs()\ *=\ -\/1.0;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00054}00054\ \ \ \ \ q()\ <<\ q\_pred.w(),\ q\_pred.x(),\ q\_pred.y(),\ q\_pred.z();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00056}00056\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ F\ =\ -\/\mbox{\hyperlink{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc}{skew}}(w\_corr);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00057}00057\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ Qk\ =\ Qw\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ Phi\ =\ Eigen::Matrix3d::Identity()\ +\ F\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}\ =\ Phi\ *\ \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}\ *\ Phi.transpose()\ +\ Qk;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00060}00060\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00062}00062\ \ \ \textcolor{keywordtype}{void}\ print\_diagnostic(\textcolor{keyword}{const}\ Eigen::MatrixXd\ \&S,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&Pz,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,\ \textcolor{keyword}{const}\ Eigen::VectorXd\ \&d\_r,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ name)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{classMEKF_aef42816238410c8da83024e67d75750f}{should\_print\_diagnostic}})}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00066}00066\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00068}00068\ \ \ \ \ \textcolor{comment}{//\ dashboard\ is\ laid\ out\ for\ 3-\/axis\ corrections;\ skip\ 1-\/D\ ones\ (e.g.\ the}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ wheel-\/odometry\ yaw\ correction)\ instead\ of\ indexing\ out\ of\ range.}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{if}\ (d\_r.rows()\ <\ 3)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00071}00071\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00073}00073\ \ \ \ \ \textcolor{keyword}{using\ }clock\ =\ std::chrono::steady\_clock;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00074}00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ last\_print\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00075}00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ first\_run\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00077}00077\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ now\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00078}00078\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ elapsed\_ms\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ std::chrono::duration\_cast<std::chrono::milliseconds>(now\ -\/\ last\_print)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ .count();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{if}\ (elapsed\_ms\ <\ 1000)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00083}00083\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00085}00085\ \ \ \ \ last\_print\ =\ now;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00087}00087\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Sx\ =\ S(0,\ 0);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00088}00088\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Sy\ =\ S(1,\ 1);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00089}00089\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Sz\ =\ S(2,\ 2);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00091}00091\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Pzx\ =\ Pz(0,\ 0);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00092}00092\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Pzy\ =\ Pz(1,\ 1);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00093}00093\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Pzz\ =\ Pz(2,\ 2);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Rx\ =\ R(0,\ 0);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00096}00096\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Ry\ =\ R(1,\ 1);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00097}00097\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ Rz\ =\ R(2,\ 2);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00099}00099\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ nrx\ =\ d\_r(0)\ /\ std::sqrt(Sx);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00100}00100\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ nry\ =\ d\_r(1)\ /\ std::sqrt(Sy);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00101}00101\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ nrz\ =\ d\_r(2)\ /\ std::sqrt(Sz);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00103}00103\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector4d\ q\_curr\ =\ this-\/>q();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00104}00104\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ bg\_curr\ =\ this-\/>bg0;\ \textcolor{comment}{//\ constant\ offset,\ not\ a\ state}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00105}00105\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ bm\_curr\ =\ Eigen::Vector3d::Zero();\ \textcolor{comment}{//\ bm\ removed}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00107}00107\ \ \ \ \ Eigen::Vector3d\ w\_raw\ =\ Eigen::Vector3d::Zero();\ \textcolor{comment}{//\ <-\/-\/\ changed}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00108}00108\ \ \ \ \ \textcolor{keywordflow}{if}\ (gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ <-\/-\/\ changed}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00109}00109\ \ \ \ \ \ \ w\_raw\ =\ gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ <-\/-\/\ changed}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00111}00111\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ w\_corrected\ =\ w\_raw\ -\/\ bg\_curr;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00113}00113\ \ \ \ \ Eigen::Vector3d\ w\_mean\ =\ Eigen::Vector3d::Zero();\ \textcolor{comment}{//\ <-\/-\/\ changed}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00114}00114\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_mean<Eigen::Vector3d>}}(\textcolor{stringliteral}{"{}gyro"{}},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\_mean);\ \textcolor{comment}{//\ <-\/-\/\ changed}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00117}00117\ \ \ \ \ Eigen::Quaterniond\ q\_obj(q\_curr(0),\ q\_curr(1),\ q\_curr(2),\ q\_curr(3));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00118}00118\ \ \ \ \ q\_obj.normalize();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00120}00120\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ Rot\ =\ q\_obj.toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00122}00122\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ roll\ =\ std::atan2(Rot(2,\ 1),\ Rot(2,\ 2))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00123}00123\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ pitch\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ std::asin(std::max(-\/1.0,\ std::min(1.0,\ -\/Rot(2,\ 0))))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00125}00125\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ yaw\ =\ std::atan2(Rot(1,\ 0),\ Rot(0,\ 0))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{if}\ (!first\_run)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00128}00128\ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[19A"{}};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00129}00129\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00130}00130\ \ \ \ \ \ \ first\_run\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00131}00131\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00133}00133\ \ \ \ \ std::cout}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K=============================\ \%s\ DASHBOARD\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}=============================\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2KNIS\ \ :\ \%9.4f\ (Expected\ Mean:\ \%d)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2KAttitude\ (Euler\ Angles)\ \ \ \ \ \ \ \ \ \ |\ State\ Trajectory\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Estimates\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ Roll\ :\ \%8.3f\ deg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ q\ \ :\ [\%.4f,\ \%.4f,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.4f,\ \%.4f]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ Pitch:\ \%8.3f\ deg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ bg\ :\ [\%.6f,\ \%.6f,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.6f]\ rad/s\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ Yaw\ \ :\ \%8.3f\ deg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ bm\ :\ [\%.6f,\ \%.6f,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.6f]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2KGyroscope\ Channels\ (rad/s)\ \ \ \ \ \ \ |\ Measurement\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Innovation\ Residuals\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ w\ raw\ \ :\ [\%.5f,\ \%.5f,\ \%.5f]\ \ |\ \ \ r\ \ :\ [\%.6f,\ \%.6f,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.6f]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ w-\/bg\ \ \ :\ [\%.5f,\ \%.5f,\ \%.5f]\ \ |\ \ \ nr\ :\ [\%.4f,\ \%.4f,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.4f]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ w\ mean\ :\ [\%.5f,\ \%.5f,\ \%.5f]\ \ |\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2KUncertainty\ \&\ Sensor\ Noise\ Balances\ (Axis:\ X,\ Y,\ Z)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ S\ \ total\ innov\ var\ :\ \ \%.4e,\ \ \%.4e,\ \ \%.4e\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ Pz\ state\ contrib\ \ \ :\ \ \%.4e,\ \ \%.4e,\ \ \%.4e\ \ (\%5.1f\%\%,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%5.1f\%\%,\ \%5.1f\%\%)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K\ \ R\ \ sensor\ noise\ \ \ \ :\ \ \%.4e,\ \ \%.4e,\ \ \%.4e\ \ (\%5.1f\%\%,\ "{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%5.1f\%\%,\ \%5.1f\%\%)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[2K========================================================"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}==================\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name.c\_str(),\ this-\/>last\_nis(),\ (\textcolor{keywordtype}{int})d\_r.rows(),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ roll,\ q\_curr(0),\ q\_curr(1),\ q\_curr(2),\ q\_curr(3),\ pitch,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bg\_curr(0),\ bg\_curr(1),\ bg\_curr(2),\ yaw,\ bm\_curr(0),\ bm\_curr(1),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bm\_curr(2),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\_raw.x(),\ w\_raw.y(),\ w\_raw.z(),\ d\_r(0),\ d\_r(1),\ d\_r(2),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\_corrected.x(),\ w\_corrected.y(),\ w\_corrected.z(),\ nrx,\ nry,\ nrz,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\_mean.x(),\ w\_mean.y(),\ w\_mean.z(),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Sx,\ Sy,\ Sz,\ Pzx,\ Pzy,\ Pzz,\ 100.0\ *\ Pzx\ /\ Sx,\ 100.0\ *\ Pzy\ /\ Sy,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 100.0\ *\ Pzz\ /\ Sz,\ Rx,\ Ry,\ Rz,\ 100.0\ *\ Rx\ /\ Sx,\ 100.0\ *\ Ry\ /\ Sy,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 100.0\ *\ Rz\ /\ Sz)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ <<\ std::flush;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00183}00183\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00185}00185\ \ \ Eigen::Quaterniond\ q0\_ref\{Eigen::Quaterniond::Identity()\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00186}00186\ \ \ Eigen::Vector3d\ magnm\_mean\{Eigen::Vector3d::Zero()\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00187}00187\ \ \ Eigen::MatrixXd\ R\_accel,\ R\_magnm;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00188}00188\ \ \ \textcolor{keywordtype}{bool}\ accel\_finished\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00190}00190\ \ \ \textcolor{comment}{//\ offline\ magnetometer\ calibration\ (see\ analysis/calibrate.py}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00191}00191\ \ \ \textcolor{comment}{//\ fit\_ellipsoid\ /\ save\_mag\_calibration).\ m\_cal\ =\ W\_mag\ *\ (m\_raw\ -\/\ bias\_mag).}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00192}00192\ \ \ \textcolor{comment}{//\ Defaults\ to\ identity/zero\ (no-\/op)\ until\ a\ calibration\ file\ is\ found.}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00193}00193\ \ \ \textcolor{comment}{//\ Loaded\ lazily\ from\ the\ magnm\ init\ callback,\ not\ the\ constructor,\ since\ the}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00194}00194\ \ \ \textcolor{comment}{//\ file\ may\ not\ exist\ yet\ at\ construction\ time.}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00195}00195\ \ \ std::string\ mag\_calibration\_path\{\textcolor{stringliteral}{"{}mag\_calibration.txt"{}}\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00196}00196\ \ \ Eigen::Matrix3d\ W\_mag\{Eigen::Matrix3d::Identity()\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00197}00197\ \ \ Eigen::Vector3d\ bias\_mag\{Eigen::Vector3d::Zero()\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00199}00199\ \ \ \textcolor{keywordtype}{void}\ load\_mag\_calibration()\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00200}00200\ \ \ \ \ std::vector<double>\ vals;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00201}00201\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{utils_8h_ab55ab03dbd3d731a0e24b3e8c6e0ec1e}{load\_doubles}}(this-\/>mag\_calibration\_path,\ vals,\ 12))\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00202}00202\ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[MEKF]\ no\ mag\ calibration\ at\ '"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ this-\/>mag\_calibration\_path}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}'\ —\ using\ identity/zero\ (raw\ magnetometer)\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00205}00205\ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ identity/zero\ stays\ in\ effect}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00206}00206\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00207}00207\ \ \ \ \ this-\/>W\_mag\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ Eigen::Map<Eigen::Matrix<double,\ 3,\ 3,\ Eigen::RowMajor>>(vals.data());}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00209}00209\ \ \ \ \ this-\/>bias\_mag\ =\ Eigen::Vector3d(vals[9],\ vals[10],\ vals[11]);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00210}00210\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[MEKF]\ loaded\ mag\ calibration\ from\ '"{}}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ this-\/>mag\_calibration\_path\ <<\ \textcolor{stringliteral}{"{}'\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00212}00212\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00214}00214\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00215}\mbox{\hyperlink{classMEKF_aef42816238410c8da83024e67d75750f}{00215}}\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMEKF_aef42816238410c8da83024e67d75750f}{should\_print\_diagnostic}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00216}\mbox{\hyperlink{classMEKF_ab98f50e8ad2b02c49db99ddfc41595ed}{00216}}\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMEKF_ab98f50e8ad2b02c49db99ddfc41595ed}{suppress\_magnm}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00217}\mbox{\hyperlink{classMEKF_a9833178ae1ee57972b84627d4c84ec7b}{00217}}\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMEKF_a9833178ae1ee57972b84627d4c84ec7b}{is\_finished\_orienting}}()\ \{\ \textcolor{keywordflow}{return}\ this-\/>accel\_finished;\ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00219}\mbox{\hyperlink{classMEKF_ac58ff84d27642fa80fc6e111ee6ce601}{00219}}\ \ \ \mbox{\hyperlink{classMEKF_ac58ff84d27642fa80fc6e111ee6ce601}{MEKF}}(SteadyClock::time\_point\ t0)\ :\ \mbox{\hyperlink{namespaceekf}{ekf}}::\mbox{\hyperlink{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e}{EKF}}(4,\ 3,\ t0)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00220}00220\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ =\ Eigen::Vector3d;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00221}00221\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{trans__ekf_8hpp_ab69e918a7fa641504f1d2bce2c8553b8}{V4}}\ =\ Eigen::Vector4d;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00222}00222\ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(0)\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00223}00223\ \ \ \ \ Qw\ =\ Eigen::Matrix3d::Identity()\ *\ 1e-\/5;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00225}00225\ \ \ \ \ \textcolor{keyword}{auto}\ accel\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V3>}}(\textcolor{stringliteral}{"{}accel"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00226}00226\ \ \ \ \ accel\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \&z,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ z\_norm\ =\ std::max(z.norm(),\ 1e-\/9);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::MatrixXd\ R\_accel\_dir\ =\ R\ /\ (z\_norm\ *\ z\_norm);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\_correction}}(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,\ R\_accel\_dir,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},\ z](Eigen::MatrixXd\ \&H,\ Eigen::VectorXd\ \&r)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector4d\ o\ =\ q();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Quaterniond\ \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}(o(0),\ o(1),\ o(2),\ o(3));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ grav\_body\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}.normalized().toRotationMatrix().transpose()\ *}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ekf_8hpp_af19c968b28d79f66a1a4976c7d299ef5}{grav\_vec}};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ z\_norm\ =\ z.norm();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ g\_norm\ =\ grav\_body.norm();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (z\_norm\ <\ 1e-\/9\ ||\ g\_norm\ <\ 1e-\/9)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ z\_dir\ =\ z\ /\ z\_norm;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ g\_dir\ =\ grav\_body\ /\ g\_norm;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ tangent\_projector\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix3d::Identity()\ -\/\ g\_dir\ *\ g\_dir.transpose();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H\ =\ Eigen::MatrixXd::Zero(3,\ 3);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H.block<3,\ 3>(0,\ 0)\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (tangent\_projector\ /\ g\_norm)\ *\ \mbox{\hyperlink{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc}{skew}}(grav\_body);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ z\_dir\ -\/\ g\_dir;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}accel"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<V3>}}\ \&prod)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ accel\_mean\ =\ prod.get\_mean();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ this-\/>q0\_ref\ =\ Eigen::Quaterniond::FromTwoVectors(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accel\_mean.normalized(),\ Eigen::Vector3d::UnitZ());}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ q()\ <<\ q0\_ref.w(),\ q0\_ref.x(),\ q0\_ref.y(),\ q0\_ref.z();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00266}00266\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}.diagonal().segment<3>(0).setConstant(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pow(0.5\ *\ M\_PI\ /\ 180.0,\ 2));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ accel\_norm\ =\ std::max(accel\_mean.norm(),\ 1e-\/9);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\_accel\_raw\ =\ prod.get\_variance().asDiagonal();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ R\_accel\ =\ R\_accel\_raw\ /\ (accel\_norm\ *\ accel\_norm);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ accel\_finished\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00276}00276\ \ \ \ \ \textcolor{keyword}{auto}\ magnm\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V3>}}(\textcolor{stringliteral}{"{}magnm"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00277}00277\ \ \ \ \ magnm\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00278}00278\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \&z,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::MatrixXd\ R\_magnm\_cal\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>W\_mag\ *\ R\ *\ this-\/>W\_mag.transpose();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\_correction}}(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,\ R\_magnm\_cal,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},\ z](Eigen::MatrixXd\ \&H,\ Eigen::VectorXd\ \&r)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>accel\_finished)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ hard\ +\ soft\ iron\ correction\ (identity/zero\ =>\ raw)}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ z\_cal\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>W\_mag\ *\ (z\ -\/\ this-\/>bias\_mag);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ residual\ must\ be\ measurement\ minus\ what\ the\ ATTITUDE}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ predicts\ (startup\ reference\ rotated\ into\ the\ current\ body}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ frame)\ —\ comparing\ against\ the\ constant\ magnm\_mean\ removes}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ state\ from\ the\ loop\ and\ turns\ the\ correction\ into\ an}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ open\ integrator\ (constant-\/rate\ fake\ yaw\ spin).}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector4d\ o\ =\ this-\/>q();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Quaterniond\ \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}(o(0),\ o(1),\ o(2),\ o(3));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ mean\_north\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q0\_ref.toRotationMatrix()\ *\ magnm\_mean;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3d\ mag\_body\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}.normalized().toRotationMatrix().transpose()\ *}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mean\_north;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H\ =\ Eigen::MatrixXd::Zero(3,\ 3);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H.block<3,\ 3>(0,\ 0)\ =\ \mbox{\hyperlink{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc}{skew}}(mag\_body);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ z\_cal\ -\/\ mag\_body;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}magnm"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<V3>}}\ \&prod)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ this-\/>load\_mag\_calibration();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ affine,\ so\ calibrating\ the\ mean\ is\ equivalent\ to\ calibrating}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ every\ raw\ sample\ before\ averaging}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ magnm\_mean\ =\ this-\/>W\_mag\ *\ (prod.get\_mean()\ -\/\ this-\/>bias\_mag);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\_raw\ =\ prod.get\_variance().asDiagonal();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\_cal\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>W\_mag\ *\ R\_raw\ *\ this-\/>W\_mag.transpose();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00323}00323\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ R\_magnm\ =\ R\_cal;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00326}00326\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00327}00327\ \ \ \ \ \textcolor{keyword}{auto}\ gyro\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V3>}}(\textcolor{stringliteral}{"{}gyro"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00328}00328\ \ \ \ \ gyro\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \&z,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\_task}}(t,\ [\textcolor{keyword}{this},\ z,\ t]()\ \{\ this-\/>gyro\_snapshot\ =\ \{t,\ z,\ \textcolor{keyword}{true}\};\ \});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<V3>}}\ \&prod)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ plain\ constant\ offset\ from\ the\ startup\ mean\ —\ not\ estimated\ online}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ bg0\ =\ prod.get\_mean();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00338}00338\ \ \ \ \ \textcolor{keyword}{auto}\ control\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V4>}}(\textcolor{stringliteral}{"{}control"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00339}00339\ \ \ \ \ control\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_ab69e918a7fa641504f1d2bce2c8553b8}{V4}}\ \&z,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ accumulate\ wheel-\/odometry\ yaw\ (start-\/relative,\ like\ rel\ yaw).}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Done\ here\ at\ emit\ time\ so\ the\ integration\ order\ is\ well-\/defined.}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}})\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ const\ double\ dt\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::chrono::duration<double>(t\ -\/\ control\_snapshot.t).count();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ if\ (dt\ >\ 0.0\ \&\&\ dt\ <\ 0.5)\ \textcolor{comment}{//\ guard\ first\ msg\ /\ stale\ gaps}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_wheel\ +=}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GEOM.rw\ /\ GEOM.B\ *\ (GEOM.mu\_r\ *\ z(0)\ -\/\ GEOM.mu\_l\ *\ z(1))\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ this-\/>control\_snapshot\ =\ \{t,\ z,\ true\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\_correction}}(}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,\ this-\/>R\_yaw\_odo,}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ capture\ the\ accumulated\ value\ at\ queue\ time}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},\ yw\ =\ yaw\_wheel](Eigen::MatrixXd\ \&H,\ Eigen::VectorXd\ \&r)\ \{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>accel\_finished)}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ wheel\ yaw\ is\ relative\ to\ startup,\ so\ compare\ against\ the}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ rel\ (q0-\/frame)\ yaw,\ not\ the\ absolute\ one}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ Rm\ =\ \mbox{\hyperlink{classMEKF_a15afe8874ea9d5b44f6ca0ef20d0047c}{rel\_orientation}}().toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ yaw\_orient\ =\ std::atan2(Rm(1,\ 0),\ Rm(0,\ 0));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00364}00364\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ yaw\_error\ =\ std::atan2(std::sin(yw\ -\/\ yaw\_orient),}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cos(yw\ -\/\ yaw\_orient));}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H\ =\ Eigen::MatrixXd::Zero(1,\ 3);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H(0,\ 2)\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ Eigen::VectorXd::Constant(1,\ yaw\_error);}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}control"{}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor::SensorHook<V4>::NoInitialize}});}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00376}00376\ \ \ \};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00377}00377\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00378}\mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{00378}}\ \ \ Eigen::Quaterniond\ \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00379}00379\ \ \ \ \ \textcolor{keywordflow}{return}\ Eigen::Quaterniond(\mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(0),\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(1),\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(2),\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(3)).normalized();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00380}00380\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00382}\mbox{\hyperlink{classMEKF_a0c61327054091f50f2afefdc163e2572}{00382}}\ \ \ Eigen::Quaterniond\ \mbox{\hyperlink{classMEKF_a0c61327054091f50f2afefdc163e2572}{orientation0}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ this-\/>q0\_ref.normalized();\ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00384}\mbox{\hyperlink{classMEKF_a15afe8874ea9d5b44f6ca0ef20d0047c}{00384}}\ \ \ Eigen::Quaterniond\ \mbox{\hyperlink{classMEKF_a15afe8874ea9d5b44f6ca0ef20d0047c}{rel\_orientation}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00385}00385\ \ \ \ \ \textcolor{keyword}{auto}\ curr\ =\ \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00386}00386\ \ \ \ \ \textcolor{keyword}{auto}\ zero\ =\ \mbox{\hyperlink{classMEKF_a0c61327054091f50f2afefdc163e2572}{orientation0}}();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00388}00388\ \ \ \ \ \textcolor{keywordflow}{return}\ (zero.conjugate()\ *\ curr).normalized();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00389}00389\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00391}\mbox{\hyperlink{classMEKF_a190351c210e9b8eb7b046e5334500eed}{00391}}\ \ \ Eigen::Vector3d\ \mbox{\hyperlink{classMEKF_a190351c210e9b8eb7b046e5334500eed}{get\_bg}}()\ \{\ \textcolor{keywordflow}{return}\ this-\/>bg0;\ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00392}00392\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00393}\mbox{\hyperlink{classMEKF_aafb16c6f6a9bc53011873843654234ca}{00393}}\ \ \ Eigen::Vector3d\ \mbox{\hyperlink{classMEKF_aafb16c6f6a9bc53011873843654234ca}{rpy}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00394}00394\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\ =\ this-\/>\mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}}().toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00395}00395\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ roll\ =\ std::atan2(R(2,\ 1),\ R(2,\ 2))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00396}00396\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ pitch\ =}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ std::asin(std::max(-\/1.0,\ std::min(1.0,\ -\/R(2,\ 0))))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00398}00398\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ yaw\ =\ std::atan2(R(1,\ 0),\ R(0,\ 0))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00400}00400\ \ \ \ \ \textcolor{keywordflow}{return}\ \{roll,\ pitch,\ yaw\};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00401}00401\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00402}00402\ }
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00403}\mbox{\hyperlink{classMEKF_aa8bc6050d0718a18deb0ecb74b1407bf}{00403}}\ \ \ Eigen::Vector3d\ \mbox{\hyperlink{classMEKF_aa8bc6050d0718a18deb0ecb74b1407bf}{gyro\_bias}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ bg0;\ \}}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00404}00404\ \};}
+\DoxyCodeLine{\Hypertarget{mekf_8hpp_source_l00405}00405\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -33,9 +33,9 @@
 \item 
 \mbox{\hyperlink{namespacebias__calc_ace22b1e7607d4a60a989400f386835d4}{X\+\_\+yaw}} = np.\+fft.\+fft(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}} -\/ np.\+mean(\mbox{\hyperlink{namespacebias__calc_a8f92b2a6bb94547d64dea04c56eb9add}{wyaw}}))
 \item 
-\mbox{\hyperlink{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}{freqs}} = np.\+fft.\+fftfreq(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{len}}(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{d}}=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})
+\mbox{\hyperlink{namespacebias__calc_af0ea33e02aee803e537fb0fb0c5323b1}{freqs}} = np.\+fft.\+fftfreq(len(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), d=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})
 \item 
-\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{int}} \mbox{\hyperlink{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174}{mask}} = 0
+int \mbox{\hyperlink{namespacebias__calc_a80cc6820ee23ee76c3f66ffbe4987174}{mask}} = 0
 \end{DoxyCompactItemize}
 
 
@@ -84,7 +84,7 @@ Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00017}{17}} of file \
 \index{bias\_calc@{bias\_calc}!freqs@{freqs}}
 \index{freqs@{freqs}!bias\_calc@{bias\_calc}}
 \doxysubsubsection{\texorpdfstring{freqs}{freqs}}
-{\footnotesize\ttfamily bias\+\_\+calc.\+freqs = np.\+fft.\+fftfreq(\mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{len}}(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{d}}=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})}
+{\footnotesize\ttfamily bias\+\_\+calc.\+freqs = np.\+fft.\+fftfreq(len(\mbox{\hyperlink{namespacebias__calc_aaa1b38e93b28dfc56c37f685d3975ad1}{wroll}}), d=\mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}})}
 
 
 
@@ -104,7 +104,7 @@ Definition at line \mbox{\hyperlink{bias__calc_8py_source_l00005}{5}} of file \m
 \index{bias\_calc@{bias\_calc}!mask@{mask}}
 \index{mask@{mask}!bias\_calc@{bias\_calc}}
 \doxysubsubsection{\texorpdfstring{mask}{mask}}
-{\footnotesize\ttfamily \mbox{\hyperlink{namespacebias__calc_a5f2b34793cb3c853cb09acc0d5811fb6}{int}} bias\+\_\+calc.\+mask = 0}
+{\footnotesize\ttfamily int bias\+\_\+calc.\+mask = 0}
 
 
 

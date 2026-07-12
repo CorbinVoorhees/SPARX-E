@@ -1,0 +1,268 @@
+\doxysection{plot\+\_\+position.\+py}
+\hypertarget{plot__position_8py_source}{}\label{plot__position_8py_source}\index{analysis/plot\_position.py@{analysis/plot\_position.py}}
+\mbox{\hyperlink{plot__position_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00001}\mbox{\hyperlink{namespaceplot__position}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00004}00004\ \textcolor{keyword}{import}\ matplotlib}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00005}00005\ matplotlib.use(\textcolor{stringliteral}{'TkAgg'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00007}00007\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00008}00008\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00009}00009\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00010}00010\ \textcolor{keyword}{from}\ matplotlib.patches\ \textcolor{keyword}{import}\ Ellipse}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00012}00012\ \textcolor{keyword}{from}\ plot\_common\ \textcolor{keyword}{import}\ enable\_quit\_key,\ add\_time\_window}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00014}\mbox{\hyperlink{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}{00014}}\ EKF\_CSV\ =\ \textcolor{stringliteral}{'../sparxe\_ekf\_test1\_\_1\_1'}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00016}\mbox{\hyperlink{namespaceplot__position_a8a1cf9f1a9af4d8a1c7d8aca3c7fa485}{00016}}\ REQUIRED\_COLS\ =\ [\textcolor{stringliteral}{'time'},\ \textcolor{stringliteral}{'nis'},\ \textcolor{stringliteral}{'px'},\ \textcolor{stringliteral}{'py'},\ \textcolor{stringliteral}{'pz'},\ \textcolor{stringliteral}{'vx'},\ \textcolor{stringliteral}{'vy'},\ \textcolor{stringliteral}{'vz'}]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00019}\mbox{\hyperlink{namespaceplot__position_a1b5d46b9f81ef817c7215e508d678b0b}{00019}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__position_a1b5d46b9f81ef817c7215e508d678b0b}{load\_csv}}(base):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{raise}\ FileNotFoundError(f\textcolor{stringliteral}{"{}Could\ not\ find\ '\{base\}'\ or\ '\{base\}.csv'."{}})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00026}\mbox{\hyperlink{namespaceplot__position_a48b55fb96a805f875bb0a772bced1352}{00026}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__position_a48b55fb96a805f875bb0a772bced1352}{clean}}(df,\ cols):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00027}00027\ \ \ \ \ df\ =\ df.copy()}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ cols:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ df[c]\ =\ pd.to\_numeric(df[c],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00030}00030\ \ \ \ \ df\ =\ df.dropna(subset=cols)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00031}00031\ \ \ \ \ df\ =\ df.sort\_values(\textcolor{stringliteral}{'time'}).drop\_duplicates(subset=\textcolor{stringliteral}{'time'},\ keep=\textcolor{stringliteral}{'first'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00032}00032\ \ \ \ \ df\ =\ df.reset\_index(drop=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{if}\ len(df)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(\textcolor{stringliteral}{'Not\ enough\ valid\ rows\ after\ cleaning.'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{return}\ df}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00038}\mbox{\hyperlink{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71}{00038}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71}{rotate\_vecs}}(Q,\ V):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00039}00039\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Rotate\ body-\/frame\ vectors\ V\ (Nx3)\ by\ quaternions\ Q\ (Nx4\ [w,x,y,z])\ into}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ the\ q0\ frame\ —\ i.e.\ p\_q0\ =\ R(q)·p\_body,\ done\ per\ row.\ Vectorized."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00041}00041\ \ \ \ \ w,\ x,\ y,\ z\ =\ Q[:,\ 0],\ Q[:,\ 1],\ Q[:,\ 2],\ Q[:,\ 3]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00042}00042\ \ \ \ \ n\ =\ np.sqrt(w\ *\ w\ +\ x\ *\ x\ +\ y\ *\ y\ +\ z\ *\ z)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00043}00043\ \ \ \ \ n[n\ ==\ 0]\ =\ 1.0}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00044}00044\ \ \ \ \ w,\ x,\ y,\ z\ =\ w\ /\ n,\ x\ /\ n,\ y\ /\ n,\ z\ /\ n}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00045}00045\ \ \ \ \ vx,\ vy,\ vz\ =\ V[:,\ 0],\ V[:,\ 1],\ V[:,\ 2]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00046}00046\ \ \ \ \ rx\ =\ (1\ -\/\ 2\ *\ (y\ *\ y\ +\ z\ *\ z))\ *\ vx\ +\ 2\ *\ (x\ *\ y\ -\/\ z\ *\ w)\ *\ vy\ +\ 2\ *\ (x\ *\ z\ +\ y\ *\ w)\ *\ vz}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00047}00047\ \ \ \ \ ry\ =\ 2\ *\ (x\ *\ y\ +\ z\ *\ w)\ *\ vx\ +\ (1\ -\/\ 2\ *\ (x\ *\ x\ +\ z\ *\ z))\ *\ vy\ +\ 2\ *\ (y\ *\ z\ -\/\ x\ *\ w)\ *\ vz}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00048}00048\ \ \ \ \ rz\ =\ 2\ *\ (x\ *\ z\ -\/\ y\ *\ w)\ *\ vx\ +\ 2\ *\ (y\ *\ z\ +\ x\ *\ w)\ *\ vy\ +\ (1\ -\/\ 2\ *\ (x\ *\ x\ +\ y\ *\ y))\ *\ vz}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{return}\ np.column\_stack([rx,\ ry,\ rz])}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00052}\mbox{\hyperlink{namespaceplot__position_a32ceb461eca65872bbf7bcb100b0d34c}{00052}}\ \textcolor{keyword}{def\ }main(ekf\_path=EKF\_CSV):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00053}00053\ \ \ \ \ df\ =\ \mbox{\hyperlink{namespaceplot__position_a1b5d46b9f81ef817c7215e508d678b0b}{load\_csv}}(ekf\_path)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00055}00055\ \ \ \ \ missing\ =\ [c\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ REQUIRED\_COLS\ \textcolor{keywordflow}{if}\ c\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{if}\ missing:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ KeyError(f\textcolor{stringliteral}{'EKF\ CSV\ missing\ columns:\ \{missing\}'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00059}00059\ \ \ \ \ df\ =\ \mbox{\hyperlink{namespaceplot__position_a48b55fb96a805f875bb0a772bced1352}{clean}}(df,\ REQUIRED\_COLS)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00061}00061\ \ \ \ \ t\ =\ df[\textcolor{stringliteral}{'time'}].to\_numpy(dtype=float).copy()}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00062}00062\ \ \ \ \ t\ -\/=\ t[0]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00064}00064\ \ \ \ \ px\ =\ df[\textcolor{stringliteral}{'px'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00065}00065\ \ \ \ \ py\ =\ df[\textcolor{stringliteral}{'py'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00066}00066\ \ \ \ \ pz\ =\ df[\textcolor{stringliteral}{'pz'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00067}00067\ \ \ \ \ vx\ =\ df[\textcolor{stringliteral}{'vx'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00068}00068\ \ \ \ \ vy\ =\ df[\textcolor{stringliteral}{'vy'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00069}00069\ \ \ \ \ vz\ =\ df[\textcolor{stringliteral}{'vz'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00070}00070\ \ \ \ \ nis\ =\ df[\textcolor{stringliteral}{'nis'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00072}00072\ \ \ \ \ \textcolor{comment}{\#\ position/velocity\ are\ logged\ in\ the\ q0\ frame\ (wheel-\/model\ dynamics).\ If\ a}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00073}00073\ \ \ \ \ \textcolor{comment}{\#\ log\ carries\ body-\/frame\ states\ +\ the\ rel\_orientation\ quaternion\ (qw..qz),}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00074}00074\ \ \ \ \ \textcolor{comment}{\#\ rotate\ to\ q0\ here\ at\ plot\ time;\ otherwise\ plot\ as\ logged.}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00075}00075\ \ \ \ \ quat\_cols\ =\ [\textcolor{stringliteral}{'qw'},\ \textcolor{stringliteral}{'qx'},\ \textcolor{stringliteral}{'qy'},\ \textcolor{stringliteral}{'qz'}]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00076}00076\ \ \ \ \ has\_quat\ =\ all(c\ \textcolor{keywordflow}{in}\ df.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ quat\_cols)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00077}00077\ \ \ \ \ frame\ =\ \textcolor{stringliteral}{'q0\ (as\ logged)'}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00078}00078\ \ \ \ \ yaw\ =\ np.zeros(len(px))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_quat:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ Q\ =\ df[quat\_cols].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ pw\ =\ \mbox{\hyperlink{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71}{rotate\_vecs}}(Q,\ np.column\_stack([px,\ py,\ pz]))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ vw\ =\ \mbox{\hyperlink{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71}{rotate\_vecs}}(Q,\ np.column\_stack([vx,\ vy,\ vz]))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ px,\ py,\ pz\ =\ pw[:,\ 0],\ pw[:,\ 1],\ pw[:,\ 2]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ vx,\ vy,\ vz\ =\ vw[:,\ 0],\ vw[:,\ 1],\ vw[:,\ 2]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ w,\ x,\ y,\ z\ =\ Q[:,\ 0],\ Q[:,\ 1],\ Q[:,\ 2],\ Q[:,\ 3]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ yaw\ =\ np.arctan2(2\ *\ (x\ *\ y\ +\ z\ *\ w),\ 1\ -\/\ 2\ *\ (y\ *\ y\ +\ z\ *\ z))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ frame\ =\ \textcolor{stringliteral}{'q0\ (rotated\ from\ body\ at\ plot\ time)'}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00089}00089\ \ \ \ \ \textcolor{comment}{\#\ adaptive-\/slip\ states\ (bax,\ mu\_r,\ mu\_l)\ —\ present\ in\ newer\ logs}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00090}00090\ \ \ \ \ bias\_cols\ =\ [\textcolor{stringliteral}{'bax'},\ \textcolor{stringliteral}{'mur'},\ \textcolor{stringliteral}{'mul'}]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00091}00091\ \ \ \ \ has\_bias\ \ =\ all(c\ \textcolor{keywordflow}{in}\ df.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ bias\_cols)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00093}00093\ \ \ \ \ \textcolor{comment}{\#\ position\ xy\ covariance\ block\ [[pxx,\ pxy],\ [pxy,\ pyy]]\ (body\ frame);}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00094}00094\ \ \ \ \ \textcolor{comment}{\#\ rotate\ into\ q0\ by\ the\ yaw\ (planar\ approx)\ so\ ellipses\ match\ the\ trajectory.}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00095}00095\ \ \ \ \ cov\_cols\ =\ [\textcolor{stringliteral}{'pxx'},\ \textcolor{stringliteral}{'pyy'},\ \textcolor{stringliteral}{'pxy'}]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00096}00096\ \ \ \ \ has\_cov\ \ =\ all(c\ \textcolor{keywordflow}{in}\ df.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ cov\_cols)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_cov:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ pxx\ =\ df[\textcolor{stringliteral}{'pxx'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ pyy\ =\ df[\textcolor{stringliteral}{'pyy'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ pxy\ =\ df[\textcolor{stringliteral}{'pxy'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ has\_quat:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ c,\ s\ =\ np.cos(yaw),\ np.sin(yaw)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ pxx,\ pyy,\ pxy\ =\ (}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ *\ c\ *\ pxx\ -\/\ 2\ *\ c\ *\ s\ *\ pxy\ +\ s\ *\ s\ *\ pyy,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\ *\ s\ *\ pxx\ +\ 2\ *\ c\ *\ s\ *\ pxy\ +\ c\ *\ c\ *\ pyy,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ *\ s\ *\ (pxx\ -\/\ pyy)\ +\ (c\ *\ c\ -\/\ s\ *\ s)\ *\ pxy,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ sig\_px\ =\ np.sqrt(np.clip(pxx,\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ sig\_py\ =\ np.sqrt(np.clip(pyy,\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00111}00111\ \ \ \ \ \textcolor{comment}{\#\ display\ convention:\ py\ shown\ right-\/positive\ (negated\ from\ the\ logged}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00112}00112\ \ \ \ \ \textcolor{comment}{\#\ left-\/positive\ q0\ frame);\ pxy\ flips\ sign\ with\ it\ so\ ellipses\ stay\ correct.}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00113}00113\ \ \ \ \ py\ =\ -\/py}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00114}00114\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_cov:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ pxy\ =\ -\/pxy}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00117}00117\ \ \ \ \ \textcolor{comment}{\#\ full\ per-\/state\ variances\ (newer\ logs):\ pz,\ velocity,\ mu}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00118}00118\ \ \ \ \ ext\_cols\ =\ [\textcolor{stringliteral}{'pzz'},\ \textcolor{stringliteral}{'pvx'},\ \textcolor{stringliteral}{'pvy'},\ \textcolor{stringliteral}{'pvz'},\ \textcolor{stringliteral}{'pmr'},\ \textcolor{stringliteral}{'pml'}]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00119}00119\ \ \ \ \ has\_ext\ =\ all(c\ \textcolor{keywordflow}{in}\ df.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ ext\_cols)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_ext:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ sig\_pz\ =\ np.sqrt(np.clip(df[\textcolor{stringliteral}{'pzz'}].to\_numpy(float),\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ sig\_vx\ =\ np.sqrt(np.clip(df[\textcolor{stringliteral}{'pvx'}].to\_numpy(float),\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ sig\_vy\ =\ np.sqrt(np.clip(df[\textcolor{stringliteral}{'pvy'}].to\_numpy(float),\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ sig\_vz\ =\ np.sqrt(np.clip(df[\textcolor{stringliteral}{'pvz'}].to\_numpy(float),\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ sig\_mr\ =\ np.sqrt(np.clip(df[\textcolor{stringliteral}{'pmr'}].to\_numpy(float),\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ sig\_ml\ =\ np.sqrt(np.clip(df[\textcolor{stringliteral}{'pml'}].to\_numpy(float),\ 0,\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00128}00128\ \ \ \ \ fig\ =\ plt.figure(figsize=(16,\ 10))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00129}00129\ \ \ \ \ fig.suptitle(f\textcolor{stringliteral}{'TRANSEKF\ Position\ Estimate\ —\ \{frame\}'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00131}00131\ \ \ \ \ \textcolor{comment}{\#\ left\ column:\ time-\/series}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00132}00132\ \ \ \ \ ax\_px\ =\ fig.add\_subplot(4,\ 2,\ 1)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00133}00133\ \ \ \ \ ax\_py\ =\ fig.add\_subplot(4,\ 2,\ 3,\ sharex=ax\_px)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00134}00134\ \ \ \ \ ax\_pz\ =\ fig.add\_subplot(4,\ 2,\ 5,\ sharex=ax\_px)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00135}00135\ \ \ \ \ ax\_v\ \ =\ fig.add\_subplot(4,\ 2,\ 7,\ sharex=ax\_px)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00137}00137\ \ \ \ \ ax\_px.plot(t,\ px,\ color=\textcolor{stringliteral}{'tab:blue'},\ \ \ linewidth=1.5,\ label=\textcolor{stringliteral}{'px'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00138}00138\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_cov:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ ax\_px.fill\_between(t,\ px\ -\/\ sig\_px,\ px\ +\ sig\_px,\ color=\textcolor{stringliteral}{'tab:blue'},}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.2,\ linewidth=0,\ label=\textcolor{stringliteral}{'±1σ'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00141}00141\ \ \ \ \ ax\_px.set\_ylabel(\textcolor{stringliteral}{'px\ (m)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00142}00142\ \ \ \ \ ax\_px.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00143}00143\ \ \ \ \ ax\_px.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00145}00145\ \ \ \ \ ax\_py.plot(t,\ py,\ color=\textcolor{stringliteral}{'tab:orange'},\ linewidth=1.5,\ label=\textcolor{stringliteral}{'py'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_cov:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ ax\_py.fill\_between(t,\ py\ -\/\ sig\_py,\ py\ +\ sig\_py,\ color=\textcolor{stringliteral}{'tab:orange'},}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.2,\ linewidth=0,\ label=\textcolor{stringliteral}{'±1σ'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00149}00149\ \ \ \ \ ax\_py.set\_ylabel(\textcolor{stringliteral}{'py\ —\ right\ (m)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00150}00150\ \ \ \ \ ax\_py.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00151}00151\ \ \ \ \ ax\_py.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00153}00153\ \ \ \ \ ax\_pz.plot(t,\ pz,\ color=\textcolor{stringliteral}{'tab:green'},\ \ linewidth=1.5,\ label=\textcolor{stringliteral}{'pz'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_ext:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ ax\_pz.fill\_between(t,\ pz\ -\/\ sig\_pz,\ pz\ +\ sig\_pz,\ color=\textcolor{stringliteral}{'tab:green'},}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.2,\ linewidth=0,\ label=\textcolor{stringliteral}{'±1σ'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00157}00157\ \ \ \ \ ax\_pz.set\_ylabel(\textcolor{stringliteral}{'pz\ (m)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00158}00158\ \ \ \ \ ax\_pz.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00159}00159\ \ \ \ \ ax\_pz.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00161}00161\ \ \ \ \ ax\_v.plot(t,\ vx,\ color=\textcolor{stringliteral}{'tab:blue'},\ \ \ linewidth=1.2,\ label=\textcolor{stringliteral}{'vx'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00162}00162\ \ \ \ \ ax\_v.plot(t,\ vy,\ color=\textcolor{stringliteral}{'tab:orange'},\ linewidth=1.2,\ label=\textcolor{stringliteral}{'vy'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00163}00163\ \ \ \ \ ax\_v.plot(t,\ vz,\ color=\textcolor{stringliteral}{'tab:green'},\ \ linewidth=1.2,\ label=\textcolor{stringliteral}{'vz'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00164}00164\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_ext:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ val,\ sig,\ col\ \textcolor{keywordflow}{in}\ ((vx,\ sig\_vx,\ \textcolor{stringliteral}{'tab:blue'}),}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (vy,\ sig\_vy,\ \textcolor{stringliteral}{'tab:orange'}),}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (vz,\ sig\_vz,\ \textcolor{stringliteral}{'tab:green'})):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ ax\_v.fill\_between(t,\ val\ -\/\ sig,\ val\ +\ sig,\ color=col,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.15,\ linewidth=0)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00170}00170\ \ \ \ \ ax\_v.set\_ylabel(\textcolor{stringliteral}{'velocity\ (m/s)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00171}00171\ \ \ \ \ ax\_v.set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00172}00172\ \ \ \ \ ax\_v.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00173}00173\ \ \ \ \ ax\_v.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00175}00175\ \ \ \ \ \textcolor{comment}{\#\ right\ column:\ 2-\/D\ trajectory\ +\ NIS}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00176}00176\ \ \ \ \ ax\_xy\ \ =\ fig.add\_subplot(3,\ 2,\ 2)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00177}00177\ \ \ \ \ ax\_nis\ =\ fig.add\_subplot(3,\ 2,\ (4,\ 6))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00179}00179\ \ \ \ \ sc\ =\ ax\_xy.scatter(px,\ py,\ c=t,\ cmap=\textcolor{stringliteral}{'viridis'},\ s=8,\ zorder=3)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00180}00180\ \ \ \ \ ax\_xy.plot(px,\ py,\ color=\textcolor{stringliteral}{'grey'},\ linewidth=0.8,\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00181}00181\ \ \ \ \ ax\_xy.plot(px[0],\ \ py[0],\ \ \textcolor{stringliteral}{'go'},\ markersize=8,\ label=\textcolor{stringliteral}{'start'},\ zorder=4)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00182}00182\ \ \ \ \ ax\_xy.plot(px[-\/1],\ py[-\/1],\ \textcolor{stringliteral}{'rs'},\ markersize=8,\ label=\textcolor{stringliteral}{'end'},\ \ \ zorder=4)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00183}00183\ \ \ \ \ fig.colorbar(sc,\ ax=ax\_xy,\ label=\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00184}00184\ \ \ \ \ ax\_xy.set\_xlabel(\textcolor{stringliteral}{'px\ —\ forward\ (m)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00185}00185\ \ \ \ \ ax\_xy.set\_ylabel(\textcolor{stringliteral}{'py\ —\ right\ (m)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00186}00186\ \ \ \ \ ax\_xy.set\_title(\textcolor{stringliteral}{'XY\ Trajectory\ (top-\/down)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00187}00187\ \ \ \ \ ax\_xy.set\_aspect(\textcolor{stringliteral}{'equal'},\ adjustable=\textcolor{stringliteral}{'datalim'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00188}00188\ \ \ \ \ ax\_xy.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00190}00190\ \ \ \ \ \textcolor{comment}{\#\ 1σ\ position-\/covariance\ ellipses\ sampled\ along\ the\ trajectory}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_cov\ \textcolor{keywordflow}{and}\ len(px)\ >\ 1:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ step\ =\ max(1,\ len(px)\ //\ 20)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ k\ \textcolor{keywordflow}{in}\ range(0,\ len(px),\ step):}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ np.array([[pxx[k],\ pxy[k]],\ [pxy[k],\ pyy[k]]])}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ vals,\ vecs\ =\ np.linalg.eigh(C)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ vals\ =\ np.clip(vals,\ 0,\ \textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ ang\ =\ np.degrees(np.arctan2(vecs[1,\ 1],\ vecs[0,\ 1]))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ ax\_xy.add\_patch(Ellipse(}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (px[k],\ py[k]),\ 2\ *\ np.sqrt(vals[1]),\ 2\ *\ np.sqrt(vals[0]),}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ angle=ang,\ facecolor=\textcolor{stringliteral}{'none'},\ edgecolor=\textcolor{stringliteral}{'tab:purple'},}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.5,\ linewidth=0.8,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'1σ\ cov'}\ \textcolor{keywordflow}{if}\ k\ ==\ 0\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00203}00203\ \ \ \ \ ax\_xy.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00205}00205\ \ \ \ \ ax\_nis.plot(t,\ nis,\ color=\textcolor{stringliteral}{'tab:red'},\ linewidth=1.2,\ alpha=0.8)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00206}00206\ \ \ \ \ ax\_nis.axhline(3.0,\ color=\textcolor{stringliteral}{'black'},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ linewidth=1.0,\ label=\textcolor{stringliteral}{'χ²(3)\ mean'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00207}00207\ \ \ \ \ ax\_nis.set\_ylabel(\textcolor{stringliteral}{'NIS'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00208}00208\ \ \ \ \ ax\_nis.set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00209}00209\ \ \ \ \ ax\_nis.set\_title(\textcolor{stringliteral}{'NIS'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00210}00210\ \ \ \ \ ax\_nis.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00211}00211\ \ \ \ \ ax\_nis.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00213}00213\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00215}00215\ \ \ \ \ \textcolor{comment}{\#\ time-\/window\ scrubber\ over\ the\ time-\/series\ axes\ (not\ the\ XY\ trajectory)}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00216}00216\ \ \ \ \ add\_time\_window(fig,\ [ax\_px,\ ax\_py,\ ax\_pz,\ ax\_v,\ ax\_nis],\ t)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00218}00218\ \ \ \ \ figs\ =\ [fig]}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00220}00220\ \ \ \ \ \textcolor{comment}{\#\ ──\ Adaptive-\/slip\ states\ (mu\ freezes\ at\ rest,\ converges\ while\ driving;\ its}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00221}00221\ \ \ \ \ \textcolor{comment}{\#\ \ \ \ converged\ value\ IS\ the\ empirical\ command-\/units\ scale)\ ────────────────}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{if}\ has\_bias:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ bax\ =\ df[\textcolor{stringliteral}{'bax'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00224}00224\ \ \ \ \ \ \ \ \ mur\ =\ df[\textcolor{stringliteral}{'mur'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ mul\ =\ df[\textcolor{stringliteral}{'mul'}].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ fig2,\ ax2\ =\ plt.subplots(2,\ 1,\ figsize=(14,\ 6),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ fig2.suptitle(\textcolor{stringliteral}{'TRANSEKF\ Adaptive\ States\ —\ wheel\ efficiency\ µ\ \&\ '}}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'forward\ accel\ bias'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ ax2[0].plot(t,\ mur,\ color=\textcolor{stringliteral}{'tab:blue'},\ \ \ linewidth=1.4,\ label=\textcolor{stringliteral}{'µr'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ ax2[0].plot(t,\ mul,\ color=\textcolor{stringliteral}{'tab:orange'},\ linewidth=1.4,\ label=\textcolor{stringliteral}{'µl'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00233}00233\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ has\_ext:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ ax2[0].fill\_between(t,\ mur\ -\/\ sig\_mr,\ mur\ +\ sig\_mr,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{'tab:blue'},\ alpha=0.15,\ linewidth=0)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ ax2[0].fill\_between(t,\ mul\ -\/\ sig\_ml,\ mul\ +\ sig\_ml,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{'tab:orange'},\ alpha=0.15,\ linewidth=0)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ ax2[0].axhline(1.0,\ color=\textcolor{stringliteral}{'black'},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'µ\ =\ 1'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ ax2[0].set\_ylabel(\textcolor{stringliteral}{'wheel\ efficiency\ µ'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ ax2[0].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ ax2[0].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ ax2[1].plot(t,\ bax,\ color=\textcolor{stringliteral}{'tab:green'},\ linewidth=1.2,\ label=\textcolor{stringliteral}{'bax'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ ax2[1].axhline(0.0,\ color=\textcolor{stringliteral}{'black'},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ linewidth=1.0)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ ax2[1].set\_ylabel(\textcolor{stringliteral}{'bax\ (m/s²)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ ax2[1].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ ax2[1].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ ax2[1].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ add\_time\_window(fig2,\ list(ax2),\ t)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ figs.append(fig2)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00255}00255\ \ \ \ \ enable\_quit\_key(*figs)}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00257}00257\ \ \ \ \ plt.show()}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00260}00260\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{'\_\_main\_\_'}:}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00261}\mbox{\hyperlink{namespaceplot__position_af94040ba80998357a4d5c4032aeb5c52}{00261}}\ \ \ \ \ ekf\_path\ =\ sys.argv[1]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 1\ \textcolor{keywordflow}{else}\ EKF\_CSV}
+\DoxyCodeLine{\Hypertarget{plot__position_8py_source_l00262}00262\ \ \ \ \ main(ekf\_path)}
+
+\end{DoxyCode}

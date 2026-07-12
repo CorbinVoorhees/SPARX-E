@@ -1,0 +1,84 @@
+\doxysection{driver.\+py}
+\hypertarget{driver_8py_source}{}\label{driver_8py_source}\index{analysis/driver.py@{analysis/driver.py}}
+\mbox{\hyperlink{driver_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00001}\mbox{\hyperlink{namespacedriver}{00001}}\ \textcolor{comment}{\#!/usr/bin/env\ python3}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00002}00002\ \textcolor{stringliteral}{"{}"{}"{}Plot\ MEKF\ log\ CSV.}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00003}00003\ \textcolor{stringliteral}{Columns\ written\ by\ log\_func:}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00004}00004\ \textcolor{stringliteral}{\ \ time,nis,roll,pitch,yaw,gx,gy,gz,gunbx,gunby,gunbz,bgx,bgy,bgz,gmx,gmy,gmz}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00005}00005\ \textcolor{stringliteral}{Usage:\ python3\ plot\_mekf.py\ mekf\_log.csv\ [-\/-\/nis-\/dim\ 3]}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00006}00006\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00007}00007\ \textcolor{keyword}{import}\ argparse}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00008}00008\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00009}00009\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00012}\mbox{\hyperlink{namespacedriver_aa64e7bd43badc82b6a7eb6cab875b857}{00012}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacedriver_aa64e7bd43badc82b6a7eb6cab875b857}{require\_cols}}(df,\ cols):}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00013}00013\ \ \ \ \ missing\ =\ [c\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ cols\ \textcolor{keywordflow}{if}\ c\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns]}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00014}00014\ \ \ \ \ \textcolor{keywordflow}{if}\ missing:}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(f\textcolor{stringliteral}{"{}missing\ CSV\ columns:\ \{missing\}"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00018}\mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{00018}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{plot\_one}}(ax,\ t,\ df,\ key,\ title,\ ylabel):}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00019}00019\ \ \ \ \ ax.plot(t,\ df[key])}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00020}00020\ \ \ \ \ ax.set\_title(title);\ ax.set\_ylabel(ylabel);\ ax.grid(\textcolor{keyword}{True},\ alpha=0.3)}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00023}\mbox{\hyperlink{namespacedriver_a7855634d04f6ad72a7fa02eba7e41dfb}{00023}}\ \textcolor{keyword}{def\ }main(path,\ nis\_dim):}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00024}00024\ \ \ \ \ df\ =\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00025}00025\ \ \ \ \ df.columns\ =\ [c.strip()\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ df.columns]}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00027}00027\ \ \ \ \ required\ =\ [}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}time"{}},\ \textcolor{stringliteral}{"{}nis"{}},\ \textcolor{stringliteral}{"{}roll"{}},\ \textcolor{stringliteral}{"{}pitch"{}},\ \textcolor{stringliteral}{"{}yaw"{}},}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}gx"{}},\ \textcolor{stringliteral}{"{}gy"{}},\ \textcolor{stringliteral}{"{}gz"{}},\ \textcolor{stringliteral}{"{}gunbx"{}},\ \textcolor{stringliteral}{"{}gunby"{}},\ \textcolor{stringliteral}{"{}gunbz"{}},}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}bgx"{}},\ \textcolor{stringliteral}{"{}bgy"{}},\ \textcolor{stringliteral}{"{}bgz"{}},\ \textcolor{stringliteral}{"{}gmx"{}},\ \textcolor{stringliteral}{"{}gmy"{}},\ \textcolor{stringliteral}{"{}gmz"{}},}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00031}00031\ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{namespacedriver_aa64e7bd43badc82b6a7eb6cab875b857}{require\_cols}}(df,\ required)}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00034}00034\ \ \ \ \ \textcolor{comment}{\#\ 'time'\ is\ absolute\ steady\_clock\ seconds\ -\/>\ elapsed\ from\ first\ row}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00035}00035\ \ \ \ \ t\ =\ df[\textcolor{stringliteral}{"{}time"{}}]\ -\/\ df[\textcolor{stringliteral}{"{}time"{}}].iloc[0]}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00037}00037\ \ \ \ \ \textcolor{comment}{\#\ Figure\ 1:\ gyro,\ rows\ =\ x/y/z,\ cols\ =\ raw\ /\ corrected\ /\ bias\ /\ mean}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00038}00038\ \ \ \ \ fig,\ ax\ =\ plt.subplots(3,\ 4,\ figsize=(18,\ 10),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ c\ \textcolor{keywordflow}{in}\ enumerate(\textcolor{stringliteral}{"{}xyz"{}}):}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{plot\_one}}(ax[i,\ 0],\ t,\ df,\ f\textcolor{stringliteral}{"{}g\{c\}"{}},\ \ \ \ f\textcolor{stringliteral}{"{}gyro\ raw\ \{c\}"{}},\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}rad/s"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{plot\_one}}(ax[i,\ 1],\ t,\ df,\ f\textcolor{stringliteral}{"{}gunb\{c\}"{}},\ f\textcolor{stringliteral}{"{}gyro\ corrected\ \{c\}"{}},\ \textcolor{stringliteral}{"{}rad/s"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{plot\_one}}(ax[i,\ 2],\ t,\ df,\ f\textcolor{stringliteral}{"{}bg\{c\}"{}},\ \ \ f\textcolor{stringliteral}{"{}gyro\ bias\ \{c\}"{}},\ \ \ \ \ \ \textcolor{stringliteral}{"{}rad/s"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{plot\_one}}(ax[i,\ 3],\ t,\ df,\ f\textcolor{stringliteral}{"{}gm\{c\}"{}},\ \ \ f\textcolor{stringliteral}{"{}gyro\ mean\ \{c\}"{}},\ \ \ \ \ \ \textcolor{stringliteral}{"{}rad/s"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{for}\ a\ \textcolor{keywordflow}{in}\ ax[-\/1,\ :]:}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ a.set\_xlabel(\textcolor{stringliteral}{"{}t\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00046}00046\ \ \ \ \ fig.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00047}00047\ \ \ \ \ out\ =\ path.rsplit(\textcolor{stringliteral}{"{}."{}},\ 1)[0]\ +\ \textcolor{stringliteral}{"{}\_gyro.png"{}}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00048}00048\ \ \ \ \ fig.savefig(out,\ dpi=130);\ print(f\textcolor{stringliteral}{"{}saved\ \{out\}"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00050}00050\ \ \ \ \ \textcolor{comment}{\#\ Figure\ 2:\ attitude\ (radians,\ as\ logged)}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00051}00051\ \ \ \ \ fig3,\ ax3\ =\ plt.subplots(3,\ 1,\ figsize=(15,\ 9),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{for}\ a,\ key\ \textcolor{keywordflow}{in}\ zip(ax3,\ [\textcolor{stringliteral}{"{}roll"{}},\ \textcolor{stringliteral}{"{}pitch"{}},\ \textcolor{stringliteral}{"{}yaw"{}}]):}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_ae3356acd479fd25843a8b737e00ea7fa}{plot\_one}}(a,\ t,\ df,\ key,\ key,\ \textcolor{stringliteral}{"{}rad"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00054}00054\ \ \ \ \ ax3[-\/1].set\_xlabel(\textcolor{stringliteral}{"{}t\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00055}00055\ \ \ \ \ fig3.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00056}00056\ \ \ \ \ rpy\_out\ =\ path.rsplit(\textcolor{stringliteral}{"{}."{}},\ 1)[0]\ +\ \textcolor{stringliteral}{"{}\_rpy.png"{}}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00057}00057\ \ \ \ \ fig3.savefig(rpy\_out,\ dpi=130);\ print(f\textcolor{stringliteral}{"{}saved\ \{rpy\_out\}"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00059}00059\ \ \ \ \ \textcolor{comment}{\#\ Figure\ 3:\ NIS}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00060}00060\ \ \ \ \ fig2,\ ax2\ =\ plt.subplots(figsize=(15,\ 4.5))}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00061}00061\ \ \ \ \ ax2.plot(t,\ df[\textcolor{stringliteral}{"{}nis"{}}])}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00062}00062\ \ \ \ \ ax2.axhline(nis\_dim,\ linestyle=\textcolor{stringliteral}{"{}-\/-\/"{}},\ linewidth=1.2,\ label=f\textcolor{stringliteral}{"{}expected\ mean\ =\ \{nis\_dim:g\}"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00063}00063\ \ \ \ \ ax2.set\_title(\textcolor{stringliteral}{"{}NIS"{}});\ ax2.set\_ylabel(\textcolor{stringliteral}{"{}νᵀS⁻¹ν"{}});\ ax2.set\_xlabel(\textcolor{stringliteral}{"{}t\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00064}00064\ \ \ \ \ ax2.grid(\textcolor{keyword}{True},\ alpha=0.3);\ ax2.legend(fontsize=8)}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00065}00065\ \ \ \ \ fig2.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00066}00066\ \ \ \ \ nis\_out\ =\ path.rsplit(\textcolor{stringliteral}{"{}."{}},\ 1)[0]\ +\ \textcolor{stringliteral}{"{}\_nis.png"{}}}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00067}00067\ \ \ \ \ fig2.savefig(nis\_out,\ dpi=130);\ print(f\textcolor{stringliteral}{"{}saved\ \{nis\_out\}"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00069}00069\ \ \ \ \ plt.show()}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00072}00072\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00073}\mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{00073}}\ \ \ \ \ p\ =\ argparse.ArgumentParser()}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00074}00074\ \ \ \ \ p.add\_argument(\textcolor{stringliteral}{"{}csv"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00075}\mbox{\hyperlink{namespacedriver_ab0c5317455e686368025b743459d9f9b}{00075}}\ \ \ \ \ p.add\_argument(\textcolor{stringliteral}{"{}-\/-\/nis-\/dim"{}},\ type=float,\ default=3.0,}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00076}\mbox{\hyperlink{namespacedriver_aafc9ad2b38e322071b55b16655e69e61}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ help=\textcolor{stringliteral}{"{}measurement\ dim\ m;\ expected\ NIS\ mean\ is\ m"{}})}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00077}\mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{00077}}\ \ \ \ \ a\ =\ p.parse\_args()}
+\DoxyCodeLine{\Hypertarget{driver_8py_source_l00078}00078\ \ \ \ \ main(a.csv,\ a.nis\_dim)}
+
+\end{DoxyCode}

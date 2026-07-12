@@ -1,0 +1,9 @@
+<map id="install/lidar_processor/include/lidar_processor/lidar_processor/msg/detail/obstacle__type_support.h" name="install/lidar_processor/include/lidar_processor/lidar_processor/msg/detail/obstacle__type_support.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="159,5,357,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,130,156,170"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,77,125,125,122,120,201,72"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="180,123,336,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="261,75,261,109,255,109,255,75"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="360,130,553,170"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="321,72,411,121,408,126,319,77"/>
+</map>

@@ -1,0 +1,69 @@
+\doxysection{src/nav\+\_\+filters/include/nav\+\_\+filters/\+ISensor.hpp File Reference}
+\hypertarget{ISensor_8hpp}{}\label{ISensor_8hpp}\index{src/nav\_filters/include/nav\_filters/ISensor.hpp@{src/nav\_filters/include/nav\_filters/ISensor.hpp}}
+{\ttfamily \#include "{}../../utils.\+h"{}}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$shared\+\_\+mutex$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+Include dependency graph for ISensor.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ISensor_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ISensor_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classSensor_1_1ISensor}{Sensor\+::\+ISensor}}
+\item 
+class \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+::\+Sensor\+Hook$<$ T $>$}}
+\item 
+class \mbox{\hyperlink{classSensor_1_1SensorTable}{Sensor\+::\+Sensor\+Table}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceSensor}{Sensor}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{ISensor_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\+Clock}} = std\+::chrono\+::steady\+\_\+clock
+\item 
+using \mbox{\hyperlink{ISensor_8hpp_a4b284582bfcb4d83e286d2e3cc72d4f4}{Correct\+Fn}} = std\+::function$<$ void(const Eigen\+::\+Matrix\+Xd \&H, const Eigen\+::\+Matrix\+Xd \&R, const Eigen\+::\+Vector\+Xd \&r)$>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{ISensor_8hpp_a4b284582bfcb4d83e286d2e3cc72d4f4}\label{ISensor_8hpp_a4b284582bfcb4d83e286d2e3cc72d4f4} 
+\index{ISensor.hpp@{ISensor.hpp}!CorrectFn@{CorrectFn}}
+\index{CorrectFn@{CorrectFn}!ISensor.hpp@{ISensor.hpp}}
+\doxysubsubsection{\texorpdfstring{CorrectFn}{CorrectFn}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{ISensor_8hpp_a4b284582bfcb4d83e286d2e3cc72d4f4}{Correct\+Fn}} =  std\+::function$<$void(const Eigen\+::\+Matrix\+Xd \&H, const Eigen\+::\+Matrix\+Xd \&R, const Eigen\+::\+Vector\+Xd \&r)$>$}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00014}{14}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{ISensor_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}\label{ISensor_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5} 
+\index{ISensor.hpp@{ISensor.hpp}!SteadyClock@{SteadyClock}}
+\index{SteadyClock@{SteadyClock}!ISensor.hpp@{ISensor.hpp}}
+\doxysubsubsection{\texorpdfstring{SteadyClock}{SteadyClock}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\+Clock}} =  std\+::chrono\+::steady\+\_\+clock}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00013}{13}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+

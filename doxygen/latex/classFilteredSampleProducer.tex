@@ -1,0 +1,159 @@
+\doxysection{Filtered\+Sample\+Producer\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classFilteredSampleProducer}{}\label{classFilteredSampleProducer}\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+
+
+{\ttfamily \#include $<$utils.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_a46f329082a041c04e8e41b84605586cb}{Filtered\+Sample\+Producer}} (\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \&\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{zero}})
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{void}} \mbox{\hyperlink{classFilteredSampleProducer_a5578a9308aa1165aead945b63975f957}{set\+\_\+spike\+\_\+rejection}} (\mbox{\hyperlink{structSpikeRejectConfig}{Spike\+Reject\+Config}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{cfg}})
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{void}} \mbox{\hyperlink{classFilteredSampleProducer_a28da574b34d09dd19ebfaf9241c2c5cb}{put}} (\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \&\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{x\+\_\+in}}, Clock\+::time\+\_\+point \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{sample\+\_\+time}}=Clock\+::now())
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{void}} \mbox{\hyperlink{classFilteredSampleProducer_a2add729ca058e50676157ac1a84fe2c6}{get\+\_\+latest}} (\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \&out, Clock\+::time\+\_\+point \&\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{when}})
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \mbox{\hyperlink{classFilteredSampleProducer_a6d74c0e5ddce653a442c5fbaf8820980}{peek}} () \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}}
+\item 
+T \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{get\+\_\+mean}} () const
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \mbox{\hyperlink{classFilteredSampleProducer_a2f17280a9002cc03a2dffdc19b97d7d4}{get\+\_\+variance}} () \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}}
+\item 
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \mbox{\hyperlink{classFilteredSampleProducer_ae57038b0302a035087ec584d2b577f98}{get\+\_\+stddev}} () \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}}
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{classFilteredSampleProducer_a14451d533050e8d39db9d767cdd4cb23}{get\+\_\+count}} () \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}}
+\item 
+Clock\+::time\+\_\+point \mbox{\hyperlink{classFilteredSampleProducer_a4734e1b1d67cc26d72c350cb1ab5de97}{stamp}} () \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}}$>$\newline
+class Filtered\+Sample\+Producer$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00143}{143}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classFilteredSampleProducer_a46f329082a041c04e8e41b84605586cb}\label{classFilteredSampleProducer_a46f329082a041c04e8e41b84605586cb} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!FilteredSampleProducer@{FilteredSampleProducer}}
+\index{FilteredSampleProducer@{FilteredSampleProducer}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{FilteredSampleProducer()}{FilteredSampleProducer()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\mbox{\hyperlink{classFilteredSampleProducer}{\+::\+Filtered\+Sample\+Producer}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \&}]{zero }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00234}{234}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classFilteredSampleProducer_a14451d533050e8d39db9d767cdd4cb23}\label{classFilteredSampleProducer_a14451d533050e8d39db9d767cdd4cb23} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!get\_count@{get\_count}}
+\index{get\_count@{get\_count}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_count()}{get\_count()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::get\+\_\+count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00291}{291}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_a2add729ca058e50676157ac1a84fe2c6}\label{classFilteredSampleProducer_a2add729ca058e50676157ac1a84fe2c6} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!get\_latest@{get\_latest}}
+\index{get\_latest@{get\_latest}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_latest()}{get\_latest()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{void}} \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::get\+\_\+latest (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \&}]{out,  }\item[{Clock\+::time\+\_\+point \&}]{when }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00279}{279}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}\label{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!get\_mean@{get\_mean}}
+\index{get\_mean@{get\_mean}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_mean()}{get\_mean()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ T $>$\+::get\+\_\+mean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00286}{286}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_ae57038b0302a035087ec584d2b577f98}\label{classFilteredSampleProducer_ae57038b0302a035087ec584d2b577f98} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!get\_stddev@{get\_stddev}}
+\index{get\_stddev@{get\_stddev}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_stddev()}{get\_stddev()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::get\+\_\+stddev (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00288}{288}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_a2f17280a9002cc03a2dffdc19b97d7d4}\label{classFilteredSampleProducer_a2f17280a9002cc03a2dffdc19b97d7d4} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!get\_variance@{get\_variance}}
+\index{get\_variance@{get\_variance}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_variance()}{get\_variance()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::get\+\_\+variance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00287}{287}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_a6d74c0e5ddce653a442c5fbaf8820980}\label{classFilteredSampleProducer_a6d74c0e5ddce653a442c5fbaf8820980} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!peek@{peek}}
+\index{peek@{peek}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{peek()}{peek()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::peek (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00285}{285}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_a28da574b34d09dd19ebfaf9241c2c5cb}\label{classFilteredSampleProducer_a28da574b34d09dd19ebfaf9241c2c5cb} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!put@{put}}
+\index{put@{put}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{void}} \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::put (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{const}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} \&}]{x\+\_\+in,  }\item[{Clock\+::time\+\_\+point}]{sample\+\_\+time = {\ttfamily Clock\+:\+:now()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00250}{250}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_a5578a9308aa1165aead945b63975f957}\label{classFilteredSampleProducer_a5578a9308aa1165aead945b63975f957} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!set\_spike\_rejection@{set\_spike\_rejection}}
+\index{set\_spike\_rejection@{set\_spike\_rejection}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set\_spike\_rejection()}{set\_spike\_rejection()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{void}} \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::set\+\_\+spike\+\_\+rejection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSpikeRejectConfig}{Spike\+Reject\+Config}}}]{cfg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00237}{237}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{classFilteredSampleProducer_a4734e1b1d67cc26d72c350cb1ab5de97}\label{classFilteredSampleProducer_a4734e1b1d67cc26d72c350cb1ab5de97} 
+\index{FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}!stamp@{stamp}}
+\index{stamp@{stamp}!FilteredSampleProducer$<$ T $>$@{FilteredSampleProducer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{stamp()}{stamp()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{typename}} \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$ \\
+Clock\+::time\+\_\+point \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer}}$<$ \mbox{\hyperlink{classFilteredSampleProducer_ab4367565c0f3b6f6a67c732295741863}{T}} $>$\+::stamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00292}{292}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{utils_8h}{utils.\+h}}\end{DoxyCompactItemize}

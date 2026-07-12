@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SPARX Source Docs: src/nav_filters/src/bias_calc.py Source File</title>
+<title>SPARX Source Docs: scripts/bias_calc.py Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -98,12 +107,12 @@ $(document).ready(function(){initNavTree('bias__calc_8py_source.html',''); initR
 </div><!--header-->
 <div class="contents">
 <a href="bias__calc_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacebias__calc.html">    1</a></span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">import</span> <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">matplotlib.pyplot</a> <span class="keyword">as</span> plt</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a2fa2b52b8ab13dbc04c24ab3cfd1bbac">    5</a></span>log_file = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">pd.read_csv</a>(<span class="stringliteral">&#39;../../../output.csv&#39;</span>)</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a2fa2b52b8ab13dbc04c24ab3cfd1bbac">    5</a></span>log_file = pd.read_csv(<span class="stringliteral">&#39;../../../output.csv&#39;</span>)</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a93bcf09ac9ea8b8ccb8bac7c2875b94b">    7</a></span>data = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">log_file.to_numpy</a>()</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a93bcf09ac9ea8b8ccb8bac7c2875b94b">    7</a></span>data = log_file.to_numpy()</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">    9</a></span>t = data[:,0]</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#aaa1b38e93b28dfc56c37f685d3975ad1">   10</a></span>wroll = data[:,1]</div>
@@ -113,42 +122,41 @@ $(document).ready(function(){initNavTree('bias__calc_8py_source.html',''); initR
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a720eb9b30be9048d3d70f2e592ac55cf">   14</a></span>ptch = data[:,5]</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a130ab21ee7a6622712af2bdbb426ce9e">   15</a></span>yaw = data[:,6]</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a3ad9ba5919a79b990675fd6ef83bb7df">   17</a></span>fig,ax = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plt.subplots</a>(3,1)</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>ax[0].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plot</a>(t,roll)</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>ax[1].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plot</a>(t,ptch)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>ax[2].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plot</a>(t,yaw)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a3ad9ba5919a79b990675fd6ef83bb7df">   17</a></span>fig,ax = plt.subplots(3,1)</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>ax[0].plot(t,roll)</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>ax[1].plot(t,ptch)</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>ax[2].plot(t,yaw)</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">print</a>(f<span class="stringliteral">&quot;Roll bias mean: {np.mean(roll)}&quot;</span>)</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">print</a>(f<span class="stringliteral">&quot;Pitch bias mean: {np.mean(ptch)}&quot;</span>)</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">print</a>(f<span class="stringliteral">&quot;Yaw bias mean: {np.mean(yaw)}&quot;</span>)</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>print(f<span class="stringliteral">&quot;Roll bias mean: {np.mean(roll)}&quot;</span>)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>print(f<span class="stringliteral">&quot;Pitch bias mean: {np.mean(ptch)}&quot;</span>)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>print(f<span class="stringliteral">&quot;Yaw bias mean: {np.mean(yaw)}&quot;</span>)</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#ad3f8a086e613040dba2b6339cb05814b">   26</a></span>dt = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.mean</a>(<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.diff</a>(t))</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#ad3f8a086e613040dba2b6339cb05814b">   26</a></span>dt = np.mean(np.diff(t))</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#ac3607645434b5c0144d3d99c54216c93">   28</a></span>X_roll = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.fft.fft</a>(wroll - <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.mean</a>(wroll))</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a57a27ae5cae559048cdc83bebc118388">   29</a></span>X_ptch = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.fft.fft</a>(wptch - <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.mean</a>(wptch))</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#ace22b1e7607d4a60a989400f386835d4">   30</a></span>X_yaw  = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.fft.fft</a>(wyaw - <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.mean</a>(wyaw))</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#ac3607645434b5c0144d3d99c54216c93">   28</a></span>X_roll = np.fft.fft(wroll - np.mean(wroll))</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a57a27ae5cae559048cdc83bebc118388">   29</a></span>X_ptch = np.fft.fft(wptch - np.mean(wptch))</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#ace22b1e7607d4a60a989400f386835d4">   30</a></span>X_yaw  = np.fft.fft(wyaw - np.mean(wyaw))</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#af0ea33e02aee803e537fb0fb0c5323b1">   32</a></span>freqs = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.fft.fftfreq</a>(<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">len</a>(wroll), d=dt)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#af0ea33e02aee803e537fb0fb0c5323b1">   32</a></span>freqs = np.fft.fftfreq(len(wroll), d=dt)</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespacebias__calc.html#a80cc6820ee23ee76c3f66ffbe4987174">   33</a></span>mask = freqs &gt;= 0</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>fig,ax = <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plt.subplots</a>(3,1)</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>ax[0].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plot</a>(freqs[mask], <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.abs</a>(X_roll)[mask])</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>ax[1].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plot</a>(freqs[mask], <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.abs</a>(X_ptch)[mask])</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>ax[2].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plot</a>(freqs[mask], <a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">np.abs</a>(X_yaw)[mask])</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>fig,ax = plt.subplots(3,1)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>ax[0].plot(freqs[mask], np.abs(X_roll)[mask])</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>ax[1].plot(freqs[mask], np.abs(X_ptch)[mask])</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>ax[2].plot(freqs[mask], np.abs(X_yaw)[mask])</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>ax[0].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">set_title</a>(<span class="stringliteral">&quot;Roll FFT&quot;</span>)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>ax[1].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">set_title</a>(<span class="stringliteral">&quot;Pitch FFT&quot;</span>)</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>ax[2].<a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">set_title</a>(<span class="stringliteral">&quot;Yaw FFT&quot;</span>)</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>ax[0].set_title(<span class="stringliteral">&quot;Roll FFT&quot;</span>)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>ax[1].set_title(<span class="stringliteral">&quot;Pitch FFT&quot;</span>)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>ax[2].set_title(<span class="stringliteral">&quot;Yaw FFT&quot;</span>)</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><a class="code hl_variable" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">plt.show</a>()</div>
-<div class="ttc" id="anamespacebias__calc_html_a5f2b34793cb3c853cb09acc0d5811fb6"><div class="ttname"><a href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">bias_calc.t</a></div><div class="ttdeci">t</div><div class="ttdef"><b>Definition</b> <a href="bias__calc_8py_source.html#l00009">bias_calc.py:9</a></div></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>plt.show()</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_e7f5534288e60c743609b705508d80a9.html">nav_filters</a></li><li class="navelem"><a class="el" href="dir_466feae0e27deabab9f3b5f53436e42b.html">src</a></li><li class="navelem"><a class="el" href="bias__calc_8py.html">bias_calc.py</a></li>
+    <li class="navelem"><a class="el" href="dir_53e6fa9553ac22a5646d2a2b2d7b97a1.html">scripts</a></li><li class="navelem"><a class="el" href="bias__calc_8py.html">bias_calc.py</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

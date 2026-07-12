@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,153,108,179"/>
+<area shape="rect" id="Node000001" href="$classAutoPublisher.html" title="AutoPublisher specifically targets nav_node during runtime to kill and restart the Kalman Filter when..." alt="" coords="187,5,299,31"/>
+<area shape="poly" id="edge11_Node000000_Node000001" title=" " alt="" coords="69,140,103,89,127,62,155,40,186,25,188,30,157,44,131,66,107,92,73,143"/>
+<area shape="rect" id="Node000002" href="$classBridgeBase.html" title="Bridge is a base class that defines serial monitor communication for peripherals that use TTY." alt="" coords="195,55,291,80"/>
+<area shape="poly" id="edge12_Node000000_Node000002" title=" " alt="" coords="80,142,114,114,155,89,194,74,196,79,157,94,117,119,83,146"/>
+<area shape="rect" id="Node000005" href="$classLidarObstacleProcessor.html" title=" " alt="" coords="156,104,331,129"/>
+<area shape="poly" id="edge15_Node000000_Node000005" title=" " alt="" coords="118,147,193,127,195,132,119,152"/>
+<area shape="rect" id="Node000006" href="$classMotorCommander.html" title=" " alt="" coords="173,153,313,179"/>
+<area shape="poly" id="edge16_Node000000_Node000006" title=" " alt="" coords="122,163,173,163,173,169,122,169"/>
+<area shape="rect" id="Node000007" href="$classSmcNode.html" title=" " alt="" coords="201,203,285,228"/>
+<area shape="poly" id="edge17_Node000000_Node000007" title=" " alt="" coords="119,180,202,202,200,207,118,185"/>
+<area shape="rect" id="Node000008" href="$classUnitreeLidarSDKNode.html" title=" " alt="" coords="162,252,325,277"/>
+<area shape="poly" id="edge18_Node000000_Node000008" title=" " alt="" coords="84,186,117,212,157,237,189,250,187,254,155,242,114,217,81,190"/>
+<area shape="rect" id="Node000009" href="$classnav_1_1NavNode.html" title=" " alt="" coords="187,301,300,327"/>
+<area shape="poly" id="edge19_Node000000_Node000009" title=" " alt="" coords="74,189,108,239,131,265,157,286,188,301,185,305,155,291,127,268,104,242,69,192"/>
+<area shape="rect" id="Node000003" href="$classArduinoBridge.html" title="Bridges Arduino serial data into ROS 2 topics." alt="" coords="379,31,493,56"/>
+<area shape="poly" id="edge13_Node000002_Node000003" title=" " alt="" coords="305,57,378,48,379,53,305,62"/>
+<area shape="rect" id="Node000004" href="$classUWBBridge.html" title="Bridges UWB serial range data into ROS 2 topics." alt="" coords="388,80,484,105"/>
+<area shape="poly" id="edge14_Node000002_Node000004" title=" " alt="" coords="305,73,388,84,387,89,305,78"/>
+</map>

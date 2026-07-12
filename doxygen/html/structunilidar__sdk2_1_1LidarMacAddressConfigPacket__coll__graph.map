@@ -1,0 +1,9 @@
+<map id="unilidar_sdk2::LidarMacAddressConfigPacket" name="unilidar_sdk2::LidarMacAddressConfigPacket">
+<area shape="rect" id="Node000001" title="Lidar MAC address config packet." alt="" coords="331,55,559,95"/>
+<area shape="rect" id="Node000002" href="$structunilidar__sdk2_1_1FrameHeader.html" title="Frame Header." alt="" coords="17,5,222,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,30,331,53,330,58,205,36"/>
+<area shape="rect" id="Node000003" href="$structunilidar__sdk2_1_1LidarMacAddressConfig.html" title="Lidar MAC address Config." alt="" coords="5,55,233,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="247,73,331,73,331,78,247,78"/>
+<area shape="rect" id="Node000004" href="$structunilidar__sdk2_1_1FrameTail.html" title="Frame Tail." alt="" coords="29,120,209,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="205,115,330,93,331,98,206,120"/>
+</map>

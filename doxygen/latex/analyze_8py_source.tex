@@ -1,0 +1,481 @@
+\doxysection{analyze.\+py}
+\hypertarget{analyze_8py_source}{}\label{analyze_8py_source}\index{analysis/analyze.py@{analysis/analyze.py}}
+\mbox{\hyperlink{analyze_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00001}\mbox{\hyperlink{namespaceanalyze}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00002}00002\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00003}00003\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00004}00004\ \textcolor{keyword}{from}\ typing\ \textcolor{keyword}{import}\ Any}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00007}\mbox{\hyperlink{classanalyze_1_1Analyzer}{00007}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanalyze_1_1Analyzer}{Analyzer}}:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00008}\mbox{\hyperlink{classanalyze_1_1Analyzer_a7ad21b42b2073ece8ba037512f089fb1}{00008}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a7ad21b42b2073ece8ba037512f089fb1}{\_\_init\_\_}}(self,\ logs:\ dict,\ save\_dir:\ str\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00009}\mbox{\hyperlink{classanalyze_1_1Analyzer_a92dfc409d0493432c46822b1d1fa49b5}{00009}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a92dfc409d0493432c46822b1d1fa49b5}{logs}}\ =\ logs}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00010}\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ca4cdc8195ef6404803c4021c5c7222}{00010}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ca4cdc8195ef6404803c4021c5c7222}{save\_dir}}\ =\ save\_dir}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ save\_dir\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ os.makedirs(save\_dir,\ exist\_ok=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00015}\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{00015}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}}\ =\ 16}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00016}\mbox{\hyperlink{classanalyze_1_1Analyzer_a60bf0bf2cb7131210390cac46fcabc5a}{00016}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a60bf0bf2cb7131210390cac46fcabc5a}{lw}}\ =\ 2.8}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00017}\mbox{\hyperlink{classanalyze_1_1Analyzer_ad6bca78c42a8d7d9b3983cebdca5dcac}{00017}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ad6bca78c42a8d7d9b3983cebdca5dcac}{alpha}}\ =\ 0.22}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ plt.rcParams.update(\{}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}font.size"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}axes.titlesize"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}axes.labelsize"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}xtick.labelsize"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}}\ -\/\ 2,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ytick.labelsize"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}}\ -\/\ 2,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}legend.fontsize"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a1c70f5d6dd86516e234df4c721d917dc}{fs}}\ -\/\ 3,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}lines.linewidth"{}}:\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a60bf0bf2cb7131210390cac46fcabc5a}{lw}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}figure.figsize"{}}:\ (16,\ 10),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00030}00030\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00031}00031\ \ \ \ \ \textcolor{comment}{\#\ Generic\ extraction\ helpers}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00032}00032\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00034}\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{00034}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(self,\ name:\ str):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a92dfc409d0493432c46822b1d1fa49b5}{logs}}.get(name,\ [])\ \textcolor{keywordflow}{or}\ []}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00037}\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ceef11717a33ca46dd391e7de262118}{00037}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ceef11717a33ca46dd391e7de262118}{\_get}}(self,\ d:\ dict,\ path:\ str,\ default:\ Any\ =\ np.nan)\ -\/>\ Any:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ cur:\ Any\ =\ d}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ p\ \textcolor{keywordflow}{in}\ path.split(\textcolor{stringliteral}{"{}."{}}):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(cur,\ dict)\ \textcolor{keywordflow}{or}\ p\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ cur\ \textcolor{keywordflow}{or}\ cur[p]\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ default}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ cur\ =\ cur[p]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ cur}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00045}\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{00045}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(self,\ blocks,\ path:\ str):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ vals\ =\ []}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ b\ \textcolor{keywordflow}{in}\ blocks:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ v\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ceef11717a33ca46dd391e7de262118}{\_get}}(b,\ path,\ np.nan)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(v,\ (int,\ float,\ np.integer,\ np.floating)):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vals.append(float(v))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vals.append(np.nan)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ np.asarray(vals,\ dtype=float)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00055}\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{00055}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(self,\ blocks):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(blocks,\ \textcolor{stringliteral}{"{}time.t"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(t)\ ==\ 0\ \textcolor{keywordflow}{or}\ np.all(np.isnan(t)):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ np.nanmin(t)\ >\ 1e5:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ t\ -\/\ t[0]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00063}\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{00063}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(self,\ fig,\ name:\ str):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ fig.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ca4cdc8195ef6404803c4021c5c7222}{save\_dir}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ path\ =\ os.path.join(self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a3ca4cdc8195ef6404803c4021c5c7222}{save\_dir}},\ name)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ fig.savefig(path,\ dpi=300,\ bbox\_inches=\textcolor{stringliteral}{"{}tight"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ plt.close(fig)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ plt.show()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00072}\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{00072}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(self,\ ax):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ ax.grid(\textcolor{keyword}{True},\ alpha=0.35)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ handles,\ \_\ =\ ax.get\_legend\_handles\_labels()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ handles:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ ax.legend(loc=\textcolor{stringliteral}{"{}best"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00078}\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{00078}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(self,\ ax,\ t,\ y,\ label="{}value"{},\ color=None,\ linewidth=None):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ mask\ =\ np.isfinite(t)\ \&\ np.isfinite(y)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ np.any(mask):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ ax.plot(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t[mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y[mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=label,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=color,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linewidth=linewidth\ \textcolor{keywordflow}{if}\ linewidth\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a60bf0bf2cb7131210390cac46fcabc5a}{lw}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ zorder=5,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mask}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00091}\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{00091}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(self,\ ax,\ t,\ y,\ cov=None,\ label="{}value"{},\ color=None):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ mask\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(ax,\ t,\ y,\ label=label,\ color=color)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cov\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{and}\ len(cov)\ ==\ len(y):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ cov\_mask\ =\ mask\ \&\ np.isfinite(cov)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ np.any(cov\_mask):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sigma\ =\ np.sqrt(np.maximum(cov[cov\_mask],\ 0.0))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ax.fill\_between(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t[cov\_mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y[cov\_mask]\ -\/\ 2.0\ *\ sigma,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y[cov\_mask]\ +\ 2.0\ *\ sigma,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ad6bca78c42a8d7d9b3983cebdca5dcac}{alpha}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=color,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{r"{}\$\(\backslash\)pm\ 2\(\backslash\)sigma\$"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ zorder=1,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(ax)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00110}\mbox{\hyperlink{classanalyze_1_1Analyzer_a09b3133c652847a8e826fbc518b846d7}{00110}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a09b3133c652847a8e826fbc518b846d7}{\_plot\_mean\_std}}(self,\ ax,\ t,\ mean,\ std,\ label="{}Mean"{},\ color=None):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ mean\_mask\ =\ np.isfinite(t)\ \&\ np.isfinite(mean)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ std\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{and}\ len(std)\ ==\ len(mean):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ std\_mask\ =\ mean\_mask\ \&\ np.isfinite(std)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ np.any(std\_mask):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ax.fill\_between(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t[std\_mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mean[std\_mask]\ -\/\ 2.0\ *\ std[std\_mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mean[std\_mask]\ +\ 2.0\ *\ std[std\_mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ad6bca78c42a8d7d9b3983cebdca5dcac}{alpha}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=color,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{r"{}\$\(\backslash\)pm\ 2\(\backslash\)sigma\$"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ zorder=1,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ np.any(mean\_mask):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ ax.plot(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t[mean\_mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mean[mean\_mask],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=label,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=color,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linewidth=3.5,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ zorder=5,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(ax)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00138}00138\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00139}00139\ \ \ \ \ \textcolor{comment}{\#\ Sensor\ diagnostic\ plots}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00140}00140\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00142}\mbox{\hyperlink{classanalyze_1_1Analyzer_aae436a12f64cbe58eccfc4b739caebc2}{00142}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_aae436a12f64cbe58eccfc4b739caebc2}{plot\_accel\_diagnostics}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ nav\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(\textcolor{stringliteral}{"{}nav"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(nav)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ fig,\ axs\ =\ plt.subplots(3,\ 4,\ sharex=\textcolor{keyword}{True},\ figsize=(22,\ 12))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ items\ =\ [}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}ax"{}},\ \textcolor{stringliteral}{"{}bax"{}},\ \textcolor{stringliteral}{"{}Accel\ X"{}}),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}ay"{}},\ \textcolor{stringliteral}{"{}bay"{}},\ \textcolor{stringliteral}{"{}Accel\ Y"{}}),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}az"{}},\ \textcolor{stringliteral}{"{}baz"{}},\ \textcolor{stringliteral}{"{}Accel\ Z"{}}),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (axis,\ bias\_key,\ title)\ \textcolor{keywordflow}{in}\ enumerate(items):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ raw\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}sensor\_raw.accWorld.\{axis\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ bias\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}state.accBias.\{bias\_key\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ p\_bias\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}covariance.P\_loc\_bias.\{bias\_key\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ corrected\ =\ raw\ -\/\ bias}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ prof\_mean\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}profile.accMean.\{axis\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ prof\_std\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}profile.accStd.\{axis\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(axs[i,\ 0],\ t,\ raw,\ label=\textcolor{stringliteral}{"{}Raw"{}},\ color=\textcolor{stringliteral}{"{}tab:gray"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 0].set\_ylabel(f\textcolor{stringliteral}{"{}\{title\}\(\backslash\)n[m/s²]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 0].set\_title(\textcolor{stringliteral}{"{}Raw"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(axs[i,\ 0])}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 1],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bias,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\_bias,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=bias\_key,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:orange"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 1].set\_title(\textcolor{stringliteral}{"{}Bias\ Estimate"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 2],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{"{}Corrected"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:blue"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 2].set\_title(\textcolor{stringliteral}{"{}Corrected\ (Raw\ -\/\ Bias)"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(axs[i,\ 2])}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a09b3133c652847a8e826fbc518b846d7}{\_plot\_mean\_std}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 3],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prof\_mean,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prof\_std,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{"{}Mean"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:green"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 3].set\_title(\textcolor{stringliteral}{"{}Profiled\ Value"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(4):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ axs[-\/1,\ j].set\_xlabel(\textcolor{stringliteral}{"{}Time\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(fig,\ \textcolor{stringliteral}{"{}accel\_diagnostics.png"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00207}\mbox{\hyperlink{classanalyze_1_1Analyzer_ac6ba00e190a9e5b3af2b01d8dcd4d341}{00207}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_ac6ba00e190a9e5b3af2b01d8dcd4d341}{plot\_gyro\_diagnostics}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ nav\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(\textcolor{stringliteral}{"{}nav"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(nav)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ fig,\ axs\ =\ plt.subplots(3,\ 4,\ sharex=\textcolor{keyword}{True},\ figsize=(22,\ 12))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ items\ =\ [}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}wx"{}},\ \textcolor{stringliteral}{"{}bgx"{}},\ \textcolor{stringliteral}{"{}Gyro\ X"{}}),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}wy"{}},\ \textcolor{stringliteral}{"{}bgy"{}},\ \textcolor{stringliteral}{"{}Gyro\ Y"{}}),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}wz"{}},\ \textcolor{stringliteral}{"{}bgz"{}},\ \textcolor{stringliteral}{"{}Gyro\ Z"{}}),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (axis,\ bias\_key,\ title)\ \textcolor{keywordflow}{in}\ enumerate(items):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ raw\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}sensor\_raw.gyro.\{axis\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ bias\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}state.gyroBias.\{bias\_key\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ p\_bias\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}covariance.P\_rot\_diag.\{bias\_key\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ corrected\ =\ raw\ -\/\ bias}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ prof\_mean\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}profile.gyroMean.\{axis\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ prof\_std\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ f\textcolor{stringliteral}{"{}profile.gyroStd.\{axis\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(axs[i,\ 0],\ t,\ raw,\ label=\textcolor{stringliteral}{"{}Raw"{}},\ color=\textcolor{stringliteral}{"{}tab:gray"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 0].set\_ylabel(f\textcolor{stringliteral}{"{}\{title\}\(\backslash\)n[rad/s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 0].set\_title(\textcolor{stringliteral}{"{}Raw"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(axs[i,\ 0])}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 1],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bias,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\_bias,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=bias\_key,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:orange"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 1].set\_title(\textcolor{stringliteral}{"{}Bias\ Estimate"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 2],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{"{}Corrected"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:blue"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 2].set\_title(\textcolor{stringliteral}{"{}Corrected\ (Raw\ -\/\ Bias)"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(axs[i,\ 2])}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a09b3133c652847a8e826fbc518b846d7}{\_plot\_mean\_std}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 3],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prof\_mean,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prof\_std,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{"{}Mean"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:green"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 3].set\_title(\textcolor{stringliteral}{"{}Profiled\ Value"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00266}00266\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00267}00267\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(4):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ axs[-\/1,\ j].set\_xlabel(\textcolor{stringliteral}{"{}Time\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00270}00270\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(fig,\ \textcolor{stringliteral}{"{}gyro\_diagnostics.png"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00272}\mbox{\hyperlink{classanalyze_1_1Analyzer_a28a019292234b9e1f0febce3ea5f549a}{00272}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a28a019292234b9e1f0febce3ea5f549a}{plot\_range\_diagnostics}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ nav\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(\textcolor{stringliteral}{"{}nav"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00274}00274\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(nav)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00276}00276\ \ \ \ \ \ \ \ \ fig,\ axs\ =\ plt.subplots(2,\ 4,\ sharex=\textcolor{keyword}{True},\ figsize=(22,\ 8))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00278}00278\ \ \ \ \ \ \ \ \ metrics\ =\ [}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}sensor\_raw.range.raw"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}state.rngBias.br"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.br"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}profile.rangeMean.r"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}profile.rangeStd.r"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Range"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}[m]"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}sensor\_raw.rangeDot.raw"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}state.rngBias.brr"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.brr"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}profile.rangeMean.rr"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}profile.rangeStd.rr"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Range-\/Rate"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}[m/s]"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00299}00299\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (raw\_key,\ bias\_key,\ cov\_key,\ mean\_key,\ std\_key,\ title,\ unit)\ \textcolor{keywordflow}{in}\ enumerate(metrics):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ raw\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ raw\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ bias\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ bias\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ p\_bias\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ cov\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ corrected\ =\ raw\ -\/\ bias}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ prof\_mean\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ mean\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ prof\_std\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ std\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00307}00307\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(axs[i,\ 0],\ t,\ raw,\ label=\textcolor{stringliteral}{"{}Raw"{}},\ color=\textcolor{stringliteral}{"{}tab:gray"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 0].set\_ylabel(f\textcolor{stringliteral}{"{}\{title\}\(\backslash\)n\{unit\}"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 0].set\_title(\textcolor{stringliteral}{"{}Raw"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(axs[i,\ 0])}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00313}00313\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 1],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bias,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\_bias,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=bias\_key.split(\textcolor{stringliteral}{"{}."{}})[-\/1],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:orange"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 1].set\_title(\textcolor{stringliteral}{"{}Bias\ Estimate"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a567c0c2ca49281ed2f6d9b6e2417daff}{\_plot\_series}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 2],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{"{}Corrected"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:blue"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 2].set\_title(\textcolor{stringliteral}{"{}Corrected\ (Raw\ -\/\ Bias)"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_adbe0478507681907212134cacdc34917}{\_format\_ax}}(axs[i,\ 2])}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a09b3133c652847a8e826fbc518b846d7}{\_plot\_mean\_std}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 3],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prof\_mean,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prof\_std,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{"{}Mean"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:green"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[i,\ 3].set\_title(\textcolor{stringliteral}{"{}Profiled\ Value"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00347}00347\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(4):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ axs[-\/1,\ j].set\_xlabel(\textcolor{stringliteral}{"{}Time\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00350}00350\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(fig,\ \textcolor{stringliteral}{"{}range\_diagnostics.png"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00352}00352\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00353}00353\ \ \ \ \ \textcolor{comment}{\#\ State\ estimation\ plots}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00354}00354\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00355}00355\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00356}\mbox{\hyperlink{classanalyze_1_1Analyzer_a4abbc7516c702628e1cd49a536f8681c}{00356}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a4abbc7516c702628e1cd49a536f8681c}{plot\_state\_estimation}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00357}00357\ \ \ \ \ \ \ \ \ nav\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(\textcolor{stringliteral}{"{}nav"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00358}00358\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(nav)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00360}00360\ \ \ \ \ \ \ \ \ fig,\ axs\ =\ plt.subplots(2,\ 3,\ sharex=\textcolor{keyword}{True},\ figsize=(22,\ 10))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00362}00362\ \ \ \ \ \ \ \ \ items\ =\ [}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.pos.x"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_pos.x"{}},\ \textcolor{stringliteral}{"{}x"{}},\ \textcolor{stringliteral}{"{}Position\ X"{}},\ \textcolor{stringliteral}{"{}[m]"{}},\ 0,\ 0),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.pos.y"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_pos.y"{}},\ \textcolor{stringliteral}{"{}y"{}},\ \textcolor{stringliteral}{"{}Position\ Y"{}},\ \textcolor{stringliteral}{"{}[m]"{}},\ 0,\ 1),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.pos.z"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_pos.z"{}},\ \textcolor{stringliteral}{"{}z"{}},\ \textcolor{stringliteral}{"{}Position\ Z"{}},\ \textcolor{stringliteral}{"{}[m]"{}},\ 0,\ 2),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.vel.vx"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_vel.vx"{}},\ \textcolor{stringliteral}{"{}vx"{}},\ \textcolor{stringliteral}{"{}Velocity\ X"{}},\ \textcolor{stringliteral}{"{}[m/s]"{}},\ 1,\ 0),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.vel.vy"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_vel.vy"{}},\ \textcolor{stringliteral}{"{}vy"{}},\ \textcolor{stringliteral}{"{}Velocity\ Y"{}},\ \textcolor{stringliteral}{"{}[m/s]"{}},\ 1,\ 1),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.vel.vz"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_vel.vz"{}},\ \textcolor{stringliteral}{"{}vz"{}},\ \textcolor{stringliteral}{"{}Velocity\ Z"{}},\ \textcolor{stringliteral}{"{}[m/s]"{}},\ 1,\ 2),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00369}00369\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00371}00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ state\_key,\ cov\_key,\ label,\ title,\ unit,\ r,\ c\ \textcolor{keywordflow}{in}\ items:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ state\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ cov\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cov,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=label,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:blue"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c].set\_title(title)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c].set\_ylabel(unit)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00386}00386\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00387}00387\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ axs[-\/1,\ c].set\_xlabel(\textcolor{stringliteral}{"{}Time\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00390}00390\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(fig,\ \textcolor{stringliteral}{"{}state\_estimation.png"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00392}\mbox{\hyperlink{classanalyze_1_1Analyzer_af8e692cebe6a1fad396e9ec515fbc679}{00392}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_af8e692cebe6a1fad396e9ec515fbc679}{plot\_attitude\_estimation}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00393}00393\ \ \ \ \ \ \ \ \ nav\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(\textcolor{stringliteral}{"{}nav"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(nav)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ fig,\ axs\ =\ plt.subplots(2,\ 3,\ sharex=\textcolor{keyword}{True},\ figsize=(22,\ 10))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00398}00398\ \ \ \ \ \ \ \ \ items\ =\ [}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.rpy.roll"{}},\ \textcolor{keywordtype}{None},\ \textcolor{stringliteral}{"{}roll"{}},\ \textcolor{stringliteral}{"{}Roll"{}},\ \textcolor{stringliteral}{"{}[rad]"{}},\ 0,\ 0),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.rpy.pitch"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_att.pitch"{}},\ \textcolor{stringliteral}{"{}pitch"{}},\ \textcolor{stringliteral}{"{}Pitch"{}},\ \textcolor{stringliteral}{"{}[rad]"{}},\ 0,\ 1),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.rpy.yaw"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_att.yaw"{}},\ \textcolor{stringliteral}{"{}yaw"{}},\ \textcolor{stringliteral}{"{}Yaw"{}},\ \textcolor{stringliteral}{"{}[rad]"{}},\ 0,\ 2),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.gyroBias.bgx"{}},\ \textcolor{stringliteral}{"{}covariance.P\_rot\_diag.bgx"{}},\ \textcolor{stringliteral}{"{}bgx"{}},\ \textcolor{stringliteral}{"{}Gyro\ Bias\ X"{}},\ \textcolor{stringliteral}{"{}[rad/s]"{}},\ 1,\ 0),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.gyroBias.bgy"{}},\ \textcolor{stringliteral}{"{}covariance.P\_rot\_diag.bgy"{}},\ \textcolor{stringliteral}{"{}bgy"{}},\ \textcolor{stringliteral}{"{}Gyro\ Bias\ Y"{}},\ \textcolor{stringliteral}{"{}[rad/s]"{}},\ 1,\ 1),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.gyroBias.bgz"{}},\ \textcolor{stringliteral}{"{}covariance.P\_rot\_diag.bgz"{}},\ \textcolor{stringliteral}{"{}bgz"{}},\ \textcolor{stringliteral}{"{}Gyro\ Bias\ Z"{}},\ \textcolor{stringliteral}{"{}[rad/s]"{}},\ 1,\ 2),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00405}00405\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00406}00406\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00407}00407\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ state\_key,\ cov\_key,\ label,\ title,\ unit,\ r,\ c\ \textcolor{keywordflow}{in}\ items:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ state\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ cov\_key)\ \textcolor{keywordflow}{if}\ cov\_key\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00410}00410\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cov,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=label,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:purple"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00419}00419\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c].set\_title(title)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c].set\_ylabel(unit)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00422}00422\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00423}00423\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ axs[-\/1,\ c].set\_xlabel(\textcolor{stringliteral}{"{}Time\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00426}00426\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(fig,\ \textcolor{stringliteral}{"{}attitude\_estimation.png"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00428}\mbox{\hyperlink{classanalyze_1_1Analyzer_a83ae6bd69ea68e901d5b1e380a623ac0}{00428}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_a83ae6bd69ea68e901d5b1e380a623ac0}{plot\_bias\_estimation}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00429}00429\ \ \ \ \ \ \ \ \ nav\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a9b6198ea0268a62b1c661da2e070aaf5}{\_blocks}}(\textcolor{stringliteral}{"{}nav"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00430}00430\ \ \ \ \ \ \ \ \ t\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a08c18b4f2e8826165bdfbf18c04c1577}{\_time}}(nav)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00431}00431\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00432}00432\ \ \ \ \ \ \ \ \ fig,\ axs\ =\ plt.subplots(2,\ 3,\ sharex=\textcolor{keyword}{True},\ figsize=(22,\ 10))}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00433}00433\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00434}00434\ \ \ \ \ \ \ \ \ items\ =\ [}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.accBias.bax"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.bax"{}},\ \textcolor{stringliteral}{"{}bax"{}},\ \textcolor{stringliteral}{"{}Accel\ Bias\ X"{}},\ \textcolor{stringliteral}{"{}[m/s²]"{}},\ 0,\ 0),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.accBias.bay"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.bay"{}},\ \textcolor{stringliteral}{"{}bay"{}},\ \textcolor{stringliteral}{"{}Accel\ Bias\ Y"{}},\ \textcolor{stringliteral}{"{}[m/s²]"{}},\ 0,\ 1),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.accBias.baz"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.baz"{}},\ \textcolor{stringliteral}{"{}baz"{}},\ \textcolor{stringliteral}{"{}Accel\ Bias\ Z"{}},\ \textcolor{stringliteral}{"{}[m/s²]"{}},\ 0,\ 2),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.rngBias.br"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.br"{}},\ \textcolor{stringliteral}{"{}br"{}},\ \textcolor{stringliteral}{"{}Range\ Bias"{}},\ \textcolor{stringliteral}{"{}[m]"{}},\ 1,\ 0),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}state.rngBias.brr"{}},\ \textcolor{stringliteral}{"{}covariance.P\_loc\_bias.brr"{}},\ \textcolor{stringliteral}{"{}brr"{}},\ \textcolor{stringliteral}{"{}Range-\/Rate\ Bias"{}},\ \textcolor{stringliteral}{"{}[m/s]"{}},\ 1,\ 1),}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00440}00440\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00441}00441\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00442}00442\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ state\_key,\ cov\_key,\ label,\ title,\ unit,\ r,\ c\ \textcolor{keywordflow}{in}\ items:}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ state\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ cov\ =\ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac445c84352dfd5a024e71231a64a495f}{\_scalar\_series}}(nav,\ cov\_key)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a7cc4c232198fcc429c8a93b6ce7fa34c}{\_plot\_with\_cov}}(}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c],}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cov,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=label,}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=\textcolor{stringliteral}{"{}tab:orange"{}},}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00454}00454\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c].set\_title(title)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ axs[r,\ c].set\_ylabel(unit)}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00457}00457\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00458}00458\ \ \ \ \ \ \ \ \ axs[1,\ 2].axis(\textcolor{stringliteral}{"{}off"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00459}00459\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00460}00460\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ axs[-\/1,\ c].set\_xlabel(\textcolor{stringliteral}{"{}Time\ [s]"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00462}00462\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00463}00463\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a29d7badd653dfa0be2c83ab3e66a8af4}{\_save\_or\_show}}(fig,\ \textcolor{stringliteral}{"{}bias\_estimation.png"{}})}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00464}00464\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00465}00465\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00466}00466\ \ \ \ \ \textcolor{comment}{\#\ Main\ entry}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00467}00467\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00468}00468\ }
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00469}\mbox{\hyperlink{classanalyze_1_1Analyzer_acc5c1f959a53442a8bd3961b01276c98}{00469}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanalyze_1_1Analyzer_acc5c1f959a53442a8bd3961b01276c98}{plot\_all}}(self):}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00470}00470\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_aae436a12f64cbe58eccfc4b739caebc2}{plot\_accel\_diagnostics}}()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00471}00471\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_ac6ba00e190a9e5b3af2b01d8dcd4d341}{plot\_gyro\_diagnostics}}()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00472}00472\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a28a019292234b9e1f0febce3ea5f549a}{plot\_range\_diagnostics}}()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00473}00473\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a4abbc7516c702628e1cd49a536f8681c}{plot\_state\_estimation}}()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00474}00474\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_af8e692cebe6a1fad396e9ec515fbc679}{plot\_attitude\_estimation}}()}
+\DoxyCodeLine{\Hypertarget{analyze_8py_source_l00475}00475\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanalyze_1_1Analyzer_a83ae6bd69ea68e901d5b1e380a623ac0}{plot\_bias\_estimation}}()}
+
+\end{DoxyCode}

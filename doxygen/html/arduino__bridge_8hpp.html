@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SPARX Source Docs: src/arduino_bridge/include/arduino_bridge/arduino_bridge.hpp File Reference</title>
+<title>SPARX Source Docs: src/bridges/include/bridges/arduino_bridge.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -94,25 +103,67 @@ $(document).ready(function(){initNavTree('arduino__bridge_8hpp.html',''); initRe
   <div class="headertitle"><div class="title">arduino_bridge.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;fcntl.h&gt;</code><br />
-<code>#include &lt;termios.h&gt;</code><br />
-<code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;cerrno&gt;</code><br />
-<code>#include &lt;cstring&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &quot;rclcpp/rclcpp.hpp&quot;</code><br />
-<code>#include &quot;std_msgs/msg/string.hpp&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="bridge_8hpp_source.html">bridge.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for arduino_bridge.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="arduino__bridge_8hpp__incl.png" border="0" usemap="#asrc_2arduino__bridge_2include_2arduino__bridge_2arduino__bridge_8hpp" alt=""/></div>
-<!-- MAP 0 -->
+<div class="center"><img src="arduino__bridge_8hpp__incl.png" border="0" usemap="#asrc_2bridges_2include_2bridges_2arduino__bridge_8hpp" alt=""/></div>
+<map name="asrc_2bridges_2include_2bridges_2arduino__bridge_8hpp" id="asrc_2bridges_2include_2bridges_2arduino__bridge_8hpp">
+<area shape="rect" title=" " alt="" coords="393,5,596,45"/>
+<area shape="rect" href="bridge_8hpp.html" title=" " alt="" coords="449,93,540,119"/>
+<area shape="poly" title=" " alt="" coords="497,46,497,79,492,79,492,46"/>
+<area shape="rect" title=" " alt="" coords="5,167,75,192"/>
+<area shape="poly" title=" " alt="" coords="449,115,294,136,89,169,88,164,293,130,449,110"/>
+<area shape="rect" title=" " alt="" coords="99,167,162,192"/>
+<area shape="poly" title=" " alt="" coords="449,118,182,169,176,171,175,165,181,164,448,113"/>
+<area shape="rect" title=" " alt="" coords="87,240,158,265"/>
+<area shape="poly" title=" " alt="" coords="450,118,363,137,266,169,203,201,151,234,148,230,201,197,264,164,362,132,448,113"/>
+<area shape="rect" title=" " alt="" coords="461,167,528,192"/>
+<area shape="poly" title=" " alt="" coords="497,119,497,153,492,153,492,119"/>
+<area shape="rect" title=" " alt="" coords="553,167,615,192"/>
+<area shape="poly" title=" " alt="" coords="511,117,560,156,557,160,507,121"/>
+<area shape="rect" title=" " alt="" coords="183,240,241,265"/>
+<area shape="poly" title=" " alt="" coords="450,118,380,137,342,151,307,169,265,199,233,232,229,228,262,195,304,164,340,146,379,132,449,113"/>
+<area shape="rect" title=" " alt="" coords="639,167,723,192"/>
+<area shape="poly" title=" " alt="" coords="526,116,639,159,637,164,524,121"/>
+<area shape="rect" title=" " alt="" coords="748,167,823,192"/>
+<area shape="poly" title=" " alt="" coords="541,116,735,163,734,168,539,121"/>
+<area shape="rect" title=" " alt="" coords="266,240,329,265"/>
+<area shape="poly" title=" " alt="" coords="450,115,387,132,356,147,329,168,311,197,303,227,298,226,306,194,325,165,353,143,385,127,449,110"/>
+<area shape="rect" href="utils_8h.html" title=" " alt="" coords="339,167,437,192"/>
+<area shape="poly" title=" " alt="" coords="479,121,418,161,415,157,476,116"/>
+<area shape="rect" title=" " alt="" coords="847,167,979,192"/>
+<area shape="poly" title=" " alt="" coords="541,112,834,162,833,167,540,118"/>
+<area shape="rect" title=" " alt="" coords="1004,167,1161,192"/>
+<area shape="poly" title=" " alt="" coords="541,110,990,164,990,169,540,115"/>
+<area shape="rect" title=" " alt="" coords="1186,167,1371,192"/>
+<area shape="poly" title=" " alt="" coords="541,108,1172,164,1172,169,540,114"/>
+<area shape="poly" title=" " alt="" coords="346,195,172,241,171,236,345,189"/>
+<area shape="poly" title=" " alt="" coords="361,194,255,237,253,232,359,190"/>
+<area shape="poly" title=" " alt="" coords="375,194,325,233,321,229,372,190"/>
+<area shape="rect" title=" " alt="" coords="663,240,729,265"/>
+<area shape="poly" title=" " alt="" coords="438,189,650,237,649,242,437,194"/>
+<area shape="rect" title=" " alt="" coords="754,240,817,265"/>
+<area shape="poly" title=" " alt="" coords="438,187,450,189,594,211,741,237,740,243,593,217,449,195,437,193"/>
+<area shape="rect" title=" " alt="" coords="841,240,914,265"/>
+<area shape="poly" title=" " alt="" coords="438,187,450,189,554,203,637,212,721,221,827,237,826,242,720,226,637,217,554,209,449,195,437,193"/>
+<area shape="rect" title=" " alt="" coords="353,240,433,265"/>
+<area shape="poly" title=" " alt="" coords="392,192,394,226,389,227,386,193"/>
+<area shape="rect" title=" " alt="" coords="457,240,521,265"/>
+<area shape="poly" title=" " alt="" coords="406,190,463,230,460,234,403,194"/>
+<area shape="rect" title=" " alt="" coords="546,240,638,265"/>
+<area shape="poly" title=" " alt="" coords="422,190,547,233,545,238,420,195"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="arduino__bridge_8hpp__dep__incl.png" border="0" usemap="#asrc_2arduino__bridge_2include_2arduino__bridge_2arduino__bridge_8hppdep" alt=""/></div>
-<!-- MAP 1 -->
+<div class="center"><img src="arduino__bridge_8hpp__dep__incl.png" border="0" usemap="#asrc_2bridges_2include_2bridges_2arduino__bridge_8hppdep" alt=""/></div>
+<map name="asrc_2bridges_2include_2bridges_2arduino__bridge_8hppdep" id="asrc_2bridges_2include_2bridges_2arduino__bridge_8hppdep">
+<area shape="rect" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" href="arduino__main_8cpp.html" title=" " alt="" coords="22,93,191,133"/>
+<area shape="poly" title=" " alt="" coords="109,59,109,93,104,93,104,59"/>
+</map>
 </div>
 </div>
 <p><a href="arduino__bridge_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -128,7 +179,7 @@ Classes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a74298565a788353833bfb0781cc7faa.html">arduino_bridge</a></li><li class="navelem"><a class="el" href="dir_adf109d24070e268f3dbbc99f9a3ff2f.html">include</a></li><li class="navelem"><a class="el" href="dir_a921f2017623e1548f0453a17b1ee6b9.html">arduino_bridge</a></li><li class="navelem"><a class="el" href="arduino__bridge_8hpp.html">arduino_bridge.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b1f1c94472a52d9c42ff4292371bbf64.html">bridges</a></li><li class="navelem"><a class="el" href="dir_af021c6b7de103e118e125c529aa6279.html">include</a></li><li class="navelem"><a class="el" href="dir_59e523c0074995ff9bf62ad17bc82702.html">bridges</a></li><li class="navelem"><a class="el" href="arduino__bridge_8hpp.html">arduino_bridge.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

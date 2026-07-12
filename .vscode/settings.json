@@ -24,5 +24,6 @@
     "/home/sparky/Desktop/SPARX_E/install/build_sparxe/lib/python3.12/site-packages",
     "/opt/ros/kilted/lib/python3.12/site-packages"
   ],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "todo-tree.ripgrep.ripgrep": "/usr/bin/rg"
 }

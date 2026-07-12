@@ -1,0 +1,141 @@
+\doxysection{analysis/aligndata.py File Reference}
+\hypertarget{aligndata_8py}{}\label{aligndata_8py}\index{analysis/aligndata.py@{analysis/aligndata.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacealigndata}{aligndata}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{aligndata.\+load\+\_\+exact\+\_\+csv}} (base\+\_\+name)
+\item 
+\mbox{\hyperlink{namespacealigndata_a0a6a950a1d396d153ec7ccc715fbb7bf}{aligndata.\+require\+\_\+columns}} (df, columns, name)
+\item 
+\mbox{\hyperlink{namespacealigndata_a84794670d2eb2c15cee55667fdaa48ec}{aligndata.\+clean\+\_\+numeric}} (df, columns, time\+\_\+column)
+\item 
+\mbox{\hyperlink{namespacealigndata_a57bdc7d751912351de09aa7f949333a5}{aligndata.\+relative\+\_\+rotations}} (rotation\+\_\+matrices)
+\item 
+\mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{aligndata.\+matrices\+\_\+to\+\_\+unwrapped\+\_\+rpy}} (rotation\+\_\+matrices)
+\item 
+\mbox{\hyperlink{namespacealigndata_afc1da51b103a24d4d8316ea8e8a7f93f}{aligndata.\+integrate\+\_\+body\+\_\+rates}} (t, omega)
+\item 
+\mbox{\hyperlink{namespacealigndata_a110bc2423a371fbc34496f1d91de4a28}{aligndata.\+update\+\_\+time\+\_\+shift}} (\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespacealigndata_aa5f59504e0b20ff09f4d0ab3ca899675}{aligndata.\+MEKF\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+mekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespacealigndata_a456dbbaf81254c3239615f1259d8dbe2}{aligndata.\+APRILTAG\+\_\+\+CSV}} = \textquotesingle{}../mekf\+\_\+retest\+\_\+lowlight\+\_\+raw\textquotesingle{}
+\item 
+float \mbox{\hyperlink{namespacealigndata_a8f5ecea2d46b9db4b1cfd7332ef1de65}{aligndata.\+APRILTAG\+\_\+\+TIME\+\_\+\+OFFSET\+\_\+\+INIT}} = 0.\+0
+\item 
+bool \mbox{\hyperlink{namespacealigndata_ae1a4cfdfbd43bb3d22666e854b88c50a}{aligndata.\+MEKF\+\_\+\+LOG\+\_\+\+ANGLES\+\_\+\+ARE\+\_\+\+DEGREES}} = True
+\item 
+int \mbox{\hyperlink{namespacealigndata_a7bf6b40574922c0913bdb1bf6120fd19}{aligndata.\+MEKF\+\_\+\+READY\+\_\+\+THRESHOLD\+\_\+\+DEG}} = 1e-\/4
+\item 
+bool \mbox{\hyperlink{namespacealigndata_a823e88483afb3358f99b2a422fa83006}{aligndata.\+APRILTAG\+\_\+\+QUATERNION\+\_\+\+IS\+\_\+\+CAMERA\+\_\+\+FROM\+\_\+\+TAG}} = True
+\item 
+\mbox{\hyperlink{namespacealigndata_a331340d13dfc69df7796f9fbbebdf716}{aligndata.\+R\+\_\+\+CAMERA\+\_\+\+BODY\+\_\+\+FIXED}}
+\item 
+\mbox{\hyperlink{namespacealigndata_adb7c4d920d802ba088132c849d2d269b}{aligndata.\+df\+\_\+mekf}} = \mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{load\+\_\+exact\+\_\+csv}}(\mbox{\hyperlink{namespacealigndata_aa5f59504e0b20ff09f4d0ab3ca899675}{MEKF\+\_\+\+CSV}})
+\item 
+list \mbox{\hyperlink{namespacealigndata_a73092c8a30a4fa3a881f5e07a7ded66b}{aligndata.\+mekf\+\_\+columns}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a4f8e88c45d56aaf373abbd79cb3f0cd9}{aligndata.\+rpy\+\_\+logged}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a0c870d667a39236838e4446133cfaf91}{aligndata.\+rpy\+\_\+norm}}
+\item 
+\mbox{\hyperlink{namespacealigndata_ae05595ac7e4095e46de0a9b7621dce83}{aligndata.\+ready\+\_\+indices}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a106249dcc443ff6f7a3252dddd0471a2}{aligndata.\+mekf\+\_\+start\+\_\+index}} = int(\mbox{\hyperlink{namespacealigndata_ae05595ac7e4095e46de0a9b7621dce83}{ready\+\_\+indices}}\mbox{[}0\mbox{]})
+\item 
+\mbox{\hyperlink{namespacealigndata_a40dde4cb6f744fe2bed0f6c9680ffe1b}{aligndata.\+t\+\_\+mekf}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a1934b7824d932ab7d575b35d967ae61d}{aligndata.\+gyro\+\_\+raw}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a303625b4dd55e8f10891c357f88514fc}{aligndata.\+gyro\+\_\+unbiased}}
+\item 
+\mbox{\hyperlink{namespacealigndata_af2f72a64780a0b93901aeeb6d0351f9d}{aligndata.\+gyro\+\_\+bias}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a59a2999c405aab948a903b1f76d23467}{aligndata.\+R\+\_\+inertial\+\_\+body\+\_\+mekf}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a48ab8ae75ff9f53340e0a69f1c5384a4}{aligndata.\+R\+\_\+relative\+\_\+mekf}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a10e91ace72b6d2c98cc7397cbce31949}{aligndata.\+rpy\+\_\+relative\+\_\+mekf}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a577706127a1a1866cb18533a920391e5}{aligndata.\+R\+\_\+relative\+\_\+raw\+\_\+gyro}}
+\item 
+\mbox{\hyperlink{namespacealigndata_ae8ab36af0e3e214134192945419a6fb4}{aligndata.\+R\+\_\+relative\+\_\+bias}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a26668cb50c895215237c7274daf5d1cb}{aligndata.\+R\+\_\+relative\+\_\+unbiased}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a225bc1673e5d8f60239e16cc3aba49eb}{aligndata.\+rpy\+\_\+raw\+\_\+gyro}}
+\item 
+\mbox{\hyperlink{namespacealigndata_abcdb27df3220ca2baf6585d175b75952}{aligndata.\+rpy\+\_\+bias}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a6bcc5ae16aa32841a2932f4a77b880bc}{aligndata.\+rpy\+\_\+unbiased}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a94727c8b666950876287aea3b8a111ba}{aligndata.\+df\+\_\+at}} = \mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{load\+\_\+exact\+\_\+csv}}(\mbox{\hyperlink{namespacealigndata_a456dbbaf81254c3239615f1259d8dbe2}{APRILTAG\+\_\+\+CSV}})
+\item 
+list \mbox{\hyperlink{namespacealigndata_abb69d6a0934ef1b8b6facd5297d92d37}{aligndata.\+at\+\_\+columns}}
+\item 
+\mbox{\hyperlink{namespacealigndata_affcb6242a098c53eb0ad3b6a381543b2}{aligndata.\+errors}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a697a594ba03d220be397057fe051b8fc}{aligndata.\+t\+\_\+at}}
+\item 
+\mbox{\hyperlink{namespacealigndata_aa196af91121423d4cffbc8756e55e1da}{aligndata.\+q\+\_\+at}}
+\item 
+\mbox{\hyperlink{namespacealigndata_aa9f5ebe4bf3ddf019cc9bcb7060d5b07}{aligndata.\+q\+\_\+norm}}
+\item 
+int \mbox{\hyperlink{namespacealigndata_a2abaa6f6fdb68813a688823db3daff12}{aligndata.\+valid\+\_\+quaternion}} = \mbox{\hyperlink{namespacealigndata_aa9f5ebe4bf3ddf019cc9bcb7060d5b07}{q\+\_\+norm}}\mbox{[}\+:, 0\mbox{]} $>$ 1e-\/12
+\item 
+\mbox{\hyperlink{namespacealigndata_aa01416d34934290a2d4739060fc5e43f}{aligndata.\+R\+\_\+quaternion}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a9f8a5304ce67c4133bde88fda2c90321}{aligndata.\+R\+\_\+camera\+\_\+tag}} = \mbox{\hyperlink{namespacealigndata_aa01416d34934290a2d4739060fc5e43f}{R\+\_\+quaternion}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a82e6986d0821c09a204e6e2008723984}{aligndata.\+R\+\_\+camera\+\_\+body}}
+\item 
+\mbox{\hyperlink{namespacealigndata_aaed28f1cbf225c96fe7c03dc7fcea82e}{aligndata.\+R\+\_\+relative\+\_\+at}}
+\item 
+\mbox{\hyperlink{namespacealigndata_ac96b886e34bc5a1eb832bd11e4ed8c53}{aligndata.\+rpy\+\_\+relative\+\_\+at}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a43ace5d887c5dbe873f8546b642b2e59}{aligndata.\+fig}}
+\item 
+\mbox{\hyperlink{namespacealigndata_ad9a0341a3bddaa0f82921e2d78d26941}{aligndata.\+axes}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a037df48fb5ada1c56e5fd366dd49d11c}{aligndata.\+figsize}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a9950e176ac74c49644d180eb9e83d55a}{aligndata.\+sharex}}
+\item 
+\mbox{\hyperlink{namespacealigndata_ac9b93410aaa6da7781303da12c233994}{aligndata.\+bottom}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a753cb20c93a1645e1230eaef5e18d623}{aligndata.\+hspace}}
+\item 
+\mbox{\hyperlink{namespacealigndata_afaab48110b672b1e613cee0a8c37e8df}{aligndata.\+wspace}}
+\item 
+list \mbox{\hyperlink{namespacealigndata_aa6adae1a497206ab477e2143388a8981}{aligndata.\+angle\+\_\+labels}}
+\item 
+list \mbox{\hyperlink{namespacealigndata_ac28eeb73c5850e8165eb64ee3fc894b7}{aligndata.\+rate\+\_\+labels}}
+\item 
+list \mbox{\hyperlink{namespacealigndata_a244505e82c76a62f33ba082c202e1ffb}{aligndata.\+april\+\_\+tag\+\_\+lines}} = \mbox{[}$\,$\mbox{]}
+\item 
+tuple \mbox{\hyperlink{namespacealigndata_a4e8b887df4d09e0e6b331e619f399452}{aligndata.\+shifted\+\_\+at\+\_\+time}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a6bb5544b1efa4c0acec5fae0257b662f}{aligndata.\+label}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a47998586ba272b1562109633ada2e71e}{aligndata.\+linewidth}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a0c9df216db2ef3caf30df29368ca9f47}{aligndata.\+linestyle}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a808303b0a1fa9a533cc0b9f658e3a44a}{aligndata.\+alpha}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a4a319c642203f8f09cd7d0fa7d7eeb72}{aligndata.\+loc}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a6600f02c3999fac182ada0f6b0960531}{aligndata.\+slider\+\_\+limit}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a4c720b87de2510a9a0e38cf989a1b1e1}{aligndata.\+slider\+\_\+axis}}
+\item 
+\mbox{\hyperlink{namespacealigndata_a2a423abf6c4a648defa542c186a7a79e}{aligndata.\+time\+\_\+slider}}
+\end{DoxyCompactItemize}

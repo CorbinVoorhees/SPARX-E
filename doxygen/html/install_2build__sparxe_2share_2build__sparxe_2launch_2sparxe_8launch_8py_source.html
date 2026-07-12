@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -97,15 +106,14 @@ $(document).ready(function(){initNavTree('install_2build__sparxe_2share_2build__
   <div class="headertitle"><div class="title">sparxe.launch.py</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="install_2build__sparxe_2share_2build__sparxe_2launch_2sparxe_8launch_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacesparxe.html">    1</a></span><span class="keyword">from</span> launch <span class="keyword">import</span> LaunchDescription</div>
+<a href="install_2build__sparxe_2share_2build__sparxe_2launch_2sparxe_8launch_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">from</span> launch <span class="keyword">import</span> LaunchDescription</div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">from</span> launch.actions <span class="keyword">import</span> IncludeLaunchDescription</div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">from</span> launch.launch_description_sources <span class="keyword">import</span> PythonLaunchDescriptionSource</div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">from</span> launch.substitutions <span class="keyword">import</span> PathJoinSubstitution</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">from</span> launch_ros.actions <span class="keyword">import</span> Node</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">from</span> launch_ros.substitutions <span class="keyword">import</span> FindPackageShare</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="foldopen" id="foldopen00008" data-start="" data-end="">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="namespacesparxe.html#a88c68df7207ae0fd1edfaf23846e6977">    8</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacesparxe.html#a88c68df7207ae0fd1edfaf23846e6977">generate_launch_description</a>():</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">def </span>generate_launch_description():</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordflow">return</span> LaunchDescription([</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        IncludeLaunchDescription(</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>            PythonLaunchDescriptionSource(</div>
@@ -115,7 +123,7 @@ $(document).ready(function(){initNavTree('install_2build__sparxe_2share_2build__
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>                    <span class="stringliteral">&#39;spatial-launch.py&#39;</span>,</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                ])</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            ),</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            launch_arguments={<span class="stringliteral">&#39;hub_port&#39;</span>: <span class="stringliteral">&#39;1&#39;</span>}.items()</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            launch_arguments={<span class="stringliteral">&#39;hub_port&#39;</span>: <span class="stringliteral">&#39;0&#39;</span>}.items()</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        ),</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        Node(</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            package=<span class="stringliteral">&#39;imu_filter_madgwick&#39;</span>,</div>
@@ -149,18 +157,16 @@ $(document).ready(function(){initNavTree('install_2build__sparxe_2share_2build__
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            name=<span class="stringliteral">&#39;motor_commander&#39;</span>,</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        ),</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        Node(</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            package=<span class="stringliteral">&#39;arduino_bridge&#39;</span>,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            package=<span class="stringliteral">&#39;bridges&#39;</span>,</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            executable=<span class="stringliteral">&#39;arduino_bridge_node&#39;</span>,</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            name=<span class="stringliteral">&#39;arduino_bridge&#39;</span>,</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        ),</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        Node(</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            package=<span class="stringliteral">&#39;uwb_bridge&#39;</span>,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            package=<span class="stringliteral">&#39;bridges&#39;</span>,</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            executable=<span class="stringliteral">&#39;uwb_bridge_node&#39;</span>,</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            name=<span class="stringliteral">&#39;uwb_bridge&#39;</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        )</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    ])</div>
-</div>
-<div class="ttc" id="anamespacesparxe_html_a88c68df7207ae0fd1edfaf23846e6977"><div class="ttname"><a href="namespacesparxe.html#a88c68df7207ae0fd1edfaf23846e6977">sparxe.generate_launch_description</a></div><div class="ttdeci">generate_launch_description()</div><div class="ttdef"><b>Definition</b> <a href="install_2build__sparxe_2share_2build__sparxe_2launch_2sparxe_8launch_8py_source.html#l00008">sparxe.launch.py:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

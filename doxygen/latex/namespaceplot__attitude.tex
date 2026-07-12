@@ -1,0 +1,146 @@
+\doxysection{plot\+\_\+attitude Namespace Reference}
+\hypertarget{namespaceplot__attitude}{}\label{namespaceplot__attitude}\index{plot\_attitude@{plot\_attitude}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceplot__attitude_aa35b99445892e7ff07ee3ebd048e998c}{load\+\_\+csv}} (base)
+\item 
+\mbox{\hyperlink{namespaceplot__attitude_aa491ccf07611bf2dc21f5f41f9bbcf32}{clean}} (df, cols, time\+\_\+col=\textquotesingle{}time\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespaceplot__attitude_ab69d8df6d5a03c948571794a5e85481f}{zero\+\_\+to\+\_\+first\+\_\+nonzero}} (arr)
+\item 
+\mbox{\hyperlink{namespaceplot__attitude_ad0a6f26039a1f455857273d769e2ac75}{load\+\_\+atag}} (csv\+\_\+path)
+\item 
+\mbox{\hyperlink{namespaceplot__attitude_a4b18984779fe0e2ca49df4174c776b3f}{main}} (\mbox{\hyperlink{namespaceplot__attitude_af478761219592b240e66ea776af42843}{mekf\+\_\+path}}=\mbox{\hyperlink{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281}{MEKF\+\_\+\+CSV}}, \mbox{\hyperlink{namespaceplot__attitude_a95658cabab2467954b381efff667b925}{atag\+\_\+path}}=None)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281}{MEKF\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+mekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}
+\item 
+list \mbox{\hyperlink{namespaceplot__attitude_a3e0273c37e14b6826feca78da72a6444}{REQUIRED\+\_\+\+MEKF\+\_\+\+COLS}} = \mbox{[}\textquotesingle{}time\textquotesingle{}, \textquotesingle{}nis\textquotesingle{}, \textquotesingle{}roll\textquotesingle{}, \textquotesingle{}pitch\textquotesingle{}, \textquotesingle{}yaw\textquotesingle{}\mbox{]}
+\item 
+list \mbox{\hyperlink{namespaceplot__attitude_a70f1ef0e5d65da6c2ef2e2f886d4ac5b}{REQUIRED\+\_\+\+ATAG\+\_\+\+COLS}} = \mbox{[}\textquotesingle{}time\+\_\+s\textquotesingle{}, \textquotesingle{}roll\+\_\+deg\textquotesingle{}, \textquotesingle{}pitch\+\_\+deg\textquotesingle{}, \textquotesingle{}yaw\+\_\+deg\textquotesingle{}, \textquotesingle{}pose\+\_\+valid\textquotesingle{}, \textquotesingle{}pose\+\_\+error\textquotesingle{}\mbox{]}
+\item 
+float \mbox{\hyperlink{namespaceplot__attitude_a6471c55d0f0878019ef4053747cd83a9}{ATAG\+\_\+\+POSE\+\_\+\+ERROR\+\_\+\+MAX}} = 5.\+0
+\item 
+int \mbox{\hyperlink{namespaceplot__attitude_af478761219592b240e66ea776af42843}{mekf\+\_\+path}} = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281}{MEKF\+\_\+\+CSV}}
+\item 
+int \mbox{\hyperlink{namespaceplot__attitude_a95658cabab2467954b381efff667b925}{atag\+\_\+path}} = sys.\+argv\mbox{[}2\mbox{]} if len(sys.\+argv) $>$ 2 else None
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceplot__attitude_aa491ccf07611bf2dc21f5f41f9bbcf32}\label{namespaceplot__attitude_aa491ccf07611bf2dc21f5f41f9bbcf32} 
+\index{plot\_attitude@{plot\_attitude}!clean@{clean}}
+\index{clean@{clean}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{clean()}{clean()}}
+{\footnotesize\ttfamily plot\+\_\+attitude.\+clean (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{cols,  }\item[{}]{time\+\_\+col = {\ttfamily \textquotesingle{}time\textquotesingle{}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00030}{30}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_ad0a6f26039a1f455857273d769e2ac75}\label{namespaceplot__attitude_ad0a6f26039a1f455857273d769e2ac75} 
+\index{plot\_attitude@{plot\_attitude}!load\_atag@{load\_atag}}
+\index{load\_atag@{load\_atag}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{load\_atag()}{load\_atag()}}
+{\footnotesize\ttfamily plot\+\_\+attitude.\+load\+\_\+atag (\begin{DoxyParamCaption}\item[{}]{csv\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00048}{48}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_aa35b99445892e7ff07ee3ebd048e998c}\label{namespaceplot__attitude_aa35b99445892e7ff07ee3ebd048e998c} 
+\index{plot\_attitude@{plot\_attitude}!load\_csv@{load\_csv}}
+\index{load\_csv@{load\_csv}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{load\_csv()}{load\_csv()}}
+{\footnotesize\ttfamily plot\+\_\+attitude.\+load\+\_\+csv (\begin{DoxyParamCaption}\item[{}]{base }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00023}{23}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_a4b18984779fe0e2ca49df4174c776b3f}\label{namespaceplot__attitude_a4b18984779fe0e2ca49df4174c776b3f} 
+\index{plot\_attitude@{plot\_attitude}!main@{main}}
+\index{main@{main}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily plot\+\_\+attitude.\+main (\begin{DoxyParamCaption}\item[{}]{mekf\+\_\+path = {\ttfamily \mbox{\hyperlink{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281}{MEKF\+\_\+\+CSV}}},  }\item[{}]{atag\+\_\+path = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00078}{78}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_ab69d8df6d5a03c948571794a5e85481f}\label{namespaceplot__attitude_ab69d8df6d5a03c948571794a5e85481f} 
+\index{plot\_attitude@{plot\_attitude}!zero\_to\_first\_nonzero@{zero\_to\_first\_nonzero}}
+\index{zero\_to\_first\_nonzero@{zero\_to\_first\_nonzero}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{zero\_to\_first\_nonzero()}{zero\_to\_first\_nonzero()}}
+{\footnotesize\ttfamily plot\+\_\+attitude.\+zero\+\_\+to\+\_\+first\+\_\+nonzero (\begin{DoxyParamCaption}\item[{}]{arr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00042}{42}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceplot__attitude_a95658cabab2467954b381efff667b925}\label{namespaceplot__attitude_a95658cabab2467954b381efff667b925} 
+\index{plot\_attitude@{plot\_attitude}!atag\_path@{atag\_path}}
+\index{atag\_path@{atag\_path}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{atag\_path}{atag\_path}}
+{\footnotesize\ttfamily int plot\+\_\+attitude.\+atag\+\_\+path = sys.\+argv\mbox{[}2\mbox{]} if len(sys.\+argv) $>$ 2 else None}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00226}{226}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_a6471c55d0f0878019ef4053747cd83a9}\label{namespaceplot__attitude_a6471c55d0f0878019ef4053747cd83a9} 
+\index{plot\_attitude@{plot\_attitude}!ATAG\_POSE\_ERROR\_MAX@{ATAG\_POSE\_ERROR\_MAX}}
+\index{ATAG\_POSE\_ERROR\_MAX@{ATAG\_POSE\_ERROR\_MAX}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{ATAG\_POSE\_ERROR\_MAX}{ATAG\_POSE\_ERROR\_MAX}}
+{\footnotesize\ttfamily float plot\+\_\+attitude.\+ATAG\+\_\+\+POSE\+\_\+\+ERROR\+\_\+\+MAX = 5.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00021}{21}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281}\label{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281} 
+\index{plot\_attitude@{plot\_attitude}!MEKF\_CSV@{MEKF\_CSV}}
+\index{MEKF\_CSV@{MEKF\_CSV}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{MEKF\_CSV}{MEKF\_CSV}}
+{\footnotesize\ttfamily str plot\+\_\+attitude.\+MEKF\+\_\+\+CSV = \textquotesingle{}../sparxe\+\_\+mekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00015}{15}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_af478761219592b240e66ea776af42843}\label{namespaceplot__attitude_af478761219592b240e66ea776af42843} 
+\index{plot\_attitude@{plot\_attitude}!mekf\_path@{mekf\_path}}
+\index{mekf\_path@{mekf\_path}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{mekf\_path}{mekf\_path}}
+{\footnotesize\ttfamily int plot\+\_\+attitude.\+mekf\+\_\+path = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespaceplot__attitude_aff6b8fc3885a19866f9e2abf3cfa8281}{MEKF\+\_\+\+CSV}}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00225}{225}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_a70f1ef0e5d65da6c2ef2e2f886d4ac5b}\label{namespaceplot__attitude_a70f1ef0e5d65da6c2ef2e2f886d4ac5b} 
+\index{plot\_attitude@{plot\_attitude}!REQUIRED\_ATAG\_COLS@{REQUIRED\_ATAG\_COLS}}
+\index{REQUIRED\_ATAG\_COLS@{REQUIRED\_ATAG\_COLS}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{REQUIRED\_ATAG\_COLS}{REQUIRED\_ATAG\_COLS}}
+{\footnotesize\ttfamily list plot\+\_\+attitude.\+REQUIRED\+\_\+\+ATAG\+\_\+\+COLS = \mbox{[}\textquotesingle{}time\+\_\+s\textquotesingle{}, \textquotesingle{}roll\+\_\+deg\textquotesingle{}, \textquotesingle{}pitch\+\_\+deg\textquotesingle{}, \textquotesingle{}yaw\+\_\+deg\textquotesingle{}, \textquotesingle{}pose\+\_\+valid\textquotesingle{}, \textquotesingle{}pose\+\_\+error\textquotesingle{}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00018}{18}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+
+\Hypertarget{namespaceplot__attitude_a3e0273c37e14b6826feca78da72a6444}\label{namespaceplot__attitude_a3e0273c37e14b6826feca78da72a6444} 
+\index{plot\_attitude@{plot\_attitude}!REQUIRED\_MEKF\_COLS@{REQUIRED\_MEKF\_COLS}}
+\index{REQUIRED\_MEKF\_COLS@{REQUIRED\_MEKF\_COLS}!plot\_attitude@{plot\_attitude}}
+\doxysubsubsection{\texorpdfstring{REQUIRED\_MEKF\_COLS}{REQUIRED\_MEKF\_COLS}}
+{\footnotesize\ttfamily list plot\+\_\+attitude.\+REQUIRED\+\_\+\+MEKF\+\_\+\+COLS = \mbox{[}\textquotesingle{}time\textquotesingle{}, \textquotesingle{}nis\textquotesingle{}, \textquotesingle{}roll\textquotesingle{}, \textquotesingle{}pitch\textquotesingle{}, \textquotesingle{}yaw\textquotesingle{}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__attitude_8py_source_l00017}{17}} of file \mbox{\hyperlink{plot__attitude_8py_source}{plot\+\_\+attitude.\+py}}.
+

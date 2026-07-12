@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,60,117,85"/>
+<area shape="rect" id="Node000001" href="$structrosidl__generator__traits_1_1is__message_3_01lidar__processor_1_1msg_1_1Env_01_4.html" title=" " alt="" coords="165,5,387,60"/>
+<area shape="poly" id="edge24_Node000000_Node000001" title=" " alt="" coords="131,57,165,51,166,56,132,62"/>
+<area shape="rect" id="Node000002" href="$structrosidl__generator__traits_1_1is__message_3_01lidar__processor_1_1msg_1_1Obstacle_01_4.html" title=" " alt="" coords="165,84,387,139"/>
+<area shape="poly" id="edge25_Node000000_Node000002" title=" " alt="" coords="132,83,166,89,165,94,131,88"/>
+</map>

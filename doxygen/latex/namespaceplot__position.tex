@@ -1,0 +1,100 @@
+\doxysection{plot\+\_\+position Namespace Reference}
+\hypertarget{namespaceplot__position}{}\label{namespaceplot__position}\index{plot\_position@{plot\_position}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceplot__position_a1b5d46b9f81ef817c7215e508d678b0b}{load\+\_\+csv}} (base)
+\item 
+\mbox{\hyperlink{namespaceplot__position_a48b55fb96a805f875bb0a772bced1352}{clean}} (df, cols)
+\item 
+\mbox{\hyperlink{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71}{rotate\+\_\+vecs}} (Q, V)
+\item 
+\mbox{\hyperlink{namespaceplot__position_a32ceb461eca65872bbf7bcb100b0d34c}{main}} (\mbox{\hyperlink{namespaceplot__position_af94040ba80998357a4d5c4032aeb5c52}{ekf\+\_\+path}}=\mbox{\hyperlink{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}{EKF\+\_\+\+CSV}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}{EKF\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+ekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}
+\item 
+list \mbox{\hyperlink{namespaceplot__position_a8a1cf9f1a9af4d8a1c7d8aca3c7fa485}{REQUIRED\+\_\+\+COLS}} = \mbox{[}\textquotesingle{}time\textquotesingle{}, \textquotesingle{}nis\textquotesingle{}, \textquotesingle{}px\textquotesingle{}, \textquotesingle{}py\textquotesingle{}, \textquotesingle{}pz\textquotesingle{}, \textquotesingle{}vx\textquotesingle{}, \textquotesingle{}vy\textquotesingle{}, \textquotesingle{}vz\textquotesingle{}\mbox{]}
+\item 
+int \mbox{\hyperlink{namespaceplot__position_af94040ba80998357a4d5c4032aeb5c52}{ekf\+\_\+path}} = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}{EKF\+\_\+\+CSV}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceplot__position_a48b55fb96a805f875bb0a772bced1352}\label{namespaceplot__position_a48b55fb96a805f875bb0a772bced1352} 
+\index{plot\_position@{plot\_position}!clean@{clean}}
+\index{clean@{clean}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{clean()}{clean()}}
+{\footnotesize\ttfamily plot\+\_\+position.\+clean (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{cols }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00026}{26}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+
+\Hypertarget{namespaceplot__position_a1b5d46b9f81ef817c7215e508d678b0b}\label{namespaceplot__position_a1b5d46b9f81ef817c7215e508d678b0b} 
+\index{plot\_position@{plot\_position}!load\_csv@{load\_csv}}
+\index{load\_csv@{load\_csv}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{load\_csv()}{load\_csv()}}
+{\footnotesize\ttfamily plot\+\_\+position.\+load\+\_\+csv (\begin{DoxyParamCaption}\item[{}]{base }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00019}{19}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+
+\Hypertarget{namespaceplot__position_a32ceb461eca65872bbf7bcb100b0d34c}\label{namespaceplot__position_a32ceb461eca65872bbf7bcb100b0d34c} 
+\index{plot\_position@{plot\_position}!main@{main}}
+\index{main@{main}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily plot\+\_\+position.\+main (\begin{DoxyParamCaption}\item[{}]{ekf\+\_\+path = {\ttfamily \mbox{\hyperlink{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}{EKF\+\_\+\+CSV}}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00052}{52}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+
+\Hypertarget{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71}\label{namespaceplot__position_adbe3154fd6b9235d80b5770eb744ca71} 
+\index{plot\_position@{plot\_position}!rotate\_vecs@{rotate\_vecs}}
+\index{rotate\_vecs@{rotate\_vecs}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{rotate\_vecs()}{rotate\_vecs()}}
+{\footnotesize\ttfamily plot\+\_\+position.\+rotate\+\_\+vecs (\begin{DoxyParamCaption}\item[{}]{Q,  }\item[{}]{V }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Rotate body-frame vectors V (Nx3) by quaternions Q (Nx4 [w,x,y,z]) into
+the q0 frame — i.e. p_q0 = R(q)·p_body, done per row. Vectorized.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00038}{38}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}\label{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d} 
+\index{plot\_position@{plot\_position}!EKF\_CSV@{EKF\_CSV}}
+\index{EKF\_CSV@{EKF\_CSV}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{EKF\_CSV}{EKF\_CSV}}
+{\footnotesize\ttfamily str plot\+\_\+position.\+EKF\+\_\+\+CSV = \textquotesingle{}../sparxe\+\_\+ekf\+\_\+test1\+\_\+\+\_\+1\+\_\+1\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00014}{14}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+
+\Hypertarget{namespaceplot__position_af94040ba80998357a4d5c4032aeb5c52}\label{namespaceplot__position_af94040ba80998357a4d5c4032aeb5c52} 
+\index{plot\_position@{plot\_position}!ekf\_path@{ekf\_path}}
+\index{ekf\_path@{ekf\_path}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{ekf\_path}{ekf\_path}}
+{\footnotesize\ttfamily int plot\+\_\+position.\+ekf\+\_\+path = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespaceplot__position_a7ee9016519892c1ce1732ff490df522d}{EKF\+\_\+\+CSV}}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00261}{261}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+
+\Hypertarget{namespaceplot__position_a8a1cf9f1a9af4d8a1c7d8aca3c7fa485}\label{namespaceplot__position_a8a1cf9f1a9af4d8a1c7d8aca3c7fa485} 
+\index{plot\_position@{plot\_position}!REQUIRED\_COLS@{REQUIRED\_COLS}}
+\index{REQUIRED\_COLS@{REQUIRED\_COLS}!plot\_position@{plot\_position}}
+\doxysubsubsection{\texorpdfstring{REQUIRED\_COLS}{REQUIRED\_COLS}}
+{\footnotesize\ttfamily list plot\+\_\+position.\+REQUIRED\+\_\+\+COLS = \mbox{[}\textquotesingle{}time\textquotesingle{}, \textquotesingle{}nis\textquotesingle{}, \textquotesingle{}px\textquotesingle{}, \textquotesingle{}py\textquotesingle{}, \textquotesingle{}pz\textquotesingle{}, \textquotesingle{}vx\textquotesingle{}, \textquotesingle{}vy\textquotesingle{}, \textquotesingle{}vz\textquotesingle{}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{plot__position_8py_source_l00016}{16}} of file \mbox{\hyperlink{plot__position_8py_source}{plot\+\_\+position.\+py}}.
+

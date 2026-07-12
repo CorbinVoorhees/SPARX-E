@@ -26,5 +26,5 @@ var searchData=
   ['lidarversiondatapacket_23',['LidarVersionDataPacket',['../structunilidar__sdk2_1_1LidarVersionDataPacket.html',1,'unilidar_sdk2']]],
   ['lidarworkmodeconfig_24',['LidarWorkModeConfig',['../structunilidar__sdk2_1_1LidarWorkModeConfig.html',1,'unilidar_sdk2']]],
   ['lidarworkmodeconfigpacket_25',['LidarWorkModeConfigPacket',['../structunilidar__sdk2_1_1LidarWorkModeConfigPacket.html',1,'unilidar_sdk2']]],
-  ['lightpq_26',['lightpq',['../classplanning__module_1_1lightpq.html',1,'planning_module']]]
+  ['logger_26',['Logger',['../classLogger.html',1,'']]]
 ];

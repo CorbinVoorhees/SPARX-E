@@ -1,0 +1,103 @@
+\chapter{UWB Pi gateway Ubuntu installer}
+\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY}{}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY}\index{UWB Pi gateway Ubuntu installer@{UWB Pi gateway Ubuntu installer}}
+\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md60}%
+\Hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md60}%
+ This package installs the Raspberry Pi 5 / Ubuntu side of the Qorvo DWM3001\+CDK setup. The Pi runs the UWB board as the Fi\+Ra initiator/controller and exposes a simple serial API to the Arduino. The Arduino prints the result to the Arduino Serial Monitor.\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md61}{}\doxysection{\texorpdfstring{Files you need on the Pi}{Files you need on the Pi}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md61}
+Copy these to the Pi\+:
+
+
+\begin{DoxyEnumerate}
+\item This folder or zip contents.
+\item The Qorvo SDK zip, named {\ttfamily SDK(1).zip} or {\ttfamily SDK.\+zip}, placed beside {\ttfamily install\+\_\+pi\+\_\+gateway.\+sh}.
+\end{DoxyEnumerate}
+
+The SDK itself is not bundled in this package because it is large.\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md62}{}\doxysection{\texorpdfstring{Hardware serial requirement for Arduino Serial Monitor output}{Hardware serial requirement for Arduino Serial Monitor output}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md62}
+To see range data in the Arduino Serial Monitor, the Arduino needs two serial paths\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily Serial} over Arduino USB -\/\texorpdfstring{$>$}{>} Arduino Serial Monitor.
+\item {\ttfamily Serial1} -\/\texorpdfstring{$>$}{>} Raspberry Pi serial link.
+\end{DoxyItemize}
+
+Use an Arduino with {\ttfamily Serial1}, such as a Mega, Leonardo-\/class board, Nano Every, SAMD board, ESP32, or equivalent. If using Pi GPIO UART, level-\/shift signals if the Arduino is 5 V.\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md63}{}\doxysection{\texorpdfstring{One-\/command install}{One-command install}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md63}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{unzip\ uwb\_pi\_ubuntu\_install.zip}
+\DoxyCodeLine{cd\ uwb\_pi\_ubuntu}
+\DoxyCodeLine{sudo\ ./install\_pi\_gateway.sh\ -\/-\/start}
+
+\end{DoxyCode}
+
+
+If auto-\/detection cannot find the SDK zip or serial ports\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo\ ./install\_pi\_gateway.sh\ \(\backslash\)}
+\DoxyCodeLine{\ \ -\/-\/sdk-\/zip\ /path/to/SDK\(\backslash\)(1\(\backslash\)).zip\ \(\backslash\)}
+\DoxyCodeLine{\ \ -\/-\/uwb-\/port\ /dev/serial/by-\/id/<PI\_UWB\_PORT>\ \(\backslash\)}
+\DoxyCodeLine{\ \ -\/-\/arduino-\/port\ /dev/serial/by-\/id/<ARDUINO\_LINK\_PORT>\ \(\backslash\)}
+\DoxyCodeLine{\ \ -\/-\/start}
+
+\end{DoxyCode}
+\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md64}{}\doxysection{\texorpdfstring{What the installer does}{What the installer does}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md64}
+
+\begin{DoxyItemize}
+\item Installs Python, venv, pip, unzip, screen, and minicom.
+\item Unpacks the Qorvo SDK to {\ttfamily /opt/qorvo\+\_\+uwb\+\_\+sdk}.
+\item Creates a Python virtual environment under {\ttfamily SDK/\+Tools/uwb-\/qorvo-\/tools/.venv}.
+\item Installs {\ttfamily pyserial} and {\ttfamily colorama}.
+\item Installs {\ttfamily \doxylink{uwb__gatewayd_8py}{uwb\+\_\+gatewayd.\+py}} to {\ttfamily /opt/qorvo\+\_\+uwb\+\_\+pi\+\_\+gateway/bin}.
+\item Installs the Arduino sketch to {\ttfamily /opt/qorvo\+\_\+uwb\+\_\+pi\+\_\+gateway/arduino/\+Uwb\+Range\+Monitor}.
+\item Creates {\ttfamily /etc/default/qorvo\+\_\+uwb\+\_\+pi\+\_\+gateway}.
+\item Creates and enables {\ttfamily qorvo-\/uwb-\/pi-\/gateway.\+service}.
+\end{DoxyItemize}\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md65}{}\doxysection{\texorpdfstring{Service commands}{Service commands}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md65}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo\ systemctl\ start\ qorvo-\/uwb-\/pi-\/gateway.service}
+\DoxyCodeLine{sudo\ systemctl\ stop\ qorvo-\/uwb-\/pi-\/gateway.service}
+\DoxyCodeLine{sudo\ systemctl\ restart\ qorvo-\/uwb-\/pi-\/gateway.service}
+\DoxyCodeLine{journalctl\ -\/u\ qorvo-\/uwb-\/pi-\/gateway.service\ -\/f}
+
+\end{DoxyCode}
+\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md66}{}\doxysection{\texorpdfstring{Arduino usage}{Arduino usage}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md66}
+Upload the included sketch\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{/opt/qorvo\_uwb\_pi\_gateway/tools/upload\_arduino\_sketch.sh\ -\/-\/help}
+
+\end{DoxyCode}
+
+
+Open Arduino Serial Monitor at {\ttfamily 115200} baud and type\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{r}
+
+\end{DoxyCode}
+
+
+The Arduino sends {\ttfamily GET\+\_\+\+RANGE} to the Pi over {\ttfamily Serial1}; the Pi returns the latest range; the Arduino prints it to the monitor.
+
+Expected monitor output\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{UWB:\ RANGE\ ok=1\ peer=01:00\ seq=184\ range\_cm=243\ range\_m=2.430\ rate\_mps=-\/0.180\ rate\_valid=1\ age\_ms=31\ status=Ok}
+
+\end{DoxyCode}
+\hypertarget{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md67}{}\doxysection{\texorpdfstring{Default UWB role/config}{Default UWB role/config}}\label{md_UWB_2uwb__pi__ubuntu_2README__PI__GATEWAY_autotoc_md67}
+
+\begin{DoxyItemize}
+\item Role\+: initiator / controller
+\item Local MAC\+: {\ttfamily 0x0}
+\item Peer/responder MAC\+: {\ttfamily 0x1}
+\item Session ID\+: {\ttfamily 42}
+\item Channel\+: {\ttfamily 9}
+\item DS-\/\+TWR deferred, SP3, 64-\/symbol STS, 2 ms slots, 200 ms ranging interval, 25 slots per ranging round.
+\end{DoxyItemize}
+
+These values must match the ground-\/station responder. 

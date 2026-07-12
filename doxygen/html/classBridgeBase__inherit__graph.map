@@ -1,0 +1,9 @@
+<map id="BridgeBase" name="BridgeBase">
+<area shape="rect" id="Node000001" title="Bridge is a base class that defines serial monitor communication for peripherals that use TTY." alt="" coords="79,79,175,104"/>
+<area shape="rect" id="Node000003" href="$classArduinoBridge.html" title="Bridges Arduino serial data into ROS 2 topics." alt="" coords="5,152,120,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,116,75,154,71,150,105,113"/>
+<area shape="rect" id="Node000004" href="$classUWBBridge.html" title="Bridges UWB serial range data into ROS 2 topics." alt="" coords="144,152,240,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="149,113,183,150,179,154,145,116"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="75,5,178,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,44,129,79,124,79,124,44"/>
+</map>

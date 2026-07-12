@@ -1,0 +1,116 @@
+\doxysection{Sensor\+::Sensor\+Table Class Reference}
+\hypertarget{classSensor_1_1SensorTable}{}\label{classSensor_1_1SensorTable}\index{Sensor::SensorTable@{Sensor::SensorTable}}
+
+
+{\ttfamily \#include $<$ISensor.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSensor_1_1SensorTable_acdb5edfb4ed2ccef7b058bbd47c03bef}{Sensor\+Table}} ()=\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{delete}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\static bool \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{get\+\_\+mean}} (std\+::string id, T \&data)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ }\\\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+Hook}}$<$ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ $>$ \mbox{\hyperlink{classSensor_1_1SensorTable_a14af95afac149a38f774df2512a76d66}{get\+\_\+hook}} (std\+::string id)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ }\\\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{void}} \mbox{\hyperlink{classSensor_1_1SensorTable_a5ac5eb8caf6eb2f1f7d486ca3e793875}{set\+\_\+spike\+\_\+rejection}} (std\+::string id, \mbox{\hyperlink{structSpikeRejectConfig}{Spike\+Reject\+Config}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{cfg}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ }\\\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{bool}} \mbox{\hyperlink{classSensor_1_1SensorTable_a017075c54dd51963f336395f8e82831a}{is\+\_\+ready}} (std\+::string id)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ }\\\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{void}} \mbox{\hyperlink{classSensor_1_1SensorTable_a711b7191b6968d703be9c79cb039c0b7}{register\+\_\+sensor}} (\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{const}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} \&\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{init}}, \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{uint32\+\_\+t}} min\+\_\+samples, std\+::string \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{id\+\_\+in}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ }\\\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{void}} \mbox{\hyperlink{classSensor_1_1SensorTable_a85f9dfdbe0c49da43103011f5fdb5c38}{put}} (\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{const}} std\+::string \&id, \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{const}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} \&data, Steady\+Clock\+::time\+\_\+point \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{sample\+\_\+time}}=Steady\+Clock\+::now())
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00082}{82}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSensor_1_1SensorTable_acdb5edfb4ed2ccef7b058bbd47c03bef}\label{classSensor_1_1SensorTable_acdb5edfb4ed2ccef7b058bbd47c03bef} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!SensorTable@{SensorTable}}
+\index{SensorTable@{SensorTable}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{SensorTable()}{SensorTable()}}
+{\footnotesize\ttfamily Sensor\+::\+Sensor\+Table\+::\+Sensor\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSensor_1_1SensorTable_a14af95afac149a38f774df2512a76d66}\label{classSensor_1_1SensorTable_a14af95afac149a38f774df2512a76d66} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!get\_hook@{get\_hook}}
+\index{get\_hook@{get\_hook}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{get\_hook()}{get\_hook()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ \\
+\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor\+Hook}}$<$ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ $>$ Sensor\+::\+Sensor\+Table\+::get\+\_\+hook (\begin{DoxyParamCaption}\item[{std\+::string}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00200}{200}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}\label{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!get\_mean@{get\_mean}}
+\index{get\_mean@{get\_mean}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{get\_mean()}{get\_mean()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static bool Sensor\+::\+Sensor\+Table\+::get\+\_\+mean (\begin{DoxyParamCaption}\item[{std\+::string}]{id,  }\item[{T \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00190}{190}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorTable_a017075c54dd51963f336395f8e82831a}\label{classSensor_1_1SensorTable_a017075c54dd51963f336395f8e82831a} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!is\_ready@{is\_ready}}
+\index{is\_ready@{is\_ready}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{is\_ready()}{is\_ready()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ \\
+\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{bool}} Sensor\+::\+Sensor\+Table\+::is\+\_\+ready (\begin{DoxyParamCaption}\item[{std\+::string}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00229}{229}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorTable_a85f9dfdbe0c49da43103011f5fdb5c38}\label{classSensor_1_1SensorTable_a85f9dfdbe0c49da43103011f5fdb5c38} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!put@{put}}
+\index{put@{put}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ \\
+\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{void}} Sensor\+::\+Sensor\+Table\+::put (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{const}} std\+::string \&}]{id,  }\item[{\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{const}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} \&}]{data,  }\item[{Steady\+Clock\+::time\+\_\+point}]{sample\+\_\+time = {\ttfamily SteadyClock\+:\+:now()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00247}{247}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorTable_a711b7191b6968d703be9c79cb039c0b7}\label{classSensor_1_1SensorTable_a711b7191b6968d703be9c79cb039c0b7} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!register\_sensor@{register\_sensor}}
+\index{register\_sensor@{register\_sensor}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{register\_sensor()}{register\_sensor()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ \\
+\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{void}} Sensor\+::\+Sensor\+Table\+::register\+\_\+sensor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{const}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} \&}]{init,  }\item[{\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{uint32\+\_\+t}}}]{min\+\_\+samples,  }\item[{std\+::string}]{id\+\_\+in }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00239}{239}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+\Hypertarget{classSensor_1_1SensorTable_a5ac5eb8caf6eb2f1f7d486ca3e793875}\label{classSensor_1_1SensorTable_a5ac5eb8caf6eb2f1f7d486ca3e793875} 
+\index{Sensor::SensorTable@{Sensor::SensorTable}!set\_spike\_rejection@{set\_spike\_rejection}}
+\index{set\_spike\_rejection@{set\_spike\_rejection}!Sensor::SensorTable@{Sensor::SensorTable}}
+\doxysubsubsection{\texorpdfstring{set\_spike\_rejection()}{set\_spike\_rejection()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{typename}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{T}} $>$ \\
+\mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{static}} \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{void}} Sensor\+::\+Sensor\+Table\+::set\+\_\+spike\+\_\+rejection (\begin{DoxyParamCaption}\item[{std\+::string}]{id,  }\item[{\mbox{\hyperlink{structSpikeRejectConfig}{Spike\+Reject\+Config}}}]{cfg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{ISensor_8hpp_source_l00210}{210}} of file \mbox{\hyperlink{ISensor_8hpp_source}{ISensor.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{ISensor_8hpp}{ISensor.\+hpp}}\end{DoxyCompactItemize}

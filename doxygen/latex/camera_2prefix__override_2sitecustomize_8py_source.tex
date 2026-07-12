@@ -1,0 +1,10 @@
+\doxysection{sitecustomize.\+py}
+\hypertarget{camera_2prefix__override_2sitecustomize_8py_source}{}\label{camera_2prefix__override_2sitecustomize_8py_source}\index{build/camera/prefix\_override/sitecustomize.py@{build/camera/prefix\_override/sitecustomize.py}}
+\mbox{\hyperlink{camera_2prefix__override_2sitecustomize_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{camera_2prefix__override_2sitecustomize_8py_source_l00001}00001\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{camera_2prefix__override_2sitecustomize_8py_source_l00002}00002\ \textcolor{keywordflow}{if}\ sys.prefix\ ==\ \textcolor{stringliteral}{'/usr'}:}
+\DoxyCodeLine{\Hypertarget{camera_2prefix__override_2sitecustomize_8py_source_l00003}00003\ \ \ \ \ sys.real\_prefix\ =\ sys.prefix}
+\DoxyCodeLine{\Hypertarget{camera_2prefix__override_2sitecustomize_8py_source_l00004}00004\ \ \ \ \ sys.prefix\ =\ sys.exec\_prefix\ =\ \textcolor{stringliteral}{'/home/sparky/Desktop/SPARX\_E/install/camera'}}
+
+\end{DoxyCode}

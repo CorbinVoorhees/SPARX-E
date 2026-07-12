@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -127,9 +136,9 @@ Variables</h2></td></tr>
 <tr class="separator:a57a27ae5cae559048cdc83bebc118388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace22b1e7607d4a60a989400f386835d4" id="r_ace22b1e7607d4a60a989400f386835d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebias__calc.html#ace22b1e7607d4a60a989400f386835d4">X_yaw</a> = np.fft.fft(<a class="el" href="namespacebias__calc.html#a8f92b2a6bb94547d64dea04c56eb9add">wyaw</a> - np.mean(<a class="el" href="namespacebias__calc.html#a8f92b2a6bb94547d64dea04c56eb9add">wyaw</a>))</td></tr>
 <tr class="separator:ace22b1e7607d4a60a989400f386835d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0ea33e02aee803e537fb0fb0c5323b1" id="r_af0ea33e02aee803e537fb0fb0c5323b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebias__calc.html#af0ea33e02aee803e537fb0fb0c5323b1">freqs</a> = np.fft.fftfreq(<a class="el" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">len</a>(<a class="el" href="namespacebias__calc.html#aaa1b38e93b28dfc56c37f685d3975ad1">wroll</a>), <a class="el" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">d</a>=<a class="el" href="namespacebias__calc.html#ad3f8a086e613040dba2b6339cb05814b">dt</a>)</td></tr>
+<tr class="memitem:af0ea33e02aee803e537fb0fb0c5323b1" id="r_af0ea33e02aee803e537fb0fb0c5323b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebias__calc.html#af0ea33e02aee803e537fb0fb0c5323b1">freqs</a> = np.fft.fftfreq(len(<a class="el" href="namespacebias__calc.html#aaa1b38e93b28dfc56c37f685d3975ad1">wroll</a>), d=<a class="el" href="namespacebias__calc.html#ad3f8a086e613040dba2b6339cb05814b">dt</a>)</td></tr>
 <tr class="separator:af0ea33e02aee803e537fb0fb0c5323b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80cc6820ee23ee76c3f66ffbe4987174" id="r_a80cc6820ee23ee76c3f66ffbe4987174"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebias__calc.html#a80cc6820ee23ee76c3f66ffbe4987174">mask</a> = 0</td></tr>
+<tr class="memitem:a80cc6820ee23ee76c3f66ffbe4987174" id="r_a80cc6820ee23ee76c3f66ffbe4987174"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebias__calc.html#a80cc6820ee23ee76c3f66ffbe4987174">mask</a> = 0</td></tr>
 <tr class="separator:a80cc6820ee23ee76c3f66ffbe4987174"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -204,7 +213,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bias_calc.freqs = np.fft.fftfreq(<a class="el" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">len</a>(<a class="el" href="namespacebias__calc.html#aaa1b38e93b28dfc56c37f685d3975ad1">wroll</a>), <a class="el" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">d</a>=<a class="el" href="namespacebias__calc.html#ad3f8a086e613040dba2b6339cb05814b">dt</a>)</td>
+          <td class="memname">bias_calc.freqs = np.fft.fftfreq(len(<a class="el" href="namespacebias__calc.html#aaa1b38e93b28dfc56c37f685d3975ad1">wroll</a>), d=<a class="el" href="namespacebias__calc.html#ad3f8a086e613040dba2b6339cb05814b">dt</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -236,7 +245,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacebias__calc.html#a5f2b34793cb3c853cb09acc0d5811fb6">int</a> bias_calc.mask = 0</td>
+          <td class="memname">int bias_calc.mask = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">

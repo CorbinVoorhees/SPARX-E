@@ -1,0 +1,62 @@
+\doxysection{uwb\+\_\+bridge.\+hpp}
+\hypertarget{uwb__bridge_8hpp_source}{}\label{uwb__bridge_8hpp_source}\index{src/bridges/include/bridges/uwb\_bridge.hpp@{src/bridges/include/bridges/uwb\_bridge.hpp}}
+\mbox{\hyperlink{uwb__bridge_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ UWB\_BRIDGE\_HPP}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ UWB\_BRIDGE\_HPP}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{bridge_8hpp}{bridge.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <rclcpp/logging.hpp>}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <std\_msgs/msg/float32.hpp>}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00015}\mbox{\hyperlink{classUWBBridge}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classUWBBridge}{UWBBridge}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00016}00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00017}00017\ \ \ rclcpp::Publisher<std\_msgs::msg::Float32>::SharedPtr\ uwb\_publisher;}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00018}00018\ \ \ rclcpp::TimerBase::SharedPtr\ read\_timer;}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00023}00023\ \ \ \textcolor{keywordtype}{void}\ read\_uwb()\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{auto}\ serial\_data\ =\ this-\/>\mbox{\hyperlink{classBridgeBase_a4b530ff07f338dae058913095302498f}{read\_serial}}();}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{if}\ (serial\_data.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00027}00027\ \ \ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}No\ Value!"{}});}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00028}00028\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00029}00029\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00032}00032\ \ \ \ \ \ \ std\_msgs::msg::Float32\ msg;}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00034}00034\ \ \ \ \ \ \ \textcolor{comment}{//\ find\ "{}range\_m"{}}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00035}00035\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ find\_this\ =\ \textcolor{stringliteral}{"{}range\_m="{}};}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00037}00037\ \ \ \ \ \ \ \textcolor{comment}{//\ split\ the\ string\ by\ spaces}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00038}00038\ \ \ \ \ \ \ std::stringstream\ ss\_tknzr(serial\_data);}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00040}00040\ \ \ \ \ \ \ std::string\ token;}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00041}00041\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (ss\_tknzr\ >>\ token)}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (token.find(find\_this)\ !=\ std::string::npos)}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00045}00045\ \ \ \ \ \ \ msg.data\ =\ std::stof(token.substr(find\_this.length()));}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00046}00046\ \ \ \ \ \ \ uwb\_publisher-\/>publish(msg);}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00047}00047\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\textcolor{keyword}{const}\ std::exception\ \&e)\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00049}00049\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00051}00051\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00055}\mbox{\hyperlink{classUWBBridge_a8f19e7bc07403a3aa9444cee49c74aaa}{00055}}\ \ \ \mbox{\hyperlink{classUWBBridge_a8f19e7bc07403a3aa9444cee49c74aaa}{UWBBridge}}()\ :\ \mbox{\hyperlink{classBridgeBase}{BridgeBase}}(\textcolor{stringliteral}{"{}uwb\_bridge\_node"{}},\ \textcolor{stringliteral}{"{}/dev/ttyACM1"{}},\ 115200,\ 500)\ \{}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00056}00056\ \ \ \ \ uwb\_publisher\ =\ this-\/>create\_publisher<std\_msgs::msg::Float32>(\textcolor{stringliteral}{"{}/uwb"{}},\ 10);}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ WALL\ TIMER\ PERIOD\ MUST\ MATCH\ THE\ UWB\ RATE}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00061}00061\ \ \ \ \ read\_timer\ =}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ this-\/>create\_wall\_timer(20ms,\ std::bind(\&UWBBridge::read\_uwb,\ \textcolor{keyword}{this}));}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00063}00063\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00064}00064\ \};}
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{uwb__bridge_8hpp_source_l00066}00066\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

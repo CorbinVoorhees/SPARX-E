@@ -1,14 +1,14 @@
 var indexSectionsWithContent =
 {
-  0: "0123456789_abcdefghilmnopqrstuvwxyz~使依坐如简编运配",
-  1: "_adefghilmnoprstuv",
-  2: "_abclprstu",
-  3: "_abcdeglmnoprstuv",
-  4: "_abcdefghilmnoprstuv~",
-  5: "_abcdefghilmnopqrstuvwxyz",
-  6: "_cdeloprstuw",
-  7: "_abcdfhilnprsu",
-  8: "hrsuv"
+  0: "0123456789_abcdefghiklmnopqrstuvwxyz~使依坐如简编运配",
+  1: "_abdefhilmnoprstu",
+  2: "_abcdelnprstu",
+  3: "_abcdeilmnoprstuv",
+  4: "_abcdefghilmnopqrstuvwz~",
+  5: "_abcdefghiklmnopqrstuvwxyz",
+  6: "_cdeiloprstuvw",
+  7: "_abcdfhilnprsuw",
+  8: "dfghilpqrsuv"
 };
 
 var indexSectionNames =

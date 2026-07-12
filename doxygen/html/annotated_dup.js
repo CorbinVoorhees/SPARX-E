@@ -1,9 +1,15 @@
 var annotated_dup =
 [
+    [ "analyze", "namespaceanalyze.html", [
+      [ "Analyzer", "classanalyze_1_1Analyzer.html", "classanalyze_1_1Analyzer" ]
+    ] ],
     [ "camera", "namespacecamera.html", [
       [ "main", "namespacecamera_1_1main.html", [
         [ "StreamCameraNode", "classcamera_1_1main_1_1StreamCameraNode.html", "classcamera_1_1main_1_1StreamCameraNode" ]
       ] ]
+    ] ],
+    [ "ekf", "namespaceekf.html", [
+      [ "EKF", "classekf_1_1EKF.html", "classekf_1_1EKF" ]
     ] ],
     [ "lidar_processor", "namespacelidar__processor.html", [
       [ "msg", "namespacelidar__processor_1_1msg.html", [
@@ -40,15 +46,11 @@ var annotated_dup =
         [ "Obstacle_", "structlidar__processor_1_1msg_1_1Obstacle__.html", "structlidar__processor_1_1msg_1_1Obstacle__" ]
       ] ]
     ] ],
-    [ "planning_module", "namespaceplanning__module.html", [
-      [ "d_star", "classplanning__module_1_1d__star.html", "classplanning__module_1_1d__star" ],
-      [ "datapoint", "structplanning__module_1_1datapoint.html", "structplanning__module_1_1datapoint" ],
-      [ "grid2d", "classplanning__module_1_1grid2d.html", "classplanning__module_1_1grid2d" ],
-      [ "lightpq", "classplanning__module_1_1lightpq.html", "classplanning__module_1_1lightpq" ],
-      [ "NominalTrajectory", "classplanning__module_1_1NominalTrajectory.html", "classplanning__module_1_1NominalTrajectory" ],
-      [ "ReplannedTrajectory", "classplanning__module_1_1ReplannedTrajectory.html", "classplanning__module_1_1ReplannedTrajectory" ],
-      [ "Trajectory", "classplanning__module_1_1Trajectory.html", "classplanning__module_1_1Trajectory" ],
-      [ "Vec2", "structplanning__module_1_1Vec2.html", "structplanning__module_1_1Vec2" ]
+    [ "nav", "namespacenav.html", [
+      [ "NavNode", "classnav_1_1NavNode.html", "classnav_1_1NavNode" ]
+    ] ],
+    [ "parser", "namespaceparser.html", [
+      [ "Parser", "classparser_1_1Parser.html", "classparser_1_1Parser" ]
     ] ],
     [ "rosidl_generator_traits", "namespacerosidl__generator__traits.html", [
       [ "has_bounded_size< lidar_processor::msg::Env >", "structrosidl__generator__traits_1_1has__bounded__size_3_01lidar__processor_1_1msg_1_1Env_01_4.html", null ],
@@ -57,6 +59,11 @@ var annotated_dup =
       [ "has_fixed_size< lidar_processor::msg::Obstacle >", "structrosidl__generator__traits_1_1has__fixed__size_3_01lidar__processor_1_1msg_1_1Obstacle_01_4.html", null ],
       [ "is_message< lidar_processor::msg::Env >", "structrosidl__generator__traits_1_1is__message_3_01lidar__processor_1_1msg_1_1Env_01_4.html", null ],
       [ "is_message< lidar_processor::msg::Obstacle >", "structrosidl__generator__traits_1_1is__message_3_01lidar__processor_1_1msg_1_1Obstacle_01_4.html", null ]
+    ] ],
+    [ "Sensor", "namespaceSensor.html", [
+      [ "ISensor", "classSensor_1_1ISensor.html", "classSensor_1_1ISensor" ],
+      [ "SensorHook", "classSensor_1_1SensorHook.html", "classSensor_1_1SensorHook" ],
+      [ "SensorTable", "classSensor_1_1SensorTable.html", "classSensor_1_1SensorTable" ]
     ] ],
     [ "status_updater", "namespacestatus__updater.html", [
       [ "main", "namespacestatus__updater_1_1main.html", [
@@ -93,19 +100,28 @@ var annotated_dup =
       [ "TimeStamp", "structunilidar__sdk2_1_1TimeStamp.html", "structunilidar__sdk2_1_1TimeStamp" ],
       [ "UnitreeLidarReader", "classunilidar__sdk2_1_1UnitreeLidarReader.html", "classunilidar__sdk2_1_1UnitreeLidarReader" ]
     ] ],
+    [ "uwb_gatewayd", "namespaceuwb__gatewayd.html", [
+      [ "RangeSample", "classuwb__gatewayd_1_1RangeSample.html", null ],
+      [ "RangeStore", "classuwb__gatewayd_1_1RangeStore.html", "classuwb__gatewayd_1_1RangeStore" ],
+      [ "UwbSession", "classuwb__gatewayd_1_1UwbSession.html", "classuwb__gatewayd_1_1UwbSession" ]
+    ] ],
     [ "ArduinoBridge", "classArduinoBridge.html", "classArduinoBridge" ],
-    [ "AutoNode", "classAutoNode.html", "classAutoNode" ],
     [ "AutoPublisher", "classAutoPublisher.html", "classAutoPublisher" ],
+    [ "BridgeBase", "classBridgeBase.html", "classBridgeBase" ],
+    [ "FilteredSampleProducer", "classFilteredSampleProducer.html", "classFilteredSampleProducer" ],
     [ "lidar_processor__msg__Env", "structlidar__processor____msg____Env.html", "structlidar__processor____msg____Env" ],
     [ "lidar_processor__msg__Env__Sequence", "structlidar__processor____msg____Env____Sequence.html", "structlidar__processor____msg____Env____Sequence" ],
     [ "lidar_processor__msg__Obstacle", "structlidar__processor____msg____Obstacle.html", "structlidar__processor____msg____Obstacle" ],
     [ "lidar_processor__msg__Obstacle__Sequence", "structlidar__processor____msg____Obstacle____Sequence.html", "structlidar__processor____msg____Obstacle____Sequence" ],
     [ "LidarObstacleProcessor", "classLidarObstacleProcessor.html", "classLidarObstacleProcessor" ],
+    [ "Logger", "classLogger.html", "classLogger" ],
+    [ "MEKF", "classMEKF.html", "classMEKF" ],
     [ "MotorCommander", "classMotorCommander.html", "classMotorCommander" ],
-    [ "NavigationNode", "classNavigationNode.html", "classNavigationNode" ],
     [ "PointType", "structPointType.html", "structPointType" ],
+    [ "RoverGeometry", "structRoverGeometry.html", "structRoverGeometry" ],
     [ "SmcNode", "classSmcNode.html", "classSmcNode" ],
-    [ "spline_testcase", "classspline__testcase.html", "classspline__testcase" ],
+    [ "SpikeRejectConfig", "structSpikeRejectConfig.html", "structSpikeRejectConfig" ],
+    [ "TRANSEKF", "classTRANSEKF.html", "classTRANSEKF" ],
     [ "UDPHandler", "classUDPHandler.html", "classUDPHandler" ],
     [ "UnitreeLidarSDKNode", "classUnitreeLidarSDKNode.html", "classUnitreeLidarSDKNode" ],
     [ "UWBBridge", "classUWBBridge.html", "classUWBBridge" ]

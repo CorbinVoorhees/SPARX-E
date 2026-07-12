@@ -1,0 +1,289 @@
+\doxysection{ekf\+::EKF Class Reference}
+\hypertarget{classekf_1_1EKF}{}\label{classekf_1_1EKF}\index{ekf::EKF@{ekf::EKF}}
+
+
+{\ttfamily \#include $<$ekf.\+hpp$>$}
+
+
+
+Inheritance diagram for ekf\+::EKF\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{classekf_1_1EKF__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classekf_1_1EKF_a3f36b75db5c5266f85ab5d22eefd2a8e}{get\+\_\+cov\+\_\+matrix}} () const
+\item 
+virtual \mbox{\hyperlink{classekf_1_1EKF_a44769999a203e1bd5cde84f5a33a3bfd}{\texorpdfstring{$\sim$}{\string~}\+EKF}} ()=default
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a1fb02603b5c59dfd90839e4c1e625a1f}{tick}} (Steady\+Clock\+::time\+\_\+point now)
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a2a4abbe07a27f4f6eb7f5757133f7514}{last\+\_\+gain}} (const std\+::string \&name, Eigen\+::\+Index n) const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a921f95cbea690a28fd17c498e4d1912b}{last\+\_\+innovation}} (const std\+::string \&name, Eigen\+::\+Index m) const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classekf_1_1EKF_a2b55a37be34e719b46aee41fdb08289d}{num\+\_\+steps}} () const
+\item 
+const Eigen\+::\+Matrix\+Xd \& \mbox{\hyperlink{classekf_1_1EKF_a6f013297f3e51f8ab9b7f009db2e42dd}{covariance}} () const
+\item 
+double \mbox{\hyperlink{classekf_1_1EKF_a0e30b789f01959b4109192ec2012c8ec}{last\+\_\+nis}} () const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a2c128fc1ee8f8b2c61be06ed1557aa7e}{get\+\_\+curr\+\_\+state}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{ekf\+::\+EKF\+::snapshot}} \mbox{\hyperlink{classekf_1_1EKF_a817667abe2ccae1ad9bf7a3e5ff02ef1}{snapshot}}
+\item 
+using \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}} = std\+::function$<$ bool(Eigen\+::\+Matrix\+Xd \&H, Eigen\+::\+Vector\+Xd \&r)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e}{EKF}} (const Eigen\+::\+Matrix\+Xd \&P0, const Eigen\+::\+Vector\+Xd \&x0, Steady\+Clock\+::time\+\_\+point t0)
+\item 
+\mbox{\hyperlink{classekf_1_1EKF_aadbc06513e883eced7bf225459dac5db}{EKF}} (Eigen\+::\+Index state\+\_\+len, Eigen\+::\+Index cov\+\_\+len, Steady\+Clock\+::time\+\_\+point t)
+\item 
+virtual void \mbox{\hyperlink{classekf_1_1EKF_ae0d6b8963c0bd04a6c2002cc10c7b88c}{predict}} (double dt)=0
+\item 
+virtual void \mbox{\hyperlink{classekf_1_1EKF_ab6dd7d8cc275fceeaebb7dc2934e823f}{apply\+\_\+error}} (const Eigen\+::\+Vector\+Xd \&dx)=0
+\item 
+virtual void \mbox{\hyperlink{classekf_1_1EKF_a64a9d1966da3d18400049c5a43a4dbfc}{print\+\_\+diagnostic}} (const Eigen\+::\+Matrix\+Xd \&S, const Eigen\+::\+Matrix\+Xd \&Pz, const Eigen\+::\+Matrix\+Xd \&R, const Eigen\+::\+Vector\+Xd \&d\+\_\+r, std\+::string name)=0
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\+\_\+task}} (Steady\+Clock\+::time\+\_\+point t, std\+::function$<$ void()$>$ callback)
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\+\_\+correction}} (Steady\+Clock\+::time\+\_\+point t, const Eigen\+::\+Matrix\+Xd \&R, \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}} compute\+\_\+\+Hr, std\+::string name)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classekf_1_1EKF_a0fe5aba21fa40cef8d79e96b547547c3}{nis}} = 0.\+0
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00020}{20}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}\label{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35} 
+\index{ekf::EKF@{ekf::EKF}!ComputeHrFn@{ComputeHrFn}}
+\index{ComputeHrFn@{ComputeHrFn}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{ComputeHrFn}{ComputeHrFn}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{ekf\+::\+EKF\+::\+Compute\+Hr\+Fn}} =  std\+::function$<$bool(Eigen\+::\+Matrix\+Xd \&H, Eigen\+::\+Vector\+Xd \&r)$>$\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00112}{112}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a817667abe2ccae1ad9bf7a3e5ff02ef1}\label{classekf_1_1EKF_a817667abe2ccae1ad9bf7a3e5ff02ef1} 
+\index{ekf::EKF@{ekf::EKF}!snapshot@{snapshot}}
+\index{snapshot@{snapshot}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{snapshot}{snapshot}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{ekf\+::\+EKF\+::snapshot}} \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{ekf\+::\+EKF\+::snapshot}}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e}\label{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e} 
+\index{ekf::EKF@{ekf::EKF}!EKF@{EKF}}
+\index{EKF@{EKF}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{EKF()}{EKF()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily ekf\+::\+EKF\+::\+EKF (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{P0,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{x0,  }\item[{Steady\+Clock\+::time\+\_\+point}]{t0 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00096}{96}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_aadbc06513e883eced7bf225459dac5db}\label{classekf_1_1EKF_aadbc06513e883eced7bf225459dac5db} 
+\index{ekf::EKF@{ekf::EKF}!EKF@{EKF}}
+\index{EKF@{EKF}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{EKF()}{EKF()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily ekf\+::\+EKF\+::\+EKF (\begin{DoxyParamCaption}\item[{Eigen\+::\+Index}]{state\+\_\+len,  }\item[{Eigen\+::\+Index}]{cov\+\_\+len,  }\item[{Steady\+Clock\+::time\+\_\+point}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00100}{100}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a44769999a203e1bd5cde84f5a33a3bfd}\label{classekf_1_1EKF_a44769999a203e1bd5cde84f5a33a3bfd} 
+\index{ekf::EKF@{ekf::EKF}!````~EKF@{\texorpdfstring{$\sim$}{\string~}EKF}}
+\index{````~EKF@{\texorpdfstring{$\sim$}{\string~}EKF}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}EKF()}{\string~EKF()}}
+{\footnotesize\ttfamily virtual ekf\+::\+EKF\+::\texorpdfstring{$\sim$}{\string~}\+EKF (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classekf_1_1EKF_ab6dd7d8cc275fceeaebb7dc2934e823f}\label{classekf_1_1EKF_ab6dd7d8cc275fceeaebb7dc2934e823f} 
+\index{ekf::EKF@{ekf::EKF}!apply\_error@{apply\_error}}
+\index{apply\_error@{apply\_error}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{apply\_error()}{apply\_error()}}
+{\footnotesize\ttfamily virtual void ekf\+::\+EKF\+::apply\+\_\+error (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector\+Xd \&}]{dx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+\Hypertarget{classekf_1_1EKF_a6f013297f3e51f8ab9b7f009db2e42dd}\label{classekf_1_1EKF_a6f013297f3e51f8ab9b7f009db2e42dd} 
+\index{ekf::EKF@{ekf::EKF}!covariance@{covariance}}
+\index{covariance@{covariance}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{covariance()}{covariance()}}
+{\footnotesize\ttfamily const Eigen\+::\+Matrix\+Xd \& ekf\+::\+EKF\+::covariance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00166}{166}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a3f36b75db5c5266f85ab5d22eefd2a8e}\label{classekf_1_1EKF_a3f36b75db5c5266f85ab5d22eefd2a8e} 
+\index{ekf::EKF@{ekf::EKF}!get\_cov\_matrix@{get\_cov\_matrix}}
+\index{get\_cov\_matrix@{get\_cov\_matrix}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{get\_cov\_matrix()}{get\_cov\_matrix()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd ekf\+::\+EKF\+::get\+\_\+cov\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00135}{135}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a2c128fc1ee8f8b2c61be06ed1557aa7e}\label{classekf_1_1EKF_a2c128fc1ee8f8b2c61be06ed1557aa7e} 
+\index{ekf::EKF@{ekf::EKF}!get\_curr\_state@{get\_curr\_state}}
+\index{get\_curr\_state@{get\_curr\_state}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{get\_curr\_state()}{get\_curr\_state()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd ekf\+::\+EKF\+::get\+\_\+curr\+\_\+state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00168}{168}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a2a4abbe07a27f4f6eb7f5757133f7514}\label{classekf_1_1EKF_a2a4abbe07a27f4f6eb7f5757133f7514} 
+\index{ekf::EKF@{ekf::EKF}!last\_gain@{last\_gain}}
+\index{last\_gain@{last\_gain}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{last\_gain()}{last\_gain()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd ekf\+::\+EKF\+::last\+\_\+gain (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{Eigen\+::\+Index}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00152}{152}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a921f95cbea690a28fd17c498e4d1912b}\label{classekf_1_1EKF_a921f95cbea690a28fd17c498e4d1912b} 
+\index{ekf::EKF@{ekf::EKF}!last\_innovation@{last\_innovation}}
+\index{last\_innovation@{last\_innovation}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{last\_innovation()}{last\_innovation()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd ekf\+::\+EKF\+::last\+\_\+innovation (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{Eigen\+::\+Index}]{m }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00159}{159}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a0e30b789f01959b4109192ec2012c8ec}\label{classekf_1_1EKF_a0e30b789f01959b4109192ec2012c8ec} 
+\index{ekf::EKF@{ekf::EKF}!last\_nis@{last\_nis}}
+\index{last\_nis@{last\_nis}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{last\_nis()}{last\_nis()}}
+{\footnotesize\ttfamily double ekf\+::\+EKF\+::last\+\_\+nis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00167}{167}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a2b55a37be34e719b46aee41fdb08289d}\label{classekf_1_1EKF_a2b55a37be34e719b46aee41fdb08289d} 
+\index{ekf::EKF@{ekf::EKF}!num\_steps@{num\_steps}}
+\index{num\_steps@{num\_steps}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{num\_steps()}{num\_steps()}}
+{\footnotesize\ttfamily uint32\+\_\+t ekf\+::\+EKF\+::num\+\_\+steps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00165}{165}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_ae0d6b8963c0bd04a6c2002cc10c7b88c}\label{classekf_1_1EKF_ae0d6b8963c0bd04a6c2002cc10c7b88c} 
+\index{ekf::EKF@{ekf::EKF}!predict@{predict}}
+\index{predict@{predict}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{predict()}{predict()}}
+{\footnotesize\ttfamily virtual void ekf\+::\+EKF\+::predict (\begin{DoxyParamCaption}\item[{double}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+\Hypertarget{classekf_1_1EKF_a64a9d1966da3d18400049c5a43a4dbfc}\label{classekf_1_1EKF_a64a9d1966da3d18400049c5a43a4dbfc} 
+\index{ekf::EKF@{ekf::EKF}!print\_diagnostic@{print\_diagnostic}}
+\index{print\_diagnostic@{print\_diagnostic}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{print\_diagnostic()}{print\_diagnostic()}}
+{\footnotesize\ttfamily virtual void ekf\+::\+EKF\+::print\+\_\+diagnostic (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{S,  }\item[{const Eigen\+::\+Matrix\+Xd \&}]{Pz,  }\item[{const Eigen\+::\+Matrix\+Xd \&}]{R,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{d\+\_\+r,  }\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+\Hypertarget{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}\label{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a} 
+\index{ekf::EKF@{ekf::EKF}!queue\_correction@{queue\_correction}}
+\index{queue\_correction@{queue\_correction}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{queue\_correction()}{queue\_correction()}}
+{\footnotesize\ttfamily void ekf\+::\+EKF\+::queue\+\_\+correction (\begin{DoxyParamCaption}\item[{Steady\+Clock\+::time\+\_\+point}]{t,  }\item[{const Eigen\+::\+Matrix\+Xd \&}]{R,  }\item[{\mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}}}]{compute\+\_\+\+Hr,  }\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00119}{119}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}\label{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04} 
+\index{ekf::EKF@{ekf::EKF}!queue\_task@{queue\_task}}
+\index{queue\_task@{queue\_task}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{queue\_task()}{queue\_task()}}
+{\footnotesize\ttfamily void ekf\+::\+EKF\+::queue\+\_\+task (\begin{DoxyParamCaption}\item[{Steady\+Clock\+::time\+\_\+point}]{t,  }\item[{std\+::function$<$ void()$>$}]{callback }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00115}{115}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a1fb02603b5c59dfd90839e4c1e625a1f}\label{classekf_1_1EKF_a1fb02603b5c59dfd90839e4c1e625a1f} 
+\index{ekf::EKF@{ekf::EKF}!tick@{tick}}
+\index{tick@{tick}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{tick()}{tick()}}
+{\footnotesize\ttfamily void ekf\+::\+EKF\+::tick (\begin{DoxyParamCaption}\item[{Steady\+Clock\+::time\+\_\+point}]{now }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00140}{140}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classekf_1_1EKF_a0fe5aba21fa40cef8d79e96b547547c3}\label{classekf_1_1EKF_a0fe5aba21fa40cef8d79e96b547547c3} 
+\index{ekf::EKF@{ekf::EKF}!nis@{nis}}
+\index{nis@{nis}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{nis}{nis}}
+{\footnotesize\ttfamily double ekf\+::\+EKF\+::nis = 0.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00086}{86}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}\label{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b} 
+\index{ekf::EKF@{ekf::EKF}!P@{P}}
+\index{P@{P}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{P}{P}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd ekf\+::\+EKF\+::P\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00087}{87}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+\Hypertarget{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}\label{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59} 
+\index{ekf::EKF@{ekf::EKF}!x@{x}}
+\index{x@{x}!ekf::EKF@{ekf::EKF}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd ekf\+::\+EKF\+::x\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ekf_8hpp_source_l00088}{88}} of file \mbox{\hyperlink{ekf_8hpp_source}{ekf.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{ekf_8hpp}{ekf.\+hpp}}\end{DoxyCompactItemize}

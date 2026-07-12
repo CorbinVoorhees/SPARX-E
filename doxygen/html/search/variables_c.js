@@ -1,7 +1,19 @@
 var searchData=
 [
-  ['n_0',['n',['../namespaceanis.html#a9a700875aeff78e6d163593ba5910794',1,'anis']]],
-  ['name_1',['name',['../structunilidar__sdk2_1_1LidarVersionData.html#af838f51403f27bd069104bf1ab0e604c',1,'unilidar_sdk2::LidarVersionData::name'],['../namespacesetup.html#ab3a7a0638d76a01367c5bc3cc699447f',1,'setup.name']]],
-  ['nis_2',['nis',['../namespaceanis.html#a7186e97ab23a014980cca9618c55bc01',1,'anis']]],
-  ['nsec_3',['nsec',['../structunilidar__sdk2_1_1TimeStamp.html#a3d34aaae6c727f4e3a540d96b29a648d',1,'unilidar_sdk2::TimeStamp']]]
+  ['mac_0',['mac',['../structunilidar__sdk2_1_1LidarMacAddressConfig.html#acbaed8415fff356f4a516ca0b5b81e95',1,'unilidar_sdk2::LidarMacAddressConfig']]],
+  ['mag_5fcalibration_5fpath_1',['MAG_CALIBRATION_PATH',['../namespacecalibrate.html#ae1cd95e66fc97588f692c08e320b65d5',1,'calibrate']]],
+  ['maintainer_2',['maintainer',['../namespacesetup.html#aa1a7cf9bbf76004bb72697dc00bbee9d',1,'setup']]],
+  ['maintainer_5femail_3',['maintainer_email',['../namespacesetup.html#a92a81adbfdd219564d5246ce8d77f869',1,'setup']]],
+  ['mask_4',['mask',['../namespacebias__calc.html#a80cc6820ee23ee76c3f66ffbe4987174',1,'bias_calc']]],
+  ['mekf_5fcolumns_5',['mekf_columns',['../namespacealigndata.html#a73092c8a30a4fa3a881f5e07a7ded66b',1,'aligndata']]],
+  ['mekf_5fcsv_6',['mekf_csv',['../namespaceplot__sensors.html#afdc15247a239b9f9212e4ef6e4d8669b',1,'plot_sensors.MEKF_CSV'],['../namespaceplot__attitude.html#aff6b8fc3885a19866f9e2abf3cfa8281',1,'plot_attitude.MEKF_CSV'],['../namespacealigndata.html#aa5f59504e0b20ff09f4d0ab3ca899675',1,'aligndata.MEKF_CSV']]],
+  ['mekf_5flog_5fangles_5fare_5fdegrees_7',['MEKF_LOG_ANGLES_ARE_DEGREES',['../namespacealigndata.html#ae1a4cfdfbd43bb3d22666e854b88c50a',1,'aligndata']]],
+  ['mekf_5flog_5fpath_8',['mekf_log_path',['../classparser_1_1Parser.html#a5f249a50c60203d4feded02481e833be',1,'parser::Parser']]],
+  ['mekf_5fpath_9',['mekf_path',['../namespaceplot__attitude.html#af478761219592b240e66ea776af42843',1,'plot_attitude.mekf_path'],['../namespaceplot__sensors.html#a81e673d43e1cbf3db1a7c11f5995d6ee',1,'plot_sensors.mekf_path']]],
+  ['mekf_5fready_5fthreshold_5fdeg_10',['MEKF_READY_THRESHOLD_DEG',['../namespacealigndata.html#a7bf6b40574922c0913bdb1bf6120fd19',1,'aligndata']]],
+  ['mekf_5fstart_5findex_11',['mekf_start_index',['../namespacealigndata.html#a106249dcc443ff6f7a3252dddd0471a2',1,'aligndata']]],
+  ['mode_12',['mode',['../structunilidar__sdk2_1_1LidarWorkModeConfig.html#af0777671eddc14c1474d6da18061d9f7',1,'unilidar_sdk2::LidarWorkModeConfig']]],
+  ['msg_5ftype_5fcheck_13',['msg_type_check',['../structunilidar__sdk2_1_1FrameTail.html#a32d8bb1a14c8ae02192940c3a8db07d7',1,'unilidar_sdk2::FrameTail']]],
+  ['mu_5fl_14',['mu_l',['../structRoverGeometry.html#a1f2f012c60f3946856620ff92a8df11c',1,'RoverGeometry']]],
+  ['mu_5fr_15',['mu_r',['../structRoverGeometry.html#a256f42bd52576475633556066505f49c',1,'RoverGeometry']]]
 ];

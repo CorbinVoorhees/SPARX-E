@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -91,8 +100,7 @@ $(document).ready(function(){initNavTree('install_2__local__setup__util__sh_8py.
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">_local_setup_util_sh.py File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -134,39 +142,6 @@ Functions</h2></td></tr>
 <tr class="separator:a52e81419e1dac5e4d2df19c2af0ea47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70e35ff4abbd80263516d27c8e09a983" id="r_a70e35ff4abbd80263516d27c8e09a983"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a70e35ff4abbd80263516d27c8e09a983">_local_setup_util_sh._set_if_unset</a> (name, value)</td></tr>
 <tr class="separator:a70e35ff4abbd80263516d27c8e09a983"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:acfdfd3d3869f5cbfb8824105dc24c38d" id="r_acfdfd3d3869f5cbfb8824105dc24c38d"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#acfdfd3d3869f5cbfb8824105dc24c38d">_local_setup_util_sh.FORMAT_STR_COMMENT_LINE</a> = '# {comment}'</td></tr>
-<tr class="separator:acfdfd3d3869f5cbfb8824105dc24c38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29c36c07078b8578f6503f83664acefa" id="r_a29c36c07078b8578f6503f83664acefa"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a29c36c07078b8578f6503f83664acefa">_local_setup_util_sh.FORMAT_STR_SET_ENV_VAR</a> = 'export {name}=&quot;{value}&quot;'</td></tr>
-<tr class="separator:a29c36c07078b8578f6503f83664acefa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf57924f1362c6bf90a1c0a4026ddce6" id="r_adf57924f1362c6bf90a1c0a4026ddce6"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#adf57924f1362c6bf90a1c0a4026ddce6">_local_setup_util_sh.FORMAT_STR_USE_ENV_VAR</a> = '${name}'</td></tr>
-<tr class="separator:adf57924f1362c6bf90a1c0a4026ddce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a043d90a82a879c6cee8160b6901bb037" id="r_a043d90a82a879c6cee8160b6901bb037"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a043d90a82a879c6cee8160b6901bb037">_local_setup_util_sh.FORMAT_STR_INVOKE_SCRIPT</a> = 'COLCON_CURRENT_PREFIX=&quot;{prefix}&quot; _colcon_prefix_sh_source_script &quot;{script_path}&quot;'</td></tr>
-<tr class="separator:a043d90a82a879c6cee8160b6901bb037"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6894a255d8b5f5c42aaca189da2a5acb" id="r_a6894a255d8b5f5c42aaca189da2a5acb"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a6894a255d8b5f5c42aaca189da2a5acb">_local_setup_util_sh.FORMAT_STR_REMOVE_LEADING_SEPARATOR</a> = 'if [ &quot;$(echo -n ${name} | head -c 1)&quot; = &quot;:&quot; ]; then export {name}=${{{name}#?}} ; fi'</td></tr>
-<tr class="separator:a6894a255d8b5f5c42aaca189da2a5acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a409113f1059ba8134f6b9a7c5f3e1d6b" id="r_a409113f1059ba8134f6b9a7c5f3e1d6b"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a409113f1059ba8134f6b9a7c5f3e1d6b">_local_setup_util_sh.FORMAT_STR_REMOVE_TRAILING_SEPARATOR</a> = 'if [ &quot;$(echo -n ${name} | tail -c 1)&quot; = &quot;:&quot; ]; then export {name}=${{{name}%?}} ; fi'</td></tr>
-<tr class="separator:a409113f1059ba8134f6b9a7c5f3e1d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f274909f5a84ec6e9ef83a6928ae3e4" id="r_a2f274909f5a84ec6e9ef83a6928ae3e4"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a2f274909f5a84ec6e9ef83a6928ae3e4">_local_setup_util_sh.DSV_TYPE_APPEND_NON_DUPLICATE</a> = 'append-non-duplicate'</td></tr>
-<tr class="separator:a2f274909f5a84ec6e9ef83a6928ae3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64588c97095b89bd6a20623289a37051" id="r_a64588c97095b89bd6a20623289a37051"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a64588c97095b89bd6a20623289a37051">_local_setup_util_sh.DSV_TYPE_PREPEND_NON_DUPLICATE</a> = 'prepend-non-duplicate'</td></tr>
-<tr class="separator:a64588c97095b89bd6a20623289a37051"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aed77c074b12d2ab6c11fb16dc01cfc" id="r_a1aed77c074b12d2ab6c11fb16dc01cfc"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a1aed77c074b12d2ab6c11fb16dc01cfc">_local_setup_util_sh.DSV_TYPE_PREPEND_NON_DUPLICATE_IF_EXISTS</a> = 'prepend-non-duplicate-if-exists'</td></tr>
-<tr class="separator:a1aed77c074b12d2ab6c11fb16dc01cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3adaba61d9af99e2c3ae68f64e00a49" id="r_ab3adaba61d9af99e2c3ae68f64e00a49"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#ab3adaba61d9af99e2c3ae68f64e00a49">_local_setup_util_sh.DSV_TYPE_SET</a> = 'set'</td></tr>
-<tr class="separator:ab3adaba61d9af99e2c3ae68f64e00a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd1e85db4deba9dd4ec1bc97c41e4744" id="r_abd1e85db4deba9dd4ec1bc97c41e4744"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#abd1e85db4deba9dd4ec1bc97c41e4744">_local_setup_util_sh.DSV_TYPE_SET_IF_UNSET</a> = 'set-if-unset'</td></tr>
-<tr class="separator:abd1e85db4deba9dd4ec1bc97c41e4744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a641c7643fae0080e426bedec13be1490" id="r_a641c7643fae0080e426bedec13be1490"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a641c7643fae0080e426bedec13be1490">_local_setup_util_sh.DSV_TYPE_SOURCE</a> = 'source'</td></tr>
-<tr class="separator:a641c7643fae0080e426bedec13be1490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4671fbb6038d6bc762ef0d125249acca" id="r_a4671fbb6038d6bc762ef0d125249acca"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a4671fbb6038d6bc762ef0d125249acca">_local_setup_util_sh.env_state</a> = {}</td></tr>
-<tr class="separator:a4671fbb6038d6bc762ef0d125249acca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33c8846fcbbb8b254bd1bb1564a82282" id="r_a33c8846fcbbb8b254bd1bb1564a82282"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a33c8846fcbbb8b254bd1bb1564a82282">_local_setup_util_sh.rc</a> = <a class="el" href="namespace__local__setup__util__sh.html#a1b27fc72a79bb06ff30ee558df7ccaa2">main</a>()</td></tr>
-<tr class="separator:a33c8846fcbbb8b254bd1bb1564a82282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a4c43c0327926319dae62ac05e08b1d" id="r_a8a4c43c0327926319dae62ac05e08b1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__local__setup__util__sh.html#a8a4c43c0327926319dae62ac05e08b1d">_local_setup_util_sh.file</a></td></tr>
-<tr class="separator:a8a4c43c0327926319dae62ac05e08b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

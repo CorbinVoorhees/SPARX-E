@@ -1,0 +1,9 @@
+<map id="unilidar_sdk2::LidarUserCtrlCmdPacket" name="unilidar_sdk2::LidarUserCtrlCmdPacket">
+<area shape="rect" id="Node000001" title="Lidar User Control Command Packet." alt="" coords="308,55,487,95"/>
+<area shape="rect" id="Node000002" href="$structunilidar__sdk2_1_1FrameHeader.html" title="Frame Header." alt="" coords="5,5,211,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,31,308,55,307,60,186,36"/>
+<area shape="rect" id="Node000003" href="$structunilidar__sdk2_1_1LidarUserCtrlCmd.html" title="Lidar User Control Command." alt="" coords="19,55,197,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,73,308,73,308,78,211,78"/>
+<area shape="rect" id="Node000004" href="$structunilidar__sdk2_1_1FrameTail.html" title="Frame Tail." alt="" coords="18,120,198,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,115,307,90,308,96,187,120"/>
+</map>

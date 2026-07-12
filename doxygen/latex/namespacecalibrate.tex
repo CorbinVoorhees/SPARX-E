@@ -1,0 +1,210 @@
+\doxysection{calibrate Namespace Reference}
+\hypertarget{namespacecalibrate}{}\label{namespacecalibrate}\index{calibrate@{calibrate}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7}{load\+\_\+csv}} (base)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}{extract}} (df, sensor\+\_\+type)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a693ba1a97e67e93f1557c45e05d836af}{fit\+\_\+ellipsoid}} (mx, my, mz)
+\item 
+\mbox{\hyperlink{namespacecalibrate_ae15a415a08ff01cebcad91bf2fdc0b97}{apply\+\_\+mag\+\_\+calibration}} (mx, my, mz, bias, W)
+\item 
+\mbox{\hyperlink{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c}{save\+\_\+mag\+\_\+calibration}} (path, bias, W)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183}{recommend\+\_\+cutoff}} (x, fs, top\+\_\+frac=0.\+2, drop\+\_\+factor=3.\+0, fmin\+\_\+floor=0.\+5)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{recommend\+\_\+sensor\+\_\+cutoff}} (df, sensor\+\_\+type, fs)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3}{save\+\_\+filter\+\_\+cutoffs}} (path, fc\+\_\+gyro, fc\+\_\+accel, fc\+\_\+magnm)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{plot\+\_\+psd}} (sensor\+\_\+type, psd\+\_\+data)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a3be6ce6312a1951cc5ec0e33d011bb6d}{main}} (\mbox{\hyperlink{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6}{csv\+\_\+path}}=\mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}}, show\+\_\+plots=True)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespacecalibrate_ae1cd95e66fc97588f692c08e320b65d5}{MAG\+\_\+\+CALIBRATION\+\_\+\+PATH}} = \textquotesingle{}mag\+\_\+calibration.\+txt\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespacecalibrate_a746136a4204ad2981875db27158859cc}{FILTER\+\_\+\+CUTOFFS\+\_\+\+PATH}} = \textquotesingle{}filter\+\_\+cutoffs.\+txt\textquotesingle{}
+\item 
+float \mbox{\hyperlink{namespacecalibrate_a0e4ce7a16dba28d17ba7ecd604bc2872}{IMU\+\_\+\+SAMPLE\+\_\+\+RATE\+\_\+\+HZ}} = 125.\+0
+\item 
+int \mbox{\hyperlink{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6}{csv\+\_\+path}} = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecalibrate_ae15a415a08ff01cebcad91bf2fdc0b97}\label{namespacecalibrate_ae15a415a08ff01cebcad91bf2fdc0b97} 
+\index{calibrate@{calibrate}!apply\_mag\_calibration@{apply\_mag\_calibration}}
+\index{apply\_mag\_calibration@{apply\_mag\_calibration}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{apply\_mag\_calibration()}{apply\_mag\_calibration()}}
+{\footnotesize\ttfamily calibrate.\+apply\+\_\+mag\+\_\+calibration (\begin{DoxyParamCaption}\item[{}]{mx,  }\item[{}]{my,  }\item[{}]{mz,  }\item[{}]{bias,  }\item[{}]{W }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00079}{79}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}\label{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec} 
+\index{calibrate@{calibrate}!extract@{extract}}
+\index{extract@{extract}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{extract()}{extract()}}
+{\footnotesize\ttfamily calibrate.\+extract (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{sensor\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00025}{25}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a693ba1a97e67e93f1557c45e05d836af}\label{namespacecalibrate_a693ba1a97e67e93f1557c45e05d836af} 
+\index{calibrate@{calibrate}!fit\_ellipsoid@{fit\_ellipsoid}}
+\index{fit\_ellipsoid@{fit\_ellipsoid}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{fit\_ellipsoid()}{fit\_ellipsoid()}}
+{\footnotesize\ttfamily calibrate.\+fit\+\_\+ellipsoid (\begin{DoxyParamCaption}\item[{}]{mx,  }\item[{}]{my,  }\item[{}]{mz }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Fit an ellipsoid to 3D magnetometer data via least squares.
+Returns (bias, W) where bias is the hard-iron offset vector and W
+is the 3×3 soft-iron correction matrix.
+
+Apply with: m_cal = W @ (m_raw - bias)
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00036}{36}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7}\label{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7} 
+\index{calibrate@{calibrate}!load\_csv@{load\_csv}}
+\index{load\_csv@{load\_csv}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{load\_csv()}{load\_csv()}}
+{\footnotesize\ttfamily calibrate.\+load\+\_\+csv (\begin{DoxyParamCaption}\item[{}]{base }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00018}{18}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a3be6ce6312a1951cc5ec0e33d011bb6d}\label{namespacecalibrate_a3be6ce6312a1951cc5ec0e33d011bb6d} 
+\index{calibrate@{calibrate}!main@{main}}
+\index{main@{main}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily calibrate.\+main (\begin{DoxyParamCaption}\item[{}]{csv\+\_\+path = {\ttfamily \mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}}},  }\item[{}]{show\+\_\+plots = {\ttfamily True} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00152}{152}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}\label{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f} 
+\index{calibrate@{calibrate}!plot\_psd@{plot\_psd}}
+\index{plot\_psd@{plot\_psd}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{plot\_psd()}{plot\_psd()}}
+{\footnotesize\ttfamily calibrate.\+plot\+\_\+psd (\begin{DoxyParamCaption}\item[{}]{sensor\+\_\+type,  }\item[{}]{psd\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00135}{135}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183}\label{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183} 
+\index{calibrate@{calibrate}!recommend\_cutoff@{recommend\_cutoff}}
+\index{recommend\_cutoff@{recommend\_cutoff}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{recommend\_cutoff()}{recommend\_cutoff()}}
+{\footnotesize\ttfamily calibrate.\+recommend\+\_\+cutoff (\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{fs,  }\item[{}]{top\+\_\+frac = {\ttfamily 0.2},  }\item[{}]{drop\+\_\+factor = {\ttfamily 3.0},  }\item[{}]{fmin\+\_\+floor = {\ttfamily 0.5} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Welch PSD -> noise floor = median PSD over the top `top_frac` of the
+band -> cutoff = first frequency from DC where the PSD has decayed to
+within `drop_factor` of that floor.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00096}{96}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}\label{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7} 
+\index{calibrate@{calibrate}!recommend\_sensor\_cutoff@{recommend\_sensor\_cutoff}}
+\index{recommend\_sensor\_cutoff@{recommend\_sensor\_cutoff}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{recommend\_sensor\_cutoff()}{recommend\_sensor\_cutoff()}}
+{\footnotesize\ttfamily calibrate.\+recommend\+\_\+sensor\+\_\+cutoff (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{sensor\+\_\+type,  }\item[{}]{fs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Per-axis recommend_cutoff; reports the max across the 3 axes
+(conservative — a too-low cutoff clips real bandwidth on the noisiest
+axis, which is worse than slightly under-filtering the quieter ones).\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00112}{112}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3}\label{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3} 
+\index{calibrate@{calibrate}!save\_filter\_cutoffs@{save\_filter\_cutoffs}}
+\index{save\_filter\_cutoffs@{save\_filter\_cutoffs}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{save\_filter\_cutoffs()}{save\_filter\_cutoffs()}}
+{\footnotesize\ttfamily calibrate.\+save\+\_\+filter\+\_\+cutoffs (\begin{DoxyParamCaption}\item[{}]{path,  }\item[{}]{fc\+\_\+gyro,  }\item[{}]{fc\+\_\+accel,  }\item[{}]{fc\+\_\+magnm }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00130}{130}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c}\label{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c} 
+\index{calibrate@{calibrate}!save\_mag\_calibration@{save\_mag\_calibration}}
+\index{save\_mag\_calibration@{save\_mag\_calibration}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{save\_mag\_calibration()}{save\_mag\_calibration()}}
+{\footnotesize\ttfamily calibrate.\+save\+\_\+mag\+\_\+calibration (\begin{DoxyParamCaption}\item[{}]{path,  }\item[{}]{bias,  }\item[{}]{W }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Flat text format consumed by MEKF::load_mag_calibration (mekf.hpp):
+W row-major (9 numbers), then bias (3 numbers), whitespace-separated.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00085}{85}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6}\label{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6} 
+\index{calibrate@{calibrate}!csv\_path@{csv\_path}}
+\index{csv\_path@{csv\_path}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{csv\_path}{csv\_path}}
+{\footnotesize\ttfamily int calibrate.\+csv\+\_\+path = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}}}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00198}{198}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a746136a4204ad2981875db27158859cc}\label{namespacecalibrate_a746136a4204ad2981875db27158859cc} 
+\index{calibrate@{calibrate}!FILTER\_CUTOFFS\_PATH@{FILTER\_CUTOFFS\_PATH}}
+\index{FILTER\_CUTOFFS\_PATH@{FILTER\_CUTOFFS\_PATH}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{FILTER\_CUTOFFS\_PATH}{FILTER\_CUTOFFS\_PATH}}
+{\footnotesize\ttfamily str calibrate.\+FILTER\+\_\+\+CUTOFFS\+\_\+\+PATH = \textquotesingle{}filter\+\_\+cutoffs.\+txt\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00014}{14}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_a0e4ce7a16dba28d17ba7ecd604bc2872}\label{namespacecalibrate_a0e4ce7a16dba28d17ba7ecd604bc2872} 
+\index{calibrate@{calibrate}!IMU\_SAMPLE\_RATE\_HZ@{IMU\_SAMPLE\_RATE\_HZ}}
+\index{IMU\_SAMPLE\_RATE\_HZ@{IMU\_SAMPLE\_RATE\_HZ}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{IMU\_SAMPLE\_RATE\_HZ}{IMU\_SAMPLE\_RATE\_HZ}}
+{\footnotesize\ttfamily float calibrate.\+IMU\+\_\+\+SAMPLE\+\_\+\+RATE\+\_\+\+HZ = 125.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00015}{15}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_ae1cd95e66fc97588f692c08e320b65d5}\label{namespacecalibrate_ae1cd95e66fc97588f692c08e320b65d5} 
+\index{calibrate@{calibrate}!MAG\_CALIBRATION\_PATH@{MAG\_CALIBRATION\_PATH}}
+\index{MAG\_CALIBRATION\_PATH@{MAG\_CALIBRATION\_PATH}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{MAG\_CALIBRATION\_PATH}{MAG\_CALIBRATION\_PATH}}
+{\footnotesize\ttfamily str calibrate.\+MAG\+\_\+\+CALIBRATION\+\_\+\+PATH = \textquotesingle{}mag\+\_\+calibration.\+txt\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00013}{13}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+
+\Hypertarget{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}\label{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd} 
+\index{calibrate@{calibrate}!SENSORS\_CSV@{SENSORS\_CSV}}
+\index{SENSORS\_CSV@{SENSORS\_CSV}!calibrate@{calibrate}}
+\doxysubsubsection{\texorpdfstring{SENSORS\_CSV}{SENSORS\_CSV}}
+{\footnotesize\ttfamily str calibrate.\+SENSORS\+\_\+\+CSV = \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{calibrate_8py_source_l00012}{12}} of file \mbox{\hyperlink{calibrate_8py_source}{calibrate.\+py}}.
+

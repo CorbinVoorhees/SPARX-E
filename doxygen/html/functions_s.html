@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -92,38 +101,53 @@ $(document).ready(function(){initNavTree('functions_s.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
+<li>save_dir&#160;:&#160;<a class="el" href="classanalyze_1_1Analyzer.html#a3ca4cdc8195ef6404803c4021c5c7222">analyze.Analyzer</a></li>
 <li>scan_period&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1Lidar2DPointData.html#ac3906c8b4c5f1b08bc301b8becf58e5c">unilidar_sdk2::Lidar2DPointData</a>, <a class="el" href="structunilidar__sdk2_1_1LidarPointData.html#a8f2d65cd2d21d4047177cac3298bb11c">unilidar_sdk2::LidarPointData</a></li>
 <li>sec&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1TimeStamp.html#a23353600accd37b7425d34d451b0e679">unilidar_sdk2::TimeStamp</a></li>
 <li>Send()&#160;:&#160;<a class="el" href="classUDPHandler.html#ae4f2ccadc89866949f202fb45f287fcd">UDPHandler</a></li>
 <li>sendUserCtrlCmd()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#a74bd89ba04ff43fee00ef2e6edf0d906">unilidar_sdk2::UnitreeLidarReader</a></li>
-<li>seq&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1DataInfo.html#a01df17fd500784f72f0dde77e9de5f66">unilidar_sdk2::DataInfo</a></li>
+<li>SensorHook()&#160;:&#160;<a class="el" href="classSensor_1_1SensorHook.html#aaa4bc13fed89e78370ef27d6fbf35996">Sensor::SensorHook&lt; T &gt;</a></li>
+<li>SensorSnapshotFunction&#160;:&#160;<a class="el" href="classSensor_1_1SensorHook.html#a435b333643cd8d0b94f990c67782742c">Sensor::SensorHook&lt; T &gt;</a></li>
+<li>SensorTable()&#160;:&#160;<a class="el" href="classSensor_1_1SensorTable.html#acdb5edfb4ed2ccef7b058bbd47c03bef">Sensor::SensorTable</a></li>
+<li>seq&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1DataInfo.html#a01df17fd500784f72f0dde77e9de5f66">unilidar_sdk2::DataInfo</a>, <a class="el" href="classuwb__gatewayd_1_1RangeSample.html#a99c6280d915b9baaa3409053e3de5419">uwb_gatewayd.RangeSample</a></li>
+<li>serial_fd&#160;:&#160;<a class="el" href="classBridgeBase.html#afe6ba71fdf93a6b1e068c2422237f2ca">BridgeBase</a></li>
+<li>serial_monitor_subscription&#160;:&#160;<a class="el" href="classBridgeBase.html#af8bd2bed2327173d2b8aaf05fb364a22">BridgeBase</a></li>
+<li>serial_port&#160;:&#160;<a class="el" href="classBridgeBase.html#a316bdd6412a414a77e08c1605f462472">BridgeBase</a></li>
 <li>serial_port_&#160;:&#160;<a class="el" href="classUnitreeLidarSDKNode.html#a7a4ac3925402b98897e69468dc434bb1">UnitreeLidarSDKNode</a></li>
-<li>set__center()&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ae979efbcafd0da251662701de61837f2">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>set__covariance()&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a695373fb00438bf0369f65c965fedf33">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>set__environment()&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#ac6dbbb1bdfb6ce0f896848fd69e9a331">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a></li>
+<li>session_handle&#160;:&#160;<a class="el" href="classuwb__gatewayd_1_1RangeSample.html#ae332d9fed22bbb47cbb5434438d5f186">uwb_gatewayd.RangeSample</a>, <a class="el" href="classuwb__gatewayd_1_1UwbSession.html#a6a36d22f4bce28b625ae27e22bc64550">uwb_gatewayd.UwbSession</a></li>
+<li>set__center()&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ad5a415d3267ddec698b6a65146df10ef">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>set__covariance()&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a79b5123f3a1ebb3a4e05d31d053ce817">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>set__environment()&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a44c30aff953c57ce2fc01b4b42defd8b">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a></li>
+<li>set_spike_rejection()&#160;:&#160;<a class="el" href="classFilteredSampleProducer.html#a5578a9308aa1165aead945b63975f957">FilteredSampleProducer&lt; T &gt;</a>, <a class="el" href="classSensor_1_1SensorTable.html#a5ac5eb8caf6eb2f1f7d486ca3e793875">Sensor::SensorTable</a></li>
 <li>setLidarIpAddressConfig()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#aec49decde2a6f4165fdd86cb5d73a5fc">unilidar_sdk2::UnitreeLidarReader</a></li>
 <li>setLidarMacAddressConfig()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#aaf312247602e81171fff18f89754b99a">unilidar_sdk2::UnitreeLidarReader</a></li>
 <li>setLidarWorkMode()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#a223069310de716ba08c308bda8378ac1">unilidar_sdk2::UnitreeLidarReader</a></li>
 <li>SetRecvTimeout()&#160;:&#160;<a class="el" href="classUDPHandler.html#a6691cf1a29dac49518b38bc9b1f82213">UDPHandler</a></li>
 <li>SetSendTimeout()&#160;:&#160;<a class="el" href="classUDPHandler.html#a9bc61a0d32037537f6a54bf2406d8701">UDPHandler</a></li>
-<li>SharedPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a1f4b85d1c2117111073022411bb8b780">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a667bb0d45adeb7e59775498b1e9094b2">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>size&#160;:&#160;<a class="el" href="structlidar__processor____msg____Env____Sequence.html#ae401ab420f9855315b150d4f9ab385b8">lidar_processor__msg__Env__Sequence</a>, <a class="el" href="structlidar__processor____msg____Obstacle____Sequence.html#a609b080f142da3641c93a6a98997073d">lidar_processor__msg__Obstacle__Sequence</a>, <a class="el" href="classplanning__module_1_1grid2d.html#a2bca7acbef30590cb23c6199b753277b">planning_module::grid2d</a>, <a class="el" href="classplanning__module_1_1lightpq.html#a6ab0736dbdb1fe5ae49a91e2ec15e1e3">planning_module::lightpq</a></li>
-<li>SLOT_TYPES&#160;:&#160;<a class="el" href="classlidar__processor_1_1msg_1_1__env_1_1Env.html#ab9f2efe638487bb31ace1cb1b35d9ce6">lidar_processor.msg._env.Env</a>, <a class="el" href="classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#abe68add1e31d4368afb41a25e8149793">lidar_processor.msg._obstacle.Obstacle</a></li>
+<li>SharedPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#aa00634181e292dee0015018556ad27c2">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a924269a193cc23a42fc31ebf9f72962a">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>should_print_diagnostic&#160;:&#160;<a class="el" href="classMEKF.html#aef42816238410c8da83024e67d75750f">MEKF</a>, <a class="el" href="classTRANSEKF.html#ae6d7ebb50f507d9b6b4d4b7a1f4d6054">TRANSEKF</a></li>
+<li>size&#160;:&#160;<a class="el" href="structlidar__processor____msg____Env____Sequence.html#ae401ab420f9855315b150d4f9ab385b8">lidar_processor__msg__Env__Sequence</a>, <a class="el" href="structlidar__processor____msg____Obstacle____Sequence.html#a609b080f142da3641c93a6a98997073d">lidar_processor__msg__Obstacle__Sequence</a></li>
+<li>SLOT_TYPES&#160;:&#160;<a class="el" href="classlidar__processor_1_1msg_1_1__env_1_1Env.html#a078302439149e211c4aa8e857356e41c">lidar_processor.msg._env.Env</a>, <a class="el" href="classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#a1edbea1bb97d6126b8a1b31449b58ec2">lidar_processor.msg._obstacle.Obstacle</a></li>
 <li>SmcNode()&#160;:&#160;<a class="el" href="classSmcNode.html#a72f186a4bdadfc066cb10a22e5b0ae4f">SmcNode</a></li>
+<li>snapshot&#160;:&#160;<a class="el" href="classekf_1_1EKF.html#a817667abe2ccae1ad9bf7a3e5ff02ef1">ekf::EKF</a></li>
 <li>sparxe_pub&#160;:&#160;<a class="el" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a9c333fbb8870dba51baa8dc1eab2a96c">status_updater.main.StatusUpdaterNode</a></li>
 <li>sparxe_pub_timer&#160;:&#160;<a class="el" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a103e193d8eff3cff5184cc6eaf6c0163">status_updater.main.StatusUpdaterNode</a></li>
-<li>stamp&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1DataInfo.html#ac3f519a9fa4c2a3827cd6e7630f57a69">unilidar_sdk2::DataInfo</a>, <a class="el" href="structunilidar__sdk2_1_1PointCloudUnitree.html#a62f7914667428ac9262c9c53c5c9fa4b">unilidar_sdk2::PointCloudUnitree</a></li>
+<li>stale_ms&#160;:&#160;<a class="el" href="classuwb__gatewayd_1_1RangeStore.html#a6576c6010fe91b20560c3cf6db79d764">uwb_gatewayd.RangeStore</a></li>
+<li>stamp()&#160;:&#160;<a class="el" href="classFilteredSampleProducer.html#a4734e1b1d67cc26d72c350cb1ab5de97">FilteredSampleProducer&lt; T &gt;</a>, <a class="el" href="structunilidar__sdk2_1_1DataInfo.html#ac3f519a9fa4c2a3827cd6e7630f57a69">unilidar_sdk2::DataInfo</a>, <a class="el" href="structunilidar__sdk2_1_1PointCloudUnitree.html#a62f7914667428ac9262c9c53c5c9fa4b">unilidar_sdk2::PointCloudUnitree</a></li>
+<li>start()&#160;:&#160;<a class="el" href="classuwb__gatewayd_1_1UwbSession.html#a6f2cecc87de00392f6c8328f02de55f8">uwb_gatewayd.UwbSession</a></li>
 <li>start_stream()&#160;:&#160;<a class="el" href="classcamera_1_1main_1_1StreamCameraNode.html#af0c91527640624fb6f23f43223eef8f1">camera.main.StreamCameraNode</a></li>
-<li>start_time&#160;:&#160;<a class="el" href="structspline__testcase_1_1funct.html#a0821c2efd9c87a8608f1fba4d6a39e90">spline_testcase::funct</a></li>
 <li>startLidarRotation()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#a1bb718b28c30fd90e67281e65e4199cf">unilidar_sdk2::UnitreeLidarReader</a></li>
 <li>state&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1Lidar2DPointData.html#a64fb8ddd28f28c64eb4359b412512432">unilidar_sdk2::Lidar2DPointData</a>, <a class="el" href="structunilidar__sdk2_1_1LidarPointData.html#a1e4da71ad9ac3c8ce156a016ecd34350">unilidar_sdk2::LidarPointData</a></li>
-<li>status&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarAckData.html#ac0ed63c50bc4f3fe97ed3257765b282e">unilidar_sdk2::LidarAckData</a></li>
+<li>status&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarAckData.html#ac0ed63c50bc4f3fe97ed3257765b282e">unilidar_sdk2::LidarAckData</a>, <a class="el" href="classuwb__gatewayd_1_1RangeSample.html#a404b5f67e058c3ee407636c13b441dc9">uwb_gatewayd.RangeSample</a></li>
+<li>stop()&#160;:&#160;<a class="el" href="classuwb__gatewayd_1_1UwbSession.html#a4f63f209823e57d4f74c66ed73b49ee8">uwb_gatewayd.UwbSession</a></li>
 <li>stop_stream()&#160;:&#160;<a class="el" href="classcamera_1_1main_1_1StreamCameraNode.html#a7a2b76603d01255bd238b089e040c6bb">camera.main.StreamCameraNode</a></li>
 <li>stopLidarRotation()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#ae979e5d0cfac69292da10d43bccb6fc0">unilidar_sdk2::UnitreeLidarReader</a></li>
+<li>store&#160;:&#160;<a class="el" href="classuwb__gatewayd_1_1UwbSession.html#ac9faf1edbed70300692fa93b4df23dae">uwb_gatewayd.UwbSession</a></li>
 <li>sub&#160;:&#160;<a class="el" href="classcamera_1_1main_1_1StreamCameraNode.html#a78b8d713c5b888f0634c5c282f22a482">camera.main.StreamCameraNode</a></li>
 <li>subnet_mask&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarIpAddressConfig.html#acb5d45d0d916bf5b913f4fde6de5496f">unilidar_sdk2::LidarIpAddressConfig</a></li>
+<li>suppress_magnm&#160;:&#160;<a class="el" href="classMEKF.html#ab98f50e8ad2b02c49db99ddfc41595ed">MEKF</a></li>
 <li>sw_version&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarVersionData.html#ab3680acae8c1b363c94299fe7a8f781f">unilidar_sdk2::LidarVersionData</a></li>
-<li>symbol_name&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__c_1_1__Env__type__support__symbol__names__t.html#ac003192dcf12ca32aa5e00f5db887cd2">lidar_processor.msg::rosidl_typesupport_c::_Env_type_support_symbol_names_t</a>, <a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__c_1_1__Obstacle__type__support__symbol__names__t.html#a9f2b3bfdaca6e7f2682467d9f6b91bf4">lidar_processor.msg::rosidl_typesupport_c::_Obstacle_type_support_symbol_names_t</a>, <a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Env__type__support__symbol__names__t.html#a4808cc2e8066009c09a2e2658b3bcd01">lidar_processor.msg::rosidl_typesupport_cpp::_Env_type_support_symbol_names_t</a>, <a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Obstacle__type__support__symbol__names__t.html#a7f5ab07da295cd54c534874f9f3f2e80">lidar_processor.msg::rosidl_typesupport_cpp::_Obstacle_type_support_symbol_names_t</a></li>
+<li>symbol_name&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__c_1_1__Env__type__support__symbol__names__t.html#a44fbbcb01eae5bedfd08af5a3e898a88">lidar_processor::msg::rosidl_typesupport_c::_Env_type_support_symbol_names_t</a>, <a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__c_1_1__Obstacle__type__support__symbol__names__t.html#a52463f9d8d7fb7bb6b324cc38dbd43c0">lidar_processor::msg::rosidl_typesupport_c::_Obstacle_type_support_symbol_names_t</a>, <a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Env__type__support__symbol__names__t.html#a4e7c7cf5f4972582cc3388bb35ac0192">lidar_processor::msg::rosidl_typesupport_cpp::_Env_type_support_symbol_names_t</a>, <a class="el" href="structlidar__processor_1_1msg_1_1rosidl__typesupport__cpp_1_1__Obstacle__type__support__symbol__names__t.html#ac0a0b0122aba1a32f67339b3e9cd3904">lidar_processor::msg::rosidl_typesupport_cpp::_Obstacle_type_support_symbol_names_t</a></li>
 <li>syncLidarTimeStamp()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#a8b54301f16ae96c64d4ab870182251fd">unilidar_sdk2::UnitreeLidarReader</a></li>
 <li>sys_rotation_period&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarInsideState.html#a463134f16c899d1f3a43d9b2c5b6100f">unilidar_sdk2::LidarInsideState</a></li>
 </ul>

@@ -1,0 +1,417 @@
+\doxysection{plot\+\_\+sensors.\+py}
+\hypertarget{plot__sensors_8py_source}{}\label{plot__sensors_8py_source}\index{analysis/plot\_sensors.py@{analysis/plot\_sensors.py}}
+\mbox{\hyperlink{plot__sensors_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00001}\mbox{\hyperlink{namespaceplot__sensors}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00004}00004\ \textcolor{keyword}{import}\ matplotlib}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00005}00005\ matplotlib.use(\textcolor{stringliteral}{'TkAgg'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00007}00007\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00008}00008\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00009}00009\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00010}00010\ \textcolor{keyword}{from}\ mpl\_toolkits.mplot3d\ \textcolor{keyword}{import}\ Axes3D\ \ \textcolor{comment}{\#\ noqa:\ F401}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00012}00012\ \textcolor{keyword}{from}\ plot\_common\ \textcolor{keyword}{import}\ enable\_quit\_key,\ add\_time\_window}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00014}00014\ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{from}\ calibrate\ \textcolor{keyword}{import}\ fit\_ellipsoid,\ apply\_mag\_calibration}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00016}\mbox{\hyperlink{namespaceplot__sensors_a245a41a4727cceefe43ed33994905b9c}{00016}}\ \ \ \ \ \_HAS\_CALIB\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00017}00017\ \textcolor{keywordflow}{except}\ ImportError:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00018}00018\ \ \ \ \ \_HAS\_CALIB\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00020}\mbox{\hyperlink{namespaceplot__sensors_a3acc754eaef7b17d0d720b2962c1aa3f}{00020}}\ SENSORS\_CSV\ =\ \textcolor{stringliteral}{'../sparxe\_sensors\_raw'}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00021}00021\ \textcolor{comment}{\#\ bias\ estimates\ live\ in\ the\ filter\ output\ logs\ (same\ steady-\/clock\ timebase):}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00022}00022\ \textcolor{comment}{\#\ \ \ gyro\ bias\ (bg)\ -\/>\ MEKF\ log\ ;\ accel\ bias\ (ba)\ -\/>\ TRANS-\/EKF\ log}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00023}\mbox{\hyperlink{namespaceplot__sensors_afdc15247a239b9f9212e4ef6e4d8669b}{00023}}\ MEKF\_CSV\ \ =\ \textcolor{stringliteral}{'../sparxe\_mekf\_test1\_\_1\_1'}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00024}\mbox{\hyperlink{namespaceplot__sensors_a96e958d2f427b6b2d06e85125318b1cc}{00024}}\ TRANS\_CSV\ =\ \textcolor{stringliteral}{'../sparxe\_ekf\_test1\_\_1\_1'}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00027}\mbox{\hyperlink{namespaceplot__sensors_a8ceb6e96a17a617dfddf55503b17a556}{00027}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_a8ceb6e96a17a617dfddf55503b17a556}{load\_csv}}(base):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{raise}\ FileNotFoundError(f\textcolor{stringliteral}{"{}Could\ not\ find\ '\{base\}'\ or\ '\{base\}.csv'."{}})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00034}\mbox{\hyperlink{namespaceplot__sensors_af7179fdd3be6bd8eeedea0e7c4981db6}{00034}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_af7179fdd3be6bd8eeedea0e7c4981db6}{load\_bias}}(base,\ cols):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00035}00035\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Return\ (t\_abs,\ bias\ Nx3)\ from\ a\ filter\ CSV,\ or\ None\ if\ unavailable.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00036}00036\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ Absolute\ (steady-\/clock)\ time\ is\ kept\ so\ the\ bias\ can\ be\ interpolated\ onto}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ the\ raw\ sensor\ timestamps,\ which\ share\ the\ same\ clock.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'time'}\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ d.columns\ \textcolor{keywordflow}{or}\ \textcolor{keywordflow}{not}\ all(c\ \textcolor{keywordflow}{in}\ d.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ cols):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ [\textcolor{stringliteral}{'time'},\ *cols]:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[c]\ =\ pd.to\_numeric(d[c],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ d.dropna(subset=[\textcolor{stringliteral}{'time'},\ *cols]).sort\_values(\textcolor{stringliteral}{'time'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(d)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d[\textcolor{stringliteral}{'time'}].to\_numpy(float),\ d[cols].to\_numpy(float)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00057}\mbox{\hyperlink{namespaceplot__sensors_af6ccea4f7a1656dbe7c42d0e482b1404}{00057}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_af6ccea4f7a1656dbe7c42d0e482b1404}{load\_trans\_accel}}(base):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00058}00058\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Return\ (t\_abs,\ ax\_raw\ Nx3,\ ba\_body\ Nx3)\ from\ the\ TRANS-\/EKF\ log.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00059}00059\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ ax\_raw\ (body-\/frame\ raw\ accel)\ and\ ba\_body\ (accel\ bias\ already\ rotated\ into}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ the\ body\ frame\ in\ nav\_node)\ live\ on\ the\ same\ rows,\ so\ unbiased\ =\ raw-\/ba\_body}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ needs\ no\ interpolation.\ Returns\ None\ if\ the\ log/columns\ aren't\ present.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00064}00064\ \ \ \ \ raw\_c\ =\ [\textcolor{stringliteral}{'ax\_raw'},\ \textcolor{stringliteral}{'ay\_raw'},\ \textcolor{stringliteral}{'az\_raw'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00065}00065\ \ \ \ \ bb\_c\ \ =\ [\textcolor{stringliteral}{'bax\_b'},\ \textcolor{stringliteral}{'bay\_b'},\ \textcolor{stringliteral}{'baz\_b'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ need\ =\ [\textcolor{stringliteral}{'time'},\ *raw\_c,\ *bb\_c]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ all(c\ \textcolor{keywordflow}{in}\ d.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ need):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ need:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[c]\ =\ pd.to\_numeric(d[c],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ d.dropna(subset=need).sort\_values(\textcolor{stringliteral}{'time'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(d)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (d[\textcolor{stringliteral}{'time'}].to\_numpy(float),}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[raw\_c].to\_numpy(float),}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[bb\_c].to\_numpy(float))}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00086}\mbox{\hyperlink{namespaceplot__sensors_a6c1ac87b81f4b7d43aa8249b8a23059e}{00086}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_a6c1ac87b81f4b7d43aa8249b8a23059e}{load\_accel\_q0}}(base):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00087}00087\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Return\ (t\_abs,\ a\_q0\ Nx3,\ bias\_q0\ Nx3)\ from\ the\ TRANS-\/EKF\ log.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00088}00088\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ a\_q0\ =\ raw\ accel\ rotated\ into\ the\ q0\ frame\ (done\ in\ nav\_node),\ bias\_q0\ is}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ the\ accel\ bias\ state\ (already\ q0).\ unbiased\ =\ a\_q0\ -\/\ bias\_q0\ should\ sit\ at}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ the\ inertial\ gravity\ (grav\_ref)\ at\ rest\ and\ stay\ put\ during\ pure\ rotation.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00093}00093\ \ \ \ \ aq\_c\ =\ [\textcolor{stringliteral}{'ax\_i'},\ \textcolor{stringliteral}{'ay\_i'},\ \textcolor{stringliteral}{'az\_i'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00094}00094\ \ \ \ \ b\_c\ \ =\ [\textcolor{stringliteral}{'bax'},\ \textcolor{stringliteral}{'bay'},\ \textcolor{stringliteral}{'baz'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00095}00095\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ need\ =\ [\textcolor{stringliteral}{'time'},\ *aq\_c,\ *b\_c]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ all(c\ \textcolor{keywordflow}{in}\ d.columns\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ need):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ need:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[c]\ =\ pd.to\_numeric(d[c],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ d.dropna(subset=need).sort\_values(\textcolor{stringliteral}{'time'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(d)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (d[\textcolor{stringliteral}{'time'}].to\_numpy(float),}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[aq\_c].to\_numpy(float),}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d[b\_c].to\_numpy(float))}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00112}00112\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00115}\mbox{\hyperlink{namespaceplot__sensors_a56e89c5948868568d0262e44009e11a6}{00115}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_a56e89c5948868568d0262e44009e11a6}{overlay\_bias}}(axes3,\ sub,\ bias\_data,\ unbiased\_label='unbiased'):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00116}00116\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Overlay\ bias\ estimate\ +\ unbiased\ (raw\ -\/\ bias)\ on\ 3\ per-\/axis\ raw\ subplots.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00117}00117\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ axes3\ \ \ \ \ \ :\ the\ three\ Axes\ (x,\ y,\ z)\ already\ showing\ the\ raw\ trace.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ sub\ \ \ \ \ \ \ \ :\ the\ raw\ sensor\ dataframe\ (has\ absolute\ 'time'\ +\ v0/v1/v2).}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ bias\_data\ \ :\ (t\_abs,\ bias\ Nx3)\ from\ load\_bias,\ or\ None\ (then\ no-\/op).}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00122}00122\ \ \ \ \ \textcolor{keywordflow}{if}\ bias\_data\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{or}\ len(sub)\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00124}00124\ \ \ \ \ tb\_abs,\ bias\ =\ bias\_data}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00125}00125\ \ \ \ \ t\_abs\ =\ sub[\textcolor{stringliteral}{'time'}].to\_numpy(float)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00126}00126\ \ \ \ \ t0\ =\ t\_abs[0]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00127}00127\ \ \ \ \ trel\ =\ t\_abs\ -\/\ t0}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ raw\_i\ =\ sub[f\textcolor{stringliteral}{'v\{i\}'}].to\_numpy(float)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ b\_i\ =\ np.interp(t\_abs,\ tb\_abs,\ bias[:,\ i])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ axes3[i].plot(trel,\ b\_i,\ color=\textcolor{stringliteral}{'tab:red'},\ linewidth=1.0,\ alpha=0.85,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ label=\textcolor{stringliteral}{'bias'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ axes3[i].plot(trel,\ raw\_i\ -\/\ b\_i,\ color=\textcolor{stringliteral}{'black'},\ linewidth=0.8,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.7,\ label=unbiased\_label)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ axes3[i].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=8)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00138}\mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{00138}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}}(df,\ sensor\_type):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00139}00139\ \ \ \ \ sub\ =\ df[df[\textcolor{stringliteral}{'type'}]\ ==\ sensor\_type].copy()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00140}00140\ \ \ \ \ sub[\textcolor{stringliteral}{'time'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'time'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00141}00141\ \ \ \ \ sub[\textcolor{stringliteral}{'v0'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v0'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00142}00142\ \ \ \ \ sub[\textcolor{stringliteral}{'v1'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v1'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00143}00143\ \ \ \ \ sub[\textcolor{stringliteral}{'v2'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v2'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00144}00144\ \ \ \ \ sub[\textcolor{stringliteral}{'v3'}]\ =\ pd.to\_numeric(sub[\textcolor{stringliteral}{'v3'}],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00145}00145\ \ \ \ \ sub\ =\ sub.dropna(subset=[\textcolor{stringliteral}{'time'}]).sort\_values(\textcolor{stringliteral}{'time'}).reset\_index(drop=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{return}\ sub}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00149}\mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{00149}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(sub):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00150}00150\ \ \ \ \ t\ =\ sub[\textcolor{stringliteral}{'time'}].to\_numpy(dtype=float,\ copy=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00151}00151\ \ \ \ \ \textcolor{keywordflow}{if}\ len(t)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ t\ -\/=\ t[0]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00153}00153\ \ \ \ \ \textcolor{keywordflow}{return}\ t}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00156}\mbox{\hyperlink{namespaceplot__sensors_a42a46c549f13682633c38c5cde78faf9}{00156}}\ \textcolor{keyword}{def\ }main(csv\_path=SENSORS\_CSV,\ mekf\_path=MEKF\_CSV,\ trans\_path=TRANS\_CSV):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00157}00157\ \ \ \ \ df\ =\ \mbox{\hyperlink{namespaceplot__sensors_a8ceb6e96a17a617dfddf55503b17a556}{load\_csv}}(csv\_path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'type'}\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ KeyError(\textcolor{stringliteral}{"{}CSV\ missing\ 'type'\ column\ —\ is\ this\ a\ sensors\ raw\ log?"{}})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00162}00162\ \ \ \ \ gyro\ \ \ \ =\ \mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}}(df,\ \textcolor{stringliteral}{'gyro'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00163}00163\ \ \ \ \ accel\ \ \ =\ \mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}}(df,\ \textcolor{stringliteral}{'accel'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00164}00164\ \ \ \ \ magnm\ \ \ =\ \mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}}(df,\ \textcolor{stringliteral}{'magnm'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00165}00165\ \ \ \ \ uwb\ \ \ \ \ =\ \mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}}(df,\ \textcolor{stringliteral}{'uwb'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00166}00166\ \ \ \ \ control\ =\ \mbox{\hyperlink{namespaceplot__sensors_ade9013ec96a004a5e2c03ac548ac36b7}{extract}}(df,\ \textcolor{stringliteral}{'control'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00168}00168\ \ \ \ \ \textcolor{comment}{\#\ bias\ estimates\ from\ the\ filter\ logs\ (None\ if\ those\ logs\ aren't\ present)}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00169}00169\ \ \ \ \ gyro\_bias\ \ \ =\ \mbox{\hyperlink{namespaceplot__sensors_af7179fdd3be6bd8eeedea0e7c4981db6}{load\_bias}}(mekf\_path,\ [\textcolor{stringliteral}{'bgx'},\ \textcolor{stringliteral}{'bgy'},\ \textcolor{stringliteral}{'bgz'}])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00170}00170\ \ \ \ \ \textcolor{comment}{\#\ accel\ bias\ comes\ pre-\/rotated\ into\ the\ body\ frame\ +\ co-\/located\ with\ raw,}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00171}00171\ \ \ \ \ \textcolor{comment}{\#\ so\ no\ interpolation\ is\ needed\ (unlike\ gyro/mag\ which\ are\ already\ body-\/frame)}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00172}00172\ \ \ \ \ accel\_body\ \ =\ \mbox{\hyperlink{namespaceplot__sensors_af6ccea4f7a1656dbe7c42d0e482b1404}{load\_trans\_accel}}(trans\_path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00173}00173\ \ \ \ \ \textcolor{comment}{\#\ raw\ accel\ rotated\ into\ q0\ +\ the\ q0\ bias,\ for\ the\ inertial-\/frame\ check}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00174}00174\ \ \ \ \ accel\_q0\ \ \ \ =\ \mbox{\hyperlink{namespaceplot__sensors_a6c1ac87b81f4b7d43aa8249b8a23059e}{load\_accel\_q0}}(trans\_path)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00176}00176\ \ \ \ \ \textcolor{comment}{\#\ ──\ IMU\ figure\ (gyro\ +\ accel)\ ────────────────────────────────────────────}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00177}00177\ \ \ \ \ fig1,\ axes1\ =\ plt.subplots(6,\ 1,\ figsize=(14,\ 14),\ sharex=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00178}00178\ \ \ \ \ fig1.suptitle(\textcolor{stringliteral}{'Raw\ IMU\ —\ Gyroscope\ \&\ Accelerometer'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00180}00180\ \ \ \ \ labels\_gyro\ \ =\ [\textcolor{stringliteral}{'ωx\ (rad/s)'},\ \textcolor{stringliteral}{'ωy\ (rad/s)'},\ \textcolor{stringliteral}{'ωz\ (rad/s)'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00181}00181\ \ \ \ \ labels\_accel\ =\ [\textcolor{stringliteral}{'ax\ (m/s²)'},\ \textcolor{stringliteral}{'ay\ (m/s²)'},\ \textcolor{stringliteral}{'az\ (m/s²)'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00182}00182\ \ \ \ \ colors\_g\ =\ [\textcolor{stringliteral}{'tab:blue'},\ \textcolor{stringliteral}{'tab:orange'},\ \textcolor{stringliteral}{'tab:green'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00183}00183\ \ \ \ \ colors\_a\ =\ [\textcolor{stringliteral}{'tab:red'},\ \ \textcolor{stringliteral}{'tab:purple'},\ \textcolor{stringliteral}{'tab:brown'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00185}00185\ \ \ \ \ \textcolor{keywordflow}{if}\ len(gyro)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ tg\ =\ \mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(gyro)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (lbl,\ col)\ \textcolor{keywordflow}{in}\ enumerate(zip(labels\_gyro,\ colors\_g)):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[i].plot(tg,\ gyro[f\textcolor{stringliteral}{'v\{i\}'}].to\_numpy(),\ color=col,\ linewidth=0.8,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'raw'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[i].set\_ylabel(lbl)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[i].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ gyro\ bias\ (bg)\ is\ body-\/frame,\ so\ unbiased\ =\ raw\ -\/\ bg\ is\ exact}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplot__sensors_a56e89c5948868568d0262e44009e11a6}{overlay\_bias}}(axes1[0:3],\ gyro,\ gyro\_bias)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00194}00194\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[i].text(0.5,\ 0.5,\ \textcolor{stringliteral}{'no\ gyro\ data'},\ ha=\textcolor{stringliteral}{'center'},\ va=\textcolor{stringliteral}{'center'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform=axes1[i].transAxes)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00199}00199\ \ \ \ \ \textcolor{keywordflow}{if}\ len(accel)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ ta\ =\ \mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(accel)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (lbl,\ col)\ \textcolor{keywordflow}{in}\ enumerate(zip(labels\_accel,\ colors\_a)):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].plot(ta,\ accel[f\textcolor{stringliteral}{'v\{i\}'}].to\_numpy(),\ color=col,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linewidth=0.8,\ label=\textcolor{stringliteral}{'raw'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].set\_ylabel(lbl)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ accel\ bias\ is\ logged\ already\ rotated\ into\ the\ body\ frame\ (ba\_body),}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ co-\/located\ with\ the\ raw\ accel\ row-\/for-\/row,\ so\ raw\ -\/\ ba\_body\ is\ exact}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ and\ needs\ no\ interpolation.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ accel\_body\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ tb\_abs,\ raw\_b,\ ba\_b\ =\ accel\_body}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ trel\ =\ tb\_abs\ -\/\ accel[\textcolor{stringliteral}{'time'}].to\_numpy(float)[0]\ \ \textcolor{comment}{\#\ shift,\ not\ interp}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].plot(trel,\ ba\_b[:,\ i],\ color=\textcolor{stringliteral}{'tab:red'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linewidth=1.0,\ alpha=0.85,\ linestyle=\textcolor{stringliteral}{'-\/-\/'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'bias\ (body)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].plot(trel,\ raw\_b[:,\ i]\ -\/\ ba\_b[:,\ i],\ color=\textcolor{stringliteral}{'black'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linewidth=0.8,\ alpha=0.7,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'unbiased\ (body)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=8)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00220}00220\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00221}00221\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ axes1[3\ +\ i].text(0.5,\ 0.5,\ \textcolor{stringliteral}{'no\ accel\ data'},\ ha=\textcolor{stringliteral}{'center'},\ va=\textcolor{stringliteral}{'center'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform=axes1[3\ +\ i].transAxes)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00225}00225\ \ \ \ \ axes1[5].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00226}00226\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00227}00227\ \ \ \ \ t\_imu\ =\ tg\ \textcolor{keywordflow}{if}\ len(gyro)\ >\ 0\ \textcolor{keywordflow}{else}\ (ta\ \textcolor{keywordflow}{if}\ len(accel)\ >\ 0\ \textcolor{keywordflow}{else}\ [])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00228}00228\ \ \ \ \ add\_time\_window(fig1,\ list(axes1),\ t\_imu)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00230}00230\ \ \ \ \ \textcolor{comment}{\#\ ──\ Magnetometer\ figure\ ──────────────────────────────────────────────────}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00231}00231\ \ \ \ \ fig2,\ axes2\ =\ plt.subplots(4,\ 1,\ figsize=(14,\ 9),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00232}00232\ \ \ \ \ fig2.suptitle(\textcolor{stringliteral}{'Raw\ Magnetometer'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00234}00234\ \ \ \ \ labels\_m\ =\ [\textcolor{stringliteral}{'mx'},\ \textcolor{stringliteral}{'my'},\ \textcolor{stringliteral}{'mz'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00235}00235\ \ \ \ \ colors\_m\ =\ [\textcolor{stringliteral}{'tab:blue'},\ \textcolor{stringliteral}{'tab:orange'},\ \textcolor{stringliteral}{'tab:green'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00237}00237\ \ \ \ \ \textcolor{keywordflow}{if}\ len(magnm)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ tm\ =\ \mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(magnm)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (lbl,\ col)\ \textcolor{keywordflow}{in}\ enumerate(zip(labels\_m,\ colors\_m)):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ axes2[i].plot(tm,\ magnm[f\textcolor{stringliteral}{'v\{i\}'}].to\_numpy(),\ color=col,\ linewidth=0.8,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'raw'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ axes2[i].set\_ylabel(lbl)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ axes2[i].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ m\_norm\ =\ np.sqrt(magnm[\textcolor{stringliteral}{'v0'}]**2\ +\ magnm[\textcolor{stringliteral}{'v1'}]**2\ +\ magnm[\textcolor{stringliteral}{'v2'}]**2)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ axes2[3].plot(tm,\ m\_norm.to\_numpy(),\ color=\textcolor{stringliteral}{'tab:purple'},\ linewidth=0.8,\ label=\textcolor{stringliteral}{'‖m‖'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ axes2[3].set\_ylabel(\textcolor{stringliteral}{'‖m‖'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ axes2[3].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ axes2[3].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00249}00249\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ ax\ \textcolor{keywordflow}{in}\ axes2:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ ax.text(0.5,\ 0.5,\ \textcolor{stringliteral}{'no\ magnetometer\ data'},\ ha=\textcolor{stringliteral}{'center'},\ va=\textcolor{stringliteral}{'center'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform=ax.transAxes)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00254}00254\ \ \ \ \ axes2[3].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00255}00255\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00256}00256\ \ \ \ \ add\_time\_window(fig2,\ list(axes2),\ tm\ \textcolor{keywordflow}{if}\ len(magnm)\ >\ 0\ \textcolor{keywordflow}{else}\ [])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00258}00258\ \ \ \ \ \textcolor{comment}{\#\ ──\ UWB\ +\ Control\ figure\ ─────────────────────────────────────────────────}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00259}00259\ \ \ \ \ fig3,\ axes3\ =\ plt.subplots(5,\ 1,\ figsize=(14,\ 11),\ sharex=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00260}00260\ \ \ \ \ fig3.suptitle(\textcolor{stringliteral}{'UWB\ Range\ \&\ Motor\ Commands'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00262}00262\ \ \ \ \ \textcolor{keywordflow}{if}\ len(uwb)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ tu\ =\ \mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(uwb)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ axes3[0].plot(tu,\ uwb[\textcolor{stringliteral}{'v0'}].to\_numpy(),\ color=\textcolor{stringliteral}{'tab:cyan'},\ linewidth=0.9)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00265}00265\ \ \ \ \ \ \ \ \ axes3[0].set\_ylabel(\textcolor{stringliteral}{'UWB\ range\ (m)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00266}00266\ \ \ \ \ \ \ \ \ axes3[0].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00267}00267\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ axes3[0].text(0.5,\ 0.5,\ \textcolor{stringliteral}{'no\ UWB\ data'},\ ha=\textcolor{stringliteral}{'center'},\ va=\textcolor{stringliteral}{'center'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform=axes3[0].transAxes)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00271}00271\ \ \ \ \ ctrl\_labels\ =\ [\textcolor{stringliteral}{'wr\ (rad/s)'},\ \textcolor{stringliteral}{'wl\ (rad/s)'},\ \textcolor{stringliteral}{'dwr\ (rad/s²)'},\ \textcolor{stringliteral}{'dwl\ (rad/s²)'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00272}00272\ \ \ \ \ ctrl\_colors\ =\ [\textcolor{stringliteral}{'tab:blue'},\ \textcolor{stringliteral}{'tab:orange'},\ \textcolor{stringliteral}{'tab:green'},\ \textcolor{stringliteral}{'tab:red'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00274}00274\ \ \ \ \ \textcolor{keywordflow}{if}\ len(control)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00275}00275\ \ \ \ \ \ \ \ \ tc\ =\ \mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(control)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00276}00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ (lbl,\ col)\ \textcolor{keywordflow}{in}\ enumerate(zip(ctrl\_labels,\ ctrl\_colors)):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ axes3[1\ +\ i].plot(tc,\ control[f\textcolor{stringliteral}{'v\{i\}'}].to\_numpy(),\ color=col,\ linewidth=0.9)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ axes3[1\ +\ i].set\_ylabel(lbl)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ axes3[1\ +\ i].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00280}00280\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00281}00281\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ ax\ \textcolor{keywordflow}{in}\ axes3[1:]:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ ax.text(0.5,\ 0.5,\ \textcolor{stringliteral}{'no\ control\ data'},\ ha=\textcolor{stringliteral}{'center'},\ va=\textcolor{stringliteral}{'center'},}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform=ax.transAxes)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00285}00285\ \ \ \ \ axes3[4].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00286}00286\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00287}00287\ \ \ \ \ t\_uc\ =\ tc\ \textcolor{keywordflow}{if}\ len(control)\ >\ 0\ \textcolor{keywordflow}{else}\ (tu\ \textcolor{keywordflow}{if}\ len(uwb)\ >\ 0\ \textcolor{keywordflow}{else}\ [])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00288}00288\ \ \ \ \ add\_time\_window(fig3,\ list(axes3),\ t\_uc)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00290}00290\ \ \ \ \ \textcolor{comment}{\#\ ──\ Magnetometer\ calibration\ ellipses\ (raw\ ellipsoid\ -\/>\ calibrated\ sphere)\ ─}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00291}00291\ \ \ \ \ \textcolor{comment}{\#\ Fits\ the\ ellipsoid\ on\ this\ log\ and\ shows\ raw\ vs\ calibrated\ 2-\/D\ projections.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00292}00292\ \ \ \ \ \textcolor{comment}{\#\ A\ good\ calibration\ turns\ the\ offset\ ellipse\ (raw)\ into\ a\ centred\ circle.}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00293}00293\ \ \ \ \ fig6\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00294}00294\ \ \ \ \ \textcolor{keywordflow}{if}\ \_HAS\_CALIB\ \textcolor{keywordflow}{and}\ len(magnm)\ >=\ 10:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ mx\ =\ magnm[\textcolor{stringliteral}{'v0'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ my\ =\ magnm[\textcolor{stringliteral}{'v1'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ mz\ =\ magnm[\textcolor{stringliteral}{'v2'}].to\_numpy()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00298}00298\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ bias,\ W\ =\ fit\_ellipsoid(mx,\ my,\ mz)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ cx,\ cy,\ cz\ =\ apply\_mag\_calibration(mx,\ my,\ mz,\ bias,\ W)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ raw\ =\ np.column\_stack([mx,\ my,\ mz])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ raw\_norm\ =\ np.linalg.norm(raw,\ axis=1)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_norm\ =\ np.sqrt(cx**2\ +\ cy**2\ +\ cz**2)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ r\_raw\ =\ np.linalg.norm(raw\ -\/\ bias,\ axis=1).mean()\ \ \textcolor{comment}{\#\ fitted\ sphere\ radius}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ r\_cal\ =\ cal\_norm.mean()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00306}00306\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }\_circle(ax,\ cen,\ r,\ color):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ th\ =\ np.linspace(0,\ 2\ *\ np.pi,\ 200)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ax.plot(cen[0]\ +\ r\ *\ np.cos(th),\ cen[1]\ +\ r\ *\ np.sin(th),}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color=color,\ linewidth=1.2,\ linestyle=\textcolor{stringliteral}{'-\/-\/'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ fig6,\ axes6\ =\ plt.subplots(2,\ 3,\ figsize=(15,\ 9))}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ fig6.suptitle(\textcolor{stringliteral}{'Magnetometer\ Calibration\ —\ Raw\ ellipsoid\ vs\ '}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Calibrated\ sphere\ (2-\/D\ projections)'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ proj\ =\ [(\textcolor{stringliteral}{'XY'},\ 0,\ 1),\ (\textcolor{stringliteral}{'XZ'},\ 0,\ 2),\ (\textcolor{stringliteral}{'YZ'},\ 1,\ 2)]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ raw\_d\ =\ [mx,\ my,\ mz]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_d\ =\ [cx,\ cy,\ cz]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ labels\ =\ [\textcolor{stringliteral}{'mx'},\ \textcolor{stringliteral}{'my'},\ \textcolor{stringliteral}{'mz'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ k,\ (name,\ i,\ j)\ \textcolor{keywordflow}{in}\ enumerate(proj):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ axes6[0,\ k]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.scatter(raw\_d[i],\ raw\_d[j],\ s=2,\ alpha=0.35,\ color=\textcolor{stringliteral}{'tab:blue'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.plot(bias[i],\ bias[j],\ \textcolor{stringliteral}{'kx'},\ markersize=9,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'hard-\/iron\ center'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_circle(a,\ (bias[i],\ bias[j]),\ r\_raw,\ \textcolor{stringliteral}{'tab:red'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.set\_title(f\textcolor{stringliteral}{'Raw\ —\ \{name\}'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.set\_xlabel(labels[i])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.set\_ylabel(labels[j])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.set\_aspect(\textcolor{stringliteral}{'equal'},\ adjustable=\textcolor{stringliteral}{'datalim'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ k\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=8)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ axes6[1,\ k]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.scatter(cal\_d[i],\ cal\_d[j],\ s=2,\ alpha=0.35,\ color=\textcolor{stringliteral}{'tab:orange'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.plot(0,\ 0,\ \textcolor{stringliteral}{'k+'},\ markersize=9)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_circle(b,\ (0,\ 0),\ r\_cal,\ \textcolor{stringliteral}{'tab:green'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.set\_title(f\textcolor{stringliteral}{'Calibrated\ —\ \{name\}'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.set\_xlabel(labels[i]\ +\ \textcolor{stringliteral}{'\ cal'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.set\_ylabel(labels[j]\ +\ \textcolor{stringliteral}{'\ cal'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.set\_aspect(\textcolor{stringliteral}{'equal'},\ adjustable=\textcolor{stringliteral}{'datalim'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }\_pp(x):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 100\ *\ (x.max()\ -\/\ x.min())\ /\ 2\ /\ x.mean()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}[cal]\ hard-\/iron\ bias\ =\ \{bias\}"{}})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}[cal]\ ||m||\ spread:\ raw\ ±\{\_pp(raw\_norm):.1f\}\%\ \ -\/>\ \ "{}}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}calibrated\ ±\{\_pp(cal\_norm):.1f\}\%\ \ "{}}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}(closer\ to\ 0\%\ =\ better\ sphere)"{}})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00350}00350\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ np.linalg.LinAlgError\ \textcolor{keyword}{as}\ exc:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}[cal]\ ellipsoid\ fit\ failed:\ \{exc\}"{}})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00353}00353\ \ \ \ \ \textcolor{comment}{\#\ ──\ Accel\ norm\ vs\ 9.81\ ───────────────────────────────────────────────────}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00354}00354\ \ \ \ \ fig4\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00355}00355\ \ \ \ \ \textcolor{keywordflow}{if}\ len(accel)\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00356}00356\ \ \ \ \ \ \ \ \ fig4,\ ax4\ =\ plt.subplots(figsize=(14,\ 4))}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00357}00357\ \ \ \ \ \ \ \ \ fig4.suptitle(\textcolor{stringliteral}{'Accel\ Norm\ vs\ g\ —\ gate\ diagnostic'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00358}00358\ \ \ \ \ \ \ \ \ ta\ =\ \mbox{\hyperlink{namespaceplot__sensors_aa650ca6095fa6a89e4040c9a573cc0d0}{rel\_time}}(accel)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00359}00359\ \ \ \ \ \ \ \ \ a\_norm\ =\ np.sqrt(accel[\textcolor{stringliteral}{'v0'}]**2\ +\ accel[\textcolor{stringliteral}{'v1'}]**2\ +\ accel[\textcolor{stringliteral}{'v2'}]**2)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00360}00360\ \ \ \ \ \ \ \ \ ax4.plot(ta,\ a\_norm,\ color=\textcolor{stringliteral}{'tab:blue'},\ linewidth=0.8,\ label=\textcolor{stringliteral}{'‖a‖'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00361}00361\ \ \ \ \ \ \ \ \ ax4.axhline(9.81,\ color=\textcolor{stringliteral}{'black'},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ linewidth=1.0,\ label=\textcolor{stringliteral}{'g\ =\ 9.81'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00362}00362\ \ \ \ \ \ \ \ \ ax4.axhline(9.81\ +\ 0.3,\ color=\textcolor{stringliteral}{'tab:red'},\ linestyle=\textcolor{stringliteral}{':'},\ linewidth=0.8,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'gate\ ±0.3\ m/s²'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00364}00364\ \ \ \ \ \ \ \ \ ax4.axhline(9.81\ -\/\ 0.3,\ color=\textcolor{stringliteral}{'tab:red'},\ linestyle=\textcolor{stringliteral}{':'},\ linewidth=0.8)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00365}00365\ \ \ \ \ \ \ \ \ ax4.set\_ylabel(\textcolor{stringliteral}{'‖a‖\ (m/s²)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00366}00366\ \ \ \ \ \ \ \ \ ax4.set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00367}00367\ \ \ \ \ \ \ \ \ ax4.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=9)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00368}00368\ \ \ \ \ \ \ \ \ ax4.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00369}00369\ \ \ \ \ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00370}00370\ \ \ \ \ \ \ \ \ add\_time\_window(fig4,\ [ax4],\ ta)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00372}00372\ \ \ \ \ \textcolor{comment}{\#\ ──\ Accel\ in\ q0\ (inertial)\ frame\ —\ frame-\/consistency\ check\ ───────────────}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00373}00373\ \ \ \ \ \textcolor{comment}{\#\ unbiased\ =\ a\_q0\ -\/\ bias\_q0\ should\ sit\ at\ grav\_ref\ and\ stay\ fixed\ even\ while}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00374}00374\ \ \ \ \ \textcolor{comment}{\#\ the\ robot\ rotates\ (gravity\ stationary\ in\ inertial\ =>\ frames\ consistent).}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00375}00375\ \ \ \ \ fig5\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00376}00376\ \ \ \ \ \textcolor{keywordflow}{if}\ accel\_q0\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00377}00377\ \ \ \ \ \ \ \ \ tq\_abs,\ a\_q0,\ b\_q0\ =\ accel\_q0}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00378}00378\ \ \ \ \ \ \ \ \ trel\ =\ tq\_abs\ -\/\ tq\_abs[0]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00379}00379\ \ \ \ \ \ \ \ \ unb\ =\ a\_q0\ -\/\ b\_q0}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00380}00380\ \ \ \ \ \ \ \ \ labels\_i\ =\ [\textcolor{stringliteral}{'ax\ (q0)'},\ \textcolor{stringliteral}{'ay\ (q0)'},\ \textcolor{stringliteral}{'az\ (q0)'}]}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00381}00381\ \ \ \ \ \ \ \ \ fig5,\ ax5\ =\ plt.subplots(3,\ 1,\ figsize=(14,\ 8),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00382}00382\ \ \ \ \ \ \ \ \ fig5.suptitle(\textcolor{stringliteral}{'Accel\ in\ q0\ (inertial)\ frame\ —\ unbiased\ should\ hold\ at\ '}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'grav\_ref'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00384}00384\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].plot(trel,\ a\_q0[:,\ i],\ color=\textcolor{stringliteral}{'tab:blue'},\ linewidth=0.8,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alpha=0.7,\ label=\textcolor{stringliteral}{'raw\ (q0)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].plot(trel,\ b\_q0[:,\ i],\ color=\textcolor{stringliteral}{'tab:red'},\ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ label=\textcolor{stringliteral}{'bias\ (q0)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].plot(trel,\ unb[:,\ i],\ color=\textcolor{stringliteral}{'black'},\ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'unbiased\ =\ raw\ -\/\ bias'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ grav\_ref\ reference:\ unbiased\ mean\ over\ the\ (near-\/rest)\ first\ second}}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ ref\ =\ np.nanmean(unb[trel\ <\ (trel[0]\ +\ 1.0),\ i])\ \textcolor{keywordflow}{if}\ len(trel)\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].axhline(ref,\ color=\textcolor{stringliteral}{'tab:green'},\ linestyle=\textcolor{stringliteral}{':'},\ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label=f\textcolor{stringliteral}{'grav\_ref\ ≈\ \{ref:.3f\}'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].set\_ylabel(labels\_i[i])}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=8)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ ax5[i].grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.4)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00398}00398\ \ \ \ \ \ \ \ \ ax5[2].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00399}00399\ \ \ \ \ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00400}00400\ \ \ \ \ \ \ \ \ add\_time\_window(fig5,\ list(ax5),\ trel)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00402}00402\ \ \ \ \ enable\_quit\_key(fig1,\ fig2,\ fig3,\ fig4,\ fig5,\ fig6)}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00403}00403\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00404}00404\ \ \ \ \ plt.show()}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00406}00406\ }
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00407}00407\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{'\_\_main\_\_'}:}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00408}\mbox{\hyperlink{namespaceplot__sensors_a557e6c91e1f597ac7d121ee87cf23209}{00408}}\ \ \ \ \ csv\_path\ \ \ =\ sys.argv[1]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 1\ \textcolor{keywordflow}{else}\ SENSORS\_CSV}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00409}\mbox{\hyperlink{namespaceplot__sensors_a81e673d43e1cbf3db1a7c11f5995d6ee}{00409}}\ \ \ \ \ mekf\_path\ \ =\ sys.argv[2]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 2\ \textcolor{keywordflow}{else}\ MEKF\_CSV}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00410}\mbox{\hyperlink{namespaceplot__sensors_acecf9844d774566bdeb810cedc5c1313}{00410}}\ \ \ \ \ trans\_path\ =\ sys.argv[3]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 3\ \textcolor{keywordflow}{else}\ TRANS\_CSV}
+\DoxyCodeLine{\Hypertarget{plot__sensors_8py_source_l00411}00411\ \ \ \ \ main(csv\_path,\ mekf\_path,\ trans\_path)}
+
+\end{DoxyCode}

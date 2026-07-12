@@ -1,0 +1,26 @@
+<map id="src/unilidar_sdk2/unitree_lidar_sdk/include/unitree_lidar_sdk.h" name="src/unilidar_sdk2/unitree_lidar_sdk/include/unitree_lidar_sdk.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="220,5,410,60"/>
+<area shape="rect" id="Node000002" href="$unitree__lidar__utilities_8h.html" title=" " alt="" coords="160,108,332,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="296,62,266,99,262,95,292,58"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="356,108,415,133"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="339,58,369,96,365,99,334,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="266,255,332,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="160,129,97,137,42,151,22,162,11,174,9,188,18,205,33,217,56,227,118,244,189,254,252,260,251,266,188,260,117,249,54,232,30,221,14,208,4,189,6,171,19,157,40,146,96,132,159,123"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="28,181,103,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="218,136,109,179,107,174,216,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="128,181,190,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="233,135,185,175,182,170,230,131"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="214,181,277,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="248,134,248,168,243,168,243,134"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="302,181,366,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="261,131,310,170,307,175,258,135"/>
+<area shape="rect" id="Node000008" href="$unitree__lidar__sdk__config_8h.html" title=" " alt="" coords="390,181,582,207"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="285,131,434,175,433,180,283,136"/>
+<area shape="rect" id="Node000009" href="$unitree__lidar__protocol_8h.html" title=" " alt="" coords="606,181,782,207"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="318,131,608,176,607,182,317,136"/>
+<area shape="poly" id="edge10_Node000009_Node000003" title=" " alt="" coords="631,209,346,260,345,255,630,204"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="619,255,680,280"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="689,208,666,244,662,242,684,206"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="704,255,771,280"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="703,206,726,242,721,244,699,208"/>
+</map>

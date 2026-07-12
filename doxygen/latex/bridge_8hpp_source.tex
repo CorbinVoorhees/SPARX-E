@@ -1,0 +1,189 @@
+\doxysection{bridge.\+hpp}
+\hypertarget{bridge_8hpp_source}{}\label{bridge_8hpp_source}\index{src/bridges/include/bridges/bridge.hpp@{src/bridges/include/bridges/bridge.hpp}}
+\mbox{\hyperlink{bridge_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ GENERIC\_BRIDGE}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ GENERIC\_BRIDGE}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <cerrno>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <termios.h>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}../../../utils.h"{}}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <rclcpp/rclcpp.hpp>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <rcpputils/asserts.hpp>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <std\_msgs/msg/string.hpp>}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00025}\mbox{\hyperlink{classBridgeBase}{00025}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00027}00027\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00028}00028\ \ \ \textcolor{comment}{//\ Initialize\ shared\ pointer\ of\ subscription\ object\ string\ message}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00029}00029\ \ \ rclcpp::Subscription<std\_msgs::msg::String>::SharedPtr}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00030}\mbox{\hyperlink{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22}{00030}}\ \ \ \ \ \ \ \mbox{\hyperlink{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22}{serial\_monitor\_subscription}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00032}00032\ \ \ \textcolor{comment}{//\ Initialize\ serial\ file\ descriptor.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00033}\mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{00033}}\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00035}00035\ \ \ \textcolor{comment}{//\ String\ determining\ serial\ port\ address.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00036}\mbox{\hyperlink{classBridgeBase_a316bdd6412a414a77e08c1605f462472}{00036}}\ \ \ std::string\ \mbox{\hyperlink{classBridgeBase_a316bdd6412a414a77e08c1605f462472}{serial\_port}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00038}00038\ \ \ \textcolor{comment}{//\ Actual\ baud\ rate\ of\ the\ Arduino\ Serial\ Monitor.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00039}\mbox{\hyperlink{classBridgeBase_a41de155823ba40f07bf99843a8eaab92}{00039}}\ \ \ speed\_t\ \mbox{\hyperlink{classBridgeBase_a41de155823ba40f07bf99843a8eaab92}{baud\_rate}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00041}00041\ \ \ \textcolor{comment}{//\ buffer\ initialization}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00042}\mbox{\hyperlink{structBridgeBase_1_1Buffer}{00042}}\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structBridgeBase_1_1Buffer}{Buffer}}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00043}00043\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00044}\mbox{\hyperlink{structBridgeBase_1_1Buffer_a3a9518dba2e55c80400c971b7eced3a0}{00044}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structBridgeBase_1_1Buffer_a3a9518dba2e55c80400c971b7eced3a0}{length}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00045}\mbox{\hyperlink{structBridgeBase_1_1Buffer_ae4147b156f0ef97e1a38827e6accb770}{00045}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structBridgeBase_1_1Buffer_ae4147b156f0ef97e1a38827e6accb770}{idx}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00046}\mbox{\hyperlink{structBridgeBase_1_1Buffer_a1cbfb7d3ca914741681c004af733985e}{00046}}\ \ \ \ \ std::vector<char>\ \mbox{\hyperlink{structBridgeBase_1_1Buffer_a1cbfb7d3ca914741681c004af733985e}{buffer}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00047}\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{00047}}\ \ \ \}\ \mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00049}00049\ \ \ \textcolor{comment}{//\ target\ character}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00050}\mbox{\hyperlink{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a}{00050}}\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a}{target}}\ =\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00051}00051\ \ \ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00052}00052\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00053}00053\ \ \ \textcolor{keywordtype}{void}\ open\_serial\_port()\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ initialize\ termial\ communication\ protocol\ struct\ and\ zero-\/out\ struct}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00055}00055\ \ \ \ \ \textcolor{comment}{//\ bytes}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00056}00056\ \ \ \ \ \textcolor{keyword}{struct\ }termios\ tty;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00057}00057\ \ \ \ \ memset(\&tty,\ 0,\ \textcolor{keyword}{sizeof}\ tty);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//\ initialize\ the\ serial\ file\ descriptor,\ and\ catastrophically\ fail\ if}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ connection\ fails}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00061}00061\ \ \ \ \ \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}}\ =\ open(this-\/>serial\_port.c\_str(),\ O\_RDWR\ |\ O\_NOCTTY\ |\ O\_SYNC);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00062}00062\ \ \ \ \ rcpputils::assert\_true(}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ this-\/>serial\_fd\ >\ 0,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}Failed\ to\ open\ Connection\ Port!\ Open\ returned\ code\ \%d"{}},\ \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}}));}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ force\ checking\ config\ attr\ validity}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00067}00067\ \ \ \ \ rcpputils::assert\_true(}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ tcgetattr(this-\/>serial\_fd,\ \&tty)\ ==\ 0,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}Error\ from\ tcgetattr:\ \%s"{}},\ std::strerror(errno)));}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ set\ the\ speed\ from\ the\ baud\ rate\ in\ thte\ tty\ termois\ struct.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ we'll\ use\ these\ configs\ to\ read\ from\ the\ terminal.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00073}00073\ \ \ \ \ cfsetospeed(\&tty,\ this-\/>baud\_rate);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00074}00074\ \ \ \ \ cfsetispeed(\&tty,\ this-\/>baud\_rate);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//\ tty}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00077}00077\ \ \ \ \ tty.c\_cflag\ =\ (tty.c\_cflag\ \&\ \string~CSIZE)\ |\ CS8;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00078}00078\ \ \ \ \ tty.c\_iflag\ \&=\ \string~IGNBRK;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00079}00079\ \ \ \ \ tty.c\_lflag\ |=\ ICANON;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00080}00080\ \ \ \ \ tty.c\_lflag\ \&=\ \string~(ECHO\ |\ ECHOE\ |\ ECHONL);\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00081}00081\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00082}00082\ \ \ \ \ tty.c\_oflag\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00083}00083\ \ \ \ \ tty.c\_cc[VMIN]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00084}00084\ \ \ \ \ tty.c\_cc[VTIME]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00086}00086\ \ \ \ \ tty.c\_iflag\ \&=\ \string~(IXON\ |\ IXOFF\ |\ IXANY);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00087}00087\ \ \ \ \ tty.c\_cflag\ |=\ (CLOCAL\ |\ CREAD);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00088}00088\ \ \ \ \ tty.c\_cflag\ \&=\ \string~(PARENB\ |\ PARODD);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00089}00089\ \ \ \ \ tty.c\_cflag\ \&=\ \string~CSTOPB;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00090}00090\ \ \ \ \ tty.c\_cflag\ \&=\ \string~CRTSCTS;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ force\ setting\ of\ the\ attribute\ to\ be\ vaild.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00093}00093\ \ \ \ \ rcpputils::assert\_true(}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ tcsetattr(\mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}},\ TCSANOW,\ \&tty)\ ==\ 0,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}Error\ from\ tcsetattr:\ \%s"{}},\ std::strerror(errno)));}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ log\ the\ result\ and\ wait\ for\ data\ to\ populate.}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00098}00098\ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Serial\ port\ \%s\ opened\ at\ specified\ baud\ rate!"{}},}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classBridgeBase_a316bdd6412a414a77e08c1605f462472}{serial\_port}}.c\_str());}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00101}00101\ \ \ \ \ sleep(3);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00103}00103\ \ \ \ \ \textcolor{comment}{//\ automatically\ detect\ refresh\ rate\ of\ the\ peripheral\ using\ an\ anchoring}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ character...\ nominally\ this\ is\ /r/n,\ or\ just\ /n}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00105}00105\ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),\ \textcolor{stringliteral}{"{}Checking\ Refresh\ Rate..."{}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00106}00106\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00108}00108\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00109}\mbox{\hyperlink{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed}{00109}}\ \ \ \mbox{\hyperlink{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed}{BridgeBase}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00110}\mbox{\hyperlink{classBridgeBase_af5e3461975c69370adcbee6a66369cc6}{00110}}\ \ \ \mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \&\mbox{\hyperlink{classBridgeBase_af5e3461975c69370adcbee6a66369cc6}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00111}\mbox{\hyperlink{classBridgeBase_acfb9c232955e7e1897259734be10fd5a}{00111}}\ \ \ \mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \&\mbox{\hyperlink{classBridgeBase_acfb9c232955e7e1897259734be10fd5a}{operator=}}(\mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00112}\mbox{\hyperlink{classBridgeBase_adb16281ff6ac7c2848754829b683eb79}{00112}}\ \ \ \mbox{\hyperlink{classBridgeBase_adb16281ff6ac7c2848754829b683eb79}{BridgeBase}}(\mbox{\hyperlink{classBridgeBase}{BridgeBase}}\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00118}\mbox{\hyperlink{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1}{00118}}\ \ \ \mbox{\hyperlink{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1}{BridgeBase}}(std::string\ node\_name,\ std::string\ serial\_port\_str,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ baud\_rate\_int,\ \textcolor{keywordtype}{size\_t}\ buflen)}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00120}00120\ \ \ \ \ \ \ :\ Node(node\_name),\ \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}}(-\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00121}00121\ \ \ \ \ \textcolor{comment}{//\ Allows\ different\ baud\ rate\ and\ serial\ port\ to\ be\ set\ up\ during\ launch\ if}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00122}00122\ \ \ \ \ \textcolor{comment}{//\ desired}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00123}00123\ \ \ \ \ this-\/>declare\_parameter<std::string>(\textcolor{stringliteral}{"{}serial\_port"{}},\ serial\_port\_str);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00124}00124\ \ \ \ \ this-\/>declare\_parameter<int>(\textcolor{stringliteral}{"{}baud\_rate"{}},\ baud\_rate\_int);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00126}00126\ \ \ \ \ \textcolor{comment}{//\ set\ the\ baud\_rate}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{switch}\ (this-\/>get\_parameter(\textcolor{stringliteral}{"{}baud\_rate"{}}).as\_int())\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{case}\ 9600:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00129}00129\ \ \ \ \ \ \ this-\/>baud\_rate\ =\ B9600;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00130}00130\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00131}00131\ \ \ \ \ \textcolor{keywordflow}{case}\ 19200:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00132}00132\ \ \ \ \ \ \ this-\/>baud\_rate\ =\ B19200;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00133}00133\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{case}\ 38400:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00135}00135\ \ \ \ \ \ \ this-\/>baud\_rate\ =\ B38400;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00136}00136\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00137}00137\ \ \ \ \ \textcolor{keywordflow}{case}\ 57600:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00138}00138\ \ \ \ \ \ \ this-\/>baud\_rate\ =\ B57600;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00139}00139\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{case}\ 115200:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00141}00141\ \ \ \ \ \ \ this-\/>baud\_rate\ =\ B115200;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00142}00142\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00144}00144\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Unsupported\ baud\ rate"{}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00145}00145\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00147}00147\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ serial\ port\ and\ baud\ rate\ from\ the\ ROS\ start\ up\ sequence}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00148}00148\ \ \ \ \ this-\/>serial\_port\ =\ this-\/>get\_parameter(\textcolor{stringliteral}{"{}serial\_port"{}}).as\_string();}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00149}00149\ \ \ \ \ this-\/>\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}.\mbox{\hyperlink{structBridgeBase_1_1Buffer_a3a9518dba2e55c80400c971b7eced3a0}{length}}\ =\ buflen;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00150}00150\ \ \ \ \ this-\/>\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}.\mbox{\hyperlink{structBridgeBase_1_1Buffer_a1cbfb7d3ca914741681c004af733985e}{buffer}}.resize(this-\/>\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}.\mbox{\hyperlink{structBridgeBase_1_1Buffer_a3a9518dba2e55c80400c971b7eced3a0}{length}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00152}00152\ \ \ \ \ \textcolor{comment}{//\ Open\ the\ serial\ port}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00153}00153\ \ \ \ \ open\_serial\_port();}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00154}00154\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00156}\mbox{\hyperlink{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b}{00156}}\ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b}{\string~BridgeBase}}()\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00157}00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}}\ >=\ 0)}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00158}00158\ \ \ \ \ \ \ close(\mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00159}00159\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00166}\mbox{\hyperlink{classBridgeBase_a225a5da44b606264c006589618584662}{00166}}\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBridgeBase_a225a5da44b606264c006589618584662}{write\_serial}}(\textcolor{keyword}{const}\ std\_msgs::msg::String::SharedPtr\ msg)\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00167}00167\ \ \ \ \ rcpputils::assert\_true(this-\/>serial\_fd\ >=\ 0,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Serial\ port\ not\ open.\ Failed\ to\ send\ command."{}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00170}00170\ \ \ \ \ \textcolor{comment}{//\ Sets\ up\ string\ to\ be\ sent\ an\ appends\ a\ new\ line\ for\ arduino\ parsing}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00171}00171\ \ \ \ \ std::string\ command\ =\ msg-\/>data;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00172}00172\ \ \ \ \ command.append(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00173}00173\ \ \ \ \ ssize\_t\ bytes\_written\ =\ write(\mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}},\ command.c\_str(),\ command.size());}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00174}00174\ \ \ \ \ tcdrain(\mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\_fd}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00176}00176\ \ \ \ \ rcpputils::assert\_true(}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ bytes\_written\ >=\ 0,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}Error\ writing\ to\ serial\ port:\ \%s"{}},\ strerror(errno)));}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00179}00179\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00184}\mbox{\hyperlink{classBridgeBase_a4b530ff07f338dae058913095302498f}{00184}}\ \ \ std::string\ \mbox{\hyperlink{classBridgeBase_a4b530ff07f338dae058913095302498f}{read\_serial}}()\ \{}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00185}00185\ \ \ \ \ \textcolor{comment}{//\ ensure\ serial\ communication\ is\ successful,\ fail\ if\ not}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00186}00186\ \ \ \ \ rcpputils::assert\_true(this-\/>serial\_fd\ >=\ 0,}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Serial\ port\ not\ open.\ Failed\ to\ read\ command."{}});}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00188}00188\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00189}00189\ \ \ \ \ \textcolor{comment}{//\ read\ into\ a\ long\ buffer}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00190}00190\ \ \ \ \ ssize\_t\ bytes\_read\ =\ read(this-\/>serial\_fd,\ this-\/>\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}.\mbox{\hyperlink{structBridgeBase_1_1Buffer_a1cbfb7d3ca914741681c004af733985e}{buffer}}.data(),\ this-\/>buf.length\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00191}00191\ \ \ \ \ this-\/>\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}.\mbox{\hyperlink{structBridgeBase_1_1Buffer_a1cbfb7d3ca914741681c004af733985e}{buffer}}[bytes\_read]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00193}00193\ \ \ \ \ \textcolor{keywordflow}{if}\ (bytes\_read\ <=\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00194}00194\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00195}00195\ \ \ \ \ \textcolor{keyword}{auto}\ s\ =\ std::string(this-\/>\mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}.\mbox{\hyperlink{structBridgeBase_1_1Buffer_a1cbfb7d3ca914741681c004af733985e}{buffer}}.data());}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00197}00197\ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00198}00198\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00199}00199\ \};}
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{bridge_8hpp_source_l00201}00201\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

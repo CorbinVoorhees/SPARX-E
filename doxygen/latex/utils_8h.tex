@@ -1,0 +1,178 @@
+\doxysection{src/utils.h File Reference}
+\hypertarget{utils_8h}{}\label{utils_8h}\index{src/utils.h@{src/utils.h}}
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for utils.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classLogger}{Logger}}
+\begin{DoxyCompactList}\small\item\em Meyer\textquotesingle{}s singleton used on a logging instance. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structRoverGeometry}{Rover\+Geometry}}
+\item 
+struct \mbox{\hyperlink{structSpikeRejectConfig}{Spike\+Reject\+Config}}
+\item 
+class \mbox{\hyperlink{classFilteredSampleProducer}{Filtered\+Sample\+Producer$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{utils_8h_a8b4533f1d841bdc7242bc8013d65b47f}{IF\+\_\+\+CONSTEXPR\+\_\+\+ASSIGN}}(M,  T,  A,  B)
+\item 
+\#define \mbox{\hyperlink{utils_8h_a9078703a84f6d138e82feda02b458d26}{WITH\+\_\+\+LOCK}}(m)~std\+::lock\+\_\+guard$<$std\+::mutex$>$ lk(m);
+\item 
+\#define \mbox{\hyperlink{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46}{WITH\+\_\+\+UQ\+\_\+\+LOCK}}(m)~std\+::unique\+\_\+lock$<$std\+::shared\+\_\+mutex$>$ lk(m);
+\item 
+\#define \mbox{\hyperlink{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d}{WITH\+\_\+\+SH\+\_\+\+LOCK}}(m)~std\+::shared\+\_\+lock$<$std\+::shared\+\_\+mutex$>$ lk(m);
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\std\+::string \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\+\_\+format}} (const char \texorpdfstring{$\ast$}{*}fmt, Args... args)
+\item 
+bool \mbox{\hyperlink{utils_8h_ab55ab03dbd3d731a0e24b3e8c6e0ec1e}{load\+\_\+doubles}} (const std\+::string \&path, std\+::vector$<$ double $>$ \&out, size\+\_\+t expected\+\_\+count)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \mbox{\hyperlink{structRoverGeometry}{Rover\+Geometry}} \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}} \{\}
+\item 
+constexpr double \mbox{\hyperlink{utils_8h_a4b464df4b63865daedb3b0956881d65e}{CTRL\+\_\+\+PERIOD\+\_\+S}} = 0.\+067
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{utils_8h_a8b4533f1d841bdc7242bc8013d65b47f}\label{utils_8h_a8b4533f1d841bdc7242bc8013d65b47f} 
+\index{utils.h@{utils.h}!IF\_CONSTEXPR\_ASSIGN@{IF\_CONSTEXPR\_ASSIGN}}
+\index{IF\_CONSTEXPR\_ASSIGN@{IF\_CONSTEXPR\_ASSIGN}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{IF\_CONSTEXPR\_ASSIGN}{IF\_CONSTEXPR\_ASSIGN}}
+{\footnotesize\ttfamily \#define IF\+\_\+\+CONSTEXPR\+\_\+\+ASSIGN(\begin{DoxyParamCaption}\item[{}]{M,  }\item[{}]{T,  }\item[{}]{A,  }\item[{}]{B }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{do}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_arithmetic\_v<T>)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ (M)\ =\ (A);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{else}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ (M)\ =\ (B);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00082}{82}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{utils_8h_a9078703a84f6d138e82feda02b458d26}\label{utils_8h_a9078703a84f6d138e82feda02b458d26} 
+\index{utils.h@{utils.h}!WITH\_LOCK@{WITH\_LOCK}}
+\index{WITH\_LOCK@{WITH\_LOCK}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{WITH\_LOCK}{WITH\_LOCK}}
+{\footnotesize\ttfamily \#define WITH\+\_\+\+LOCK(\begin{DoxyParamCaption}\item[{}]{m }\end{DoxyParamCaption})~std\+::lock\+\_\+guard$<$std\+::mutex$>$ lk(m);}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00090}{90}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d}\label{utils_8h_a298e503a1c50e5dc2b4a0fa6110dca3d} 
+\index{utils.h@{utils.h}!WITH\_SH\_LOCK@{WITH\_SH\_LOCK}}
+\index{WITH\_SH\_LOCK@{WITH\_SH\_LOCK}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{WITH\_SH\_LOCK}{WITH\_SH\_LOCK}}
+{\footnotesize\ttfamily \#define WITH\+\_\+\+SH\+\_\+\+LOCK(\begin{DoxyParamCaption}\item[{}]{m }\end{DoxyParamCaption})~std\+::shared\+\_\+lock$<$std\+::shared\+\_\+mutex$>$ lk(m);}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00092}{92}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46}\label{utils_8h_ac276b0dc28bc66ad86a695cde23e4c46} 
+\index{utils.h@{utils.h}!WITH\_UQ\_LOCK@{WITH\_UQ\_LOCK}}
+\index{WITH\_UQ\_LOCK@{WITH\_UQ\_LOCK}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{WITH\_UQ\_LOCK}{WITH\_UQ\_LOCK}}
+{\footnotesize\ttfamily \#define WITH\+\_\+\+UQ\+\_\+\+LOCK(\begin{DoxyParamCaption}\item[{}]{m }\end{DoxyParamCaption})~std\+::unique\+\_\+lock$<$std\+::shared\+\_\+mutex$>$ lk(m);}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00091}{91}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utils_8h_ab55ab03dbd3d731a0e24b3e8c6e0ec1e}\label{utils_8h_ab55ab03dbd3d731a0e24b3e8c6e0ec1e} 
+\index{utils.h@{utils.h}!load\_doubles@{load\_doubles}}
+\index{load\_doubles@{load\_doubles}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{load\_doubles()}{load\_doubles()}}
+{\footnotesize\ttfamily bool load\+\_\+doubles (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path,  }\item[{std\+::vector$<$ double $>$ \&}]{out,  }\item[{size\+\_\+t}]{expected\+\_\+count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00124}{124}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}\label{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce} 
+\index{utils.h@{utils.h}!string\_format@{string\_format}}
+\index{string\_format@{string\_format}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{string\_format()}{string\_format()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+std\+::string string\+\_\+format (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fmt,  }\item[{Args...}]{args }\end{DoxyParamCaption})}
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00023}{23}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{utils_8h_a4b464df4b63865daedb3b0956881d65e}\label{utils_8h_a4b464df4b63865daedb3b0956881d65e} 
+\index{utils.h@{utils.h}!CTRL\_PERIOD\_S@{CTRL\_PERIOD\_S}}
+\index{CTRL\_PERIOD\_S@{CTRL\_PERIOD\_S}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{CTRL\_PERIOD\_S}{CTRL\_PERIOD\_S}}
+{\footnotesize\ttfamily constexpr double CTRL\+\_\+\+PERIOD\+\_\+S = 0.\+067\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00080}{80}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+
+\Hypertarget{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}\label{utils_8h_a2e6eb08130389c1c7b416a33d34b7301} 
+\index{utils.h@{utils.h}!GEOM@{GEOM}}
+\index{GEOM@{GEOM}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{GEOM}{GEOM}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{structRoverGeometry}{Rover\+Geometry}} GEOM \{\}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{utils_8h_source_l00076}{76}} of file \mbox{\hyperlink{utils_8h_source}{utils.\+h}}.
+

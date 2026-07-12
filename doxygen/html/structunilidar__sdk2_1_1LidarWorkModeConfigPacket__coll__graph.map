@@ -1,0 +1,9 @@
+<map id="unilidar_sdk2::LidarWorkModeConfigPacket" name="unilidar_sdk2::LidarWorkModeConfigPacket">
+<area shape="rect" id="Node000001" title="Lidar Work Mode Packet." alt="" coords="308,55,491,95"/>
+<area shape="rect" id="Node000002" href="$structunilidar__sdk2_1_1FrameHeader.html" title="Frame Header." alt="" coords="5,5,211,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,31,308,55,307,60,186,36"/>
+<area shape="rect" id="Node000003" href="$structunilidar__sdk2_1_1LidarWorkModeConfig.html" title="Lidar Work Mode." alt="" coords="17,55,199,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="213,73,308,73,308,78,213,78"/>
+<area shape="rect" id="Node000004" href="$structunilidar__sdk2_1_1FrameTail.html" title="Frame Tail." alt="" coords="18,120,198,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,115,307,91,308,96,187,120"/>
+</map>

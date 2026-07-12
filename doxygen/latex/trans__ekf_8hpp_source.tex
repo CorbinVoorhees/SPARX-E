@@ -1,0 +1,268 @@
+\doxysection{trans\+\_\+ekf.\+hpp}
+\hypertarget{trans__ekf_8hpp_source}{}\label{trans__ekf_8hpp_source}\index{src/nav\_filters/include/nav\_filters/trans\_ekf.hpp@{src/nav\_filters/include/nav\_filters/trans\_ekf.hpp}}
+\mbox{\hyperlink{trans__ekf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TRANS\_EKF\_HPP}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TRANS\_EKF\_HPP}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ISensor_8hpp}{ISensor.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ekf_8hpp}{ekf.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mekf_8hpp}{mekf.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00009}\mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{00009}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ =\ Eigen::Vector3d;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00010}\mbox{\hyperlink{trans__ekf_8hpp_ab69e918a7fa641504f1d2bce2c8553b8}{00010}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{trans__ekf_8hpp_ab69e918a7fa641504f1d2bce2c8553b8}{V4}}\ =\ Eigen::Vector4d;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00012}00012\ \textcolor{comment}{//\ Adaptive-\/slip\ translational\ EKF\ (q0\ frame),\ kinematic\ dynamics.}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00013}00013\ \textcolor{comment}{//\ x\ =\ [\ px\ py\ pz\ \ vx\ vy\ vz\ \ mu\_r\ \ mu\_l\ ]}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00014}\mbox{\hyperlink{classTRANSEKF}{00014}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTRANSEKF}{TRANSEKF}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classekf_1_1EKF}{ekf::EKF}}\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00016}00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00017}00017\ \ \ \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}\ gyro\_snapshot;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00018}00018\ \ \ \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}\ control\_snapshot;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00019}00019\ \ \ \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}\ accel\_snapshot;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00020}00020\ \ \ \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{snapshot}}\ uwb\_snapshot;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00021}00021\ \ \ std::shared\_ptr<MEKF>\ mekf\_ref;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00023}00023\ \ \ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ grav\_ref\ =\ \mbox{\hyperlink{ekf_8hpp_af19c968b28d79f66a1a4976c7d299ef5}{grav\_vec}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00024}00024\ \ \ \textcolor{comment}{//\ Eigen::Matrix3d\ R\_accel\ =\ Eigen::Vector3d::Constant(0.25\ *}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00025}00025\ \ \ \textcolor{comment}{//\ 0.25).asDiagonal();}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00027}00027\ \ \ \textcolor{keyword}{auto}\ position()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}.segment<3>(0);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00028}00028\ \ \ \textcolor{keyword}{auto}\ velocity()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}.segment<3>(3);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00029}00029\ \ \ \textcolor{keywordtype}{double}\ \&mu\_r()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(6);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00030}00030\ \ \ \textcolor{keywordtype}{double}\ \&mu\_l()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(7);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00032}00032\ \ \ \textcolor{keywordtype}{void}\ apply\_error(\textcolor{keyword}{const}\ Eigen::VectorXd\ \&err)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00033}00033\ \ \ \ \ position()\ +=\ err.segment<3>(0);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00034}00034\ \ \ \ \ velocity()\ +=\ err.segment<3>(3);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00035}00035\ \ \ \ \ mu\_r()\ +=\ err(6);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00036}00036\ \ \ \ \ mu\_l()\ +=\ err(7);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00037}00037\ \ \ \ \ mu\_r()\ =\ std::max(mu\_r(),\ 0.02);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00038}00038\ \ \ \ \ mu\_l()\ =\ std::max(mu\_l(),\ 0.02);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00039}00039\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00041}00041\ \ \ \textcolor{keywordtype}{void}\ predict(\textcolor{keywordtype}{double}\ dt)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (!mekf\_ref-\/>is\_finished\_orienting())}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00043}00043\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ wr\ =\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(0);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ wl\ =\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(1);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00048}00048\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\_I\_B\ =}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ mekf\_ref-\/>rel\_orientation().normalized().toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00051}00051\ \ \ \ \ position()\ +=\ velocity()\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00052}00052\ \ \ \ \ velocity()\ =}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ R\_I\_B\ *\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}(\mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ (mu\_r()\ *\ wr\ +\ mu\_l()\ *\ wl),\ 0.0,\ 0.0);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00055}00055\ \ \ \ \ Eigen::Matrix<double,\ 8,\ 8>\ Phi\ =\ Eigen::Matrix<double,\ 8,\ 8>::Zero();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00056}00056\ \ \ \ \ Phi.block<3,\ 3>(0,\ 0)\ =\ Eigen::Matrix3d::Identity();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00057}00057\ \ \ \ \ Phi.block<3,\ 3>(0,\ 3)\ =\ Eigen::Matrix3d::Identity()\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00058}00058\ \ \ \ \ Phi.block<3,\ 1>(3,\ 6)\ =\ R\_I\_B.col(0)\ *\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ wr;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00059}00059\ \ \ \ \ Phi.block<3,\ 1>(3,\ 7)\ =\ R\_I\_B.col(0)\ *\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ wl;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00060}00060\ \ \ \ \ Phi(6,\ 6)\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00061}00061\ \ \ \ \ Phi(7,\ 7)\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00063}00063\ \ \ \ \ Eigen::MatrixXd\ Qd\ =\ Eigen::MatrixXd::Zero(8,\ 8);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00064}00064\ \ \ \ \ Qd.diagonal()\ <<\ 1e-\/6,\ 1e-\/6,\ 1e-\/6,\ 1e-\/4,\ 1e-\/3,\ 1e-\/4,\ 1e-\/4,\ 1e-\/4;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00065}00065\ \ \ \ \ Qd\ *=\ dt;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00067}00067\ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}\ =\ Phi\ *\ \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}\ *\ Phi.transpose()\ +\ Qd;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00068}00068\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00070}00070\ \ \ \textcolor{keywordtype}{void}\ print\_diagnostic(\textcolor{keyword}{const}\ Eigen::MatrixXd\ \&S,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&,\ \textcolor{keyword}{const}\ Eigen::VectorXd\ \&d\_r,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ name)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{classTRANSEKF_ae6d7ebb50f507d9b6b4d4b7a1f4d6054}{should\_print\_diagnostic}})}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00074}00074\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00075}00075\ \ \ \ \ \textcolor{keyword}{using\ }clock\ =\ std::chrono::steady\_clock;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00077}00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ last\_print\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00078}00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ first\_print\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00079}00079\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ now\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00081}00081\ \ \ \ \ \textcolor{keywordflow}{if}\ (std::chrono::duration\_cast<std::chrono::milliseconds>(now\ -\/\ last\_print)}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ .count()\ <\ 1000)}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00083}00083\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00085}00085\ \ \ \ \ last\_print\ =\ now;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00087}00087\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ m\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(d\_r.rows());}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00089}00089\ \ \ \ \ std::array<double,\ 3>\ residual\{\};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00090}00090\ \ \ \ \ std::array<double,\ 3>\ normalized\{\};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00091}00091\ \ \ \ \ std::array<double,\ 3>\ s\_diag\{\};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ std::min(m,\ 3);\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00094}00094\ \ \ \ \ \ \ residual[i]\ =\ d\_r(i);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00095}00095\ \ \ \ \ \ \ s\_diag[i]\ =\ S(i,\ i);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00096}00096\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\_diag[i]\ >\ 0.0)}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ normalized[i]\ =\ residual[i]\ /\ std::sqrt(s\_diag[i]);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00098}00098\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00100}00100\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ p\ =\ position();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00101}00101\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ v\ =\ velocity();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00103}00103\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ wr\ =\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ ?\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(0)\ :\ 0.0;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00104}00104\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ wl\ =\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ ?\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(1)\ :\ 0.0;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00106}00106\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ uwb\_meas\ =\ uwb\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ ?\ uwb\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(0)\ :\ 0.0;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00107}00107\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ uwb\_pred\ =\ p.norm();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00108}00108\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ uwb\_resid\ =\ uwb\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ ?\ uwb\_meas\ -\/\ uwb\_pred\ :\ 0.0;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00109}00109\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *uwb\_tag\ =\ uwb\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ ?\ \textcolor{stringliteral}{"{}"{}}\ :\ \textcolor{stringliteral}{"{}\ [stale]"{}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00111}00111\ \ \ \ \ \textcolor{keywordflow}{if}\ (!first\_print)}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00112}00112\ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[16A\(\backslash\)033[J"{}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00113}00113\ \ \ \ \ first\_print\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00115}00115\ \ \ \ \ std::cout}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}=====================\ \%s\ TRANSLATIONAL\ EKF\ (q0,\ kinematic,\ "{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}adaptive\ mu)\ =====================\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}NIS\ \ \ \ \ \ \ \ \ \ :\ \%.6f\ (dim:\ \%d)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}position\ \ \ \ \ :\ [\%\ .6f,\ \%\ .6f,\ \%\ .6f]\ m\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}velocity\ \ \ \ \ :\ [\%\ .6f,\ \%\ .6f,\ \%\ .6f]\ m/s\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}mu\_r\ /\ mu\_l\ \ :\ \%\ .4f\ /\ \%\ .4f\ \ \ (cmd\ wr/wl:\ \%\ .3f\ /\ \%\ .3f)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}wheel\ v(mu)\ \ :\ \%\ .4f\ m/s\ \ (mu*rw*(wr+wl)/2)\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}UWB\ meas\ \ \ \ \ :\ \%\ .6f\ m\%s\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}UWB\ pred(|p|):\ \%\ .6f\ m\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}UWB\ resid\ \ \ \ :\ \%\ .6f\ m\%s\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}residual\ \ \ \ \ :\ [\%\ .6f,\ \%\ .6f,\ \%\ .6f]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}normalized\ \ \ :\ [\%\ .4f,\ \%\ .4f,\ \%\ .4f]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}S\ \ \ \ \ \ \ \ \ \ \ \ :\ [\%\ .4e,\ \%\ .4e,\ \%\ .4e]\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}===========================================================\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name.c\_str(),\ \mbox{\hyperlink{classekf_1_1EKF_a0fe5aba21fa40cef8d79e96b547547c3}{nis}},\ m,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.x(),\ p.y(),\ p.z(),\ v.x(),\ v.y(),\ v.z(),}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(6),\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(7),\ wr,\ wl,\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ (\mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(6)\ *\ wr\ +\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(7)\ *\ wl),}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uwb\_meas,\ uwb\_tag,\ uwb\_pred,\ uwb\_resid,\ uwb\_tag,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual[0],\ residual[1],\ residual[2],\ normalized[0],}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalized[1],\ normalized[2],\ s\_diag[0],\ s\_diag[1],\ s\_diag[2])}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ <<\ std::flush;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00147}00147\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00149}00149\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00150}\mbox{\hyperlink{classTRANSEKF_a878aabff00330162cb98ebb5531416c8}{00150}}\ \ \ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \mbox{\hyperlink{classTRANSEKF_a878aabff00330162cb98ebb5531416c8}{get\_position}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}.segment<3>(0);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00151}\mbox{\hyperlink{classTRANSEKF_acbd87e908da839f93c0b45421b226a0b}{00151}}\ \ \ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \mbox{\hyperlink{classTRANSEKF_acbd87e908da839f93c0b45421b226a0b}{get\_velocity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}.segment<3>(3);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00152}\mbox{\hyperlink{classTRANSEKF_ac40409d9e2ad3ddaa9af8e29fd344b66}{00152}}\ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classTRANSEKF_ac40409d9e2ad3ddaa9af8e29fd344b66}{get\_bax}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ 0.0;\ \}\ \textcolor{comment}{//\ state\ removed\ (kinematic\ dynamics)}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00153}\mbox{\hyperlink{classTRANSEKF_a3bfb8ff38b739b54a7aea3be77b80ad7}{00153}}\ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classTRANSEKF_a3bfb8ff38b739b54a7aea3be77b80ad7}{get\_mu\_r}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(6);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00154}\mbox{\hyperlink{classTRANSEKF_a312a2ff4ed52ef27e608db7587935794}{00154}}\ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classTRANSEKF_a312a2ff4ed52ef27e608db7587935794}{get\_mu\_l}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}(7);\ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00155}\mbox{\hyperlink{classTRANSEKF_ae6d7ebb50f507d9b6b4d4b7a1f4d6054}{00155}}\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTRANSEKF_ae6d7ebb50f507d9b6b4d4b7a1f4d6054}{should\_print\_diagnostic}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00157}\mbox{\hyperlink{classTRANSEKF_ad6877b662d3689bc844ca58917f20d65}{00157}}\ \ \ \mbox{\hyperlink{classTRANSEKF_ad6877b662d3689bc844ca58917f20d65}{TRANSEKF}}(SteadyClock::time\_point\ t0,\ \textcolor{keyword}{const}\ std::shared\_ptr<MEKF>\ \&ref)}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00158}00158\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e}{EKF}}(8,\ 8,\ t0),\ mekf\_ref(ref)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00160}00160\ \ \ \ \ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}\ =\ Eigen::Vector4d::Zero();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00161}00161\ \ \ \ \ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00162}00162\ \ \ \ \ gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}\ =\ V3::Zero();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00163}00163\ \ \ \ \ gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_ae2d832177bfeca40687165c877d26505}{fresh}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00165}00165\ \ \ \ \ position()\ =\ Eigen::Vector3d\{36.5,\ 0,\ -\/48\}\ *\ 0.0254;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00166}00166\ \ \ \ \ velocity()\ =\ Eigen::Vector3d::Zero();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00167}00167\ \ \ \ \ mu\_r()\ =\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a256f42bd52576475633556066505f49c}{mu\_r}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00168}00168\ \ \ \ \ mu\_l()\ =\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a1f2f012c60f3946856620ff92a8df11c}{mu\_l}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00170}00170\ \ \ \ \ this-\/>\mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}.diagonal()\ <<\ 0.25,\ 0.25,\ 0.25,\ \textcolor{comment}{//\ p}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ 1e-\/4,\ 1e-\/4,\ 1e-\/4,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ v}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ 2.5e-\/3,\ 2.5e-\/3;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ mu\ (sigma\ \string~0.05)}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00174}00174\ \ \ \ \ \textcolor{keyword}{auto}\ accel\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V3>}}(\textcolor{stringliteral}{"{}accel"{}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00175}00175\ \ \ \ \ accel\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \&data,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\_task}}(t,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},\ data,\ t]()\ \{\ accel\_snapshot\ =\ \{t,\ data,\ \textcolor{keyword}{true}\};\ \});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\_correction}}(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,\ R,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},\ data](Eigen::MatrixXd\ \&H,\ Eigen::VectorXd\ \&r)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>mekf\_ref-\/>is\_finished\_orienting())}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ dwr\ =\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(2);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ dwl\ =\ control\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}(3);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\_B\_I\ =\ mekf\_ref-\/>rel\_orientation()}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .normalized()}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .toRotationMatrix()}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .transpose();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ omega\ =}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gyro\_snapshot.\mbox{\hyperlink{structekf_1_1EKF_1_1snapshot_a60c06874db1de89ae70cb40dcd23f495}{z}}.head<3>()\ -\/\ mekf\_ref-\/>gyro\_bias();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ v\_body\ =\ R\_B\_I\ *\ velocity();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ a\_fwd(\mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ (mu\_r()\ *\ dwr\ +\ mu\_l()\ *\ dwl)\ /}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{utils_8h_a4b464df4b63865daedb3b0956881d65e}{CTRL\_PERIOD\_S}},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ h\_pred\ =}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\_B\_I\ *\ grav\_ref\ +\ a\_fwd\ +\ omega.cross(v\_body);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H\ =\ Eigen::MatrixXd::Zero(3,\ 8);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H.block<3,\ 3>(0,\ 3)\ =\ \mbox{\hyperlink{ekf_8hpp_ad03dbc11f697911d4aefdea77c7ae2bc}{skew}}(omega)\ *\ R\_B\_I;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H.col(6)\ =\ V3::UnitX()\ *\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ dwr\ /\ \mbox{\hyperlink{utils_8h_a4b464df4b63865daedb3b0956881d65e}{CTRL\_PERIOD\_S}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H.col(7)\ =\ V3::UnitX()\ *\ \mbox{\hyperlink{utils_8h_a2e6eb08130389c1c7b416a33d34b7301}{GEOM}}.\mbox{\hyperlink{structRoverGeometry_a4c53d2eb914a2d7ca54543aee7e02fbd}{rw}}\ /\ 2\ *\ dwl\ /\ \mbox{\hyperlink{utils_8h_a4b464df4b63865daedb3b0956881d65e}{CTRL\_PERIOD\_S}};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ data\ -\/\ h\_pred;}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}accel"{}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{classFilteredSampleProducer}{FilteredSampleProducer<V3>}}\ \&prod)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ g\ =\ prod.get\_mean();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\_task}}(SteadyClock::now(),\ [\textcolor{keyword}{this},\ g]()\ \{\ this-\/>grav\_ref\ =\ g;\ \});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00219}00219\ \ \ \ \ \textcolor{keyword}{auto}\ uwb\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<double>}}(\textcolor{stringliteral}{"{}uwb"{}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00220}00220\ \ \ \ \ uwb\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ data,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&R,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\_task}}(t,\ [\textcolor{keyword}{this},\ data,\ t]()\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ uwb\_snapshot\ =\ \{t,\ Eigen::VectorXd::Constant(1,\ data),\ \textcolor{keyword}{true}\};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\_correction}}(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,\ R,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},\ data](Eigen::MatrixXd\ \&H,\ Eigen::VectorXd\ \&r)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ displacement\ =\ position();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H\ =\ Eigen::MatrixXd::Zero(1,\ 8);}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H.block<1,\ 3>(0,\ 0)\ =}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (displacement\ /\ displacement.norm()).transpose();}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ Eigen::VectorXd::Constant(1,\ data\ -\/\ (displacement).norm());}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}uwb"{}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor::SensorHook<double>::NoInitialize}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00241}00241\ \ \ \ \ \textcolor{keyword}{auto}\ control\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V4>}}(\textcolor{stringliteral}{"{}control"{}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00242}00242\ \ \ \ \ control\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_ab69e918a7fa641504f1d2bce2c8553b8}{V4}}\ \&data,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\_task}}(t,\ [\textcolor{keyword}{this},\ data,\ t]()\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>control\_snapshot\ =\ \{t,\ data,\ \textcolor{keyword}{true}\};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor::SensorHook<V4>::NoInitialize}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00251}00251\ \ \ \ \ \textcolor{keyword}{auto}\ gyro\_hook\ =\ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_hook<V3>}}(\textcolor{stringliteral}{"{}gyro"{}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00252}00252\ \ \ \ \ gyro\_hook-\/>bind(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \&data,\ \textcolor{keyword}{const}\ Eigen::MatrixXd\ \&,}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SteadyClock::time\_point\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\_task}}(}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t,\ [\textcolor{keyword}{this},\ data,\ t]()\ \{\ this-\/>gyro\_snapshot\ =\ \{t,\ data,\ \textcolor{keyword}{true}\};\ \});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorHook}{Sensor::SensorHook<V3>::NoInitialize}});}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00259}00259\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00260}00260\ \};}
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{trans__ekf_8hpp_source_l00262}00262\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

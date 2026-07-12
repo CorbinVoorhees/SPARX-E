@@ -19,256 +19,251 @@
 \DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00015}00015\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \_\_int64\ uint64\_t;}
 \DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00016}00016\ \textcolor{comment}{//\ intptr\_t\ and\ friends\ are\ defined\ in\ crtdefs.h\ through\ stdio.h.}}
 \DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00017}00017\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <cstdint>}}
 \DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00019}00019\ \textcolor{preprocessor}{\#endif}}
 \DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <iostream>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <fstream>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <iomanip>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <deque>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00026}00026\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <memory>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <math.h>}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{unitree__lidar__sdk__config_8h}{unitree\_lidar\_sdk\_config.h}}>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{unitree__lidar__protocol_8h}{unitree\_lidar\_protocol.h}}>}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00029}00029\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\_sdk2}}\{}
 \DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00031}00031\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{unitree__lidar__sdk__config_8h}{unitree\_lidar\_sdk\_config.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00032}00032\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{unitree__lidar__protocol_8h}{unitree\_lidar\_protocol.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00034}00034\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceunilidar__sdk2}{unilidar\_sdk2}}\{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00035}00035\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00037}00037\ \textcolor{comment}{//\ CONSTANTS}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00039}\mbox{\hyperlink{namespaceunilidar__sdk2_a02c6f66bd27cb120b9da7b509751280b}{00039}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a02c6f66bd27cb120b9da7b509751280b}{DEGREE\_TO\_RADIAN}}\ =\ M\_PI\ /\ 180.0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00040}\mbox{\hyperlink{namespaceunilidar__sdk2_a08d0ed7f3d3c85235be118cdf7d872a4}{00040}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a08d0ed7f3d3c85235be118cdf7d872a4}{RADIAN\_TO\_DEGREE}}\ =\ 180.0\ /\ M\_PI;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00043}00043\ \textcolor{comment}{//\ TYPES}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00045}00045\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00049}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{00049}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00050}00050\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00051}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{00051}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{x}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00052}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{00052}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{y}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00053}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{00053}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{z}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00054}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{00054}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{intensity}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00055}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{00055}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{time}};\ \ \ \ \textcolor{comment}{//\ relative\ time\ of\ this\ point\ from\ cloud\ stamp}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00056}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{00056}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{ring}};\ \textcolor{comment}{//\ ring}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00057}00057\ \}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{PointUnitree}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00058}00058\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00062}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{00062}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00063}00063\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00064}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{00064}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}};\ \ \ \ \ \textcolor{comment}{//\ cloud\ start\ timestamp,\ the\ point\ timestamp\ is\ relative\ to\ this}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00065}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{00065}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}};\ \ \ \ \ \ \textcolor{comment}{//\ sequence\ id}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00066}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{00066}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}};\ \textcolor{comment}{//\ number\ of\ rings}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00067}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{00067}}\ \ \ \ \ std::vector<PointUnitree>\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00068}00068\ \}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00069}00069\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00071}00071\ \textcolor{comment}{//\ FUNCTIONS}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00073}00073\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00077}\mbox{\hyperlink{namespaceunilidar__sdk2_aa8cf3314b1bb7182032b45617be9325b}{00077}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}(\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp}{TimeStamp}}\ \&timestamp)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00078}00078\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00079}00079\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ time1\ =\ \{0,\ 0\};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00080}00080\ \ \ \ \ clock\_gettime(CLOCK\_REALTIME,\ \&time1);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00081}00081\ \ \ \ \ timestamp.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}}\ =\ time1.tv\_sec;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00082}00082\ \ \ \ \ timestamp.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}}\ =\ time1.tv\_nsec;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00083}00083\ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00084}00084\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00088}\mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{00088}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00089}00089\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00090}00090\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ time1\ =\ \{0,\ 0\};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00091}00091\ \ \ \ \ clock\_gettime(CLOCK\_REALTIME,\ \&time1);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{return}\ time1.tv\_sec\ +\ time1.tv\_nsec\ /\ 1.0e9;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00093}00093\ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00094}00094\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00101}\mbox{\hyperlink{namespaceunilidar__sdk2_ac6bb362ccc5a5a72af19266c26406710}{00101}}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{namespaceunilidar__sdk2_ac6bb362ccc5a5a72af19266c26406710}{crc32}}(\textcolor{keyword}{const}\ uint8\_t\ *buf,\ uint32\_t\ len)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00102}00102\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00103}00103\ \ \ \ \ uint8\_t\ i;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00104}00104\ \ \ \ \ uint32\_t\ crc\ =\ 0xFFFFFFFF;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{while}\ (len-\/-\/)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00106}00106\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ crc\ \string^=\ *buf++;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 8;\ ++i)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (crc\ \&\ 1)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crc\ =\ (crc\ >>\ 1)\ \string^\ 0xEDB88320;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crc\ =\ (crc\ >>\ 1);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00115}00115\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00116}00116\ \ \ \ \ \textcolor{keywordflow}{return}\ \string~crc;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00117}00117\ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00118}00118\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00127}\mbox{\hyperlink{namespaceunilidar__sdk2_a49fb1dfcea9586d7f57697ebfd84b059}{00127}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a49fb1dfcea9586d7f57697ebfd84b059}{parseFromPacketToPointCloud}}(}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00128}00128\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloud,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00129}00129\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{LidarPointDataPacket}}\ \&packet,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00130}00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00131}00131\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00132}00132\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00133}00133\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00134}00134\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00135}00135\ \ \ \ \ \textcolor{comment}{//\ scan\ info}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00136}00136\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_of\_points\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a2399d1611534522d5d308c5864d01856}{point\_num}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00137}00137\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ time\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a296b5bf8e6cf3d70d47522f5ee39e48f}{time\_increment}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00138}00138\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scan\_period\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a8f2d65cd2d21d4047177cac3298bb11c}{scan\_period}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00139}00139\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00140}00140\ \ \ \ \ \textcolor{comment}{//\ intermediate\ variables}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00141}00141\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_beta\ =\ sin(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ae931a6ea6283e898fb6f6b9508cad83d}{beta\_angle}});}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00142}00142\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_beta\ =\ cos(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ae931a6ea6283e898fb6f6b9508cad83d}{beta\_angle}});}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00143}00143\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_xi\ =\ sin(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ad5a07058e275db8b08a308efb345b1d1}{xi\_angle}});}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00144}00144\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_xi\ =\ cos(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ad5a07058e275db8b08a308efb345b1d1}{xi\_angle}});}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00145}00145\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_beta\_sin\_xi\ =\ cos\_beta\ *\ sin\_xi;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00146}00146\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_beta\_cos\_xi\ =\ sin\_beta\ *\ cos\_xi;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00147}00147\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_beta\_sin\_xi\ =\ sin\_beta\ *\ sin\_xi;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00148}00148\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_beta\_cos\_xi\ =\ cos\_beta\ *\ cos\_xi;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00149}00149\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00150}00150\ \ \ \ \ \textcolor{comment}{//\ cloud\ init}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00151}00151\ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_system\_timestamp)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00152}00152\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()\ -\/\ scan\_period;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00154}00154\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a4cc34de8897723c71ef5622b8bf28a75}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a4cc34de8897723c71ef5622b8bf28a75}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}}\ /\ 1.0e9;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00156}00156\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00157}00157\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00158}00158\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00159}00159\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.clear();}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00160}00160\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.reserve(300);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00161}00161\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00162}00162\ \ \ \ \ \textcolor{comment}{//\ transform\ raw\ data\ to\ a\ pointcloud}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00163}00163\ \ \ \ \ \textcolor{keyword}{auto}\ \&ranges\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a6e1b49ad8057a5add22b8aefc7bbe95c}{ranges}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00164}00164\ \ \ \ \ \textcolor{keyword}{auto}\ \&intensities\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a479a6ce3bf4bbb9e7e2132989b5217c1}{intensities}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00165}00165\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00166}00166\ \ \ \ \ \textcolor{keywordtype}{float}\ time\_relative\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00167}00167\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_cur\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a20a29034fda41e756c8cd3ea17bb9d08}{angle\_min}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a9b6949ddbf09cfeab7a3d1fe75eb67b7}{alpha\_angle\_bias}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00168}00168\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ad6c4e303530e3e2186b1a08bea803240}{angle\_increment}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00169}00169\ \ \ \ \ \textcolor{keywordtype}{float}\ theta\_cur\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ad2652077b78f10d6f7927597806508e6}{com\_horizontal\_angle\_start}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a38636c2cc37a07d10fc240be1672ec6e}{theta\_angle\_bias}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00170}00170\ \ \ \ \ \textcolor{keywordtype}{float}\ theta\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a2127cbed33ab8b20d16a565be73b5387}{com\_horizontal\_angle\_step}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00171}00171\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00172}00172\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_float;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00173}00173\ \ \ \ \ \textcolor{keywordtype}{float}\ sin\_alpha,\ cos\_alpha,\ sin\_theta,\ cos\_theta;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00174}00174\ \ \ \ \ \textcolor{keywordtype}{float}\ A,\ B,\ C;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00175}00175\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00176}00176\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{PointUnitree}}\ point3d;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00177}00177\ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{ring}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00178}00178\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}packet.data.param.range\_scale\ =\ "{}\ <<\ packet.data.param.range\_scale\ <<\ std::endl;}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00179}00179\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00180}00180\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ num\_of\_points;\ j\ +=\ 1,\ alpha\_cur\ +=\ alpha\_step,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ theta\_cur\ +=\ theta\_step,\ time\_relative\ +=\ time\_step)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00182}00182\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ invalid\ points}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ranges[j]\ <\ 1)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00188}00188\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ calculate\ point\ range\ in\ float\ type}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ range\_float\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a00d29f4ebb9b92f65481abe2c4ccaf4d}{range\_scale}}\ *\ ((float)ranges[j]\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_aa505908574e625eaa02b109ca37b4432}{range\_bias}});}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00191}00191\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ range\_float\ <\ packet.data.range\_min\ ||\ range\_float\ >\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a7a49fdf0ae63c8df96a32c29818d9a05}{range\_max}})}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00197}00197\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_float\ <\ range\_min\ ||\ range\_float\ >\ range\_max)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00203}00203\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ transform\ to\ XYZ\ coordinate}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ sin\_alpha\ =\ sin(alpha\_cur);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ cos\_alpha\ =\ cos(alpha\_cur);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ sin\_theta\ =\ sin(theta\_cur);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ cos\_theta\ =\ cos(theta\_cur);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00209}00209\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ A\ =\ (-\/cos\_beta\_sin\_xi\ +\ sin\_beta\_cos\_xi\ *\ sin\_alpha)\ *\ range\_float\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a628f246891252ed5e4cec5a5009abf4e}{b\_axis\_dist}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ B\ =\ cos\_alpha\ *\ cos\_xi\ *\ range\_float;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ C\ =\ (sin\_beta\_sin\_xi\ +\ cos\_beta\_cos\_xi\ *\ sin\_alpha)\ *\ range\_float;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00213}00213\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{x}}\ =\ cos\_theta\ *\ A\ -\/\ sin\_theta\ *\ B;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{y}}\ =\ sin\_theta\ *\ A\ +\ cos\_theta\ *\ B;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{z}}\ =\ C\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a0cd24932d9cd69afbccc602e9a983896}{a\_axis\_dist}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00217}00217\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ push\ back\ this\ point\ to\ cloud}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{intensity}}\ =\ intensities[j];}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{time}}\ =\ time\_relative;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.push\_back(point3d);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00222}00222\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00223}00223\ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00224}00224\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00233}\mbox{\hyperlink{namespaceunilidar__sdk2_a877d2bb701aeb90e47b089ba145722f1}{00233}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a877d2bb701aeb90e47b089ba145722f1}{parseFromPacketPointCloud2D}}(}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00234}00234\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloud,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00235}00235\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2DPointDataPacket}}\ \&packet,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00236}00236\ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00237}00237\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00238}00238\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00239}00239\ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00240}00240\ \ \ \ \ \textcolor{comment}{//\ scan\ info}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00241}00241\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_of\_points\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_ad07c6ea144669441b229cf7b36477ed0}{point\_num}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00242}00242\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ time\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a34b9ad83be32d40e10baf48b16b84555}{time\_increment}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00243}00243\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scan\_period\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_ac3906c8b4c5f1b08bc301b8becf58e5c}{scan\_period}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00244}00244\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00245}00245\ \ \ \ \ \textcolor{comment}{//\ cloud\ init}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00246}00246\ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_system\_timestamp)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00247}00247\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()\ -\/\ scan\_period;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00249}00249\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a554aca5bbf3ffbd33844c03ec1e7a706}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a554aca5bbf3ffbd33844c03ec1e7a706}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}}\ /\ 1.0e9;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00251}00251\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00252}00252\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00253}00253\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00254}00254\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.clear();}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00255}00255\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.reserve(300);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00256}00256\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00257}00257\ \ \ \ \ \textcolor{comment}{//\ transform\ raw\ data\ to\ a\ pointcloud}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00258}00258\ \ \ \ \ \textcolor{keyword}{auto}\ \&ranges\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a1da4f96c1af2642d1b54867865b49684}{ranges}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00259}00259\ \ \ \ \ \textcolor{keyword}{auto}\ \&intensities\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_ad8e3cf843162ed127d2d002add7c8cb9}{intensities}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00260}00260\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00261}00261\ \ \ \ \ \textcolor{keywordtype}{float}\ time\_relative\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00262}00262\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_cur\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a44666982aea315edf0a65683265ce4ba}{angle\_min}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a9b6949ddbf09cfeab7a3d1fe75eb67b7}{alpha\_angle\_bias}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00263}00263\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a2d786537a863db6c6c358cc5e2e7510b}{angle\_increment}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00264}00264\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00265}00265\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_float;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00266}00266\ \ \ \ \ \textcolor{keywordtype}{float}\ sin\_alpha,\ cos\_alpha;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00267}00267\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00268}00268\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{PointUnitree}}\ point3d;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00269}00269\ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{ring}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00270}00270\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00271}00271\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ num\_of\_points;\ j\ +=\ 1,\ alpha\_cur\ +=\ alpha\_step,\ time\_relative\ +=\ time\_step)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00272}00272\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ invalid\ points}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ranges[j]\ <\ 1)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00278}00278\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ calculate\ point\ range\ in\ float\ type}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ range\_float\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a00d29f4ebb9b92f65481abe2c4ccaf4d}{range\_scale}}\ *\ (ranges[j]\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_aa505908574e625eaa02b109ca37b4432}{range\_bias}});}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00281}00281\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_float\ <\ packet.data.range\_min\ ||\ range\_float\ >\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_adfe20bdeeb4851e3b7049802421f86ef}{range\_max}})}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00287}00287\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_float\ <\ range\_min\ ||\ range\_float\ >\ range\_max)}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00293}00293\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ transform\ to\ XYZ\ coordinate}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ sin\_alpha\ =\ sin(alpha\_cur);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ cos\_alpha\ =\ cos(alpha\_cur);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{x}}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{y}}\ =\ cos\_alpha\ *\ range\_float;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{z}}\ =\ sin\_alpha\ *\ range\_float\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a0cd24932d9cd69afbccc602e9a983896}{a\_axis\_dist}};}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00300}00300\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ push\ back\ this\ point\ to\ cloud}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{intensity}}\ =\ intensities[j];}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{time}}\ =\ time\_relative;}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.push\_back(point3d);}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00305}00305\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00306}00306\ \}}
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00307}00307\ }
-\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00308}00308\ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00032}00032\ \textcolor{comment}{//\ CONSTANTS}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00034}\mbox{\hyperlink{namespaceunilidar__sdk2_a02c6f66bd27cb120b9da7b509751280b}{00034}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a02c6f66bd27cb120b9da7b509751280b}{DEGREE\_TO\_RADIAN}}\ =\ M\_PI\ /\ 180.0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00035}\mbox{\hyperlink{namespaceunilidar__sdk2_a08d0ed7f3d3c85235be118cdf7d872a4}{00035}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a08d0ed7f3d3c85235be118cdf7d872a4}{RADIAN\_TO\_DEGREE}}\ =\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00038}00038\ \textcolor{comment}{//\ TYPES}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00044}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{00044}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00045}00045\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00046}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{00046}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{x}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00047}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{00047}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{y}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00048}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{00048}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{z}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00049}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{00049}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{intensity}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00050}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{00050}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{time}};\ \ \ \ \textcolor{comment}{//\ relative\ time\ of\ this\ point\ from\ cloud\ stamp}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00051}\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{00051}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{ring}};\ \textcolor{comment}{//\ ring}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00052}00052\ \}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{PointUnitree}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00057}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{00057}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00058}00058\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00059}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{00059}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}};\ \ \ \ \ \textcolor{comment}{//\ cloud\ start\ timestamp,\ the\ point\ timestamp\ is\ relative\ to\ this}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00060}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{00060}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}};\ \ \ \ \ \ \textcolor{comment}{//\ sequence\ id}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00061}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{00061}}\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}};\ \textcolor{comment}{//\ number\ of\ rings}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00062}\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{00062}}\ \ \ \ \ std::vector<PointUnitree>\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00063}00063\ \}\ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00066}00066\ \textcolor{comment}{//\ FUNCTIONS}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00072}\mbox{\hyperlink{namespaceunilidar__sdk2_aa8cf3314b1bb7182032b45617be9325b}{00072}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}(\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp}{TimeStamp}}\ \&timestamp)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00073}00073\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00074}00074\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ time1\ =\ \{0,\ 0\};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00075}00075\ \ \ \ \ clock\_gettime(CLOCK\_REALTIME,\ \&time1);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00076}00076\ \ \ \ \ timestamp.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}}\ =\ time1.tv\_sec;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00077}00077\ \ \ \ \ timestamp.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}}\ =\ time1.tv\_nsec;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00078}00078\ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00083}\mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{00083}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00084}00084\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00085}00085\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ time1\ =\ \{0,\ 0\};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00086}00086\ \ \ \ \ clock\_gettime(CLOCK\_REALTIME,\ \&time1);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{return}\ time1.tv\_sec\ +\ time1.tv\_nsec\ /\ 1.0e9;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00088}00088\ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00096}\mbox{\hyperlink{namespaceunilidar__sdk2_ac6bb362ccc5a5a72af19266c26406710}{00096}}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{namespaceunilidar__sdk2_ac6bb362ccc5a5a72af19266c26406710}{crc32}}(\textcolor{keyword}{const}\ uint8\_t\ *buf,\ uint32\_t\ len)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00097}00097\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00098}00098\ \ \ \ \ uint8\_t\ i;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00099}00099\ \ \ \ \ uint32\_t\ crc\ =\ 0xFFFFFFFF;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00100}00100\ \ \ \ \ \textcolor{keywordflow}{while}\ (len-\/-\/)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00101}00101\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ crc\ \string^=\ *buf++;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 8;\ ++i)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (crc\ \&\ 1)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crc\ =\ (crc\ >>\ 1)\ \string^\ 0xEDB88320;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crc\ =\ (crc\ >>\ 1);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00110}00110\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00111}00111\ \ \ \ \ \textcolor{keywordflow}{return}\ \string~crc;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00112}00112\ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00122}\mbox{\hyperlink{namespaceunilidar__sdk2_a49fb1dfcea9586d7f57697ebfd84b059}{00122}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a49fb1dfcea9586d7f57697ebfd84b059}{parseFromPacketToPointCloud}}(}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00123}00123\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloud,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00124}00124\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket}{LidarPointDataPacket}}\ \&packet,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00125}00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00126}00126\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00127}00127\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00128}00128\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00129}00129\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00130}00130\ \ \ \ \ \textcolor{comment}{//\ scan\ info}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00131}00131\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_of\_points\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a2399d1611534522d5d308c5864d01856}{point\_num}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00132}00132\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ time\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a296b5bf8e6cf3d70d47522f5ee39e48f}{time\_increment}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00133}00133\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scan\_period\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a8f2d65cd2d21d4047177cac3298bb11c}{scan\_period}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00135}00135\ \ \ \ \ \textcolor{comment}{//\ intermediate\ variables}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00136}00136\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_beta\ =\ sin(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ae931a6ea6283e898fb6f6b9508cad83d}{beta\_angle}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00137}00137\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_beta\ =\ cos(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ae931a6ea6283e898fb6f6b9508cad83d}{beta\_angle}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00138}00138\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_xi\ =\ sin(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ad5a07058e275db8b08a308efb345b1d1}{xi\_angle}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00139}00139\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_xi\ =\ cos(packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_ad5a07058e275db8b08a308efb345b1d1}{xi\_angle}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00140}00140\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_beta\_sin\_xi\ =\ cos\_beta\ *\ sin\_xi;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00141}00141\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_beta\_cos\_xi\ =\ sin\_beta\ *\ cos\_xi;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00142}00142\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sin\_beta\_sin\_xi\ =\ sin\_beta\ *\ sin\_xi;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00143}00143\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cos\_beta\_cos\_xi\ =\ cos\_beta\ *\ cos\_xi;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00145}00145\ \ \ \ \ \textcolor{comment}{//\ cloud\ init}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_system\_timestamp)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00147}00147\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()\ -\/\ scan\_period;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00149}00149\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a4cc34de8897723c71ef5622b8bf28a75}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a4cc34de8897723c71ef5622b8bf28a75}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}}\ /\ 1.0e9;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00151}00151\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00152}00152\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00153}00153\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00154}00154\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.clear();}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00155}00155\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.reserve(300);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00157}00157\ \ \ \ \ \textcolor{comment}{//\ transform\ raw\ data\ to\ a\ pointcloud}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00158}00158\ \ \ \ \ \textcolor{keyword}{auto}\ \&ranges\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a6e1b49ad8057a5add22b8aefc7bbe95c}{ranges}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00159}00159\ \ \ \ \ \textcolor{keyword}{auto}\ \&intensities\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a479a6ce3bf4bbb9e7e2132989b5217c1}{intensities}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00161}00161\ \ \ \ \ \textcolor{keywordtype}{float}\ time\_relative\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00162}00162\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_cur\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a20a29034fda41e756c8cd3ea17bb9d08}{angle\_min}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a9b6949ddbf09cfeab7a3d1fe75eb67b7}{alpha\_angle\_bias}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00163}00163\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ad6c4e303530e3e2186b1a08bea803240}{angle\_increment}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00164}00164\ \ \ \ \ \textcolor{keywordtype}{float}\ theta\_cur\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ad2652077b78f10d6f7927597806508e6}{com\_horizontal\_angle\_start}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a38636c2cc37a07d10fc240be1672ec6e}{theta\_angle\_bias}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00165}00165\ \ \ \ \ \textcolor{keywordtype}{float}\ theta\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a2127cbed33ab8b20d16a565be73b5387}{com\_horizontal\_angle\_step}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00167}00167\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_float;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00168}00168\ \ \ \ \ \textcolor{keywordtype}{float}\ sin\_alpha,\ cos\_alpha,\ sin\_theta,\ cos\_theta;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00169}00169\ \ \ \ \ \textcolor{keywordtype}{float}\ A,\ B,\ C;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00171}00171\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{PointUnitree}}\ point3d;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00172}00172\ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{ring}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00173}00173\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}packet.data.param.range\_scale\ =\ "{}\ <<\ packet.data.param.range\_scale\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00175}00175\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ num\_of\_points;\ j\ +=\ 1,\ alpha\_cur\ +=\ alpha\_step,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ theta\_cur\ +=\ theta\_step,\ time\_relative\ +=\ time\_step)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00177}00177\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ invalid\ points}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ranges[j]\ <\ 1)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ calculate\ point\ range\ in\ float\ type}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ range\_float\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a00d29f4ebb9b92f65481abe2c4ccaf4d}{range\_scale}}\ *\ ((float)ranges[j]\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_aa505908574e625eaa02b109ca37b4432}{range\_bias}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ range\_float\ <\ packet.data.range\_min\ ||\ range\_float\ >\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_a7a49fdf0ae63c8df96a32c29818d9a05}{range\_max}})}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_float\ <\ range\_min\ ||\ range\_float\ >\ range\_max)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ transform\ to\ XYZ\ coordinate}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ sin\_alpha\ =\ sin(alpha\_cur);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ cos\_alpha\ =\ cos(alpha\_cur);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ sin\_theta\ =\ sin(theta\_cur);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ cos\_theta\ =\ cos(theta\_cur);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ A\ =\ (-\/cos\_beta\_sin\_xi\ +\ sin\_beta\_cos\_xi\ *\ sin\_alpha)\ *\ range\_float\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a628f246891252ed5e4cec5a5009abf4e}{b\_axis\_dist}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ B\ =\ cos\_alpha\ *\ cos\_xi\ *\ range\_float;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ C\ =\ (sin\_beta\_sin\_xi\ +\ cos\_beta\_cos\_xi\ *\ sin\_alpha)\ *\ range\_float;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{x}}\ =\ cos\_theta\ *\ A\ -\/\ sin\_theta\ *\ B;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{y}}\ =\ sin\_theta\ *\ A\ +\ cos\_theta\ *\ B;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{z}}\ =\ C\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointDataPacket_a2948a0c64e2236ce6dfc3d451cc8328f}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarPointData_ae247e4cea29302d9baebf4953f89848e}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a0cd24932d9cd69afbccc602e9a983896}{a\_axis\_dist}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ push\ back\ this\ point\ to\ cloud}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{intensity}}\ =\ intensities[j];}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{time}}\ =\ time\_relative;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.push\_back(point3d);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00217}00217\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00218}00218\ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00228}\mbox{\hyperlink{namespaceunilidar__sdk2_a877d2bb701aeb90e47b089ba145722f1}{00228}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceunilidar__sdk2_a877d2bb701aeb90e47b089ba145722f1}{parseFromPacketPointCloud2D}}(}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00229}00229\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree}{PointCloudUnitree}}\ \&cloud,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00230}00230\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket}{Lidar2DPointDataPacket}}\ \&packet,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00231}00231\ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_system\_timestamp\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00232}00232\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_min\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00233}00233\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_max\ =\ 100)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00234}00234\ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00235}00235\ \ \ \ \ \textcolor{comment}{//\ scan\ info}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00236}00236\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_of\_points\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_ad07c6ea144669441b229cf7b36477ed0}{point\_num}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00237}00237\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ time\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a34b9ad83be32d40e10baf48b16b84555}{time\_increment}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00238}00238\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scan\_period\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_ac3906c8b4c5f1b08bc301b8becf58e5c}{scan\_period}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00240}00240\ \ \ \ \ \textcolor{comment}{//\ cloud\ init}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00241}00241\ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_system\_timestamp)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00242}00242\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ \mbox{\hyperlink{namespaceunilidar__sdk2_a7c237d5f636393dd9d5c4baebf3e1455}{getSystemTimeStamp}}()\ -\/\ scan\_period;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00244}00244\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a62f7914667428ac9262c9c53c5c9fa4b}{stamp}}\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a554aca5bbf3ffbd33844c03ec1e7a706}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a23353600accd37b7425d34d451b0e679}{sec}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a554aca5bbf3ffbd33844c03ec1e7a706}{info}}.\mbox{\hyperlink{structunilidar__sdk2_1_1DataInfo_ac3f519a9fa4c2a3827cd6e7630f57a69}{stamp}}.\mbox{\hyperlink{structunilidar__sdk2_1_1TimeStamp_a3d34aaae6c727f4e3a540d96b29a648d}{nsec}}\ /\ 1.0e9;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00246}00246\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00247}00247\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a871dc9c676660d2be7f65e9355cb320a}{id}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00248}00248\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a4305251fefa6715981a15973d360a5a6}{ringNum}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00249}00249\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.clear();}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00250}00250\ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.reserve(300);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00252}00252\ \ \ \ \ \textcolor{comment}{//\ transform\ raw\ data\ to\ a\ pointcloud}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00253}00253\ \ \ \ \ \textcolor{keyword}{auto}\ \&ranges\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a1da4f96c1af2642d1b54867865b49684}{ranges}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00254}00254\ \ \ \ \ \textcolor{keyword}{auto}\ \&intensities\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_ad8e3cf843162ed127d2d002add7c8cb9}{intensities}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00256}00256\ \ \ \ \ \textcolor{keywordtype}{float}\ time\_relative\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00257}00257\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_cur\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a44666982aea315edf0a65683265ce4ba}{angle\_min}}\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a9b6949ddbf09cfeab7a3d1fe75eb67b7}{alpha\_angle\_bias}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00258}00258\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\_step\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_a2d786537a863db6c6c358cc5e2e7510b}{angle\_increment}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00260}00260\ \ \ \ \ \textcolor{keywordtype}{float}\ range\_float;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00261}00261\ \ \ \ \ \textcolor{keywordtype}{float}\ sin\_alpha,\ cos\_alpha;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00263}00263\ \ \ \ \ \mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree}{PointUnitree}}\ point3d;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00264}00264\ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a23735fef87a73b2a3e8f66e41a03eee9}{ring}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00266}00266\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ num\_of\_points;\ j\ +=\ 1,\ alpha\_cur\ +=\ alpha\_step,\ time\_relative\ +=\ time\_step)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00267}00267\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ invalid\ points}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ranges[j]\ <\ 1)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ calculate\ point\ range\ in\ float\ type}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ range\_float\ =\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a00d29f4ebb9b92f65481abe2c4ccaf4d}{range\_scale}}\ *\ (ranges[j]\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_aa505908574e625eaa02b109ca37b4432}{range\_bias}});}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_float\ <\ packet.data.range\_min\ ||\ range\_float\ >\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_adfe20bdeeb4851e3b7049802421f86ef}{range\_max}})}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ jump\ points\ beyond\ range\ limit}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_float\ <\ range\_min\ ||\ range\_float\ >\ range\_max)}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ transform\ to\ XYZ\ coordinate}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ sin\_alpha\ =\ sin(alpha\_cur);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ cos\_alpha\ =\ cos(alpha\_cur);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a922b0cc0ea4814592bbc8c959465d87c}{x}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a97f8d4651336cecdf2f6b10efb8e4552}{y}}\ =\ cos\_alpha\ *\ range\_float;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_ac95f891f68ce5b76dd09547b9aba93a7}{z}}\ =\ sin\_alpha\ *\ range\_float\ +\ packet.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointDataPacket_a6c9d23559e2ba133bbfe331f0f5f9a88}{data}}.\mbox{\hyperlink{structunilidar__sdk2_1_1Lidar2DPointData_aefdfbeb8e27a30b7b96b146685740635}{param}}.\mbox{\hyperlink{structunilidar__sdk2_1_1LidarCalibParam_a0cd24932d9cd69afbccc602e9a983896}{a\_axis\_dist}};}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ push\ back\ this\ point\ to\ cloud}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_af12071c8b726701dfe50a770dbe8b583}{intensity}}\ =\ intensities[j];}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ point3d.\mbox{\hyperlink{structunilidar__sdk2_1_1PointUnitree_a7d1430cadd3085e654b6da8be05b4276}{time}}\ =\ time\_relative;}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ cloud.\mbox{\hyperlink{structunilidar__sdk2_1_1PointCloudUnitree_a798a9326d1cd1aa3cb9d13c545bd39da}{points}}.push\_back(point3d);}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00300}00300\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00301}00301\ \}}
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{unitree__lidar__utilities_8h_source_l00303}00303\ \}}
 
 \end{DoxyCode}

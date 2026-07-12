@@ -5,127 +5,126 @@
 \DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_MOTOR\_COMMANDER\_NODE\_\_}}
 \DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_MOTOR\_COMMANDER\_NODE\_\_}}
 \DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}rclcpp/rclcpp.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/string.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/msg/twist.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/msg/quaternion.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <chrono>}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cmath>}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/string.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00011}00011\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00012}00012\ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00013}00013\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00014}00014\ \textcolor{comment}{//\ Creates\ the\ node\ which\ creates\ motor\ controller\ commands\ that\ will\ be\ sent\ to\ the\ arduino}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00015}\mbox{\hyperlink{classMotorCommander}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMotorCommander}{MotorCommander}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00016}00016\ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00018}\mbox{\hyperlink{classMotorCommander_a290b435453bd0e3cf91443aa80d22a6f}{00018}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMotorCommander_a290b435453bd0e3cf91443aa80d22a6f}{MotorCommander}}()\ :\ Node(\textcolor{stringliteral}{"{}motor\_commander\_node"{}})}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ parameters,\ subscribers,\ and\ publishers}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ manual\_operation\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ last\_manual\_operation\_time\ =\ this-\/>now();}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ joystick\_subscription\ =\ this-\/>create\_subscription<geometry\_msgs::msg::Twist>(}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/cmd\_vel"{}},}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&MotorCommander::motor\_command\_callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ control\_subscription\ =\ this-\/>create\_subscription<geometry\_msgs::msg::Quaternion>(}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/smc/control"{}},}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 10,}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&MotorCommander::auto\_motor\_command\_callback,\ \textcolor{keyword}{this},\ std::placeholders::\_1)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ arduino\_publisher\ =\ this-\/>create\_publisher<std\_msgs::msg::String>(\textcolor{stringliteral}{"{}/arduino\_cmd"{}},\ 10);}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ manual\_operation\_timer\ =\ this-\/>create\_wall\_timer(}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 100ms,}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&MotorCommander::check\_manual\_operation,\ \textcolor{keyword}{this})}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ command\_loop\_timer\ =\ this-\/>create\_wall\_timer(}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 67ms,}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&MotorCommander::command\_loop,\ \textcolor{keyword}{this})}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initializes\ values\ for\ linear\ and\ angular\ velocity,\ and\ speed\ and\ rotation\ values\ to\ be\ sent\ to\ the\ rover}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ linear\_x\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ angular\_z\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rover\_speed\_manual\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rover\_rotation\_speed\_manual\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ w\_r\ =\ 0.0,\ w\_l\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00050}00050\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pulls\ linear\ and\ angular\ values\ from\ the\ joystick\ topic\ and\ updates\ a\ last\ time\ since\ joystick\ published\ value\ }}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Also\ updates\ the\ manual\ operation\ boolean\ to\ true\ if\ it\ is\ not\ already\ true}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ motor\_command\_callback(\textcolor{keyword}{const}\ geometry\_msgs::msg::Twist::SharedPtr\ msg)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ last\_manual\_operation\_time\ =\ this-\/>now();}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ linear\_x\ =\ msg-\/>linear.x;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ angular\_z\ =\ msg-\/>angular.z;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00059}00059\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ auto\_motor\_command\_callback(\textcolor{keyword}{const}\ geometry\_msgs::msg::Quaternion::SharedPtr\ msg)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ last\_manual\_operation\_time\ =\ this-\/>now();}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ msg-\/>w\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ msg-\/>x\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ msg-\/>y\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ msg-\/>z\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ std::endl;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>w\_r\ =\ msg-\/>w;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>w\_l\ =\ msg-\/>x;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00067}00067\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ the\ joystick\ has\ published\ a\ value\ in\ the\ last\ 0.5\ seconds,\ if\ not\ it\ sets\ the\ manual\ operation\ boolean\ to\ false}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ check\_manual\_operation()}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_ad3f8a086e613040dba2b6339cb05814b}{dt}}\ =\ (this-\/>now()\ -\/\ last\_manual\_operation\_time).seconds();}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dt\ >\ 0.5\ \&\&\ manual\_operation)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ manual\_operation\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00077}00077\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Command\ loop\ pulls\ values\ from\ either\ manual\ or\ autonomy\ commands\ then\ sends\ values\ to\ arduino}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Loop\ runs\ at\ 50Hz}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ command\_loop()}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (manual\_operation)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}}\ =\ linear\_x;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ z\ =\ angular\_z;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (abs(x)<0.05\ \&\&\ abs(z)<0.15)\ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (abs(x)<0.05\ \&\&\ abs(z)>=0.15)\ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ z;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (abs(x)>=0.05\ \&\&\ abs(z)<0.15)\ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}};}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ \mbox{\hyperlink{namespacetest_accf9c2b29590b2e2d68bb2614364444e}{x}};}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ z;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ send\_command\_to\_arduino(\textcolor{stringliteral}{"{}MOVE:"{}}\ +\ std::to\_string(rover\_speed\_manual)\ +\ \textcolor{stringliteral}{"{},"{}}\ +\ std::to\_string(rover\_rotation\_speed\_manual));\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}AUTO:"{}}\ +\ std::to\_string(this-\/>w\_r)\ +\ \textcolor{stringliteral}{"{},"{}}\ +\ std::to\_string(this-\/>w\_l)\ <<\ std::endl;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ send\_command\_to\_arduino(\textcolor{stringliteral}{"{}AUTO:"{}}\ +\ std::to\_string(this-\/>w\_r)\ +\ \textcolor{stringliteral}{"{},"{}}\ +\ std::to\_string(this-\/>w\_l));}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00107}00107\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Function\ that\ sends\ commands\ to\ a\ topic\ that\ the\ arduino\ bridge\ node\ is\ subscribed\ to}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ send\_command\_to\_arduino(\textcolor{keyword}{const}\ std::string\ cmd)}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ std\_msgs::msg::String\ cmd\_msg;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ cmd\_msg.data\ =\ cmd;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ arduino\_publisher-\/>publish(cmd\_msg);}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initializes\ subscriptions,\ publishers,\ and\ timers}}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ rclcpp::Subscription<geometry\_msgs::msg::Twist>::SharedPtr\ joystick\_subscription;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ rclcpp::Subscription<geometry\_msgs::msg::Quaternion>::SharedPtr\ control\_subscription;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ rclcpp::Publisher<std\_msgs::msg::String>::SharedPtr\ arduino\_publisher;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ rclcpp::TimerBase::SharedPtr\ manual\_operation\_timer;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ rclcpp::TimerBase::SharedPtr\ command\_loop\_timer;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ rclcpp::Time\ last\_manual\_operation\_time;}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ manual\_operation\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00123}00123\ }
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00124}00124\ \};}
-\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00125}00125\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <geometry\_msgs/msg/quaternion.hpp>}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <geometry\_msgs/msg/twist.hpp>}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <rclcpp/rclcpp.hpp>}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <std\_msgs/msg/string.hpp>}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00011}00011\ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00013}00013\ \textcolor{comment}{//\ Creates\ the\ node\ which\ creates\ motor\ controller\ commands\ that\ will\ be\ sent\ to}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00014}00014\ \textcolor{comment}{//\ the\ arduino}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00015}\mbox{\hyperlink{classMotorCommander}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMotorCommander}{MotorCommander}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00016}00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00017}00017\ \ \ \textcolor{comment}{//\ Initializes\ values\ for\ linear\ and\ angular\ velocity,\ and\ speed\ and\ rotation}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00018}00018\ \ \ \textcolor{comment}{//\ values\ to\ be\ sent\ to\ the\ rover}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00019}00019\ \ \ \textcolor{keywordtype}{double}\ linear\_x\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00020}00020\ \ \ \textcolor{keywordtype}{double}\ angular\_z\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00021}00021\ \ \ \textcolor{keywordtype}{double}\ rover\_speed\_manual\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00022}00022\ \ \ \textcolor{keywordtype}{double}\ rover\_rotation\_speed\_manual\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00023}00023\ \ \ \textcolor{keywordtype}{double}\ w\_r\ =\ 0.0,\ w\_l\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00025}00025\ \ \ \textcolor{comment}{//\ Pulls\ linear\ and\ angular\ values\ from\ the\ joystick\ topic\ and\ updates\ a\ last}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00026}00026\ \ \ \textcolor{comment}{//\ time\ since\ joystick\ published\ value\ Also\ updates\ the\ manual\ operation}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00027}00027\ \ \ \textcolor{comment}{//\ boolean\ to\ true\ if\ it\ is\ not\ already\ true}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00028}00028\ \ \ \textcolor{keywordtype}{void}\ motor\_command\_callback(\textcolor{keyword}{const}\ geometry\_msgs::msg::Twist::SharedPtr\ msg)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00029}00029\ \ \ \ \ last\_manual\_operation\_time\ =\ this-\/>now();}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00030}00030\ \ \ \ \ linear\_x\ =\ msg-\/>linear.x;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00031}00031\ \ \ \ \ angular\_z\ =\ msg-\/>angular.z;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00032}00032\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00034}00034\ \ \ \textcolor{keywordtype}{void}\ auto\_motor\_command\_callback(}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00035}00035\ \ \ \ \ \ \ \textcolor{keyword}{const}\ geometry\_msgs::msg::Quaternion::SharedPtr\ msg)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00036}00036\ \ \ \ \ last\_manual\_operation\_time\ =\ this-\/>now();}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ msg-\/>w\ <<\ "{}\ "{}\ <<\ msg-\/>x\ <<\ "{}\ "{}\ <<\ msg-\/>y\ <<\ "{}\ "{}\ <<\ msg-\/>z}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ <<\ "{}\ "{}\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00039}00039\ \ \ \ \ this-\/>w\_r\ =\ msg-\/>w;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00040}00040\ \ \ \ \ this-\/>w\_l\ =\ msg-\/>x;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00041}00041\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00043}00043\ \ \ \textcolor{comment}{//\ Checks\ if\ the\ joystick\ has\ published\ a\ value\ in\ the\ last\ 0.5\ seconds,\ if}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00044}00044\ \ \ \textcolor{comment}{//\ not\ it\ sets\ the\ manual\ operation\ boolean\ to\ false}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00045}00045\ \ \ \textcolor{keywordtype}{void}\ check\_manual\_operation()\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{double}\ dt\ =\ (this-\/>now()\ -\/\ last\_manual\_operation\_time).seconds();}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (dt\ >\ 0.5\ \&\&\ manual\_operation)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00048}00048\ \ \ \ \ \ \ manual\_operation\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00050}00050\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00052}00052\ \ \ \textcolor{comment}{//\ Command\ loop\ pulls\ values\ from\ either\ manual\ or\ autonomy\ commands\ then}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00053}00053\ \ \ \textcolor{comment}{//\ sends\ values\ to\ arduino\ Loop\ runs\ at\ 50Hz}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00054}00054\ \ \ \textcolor{keywordtype}{void}\ command\_loop()\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{if}\ (manual\_operation)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00056}00056\ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ linear\_x;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00057}00057\ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ z\ =\ angular\_z;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00058}00058\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (abs(x)\ <\ 0.05\ \&\&\ abs(z)\ <\ 0.15)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00061}00061\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (abs(x)\ <\ 0.05\ \&\&\ abs(z)\ >=\ 0.15)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ z;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00064}00064\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (abs(x)\ >=\ 0.05\ \&\&\ abs(z)\ <\ 0.15)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ x;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00067}00067\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ rover\_speed\_manual\ =\ x;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ rover\_rotation\_speed\_manual\ =\ z;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00070}00070\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00071}00071\ \ \ \ \ \ \ send\_command\_to\_arduino(\textcolor{stringliteral}{"{}MOVE:"{}}\ +\ std::to\_string(rover\_speed\_manual)\ +}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},"{}}\ +}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(rover\_rotation\_speed\_manual));}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00074}00074\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00075}00075\ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}AUTO:"{}}\ +\ std::to\_string(this-\/>w\_r)\ +\ \textcolor{stringliteral}{"{},"{}}\ +}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(this-\/>w\_l)}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00078}00078\ \ \ \ \ \ \ send\_command\_to\_arduino(\textcolor{stringliteral}{"{}AUTO:"{}}\ +\ std::to\_string(this-\/>w\_r)\ +\ \textcolor{stringliteral}{"{},"{}}\ +}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(this-\/>w\_l));}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00080}00080\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00081}00081\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00083}00083\ \ \ \textcolor{comment}{//\ Function\ that\ sends\ commands\ to\ a\ topic\ that\ the\ arduino\ bridge\ node\ is}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00084}00084\ \ \ \textcolor{comment}{//\ subscribed\ to}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00085}00085\ \ \ \textcolor{keywordtype}{void}\ send\_command\_to\_arduino(\textcolor{keyword}{const}\ std::string\ cmd)\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00086}00086\ \ \ \ \ std\_msgs::msg::String\ cmd\_msg;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00087}00087\ \ \ \ \ cmd\_msg.data\ =\ cmd;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00088}00088\ \ \ \ \ arduino\_publisher-\/>publish(cmd\_msg);}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00089}00089\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00090}00090\ \ \ \textcolor{comment}{//\ Initializes\ subscriptions,\ publishers,\ and\ timers}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00091}00091\ \ \ rclcpp::Subscription<geometry\_msgs::msg::Twist>::SharedPtr}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00092}00092\ \ \ \ \ \ \ joystick\_subscription;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00093}00093\ \ \ rclcpp::Subscription<geometry\_msgs::msg::Quaternion>::SharedPtr}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00094}00094\ \ \ \ \ \ \ control\_subscription;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00095}00095\ \ \ rclcpp::Publisher<std\_msgs::msg::String>::SharedPtr\ arduino\_publisher;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00096}00096\ \ \ rclcpp::TimerBase::SharedPtr\ manual\_operation\_timer;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00097}00097\ \ \ rclcpp::TimerBase::SharedPtr\ command\_loop\_timer;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00098}00098\ \ \ rclcpp::Time\ last\_manual\_operation\_time;}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00099}00099\ \ \ \textcolor{keywordtype}{bool}\ manual\_operation\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00101}00101\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00102}\mbox{\hyperlink{classMotorCommander_a290b435453bd0e3cf91443aa80d22a6f}{00102}}\ \ \ \mbox{\hyperlink{classMotorCommander_a290b435453bd0e3cf91443aa80d22a6f}{MotorCommander}}()\ :\ Node(\textcolor{stringliteral}{"{}motor\_commander\_node"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00103}00103\ \ \ \ \ \textcolor{comment}{//\ Initialize\ parameters,\ subscribers,\ and\ publishers}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00104}00104\ \ \ \ \ manual\_operation\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00105}00105\ \ \ \ \ last\_manual\_operation\_time\ =\ this-\/>now();}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00106}00106\ \ \ \ \ joystick\_subscription\ =}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ this-\/>create\_subscription<geometry\_msgs::msg::Twist>(}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/cmd\_vel"{}},\ 10,}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&MotorCommander::motor\_command\_callback,\ \textcolor{keyword}{this},}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00111}00111\ \ \ \ \ control\_subscription\ =}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ this-\/>create\_subscription<geometry\_msgs::msg::Quaternion>(}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/smc/control"{}},\ 10,}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&MotorCommander::auto\_motor\_command\_callback,\ \textcolor{keyword}{this},}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::placeholders::\_1));}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00116}00116\ \ \ \ \ arduino\_publisher\ =}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ this-\/>create\_publisher<std\_msgs::msg::String>(\textcolor{stringliteral}{"{}/arduino\_cmd"{}},\ 10);}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00118}00118\ \ \ \ \ manual\_operation\_timer\ =\ this-\/>create\_wall\_timer(}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ 100ms,\ std::bind(\&MotorCommander::check\_manual\_operation,\ \textcolor{keyword}{this}));}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00120}00120\ \ \ \ \ command\_loop\_timer\ =\ this-\/>create\_wall\_timer(}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ 67ms,\ std::bind(\&MotorCommander::command\_loop,\ \textcolor{keyword}{this}));}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00122}00122\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00123}00123\ \};}
+\DoxyCodeLine{\Hypertarget{motor__commander_8hpp_source_l00124}00124\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

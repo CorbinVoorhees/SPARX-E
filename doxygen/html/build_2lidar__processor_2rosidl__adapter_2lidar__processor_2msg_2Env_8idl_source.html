@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -103,8 +112,10 @@ $(document).ready(function(){initNavTree('build_2lidar__processor_2rosidl__adapt
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;lidar_processor/msg/Obstacle.idl&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>module <a class="code hl_namespace" href="namespacelidar__processor.html">lidar_processor</a> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  module msg {</div>
+<div class="foldopen" id="foldopen00007" data-start="{" data-end="}">
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="namespacelidar__processor.html">    7</a></span>module <a class="code hl_namespace" href="namespacelidar__processor.html">lidar_processor</a> {</div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="}">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="namespacelidar__processor_1_1msg.html">    8</a></span>  module msg {</div>
 <div class="foldopen" id="foldopen00009" data-start="{" data-end="}">
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="namespacelidar__processor_1_1msg.html#a49ad033368419e595e2d6bfc269230b5">    9</a></span>    @<a class="code hl_function" href="namespacelidar__processor_1_1msg.html#a49ad033368419e595e2d6bfc269230b5">verbatim</a> (language=<span class="stringliteral">&quot;comment&quot;</span>, text=</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>      <span class="stringliteral">&quot;Env.msg&quot;</span> <span class="stringliteral">&quot;\n&quot;</span></div>
@@ -114,10 +125,12 @@ $(document).ready(function(){initNavTree('build_2lidar__processor_2rosidl__adapt
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    };</div>
 </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  };</div>
+</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>};</div>
-<div class="ttc" id="aclasslidar__processor_1_1msg_1_1__env_1_1Env_html"><div class="ttname"><a href="classlidar__processor_1_1msg_1_1__env_1_1Env.html">lidar_processor.msg._env.Env</a></div><div class="ttdef"><b>Definition</b> <a href="build_2lidar__processor_2ament__cmake__python_2lidar__processor_2lidar__processor_2msg_2__env_8py_source.html#l00065">_env.py:65</a></div></div>
-<div class="ttc" id="anamespacelidar__processor_1_1msg_html_a49ad033368419e595e2d6bfc269230b5"><div class="ttname"><a href="namespacelidar__processor_1_1msg.html#a49ad033368419e595e2d6bfc269230b5">lidar_processor.msg::verbatim</a></div><div class="ttdeci">verbatim(language=&quot;comment&quot;, text=&quot;Env.msg&quot; &quot;\n&quot; &quot;holds a series of Obstacle messages for a given timestep&quot;) struct Env</div><div class="ttdef"><b>Definition</b> <a href="build_2lidar__processor_2rosidl__adapter_2lidar__processor_2msg_2Env_8idl_source.html#l00009">Env.idl:9</a></div></div>
-<div class="ttc" id="anamespacelidar__processor_html"><div class="ttname"><a href="namespacelidar__processor.html">lidar_processor</a></div><div class="ttdef"><b>Definition</b> <a href="build_2lidar__processor_2ament__cmake__python_2lidar__processor_2lidar__processor_2msg_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div>
+<div class="ttc" id="aclasslidar__processor_1_1msg_1_1__env_1_1Env_html"><div class="ttname"><a href="classlidar__processor_1_1msg_1_1__env_1_1Env.html">lidar_processor::msg._env.Env</a></div><div class="ttdef"><b>Definition</b> <a href="build_2lidar__processor_2rosidl__generator__py_2lidar__processor_2msg_2__env_8py_source.html#l00065">_env.py:65</a></div></div>
+<div class="ttc" id="anamespacelidar__processor_1_1msg_html_a49ad033368419e595e2d6bfc269230b5"><div class="ttname"><a href="namespacelidar__processor_1_1msg.html#a49ad033368419e595e2d6bfc269230b5">lidar_processor::msg::verbatim</a></div><div class="ttdeci">verbatim(language=&quot;comment&quot;, text=&quot;Env.msg&quot; &quot;\n&quot; &quot;holds a series of Obstacle messages for a given timestep&quot;) struct Env</div><div class="ttdef"><b>Definition</b> <a href="build_2lidar__processor_2rosidl__adapter_2lidar__processor_2msg_2Env_8idl_source.html#l00009">Env.idl:9</a></div></div>
+<div class="ttc" id="anamespacelidar__processor_html"><div class="ttname"><a href="namespacelidar__processor.html">lidar_processor</a></div><div class="ttdef"><b>Definition</b> <a href="build_2lidar__processor_2rosidl__adapter_2lidar__processor_2msg_2Env_8idl_source.html#l00007">Env.idl:7</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,504 +1,316 @@
 \doxysection{nav\+\_\+node.\+hpp}
-\hypertarget{nav__node_8hpp_source}{}\label{nav__node_8hpp_source}\index{src/nav\_filters/src/nav\_node.hpp@{src/nav\_filters/src/nav\_node.hpp}}
+\hypertarget{nav__node_8hpp_source}{}\label{nav__node_8hpp_source}\index{src/nav\_filters/include/nav\_filters/nav\_node.hpp@{src/nav\_filters/include/nav\_filters/nav\_node.hpp}}
 \mbox{\hyperlink{nav__node_8hpp}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ NAV\_NODE\_HPP}}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ NAV\_NODE\_HPP}}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ekf_8hpp}{ekf.hpp}}"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}rclcpp/rclcpp.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}std\_msgs/msg/float32.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/msg/vector3.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}sensor\_msgs/msg/imu.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/msg/odometry.hpp"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <chrono>}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <mutex>}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <queue>}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <fstream>}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00015}00015\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00016}\mbox{\hyperlink{nav__node_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{00016}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{nav__node_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{SteadyClock}}\ =\ std::chrono::steady\_clock;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00017}\mbox{\hyperlink{classNavigationNode}{00017}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNavigationNode}{NavigationNode}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00018}00018\ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00019}00019\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MY\_PI\ =\ 3.141592653589793238462643383279502884;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00021}00021\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{comment}{//\ define\ initial\ x-\/y-\/z\ (height)\ inertial\ distance\ of\ rover\ UWB\ to\ anchor\ UWB\ (for\ ranging\ calibration)}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordtype}{double}\ START\_X\_FROM\_ANCHOR\ =\ 0.25;\ \textcolor{comment}{//\ meters}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordtype}{double}\ START\_Y\_FROM\_ANCHOR\ =\ 0.0;\ \textcolor{comment}{//\ meters}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{double}\ START\_Z\_FROM\_ANCHOR\ =\ 0.0;\ \textcolor{comment}{//\ meters}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00027}00027\ \ \ \ \ Eigen::Quaterniond\ rotation\_matrix;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00029}00029\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ rad2deg(\textcolor{keywordtype}{double}\ a)\ \{\ \textcolor{keywordflow}{return}\ a\ *\ 180.0\ /\ MY\_PI;\ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <geometry\_msgs/msg/quaternion.hpp>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <rclcpp/node.hpp>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <sensor\_msgs/msg/imu.hpp>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <sensor\_msgs/msg/magnetic\_field.hpp>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <std\_msgs/msg/float32.hpp>}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ISensor_8hpp}{ISensor.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ekf_8hpp}{ekf.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mekf_8hpp}{mekf.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{trans__ekf_8hpp}{trans\_ekf.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00019}\mbox{\hyperlink{nav__node_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{00019}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{SteadyClock}}\ =\ std::chrono::steady\_clock;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00021}\mbox{\hyperlink{namespacenav}{00021}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacenav}{nav}}\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00023}\mbox{\hyperlink{classnav_1_1NavNode}{00023}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classnav_1_1NavNode}{NavNode}}\ :\ \textcolor{keyword}{public}\ rclcpp::Node\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00024}00024\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00025}00025\ \ \ \textcolor{keyword}{using\ }V3\ =\ Eigen::Vector3d;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00026}00026\ \ \ \textcolor{keyword}{using\ }V4\ =\ Eigen::Vector4d;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00028}00028\ \ \ std::shared\_ptr<MEKF>\ mekf\_;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00029}00029\ \ \ std::unique\_ptr<TRANSEKF>\ trans\_ekf\_;}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ attributes\ of\ the\ nav\_node\ class}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00032}00032\ \ \ \ \ Eigen::VectorXd\ prior\_orientation;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00033}00033\ \ \ \ \ Eigen::VectorXd\ prior\_location;\ \textcolor{comment}{//\ [x,\ y,\ z,\ vx,\ vy,\ vz,\ bax,\ bay,\ baz]}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00034}00034\ \ \ \ \ Eigen::VectorXd\ latest\_imu;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00035}00035\ \ \ \ \ Eigen::Matrix<double,\ 6,\ 6>\ prior\_P\_rot;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00036}00036\ \ \ \ \ Eigen::Matrix<double,\ 15,\ 15>\ prior\_P\_loc;\ \textcolor{comment}{//\ covariance\ matrix}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00037}00037\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Startup\ Calibration\ -\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_calibrated\_imu\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_calibrated\_uwb\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00041}00041\ \ \ \ \ uint32\_t\ calibration\_samples\_imu\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00042}00042\ \ \ \ \ uint32\_t\ calibration\_samples\_uwb\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ REQUIRED\_CALIBRATION\_SAMPLES\ =\ 1000;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00044}00044\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ REQUIRED\_UWB\_CALIBRATION\ =\ 20;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00045}00045\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{comment}{//\ zero'ing\ out\ things\ }}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00047}00047\ \ \ \ \ Eigen::Vector3d\ baseline\_gravity\_vector\ =\ Eigen::Vector3d::Zero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00048}00048\ \ \ \ \ Eigen::Vector3d\ baseline\_gyro\_vector\ =\ Eigen::Vector3d::Zero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{double}\ baseline\_range\_rate\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00050}00050\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00051}00051\ \ \ \ \ std::queue<double>\ range\_buffer;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00052}00052\ \ \ \ \ std::queue<std::chrono::steady\_clock::time\_point>\ uwb\_time\_buffer;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00053}00053\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Frame\ lock\ -\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ world\_frame\_locked\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00056}00056\ \ \ \ \ Eigen::Matrix3d\ R\_anchor\_world\ =\ Eigen::Matrix3d::Identity();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{double}\ psi0\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00058}00058\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00059}00059\ \ \ \ \ std::ofstream\ file\_out;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00060}00060\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00061}00061\ \ \ \ \ std::chrono::time\_point<SteadyClock>\ last\_imu;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00062}00062\ \ \ \ \ std::chrono::time\_point<SteadyClock>\ last\_uwb;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00063}00063\ \ \ \ \ std::chrono::time\_point<SteadyClock>\ last\_ctrl;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00064}00064\ \ \ \ \ \textcolor{keywordtype}{double}\ sigma\_gyro\ =\ 0.001;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00065}00065\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00066}00066\ \ \ \ \ rclcpp::Publisher<nav\_msgs::msg::Odometry>::SharedPtr\ estimation\_publisher;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00067}00067\ \ \ \ \ rclcpp::Subscription<sensor\_msgs::msg::Imu>::SharedPtr\ IMU\_subscription;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00068}00068\ \ \ \ \ rclcpp::Subscription<std\_msgs::msg::Float32>::SharedPtr\ UWB\_subscription;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00069}00069\ \ \ \ \ rclcpp::Subscription<geometry\_msgs::msg::Quaternion>::SharedPtr\ control\_subscription;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00070}00070\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ 40\ Hz\ wall\ timer\ —\ drives\ the\ EKF\ update\ loop}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00072}00072\ \ \ \ \ rclcpp::TimerBase::SharedPtr\ ekf\_timer\_;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00073}00073\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00074}00074\ \ \ \ \ float32\_t\ flag\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00031}00031\ \ \ rclcpp::Subscription<sensor\_msgs::msg::Imu>::SharedPtr\ imu\_sub\_;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00032}00032\ \ \ rclcpp::Subscription<sensor\_msgs::msg::MagneticField>::SharedPtr\ mag\_sub\_;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00033}00033\ \ \ rclcpp::Subscription<std\_msgs::msg::Float32>::SharedPtr\ uwb\_sub\_;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00034}00034\ \ \ rclcpp::Subscription<geometry\_msgs::msg::Quaternion>::SharedPtr\ cntrl\_sub\_;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00036}00036\ \ \ \mbox{\hyperlink{classLogger}{Logger}}\ csv\_log;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00037}00037\ \ \ \mbox{\hyperlink{classLogger}{Logger}}\ csv\_log\_trans;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00038}00038\ \ \ \mbox{\hyperlink{classLogger}{Logger}}\ csv\_log\_sensors;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00039}00039\ \ \ \mbox{\hyperlink{classLogger}{Logger}}\ csv\_log\_gains;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00041}00041\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ min\_gyro\_samples\ =\ 3000;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00042}00042\ \ \ uint32\_t\ n\_gyro\_samples\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00044}00044\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ min\_accel\_samples\ =\ 3000;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00045}00045\ \ \ uint32\_t\ n\_accel\_samples\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00047}00047\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ min\_magnm\_samples\ =\ 3000;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00048}00048\ \ \ uint32\_t\ n\_magnm\_samples\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00050}00050\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ min\_uwb\_samples\ =\ 1000;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00051}00051\ \ \ uint32\_t\ n\_uwb\_samples\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00053}00053\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00054}\mbox{\hyperlink{classnav_1_1NavNode_a7da5d1caeb87fcd8a4e4f2d514b71d80}{00054}}\ \ \ \mbox{\hyperlink{classnav_1_1NavNode_a7da5d1caeb87fcd8a4e4f2d514b71d80}{NavNode}}()}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00055}00055\ \ \ \ \ \ \ :\ Node(\textcolor{stringliteral}{"{}nav\_node"{}}),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ csv\_log(\textcolor{stringliteral}{"{}sparxe\_mekf\_test1\_\_1\_1.csv"{}},\ std::chrono::milliseconds(25)),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ csv\_log\_trans(\textcolor{stringliteral}{"{}sparxe\_ekf\_test1\_\_1\_1.csv"{}},}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::chrono::milliseconds(25)),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ csv\_log\_sensors(\textcolor{stringliteral}{"{}sparxe\_sensors\_raw.csv"{}},\ std::chrono::milliseconds(0)),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ csv\_log\_gains(\textcolor{stringliteral}{"{}sparxe\_gains.csv"{}},\ std::chrono::milliseconds(25))\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::register\_sensor<V3>}}(V3::Zero(),\ min\_gyro\_samples,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}gyro"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00064}00064\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::register\_sensor<V3>}}(V3::Zero(),\ min\_accel\_samples,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}accel"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::register\_sensor<V3>}}(V3::Zero(),\ min\_magnm\_samples,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}magnm"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00069}00069\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::register\_sensor<double>}}(0.0,\ min\_uwb\_samples,\ \textcolor{stringliteral}{"{}uwb"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::register\_sensor<V4>}}(V4::Zero(),\ 0,\ \textcolor{stringliteral}{"{}control"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00072}00072\ \ \ \ \ csv\_log.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\textcolor{stringliteral}{"{}time,nis,roll,pitch,yaw,gx,gy,gz,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}gunbx,gunby,gunbz,bgx,bgy,bgz,gmx,gmy,gmz,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cthx,cthy,cthz\(\backslash\)n"{}});}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00075}00075\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//\ Mutex\ protecting\ all\ shared\ filter\ state\ accessed\ by\ callbacks\ and\ the\ timer}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00077}00077\ \ \ \ \ std::mutex\ state\_mutex;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00078}00078\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00079}00079\ \ \ \ \ Eigen::Vector3d\ latest\_gyro\ =\ Eigen::Vector3d::Zero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00080}00080\ \ \ \ \ Eigen::Quaterniond\ latest\_q\_triad\ =\ Eigen::Quaterniond::Identity();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00081}00081\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordtype}{double}\ latest\_ctrl\_x\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordtype}{double}\ latest\_ctrl\_y\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{double}\ latest\_ctrl\_dx\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{double}\ latest\_ctrl\_dy\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00086}00086\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//\ Latest\ UWB\ measurement,\ updated\ by\ uwb\_cb\ and\ consumed\ by\ the\ timer}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{float}\ latest\_range\ \ \ \ \ \ =\ 0.0f;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00089}00089\ \ \ \ \ \textcolor{keywordtype}{float}\ latest\_range\_rate\ =\ 0.0f;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00090}00090\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00091}00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ have\_imu\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00092}00092\ \ \ \ \ \textcolor{keywordtype}{bool}\ have\_control\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordtype}{bool}\ have\_uwb\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ prior\_orientation\_initialized\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_rotated\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00096}00096\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00098}00098\ \ \ \ \ \textcolor{comment}{//\ imu\_cb\ —\ unchanged\ implementation;\ only\ stores\ latest\ values\ under\ mutex}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00099}00099\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00100}00100\ \ \ \ \ \textcolor{keywordtype}{void}\ imu\_cb(\textcolor{keyword}{const}\ sensor\_msgs::msg::Imu::SharedPtr\ msg)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00101}00101\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ accel(msg-\/>linear\_acceleration.x,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg-\/>linear\_acceleration.y,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg-\/>linear\_acceleration.z);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ gyro(msg-\/>angular\_velocity.x,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg-\/>angular\_velocity.y,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg-\/>angular\_velocity.z);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ q\_triad(msg-\/>orientation.w,\ msg-\/>orientation.x,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg-\/>orientation.y,\ msg-\/>orientation.z);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00076}00076\ \ \ \ \ csv\_log\_sensors.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\textcolor{stringliteral}{"{}time,type,v0,v1,v2,v3\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ q0-\/frame\ strapdown\ states\ +\ the\ adaptive\ wheel\ efficiencies\ (mu)\ and}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ forward\ accel\ bias.}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00080}00080\ \ \ \ \ csv\_log\_trans.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\textcolor{stringliteral}{"{}time,nis,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}px,py,pz,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}vx,vy,vz,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ax\_raw,ay\_raw,az\_raw,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}pxx,pyy,pxy,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}bax,mur,mul,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}pzz,pvx,pvy,pvz,pmr,pml\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00088}00088\ \ \ \ \ \textcolor{comment}{//\ per-\/state\ |K|\ of\ the\ last\ applied\ correction,\ per\ sensor,\ plus\ the}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ last\ innovation\ (pre-\/gate,\ so\ rejected\ updates\ show\ too).}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00090}00090\ \ \ \ \ \textcolor{comment}{//\ trans\ states:\ px,py,pz,vx,vy,vz,mur,mul\ ;\ mekf\ states:\ thx,thy,thz}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00091}00091\ \ \ \ \ csv\_log\_gains.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\textcolor{stringliteral}{"{}time,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}uwb\_px,uwb\_py,uwb\_pz,uwb\_vx,uwb\_vy,uwb\_vz,uwb\_mr,uwb\_ml,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}acc\_px,acc\_py,acc\_pz,acc\_vx,acc\_vy,acc\_vz,acc\_mr,acc\_ml,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}macc\_x,macc\_y,macc\_z,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}mmag\_x,mmag\_y,mmag\_z,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}mctl\_x,mctl\_y,mctl\_z,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}uwb\_r,acc\_rx,acc\_ry,acc\_rz,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}macc\_rx,macc\_ry,macc\_rz,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}mmag\_rx,mmag\_ry,mmag\_rz,mctl\_r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00101}00101\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ t0\ =\ SteadyClock::now();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00102}00102\ \ \ \ \ mekf\_\ =\ std::make\_shared<MEKF>(t0);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00103}00103\ \ \ \ \ trans\_ekf\_\ =\ std::make\_unique<TRANSEKF>(t0,\ mekf\_);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00104}00104\ \ \ \ \ mekf\_-\/>should\_print\_diagnostic\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00105}00105\ \ \ \ \ trans\_ekf\_-\/>should\_print\_diagnostic\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00107}00107\ \ \ \ \ imu\_sub\_\ =\ create\_subscription<sensor\_msgs::msg::Imu>(}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/imu/data\_raw"{}},\ rclcpp::SensorDataQoS(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](sensor\_msgs::msg::Imu::SharedPtr\ m)\ \{\ imu\_cb(m);\ \});}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00110}00110\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>is\_rotated)\ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ nominal\ =\ Eigen::Quaterniond::Identity();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>rotation\_matrix\ =\ nominal\ *\ q\_triad.conjugate();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>is\_rotated\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00116}00116\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!accel.allFinite()\ ||\ !gyro.allFinite()\ ||\ !q\_triad.coeffs().allFinite())}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (q\_triad.coeffs().squaredNorm()\ <\ 1e-\/12)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ q\_triad.normalize();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00122}00122\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ global\_accel\ =\ q\_triad\ *\ accel;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00124}00124\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_calibrated\_imu)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ calibration\_samples\_imu++;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_gravity\_vector\ +=\ (global\_accel\ -\/\ baseline\_gravity\_vector)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(calibration\_samples\_imu);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_gyro\_vector\ +=\ (gyro\ -\/\ baseline\_gyro\_vector)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(calibration\_samples\_imu);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00130}00130\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_INFO\_THROTTLE(this-\/>get\_logger(),\ *this-\/>get\_clock(),\ 500,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}CALIBRATING\ IMU...\ [\%u/\%u]\ |\ baseline\ gravity\ vec=[\%.4f,\ \%.4f,\ \%.4f]\ |\ baseline\ gyro\ vec=[\%.4f,\ \%.4f,\ \%.4f]"{}},}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ calibration\_samples\_imu,\ REQUIRED\_CALIBRATION\_SAMPLES,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_gravity\_vector.x(),\ baseline\_gravity\_vector.y(),\ baseline\_gravity\_vector.z(),}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_gyro\_vector.x(),\ baseline\_gyro\_vector.y(),\ baseline\_gyro\_vector.z());}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00136}00136\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (calibration\_samples\_imu\ >=\ REQUIRED\_CALIBRATION\_SAMPLES)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix3d\ R\_wb\_init\ =\ q\_triad.toRotationMatrix();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ psi0\ =\ std::atan2(R\_wb\_init(1,\ 0),\ R\_wb\_init(0,\ 0));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00141}00141\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\_anchor\_world\ =\ Eigen::AngleAxisd(-\/psi0,\ Eigen::Vector3d::UnitZ())}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .toRotationMatrix();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00144}00144\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_gravity\_vector\ =\ R\_anchor\_world\ *\ baseline\_gravity\_vector;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00111}00111\ \ \ \ \ mag\_sub\_\ =\ create\_subscription<sensor\_msgs::msg::MagneticField>(}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/imu/mag"{}},\ rclcpp::SensorDataQoS(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](sensor\_msgs::msg::MagneticField::SharedPtr\ m)\ \{\ mag\_cb(m);\ \});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00115}00115\ \ \ \ \ uwb\_sub\_\ =\ create\_subscription<std\_msgs::msg::Float32>(}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/uwb"{}},\ rclcpp::SensorDataQoS(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](std\_msgs::msg::Float32::SharedPtr\ m)\ \{\ uwb\_cb(m);\ \});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00119}00119\ \ \ \ \ cntrl\_sub\_\ =\ create\_subscription<geometry\_msgs::msg::Quaternion>(}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/smc/control"{}},\ rclcpp::SensorDataQoS(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}](geometry\_msgs::msg::Quaternion::SharedPtr\ m)\ \{\ control\_cb(m);\ \});}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00122}00122\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00124}00124\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00125}00125\ \ \ \textcolor{keywordtype}{void}\ control\_cb(\textcolor{keyword}{const}\ geometry\_msgs::msg::Quaternion::SharedPtr\ m)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00126}00126\ \ \ \ \ \textcolor{comment}{//\ [wr,\ wl,\ dwr,\ dwl]}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00127}00127\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_ab69e918a7fa641504f1d2bce2c8553b8}{V4}}\ control(m-\/>w,\ m-\/>x,\ m-\/>y,\ m-\/>z);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00128}00128\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00129}00129\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::put<V4>}}(\textcolor{stringliteral}{"{}control"{}},\ control,\ now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00130}00130\ \ \ \ \ \textcolor{comment}{//\ mekf\_-\/>suppress\_magnm\ =\ (std::abs(m-\/>w)\ >\ 0.05\ ||\ std::abs(m-\/>x)\ >\ 0.05);}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00131}00131\ \ \ \ \ trans\_ekf\_-\/>tick(now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00133}00133\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ t\_s\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00135}00135\ \ \ \ \ csv\_log\_sensors.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\%.9f,control,\%.9f,\%.9f,\%.9f,\%.9f\(\backslash\)n"{}},\ t\_s,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ control(0),\ control(1),\ control(2),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ control(3)));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00138}00138\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00140}00140\ \ \ \textcolor{keywordtype}{void}\ uwb\_cb(\textcolor{keyword}{const}\ std\_msgs::msg::Float32::SharedPtr\ m)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00141}00141\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ range\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(m-\/>data);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00142}00142\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00143}00143\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::put<double>}}(\textcolor{stringliteral}{"{}uwb"{}},\ range,\ now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00144}00144\ \ \ \ \ trans\_ekf\_-\/>tick(now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00145}00145\ \ \ \ \ ++n\_uwb\_samples;}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00146}00146\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ q\_anchor\_world(R\_anchor\_world);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ q\_anchor\_b\ =\ q\_anchor\_world\ *\ q\_triad;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q\_anchor\_b.normalize();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[0]\ =\ q\_anchor\_b.w();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[1]\ =\ q\_anchor\_b.x();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[2]\ =\ q\_anchor\_b.y();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[3]\ =\ q\_anchor\_b.z();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00154}00154\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation\_initialized\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_calibrated\_imu\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ world\_frame\_locked\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00147}00147\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ t\_s\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00149}00149\ \ \ \ \ csv\_log\_sensors.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\%.9f,uwb,\%.9f,,,\(\backslash\)n"{}},\ t\_s,\ range));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00150}00150\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00152}00152\ \ \ \textcolor{keywordtype}{void}\ imu\_cb(\textcolor{keyword}{const}\ sensor\_msgs::msg::Imu::SharedPtr\ m)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00153}00153\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ w(m-\/>angular\_velocity.x,\ m-\/>angular\_velocity.y,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m-\/>angular\_velocity.z);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00156}00156\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}(m-\/>linear\_acceleration.x,\ m-\/>linear\_acceleration.y,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m-\/>linear\_acceleration.z);}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00158}00158\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latest\_q\_triad\ =\ q\_triad;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00159}00159\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00160}00160\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RCLCPP\_INFO(this-\/>get\_logger(),}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}IMU\ CALIBRATION\ COMPLETE.\ World\ frame\ locked.\ psi0\ =\ \%.4f\ rad\ (\%.2f\ deg)"{}},}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ psi0,\ rad2deg(psi0));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00165}00165\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ last\_imu\ =\ SteadyClock::now();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ have\_imu\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ latest\_imu\ =\ Eigen::VectorXd(3);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ latest\_imu.setZero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00170}00170\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ prior\_location[0]\ =\ latest\_range;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00172}00172\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[6]\ =\ baseline\_gyro\_vector[2];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[5]\ =\ baseline\_gyro\_vector[1];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[4]\ =\ baseline\_gyro\_vector[0];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00176}00176\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location[10]\ =\ baseline\_range\_rate;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location[8]\ =\ baseline\_gravity\_vector[2];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location[7]\ =\ baseline\_gravity\_vector[1];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location[6]\ =\ baseline\_gravity\_vector[0];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\_buffer.size()\ >=\ 2\ \&\&\ uwb\_time\_buffer.size()\ >=\ 2)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ time\_diff\ =\ std::chrono::duration<double>(uwb\_time\_buffer.back()\ -\/\ uwb\_time\_buffer.front()).count();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (time\_diff\ >\ 0.0)\ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_range\_rate\ =\ (range\_buffer.back()\ -\/\ range\_buffer.front())\ /\ time\_diff;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_range\_rate\ =\ 0.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseline\_range\_rate\ =\ 0.0;\ \textcolor{comment}{//\ Fallback\ default\ during\ initial\ startup}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00161}00161\ \ \ \ \ ++n\_gyro\_samples;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00162}00162\ \ \ \ \ ++n\_accel\_samples;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00164}00164\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::put<V3>}}(\textcolor{stringliteral}{"{}gyro"{}},\ w,\ now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00165}00165\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::put<V3>}}(\textcolor{stringliteral}{"{}accel"{}},\ a,\ now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00167}00167\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00168}00168\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ t\_s\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00170}00170\ \ \ \ \ \ \ csv\_log\_sensors.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\%.9f,gyro,\%.9f,\%.9f,\%.9f,\(\backslash\)n"{}},\ t\_s,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w.x(),\ w.y(),\ w.z()));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00172}00172\ \ \ \ \ \ \ csv\_log\_sensors.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\%.9f,accel,\%.9f,\%.9f,\%.9f,\(\backslash\)n"{}},\ t\_s,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}.x(),\ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}.y(),\ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}.z()));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00174}00174\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00176}00176\ \ \ \ \ mekf\_-\/>tick(now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\_accel\_samples\ >=\ min\_accel\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ n\_gyro\_samples\ >=\ min\_gyro\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ n\_magnm\_samples\ >=\ min\_magnm\_samples)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00181}00181\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Quaterniond\ q\ =\ mekf\_-\/>orientation().normalized();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00183}00183\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Matrix3d\ R\_I\_B\ =\ q.toRotationMatrix();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00185}00185\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_afb4965f188ce8b2565847622538c07fd}{roll}}\ =\ std::atan2(R\_I\_B(2,\ 1),\ R\_I\_B(2,\ 2))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00186}00186\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ pitch\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ std::asin(std::clamp(-\/R\_I\_B(2,\ 0),\ -\/1.0,\ 1.0))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00188}00188\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacebias__calc_a130ab21ee7a6622712af2bdbb426ce9e}{yaw}}\ =\ std::atan2(R\_I\_B(1,\ 0),\ R\_I\_B(0,\ 0))\ *\ 180.0\ /\ M\_PI;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00190}00190\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ bg\ =\ mekf\_-\/>gyro\_bias();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00192}00192\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \mbox{\hyperlink{namespacealigndata_a303625b4dd55e8f10891c357f88514fc}{gyro\_unbiased}}\ =\ w\ -\/\ bg;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00194}00194\ \ \ \ \ \ \ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ gyro\_mean\ =\ V3::Zero();}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00195}00195\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(state\_mutex);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00198}00198\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ latest\_gyro\ =\ gyro;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00196}00196\ \ \ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::get\_mean<V3>}}(\textcolor{stringliteral}{"{}gyro"{}},\ gyro\_mean);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00198}00198\ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ time\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00200}00200\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ latest\_q\_triad\ =\ q\_triad;\ \textcolor{comment}{//\ this-\/>rotation\_matrix\ *\ q\_triad;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00202}00202\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\ =\ std::chrono::duration<double>(now\ -\/\ last\_imu).count();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ last\_imu\ =\ now;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dt\ <=\ 0.0\ ||\ dt\ >\ 0.5)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00207}00207\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ a\_world\ =\ q\_triad\ *\ accel;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ a\_anchor\ =\ R\_anchor\_world\ *\ a\_world;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ a\_inertial\ =\ a\_anchor;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00211}00211\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!a\_inertial.allFinite())}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00214}00214\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ latest\_imu[0]\ =\ a\_inertial.x();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ latest\_imu[1]\ =\ a\_inertial.y();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ latest\_imu[2]\ =\ a\_inertial.z();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00218}00218\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00219}00219\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00220}00220\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00221}00221\ \ \ \ \ \textcolor{comment}{//\ control\_cb\ —\ unchanged}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00222}00222\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00223}00223\ \ \ \ \ \textcolor{keywordtype}{void}\ control\_cb(\textcolor{keyword}{const}\ geometry\_msgs::msg::Quaternion::SharedPtr\ msg)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00224}00224\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(msg-\/>x)\ ||\ !std::isfinite(msg-\/>y))}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00227}00227\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(state\_mutex);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00230}00230\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (have\_control)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\ =\ std::chrono::duration<double>(now\ -\/\ last\_ctrl).count();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (dt\ >\ 1e-\/3)}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ latest\_ctrl\_dx\ =\ (msg-\/>x\ -\/\ latest\_ctrl\_x)\ /\ dt;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ latest\_ctrl\_dy\ =\ (msg-\/>y\ -\/\ latest\_ctrl\_y)\ /\ dt;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ latest\_ctrl\_x\ \ =\ msg-\/>w;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ latest\_ctrl\_y\ \ =\ msg-\/>x;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ latest\_ctrl\_dx\ =\ msg-\/>y;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ latest\_ctrl\_dy\ =\ msg-\/>z;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ last\_ctrl\ =\ now;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ have\_control\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00246}00246\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00247}00247\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00248}00248\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00249}00249\ \ \ \ \ \textcolor{comment}{//\ uwb\_cb\ —\ now\ only\ updates\ the\ latest\ range/range\_rate\ snapshot.}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00250}00250\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ The\ EKF\ update\ itself\ is\ performed\ by\ ekf\_timer\_cb\ at\ 40\ Hz.}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00251}00251\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00252}00252\ \ \ \ \ \textcolor{keywordtype}{void}\ uwb\_cb(\textcolor{keyword}{const}\ std\_msgs::msg::Float32::SharedPtr\ uwb\_msg)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00253}00253\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(uwb\_msg-\/>data))}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00256}00256\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00258}00258\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_calibrated\_uwb)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ calibration\_samples\_uwb++;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ range\_buffer.push(uwb\_msg-\/>data);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ uwb\_time\_buffer.push(now);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (calibration\_samples\_uwb\ >=\ REQUIRED\_UWB\_CALIBRATION)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_calibrated\_uwb\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00270}00270\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ the\ latest\ UWB\ measurement\ under\ the\ mutex\ so\ the\ timer\ can}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ safely\ read\ it\ when\ it\ fires.}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(state\_mutex);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00274}00274\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float\_t\ range\ =\ uwb\_msg-\/>data;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float\_t\ range\_rate\ =\ (range\_buffer.back()\ -\/\ range\_buffer.front())\ /}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((std::chrono::duration<double>(uwb\_time\_buffer.back()\ -\/\ uwb\_time\_buffer.front()).count()));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00278}00278\ \ \ \ \ \ \ \ \ range\_buffer.pop();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ range\_buffer.push(range);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00280}00280\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ uwb\_time\_buffer.pop();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ uwb\_time\_buffer.push(now);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00283}00283\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ last\_uwb\ =\ now;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00285}00285\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ latest\_range\ \ \ \ \ \ =\ range;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ latest\_range\_rate\ =\ range\_rate;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ have\_uwb\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00289}00289\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00201}00201\ \ \ \ \ \ \ \textcolor{comment}{//\ attitude\ error-\/state\ (dtheta)\ covariance\ diagonal,\ rad\string^2}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00202}00202\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&Pm\ =\ mekf\_-\/>covariance();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00204}00204\ \ \ \ \ \ \ csv\_log.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ time,\ mekf\_-\/>last\_nis(),\ roll,\ pitch,\ yaw,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w.x(),\ w.y(),\ w.z(),\ \mbox{\hyperlink{namespacealigndata_a303625b4dd55e8f10891c357f88514fc}{gyro\_unbiased}}.x(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacealigndata_a303625b4dd55e8f10891c357f88514fc}{gyro\_unbiased}}.y(),\ \mbox{\hyperlink{namespacealigndata_a303625b4dd55e8f10891c357f88514fc}{gyro\_unbiased}}.z(),\ bg.x(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bg.y(),\ bg.z(),\ gyro\_mean.x(),\ gyro\_mean.y(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gyro\_mean.z(),\ Pm(0,\ 0),\ Pm(1,\ 1),\ Pm(2,\ 2)));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00216}00216\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00217}00217\ \ \ \ \ \ \ std::cout\ <<\ \mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\(\backslash\)raccel:\ \%d,\ gyro:\ \%d,\ magnm:\ \%d,\ uwb:\ \%d"{}},}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\_accel\_samples,\ n\_gyro\_samples,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\_magnm\_samples,\ n\_uwb\_samples)}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::flush;}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00221}00221\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}ticking\ tekf"{}\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00222}00222\ \ \ \ \ trans\_ekf\_-\/>tick(now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00223}00223\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}done"{}\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00224}00224\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00226}00226\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\_accel\_samples\ >=\ min\_accel\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ n\_gyro\_samples\ >=\ min\_gyro\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ n\_magnm\_samples\ >=\ min\_magnm\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ n\_uwb\_samples\ >=\ min\_uwb\_samples)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00230}00230\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}\ =\ trans\_ekf\_-\/>get\_position();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00231}00231\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ v\ =\ trans\_ekf\_-\/>get\_velocity();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00233}00233\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ time\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00236}00236\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&cov\ =\ trans\_ekf\_-\/>covariance();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00237}00237\ \ \ \ \ \ \ csv\_log\_trans.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,\%.9f,\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ time,\ trans\_ekf\_-\/>last\_nis(),\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.x(),\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.y(),\ \mbox{\hyperlink{namespacedriver_a93260e98fde7eb4f3fc213d1156ce833}{p}}.z(),\ v.x(),\ v.y(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ v.z(),\ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}.x(),\ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}.y(),\ \mbox{\hyperlink{namespacedriver_a51d71d65146d56af95103fcb3c788b89}{a}}.z(),\ cov(0,\ 0),\ cov(1,\ 1),\ cov(0,\ 1),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ trans\_ekf\_-\/>get\_bax(),\ trans\_ekf\_-\/>get\_mu\_r(),\ trans\_ekf\_-\/>get\_mu\_l(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ cov(2,\ 2),\ cov(3,\ 3),\ cov(4,\ 4),\ cov(5,\ 5),\ cov(6,\ 6),\ cov(7,\ 7)));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00249}00249\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00251}00251\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\_accel\_samples\ >=\ min\_accel\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ n\_gyro\_samples\ >=\ min\_gyro\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ n\_magnm\_samples\ >=\ min\_magnm\_samples\ \&\&}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ n\_uwb\_samples\ >=\ min\_uwb\_samples)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00255}00255\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ time\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00258}00258\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ gu\ =\ trans\_ekf\_-\/>last\_gain(\textcolor{stringliteral}{"{}uwb"{}},\ 8);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00259}00259\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ ga\ =\ trans\_ekf\_-\/>last\_gain(\textcolor{stringliteral}{"{}accel"{}},\ 8);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00260}00260\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ ma\ =\ mekf\_-\/>last\_gain(\textcolor{stringliteral}{"{}accel"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00261}00261\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ mm\ =\ mekf\_-\/>last\_gain(\textcolor{stringliteral}{"{}magnm"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00262}00262\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ mc\ =\ mekf\_-\/>last\_gain(\textcolor{stringliteral}{"{}control"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00264}00264\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ ru\ =\ trans\_ekf\_-\/>last\_innovation(\textcolor{stringliteral}{"{}uwb"{}},\ 1);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00265}00265\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ ra\ =\ trans\_ekf\_-\/>last\_innovation(\textcolor{stringliteral}{"{}accel"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00266}00266\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ rma\ =\ mekf\_-\/>last\_innovation(\textcolor{stringliteral}{"{}accel"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00267}00267\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ rmm\ =\ mekf\_-\/>last\_innovation(\textcolor{stringliteral}{"{}magnm"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00268}00268\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::VectorXd\ rmc\ =\ mekf\_-\/>last\_innovation(\textcolor{stringliteral}{"{}control"{}},\ 1);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00270}00270\ \ \ \ \ \ \ csv\_log\_gains.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9f,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,"{}}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%.9e,\%.9e,\%.9e,\%.9e\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ time,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ gu(0),\ gu(1),\ gu(2),\ gu(3),\ gu(4),\ gu(5),\ gu(6),\ gu(7),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ ga(0),\ ga(1),\ ga(2),\ ga(3),\ ga(4),\ ga(5),\ ga(6),\ ga(7),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ ma(0),\ ma(1),\ ma(2),\ mm(0),\ mm(1),\ mm(2),\ mc(0),\ mc(1),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ mc(2),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ ru(0),\ ra(0),\ ra(1),\ ra(2),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ rma(0),\ rma(1),\ rma(2),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ rmm(0),\ rmm(1),\ rmm(2),\ rmc(0)));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00288}00288\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00289}00289\ \ \ \}}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00290}00290\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00291}00291\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00292}00292\ \ \ \ \ \textcolor{comment}{//\ ekf\_timer\_cb\ —\ fires\ at\ 40\ Hz\ and\ runs\ the\ full\ EKF\ update.}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00293}00293\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Contains\ the\ exact\ same\ EKF\ logic\ that\ was\ previously}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00294}00294\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ inlined\ inside\ uwb\_cb;\ only\ the\ trigger\ has\ changed.}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00295}00295\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00296}00296\ \ \ \ \ \textcolor{keywordtype}{void}\ ekf\_timer\_cb()}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00297}00297\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(state\_mutex);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00291}00291\ \ \ \textcolor{keywordtype}{void}\ mag\_cb(\textcolor{keyword}{const}\ sensor\_msgs::msg::MagneticField::SharedPtr\ m)\ \{}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00292}00292\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{trans__ekf_8hpp_a3a6397d94ee530b2e4228dbece231bdc}{V3}}\ magnetic\_field(m-\/>magnetic\_field.x,\ m-\/>magnetic\_field.y,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m-\/>magnetic\_field.z);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00294}00294\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00296}00296\ \ \ \ \ \mbox{\hyperlink{classSensor_1_1SensorTable_a0cc24405b4b355e99c0635d9b66fc880}{Sensor::SensorTable::put<V3>}}(\textcolor{stringliteral}{"{}magnm"{}},\ magnetic\_field,\ now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00297}00297\ \ \ \ \ mekf\_-\/>tick(now);}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00298}00298\ \ \ \ \ ++n\_magnm\_samples;}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00299}00299\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!have\_imu\ ||\ !is\_calibrated\_imu\ ||\ !have\_uwb)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00302}00302\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ SteadyClock::now();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\ =\ std::chrono::duration<double>(now\ -\/\ last\_uwb).count();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dt\ <=\ 0.0)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00300}00300\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ t\_s\ =}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count();}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00302}00302\ \ \ \ \ csv\_log\_sensors.\mbox{\hyperlink{classLogger_aa5ee69abd1c2bb35085a506020f49c7e}{log}}(\mbox{\hyperlink{utils_8h_a7e7cff73d16bfd932ef2d9a452cb95ce}{string\_format}}(\textcolor{stringliteral}{"{}\%.9f,magnm,\%.9f,\%.9f,\%.9f,\(\backslash\)n"{}},\ t\_s,}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ magnetic\_field.x(),\ magnetic\_field.y(),}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ magnetic\_field.z()));}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00305}00305\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00306}00306\ \};}
 \DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00307}00307\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Use\ the\ latest\ snapshot\ of\ UWB\ measurements}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float\_t\ range\ \ \ \ \ \ =\ latest\_range;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ float\_t\ range\_rate\ =\ latest\_range\_rate;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00311}00311\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ Eigen::VectorXd\ imu\_pseudo\ =\ latest\_imu;\ \textcolor{comment}{//\ 3-\/vector:\ [ax,\ ay,\ az]}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00313}00313\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ q\_anchor\_world(R\_anchor\_world);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ q\_anchor\_meas\ =\ q\_anchor\_world\ *\ latest\_q\_triad;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ q\_anchor\_meas.normalize();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00317}00317\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ Eigen::VectorXd\ new\_orientation;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ Eigen::Matrix<double,\ 6,\ 6>\ new\_P\_rot;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ekf_8hpp_aa03ef056b2faac861333846f6651f1ed}{rotational\_mekf}}(q\_anchor\_meas,\ latest\_gyro,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation,\ prior\_P\_rot,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dt,\ sigma\_gyro,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_P\_rot,\ new\_orientation);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00324}00324\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (new\_orientation.allFinite())}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation\ =\ new\_orientation;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_P\_rot\ =\ new\_P\_rot;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ exit(2);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00332}00332\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ Eigen::Quaterniond\ quat(prior\_orientation[0],\ prior\_orientation[1],}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_orientation[2],\ prior\_orientation[3]);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ quat.normalize();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ R\ =\ quat.toRotationMatrix();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ roll\ \ =\ std::atan2(R(2,\ 1),\ R(2,\ 2));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ s\ \ \ \ \ =\ -\/R(2,\ 0);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pitch\ =\ (std::abs(s)\ >=\ 1.0)\ ?\ std::copysign(MY\_PI\ /\ 2.0,\ s)\ :\ std::asin(s);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yaw\ \ \ =\ std::atan2(R(1,\ 0),\ R(0,\ 0));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00341}00341\ \ \ \ \ \ \ \ \ Eigen::Vector3d\ orientation(roll,\ pitch,\ yaw);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00342}00342\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ Eigen::VectorXd\ control(4);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ control\ <<\ latest\_ctrl\_x,\ latest\_ctrl\_y,\ latest\_ctrl\_dx,\ latest\_ctrl\_dy;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00345}00345\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ Eigen::VectorXd\ new\_location;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ new\_location\ =\ Eigen::VectorXd(15);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ Eigen::Matrix<double,\ 15,\ 15>\ new\_P\_loc;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}range:\ "{}\ <<\ range\ <<\ std::endl;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}range\_rate:\ "{}\ <<\ range\_rate\ <<\ std::endl;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ekf_8hpp_a4bc11e0a1899ec4ee9415102f8cbc5c8}{translational\_ekf}}(imu\_pseudo,\ range,\ range\_rate,\ orientation,\ control,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location,\ prior\_P\_loc,\ prior\_P\_rot,\ dt,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_P\_loc,\ new\_location);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ new\_location\ <<\ std::endl;}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (new\_location.allFinite())}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location\ <<\ new\_location.head<6>(),\ new\_location.tail<5>();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ prior\_P\_loc\ =\ new\_P\_loc;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ exit(1);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00366}00366\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ the\ reference\ time\ so\ the\ next\ timer\ tick\ computes\ a\ correct\ dt}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ last\_uwb\ =\ now;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00369}00369\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ RCLCPP\_INFO\_THROTTLE(this-\/>get\_logger(),\ *this-\/>get\_clock(),\ 500,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}EKF\ OUT\ |\ pos=[\%.3f,\ \%.3f,\ \%.3f],\ ranging=[\%.3f,\ \%.3f],\ a\_inertial=[\%.3f,\ \%.3f,\ \%.3f],\ time=\%.3f"{}},}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prior\_location[0],\ prior\_location[1],\ prior\_location[2],}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\ -\/\ prior\_location[9],\ range\_rate\ -\/\ prior\_location[10],}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latest\_imu[0]\ -\/\ prior\_location[6],}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latest\_imu[1]\ -\/\ prior\_location[7],}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latest\_imu[2]\ -\/\ prior\_location[8],}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::chrono::duration<double>(now.time\_since\_epoch()).count());}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00378}00378\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ publish\_estimate\_locked(prior\_P\_loc,\ prior\_P\_rot);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00380}00380\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00381}00381\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00382}00382\ \ \ \ \ \textcolor{keywordtype}{void}\ publish\_estimate\_locked(Eigen::Matrix<double,\ 15,\ 15>\ p\_loc,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Matrix<double,\ 6,\ 6>\ p\_rot)}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00384}00384\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ two\ structs\ within\ odom\ -\/\ pose\ \&\ twist\ (position\ \&\ orientation,\ angular\ velocity\ \&\ linear\ velocity)}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ nav\_msgs::msg::Odometry\ est\_msg;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00387}00387\ \ \ \ \ \ \ \ \ est\_msg.header.stamp\ =\ this-\/>now();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ est\_msg.header.frame\_id\ =\ \textcolor{stringliteral}{"{}anchor"{}};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00389}00389\ \ \ \ \ \ \ \ \ est\_msg.child\_frame\_id\ =\ \textcolor{stringliteral}{"{}base\_link"{}};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00390}00390\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ storing\ position\ \&\ orientation}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ est\_msg.pose.pose;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00393}00393\ \ \ \ \ \ \ \ \ p.position.x\ =\ prior\_location[0];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ p.position.y\ =\ prior\_location[1];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00395}00395\ \ \ \ \ \ \ \ \ p.position.z\ =\ prior\_location[2];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00396}00396\ \ \ \ \ \ \ \ \ p.orientation.w\ =\ prior\_orientation[0];\ \textcolor{comment}{//\ quaternion}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ p.orientation.x\ =\ prior\_orientation[1];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ p.orientation.y\ =\ prior\_orientation[2];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00399}00399\ \ \ \ \ \ \ \ \ p.orientation.z\ =\ prior\_orientation[3];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00400}00400\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ storing\ linear/angular\ velocity}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&t\ =\ est\_msg.twist.twist;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00403}00403\ \ \ \ \ \ \ \ \ t.linear.x\ \ =\ prior\_location[3];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00404}00404\ \ \ \ \ \ \ \ \ t.linear.y\ \ =\ prior\_location[4];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00405}00405\ \ \ \ \ \ \ \ \ t.linear.z\ \ =\ prior\_location[5];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00406}00406\ \ \ \ \ \ \ \ \ t.angular.x\ =\ latest\_gyro[0]\ -\/\ prior\_orientation[4]\ -\/\ baseline\_gyro\_vector[0];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ t.angular.y\ =\ latest\_gyro[1]\ -\/\ prior\_orientation[5]\ -\/\ baseline\_gyro\_vector[1];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ t.angular.z\ =\ latest\_gyro[2]\ -\/\ prior\_orientation[6]\ -\/\ baseline\_gyro\_vector[2];}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00409}00409\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ estimation\_publisher-\/>publish(est\_msg);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00411}00411\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ this-\/>file\_out\ <<\ prior\_location[0]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_location[1]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_location[2]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_location[3]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_location[4]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_location[5]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_orientation[0]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_orientation[1]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_orientation[2]\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ prior\_orientation[3]\ <<\ "{},"{};}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ <<\ t.angular.x\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ <<\ t.angular.y\ <<\ "{},"{}}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ <<\ t.angular.z\ <<\ "{},"{};}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00425}00425\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ p\_loc\_diag\ =\ p\_loc.diagonal().array();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ p\_rot\_diag\ =\ p\_rot.diagonal().array();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00428}00428\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (uint32\_t\ i\ =\ 0;\ i\ <\ p\_loc\_diag.size();\ i++)}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ file\_out\ <<\ p\_loc\_diag[i]\ <<\ "{},"{};}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (uint32\_t\ i\ =\ 0;\ i\ <\ p\_rot\_diag.size();\ i++)}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ file\_out\ <<\ p\_rot\_diag[i]\ <<\ "{},"{};}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00433}00433\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ file\_out\ <<\ "{}\(\backslash\)n"{};}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00435}00435\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00436}00436\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00437}00437\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00438}\mbox{\hyperlink{classNavigationNode_ab49ae51383d7919582f736ffbff26488}{00438}}\ \ \ \ \ \mbox{\hyperlink{classNavigationNode_ab49ae51383d7919582f736ffbff26488}{NavigationNode}}()\ :\ Node(\textcolor{stringliteral}{"{}nav\_node"{}})}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00439}00439\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00440}00440\ \ \ \ \ \ \ \ \ file\_out.open(\textcolor{stringliteral}{"{}output.csv"{}});}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00441}00441\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00442}00442\ \ \ \ \ \ \ \ \ IMU\_subscription\ =\ create\_subscription<sensor\_msgs::msg::Imu>(}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/imu/data"{}},\ 10,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&NavigationNode::imu\_cb,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00445}00445\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00446}00446\ \ \ \ \ \ \ \ \ UWB\_subscription\ =\ create\_subscription<std\_msgs::msg::Float32>(}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/uwb"{}},\ rclcpp::SensorDataQoS(),}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&NavigationNode::uwb\_cb,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00449}00449\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00450}00450\ \ \ \ \ \ \ \ \ control\_subscription\ =\ create\_subscription<geometry\_msgs::msg::Quaternion>(}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/smc/control"{}},\ 10,}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&NavigationNode::control\_cb,\ \textcolor{keyword}{this},\ std::placeholders::\_1));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00453}00453\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 40\ Hz\ wall\ timer\ —\ EKF\ update\ is\ decoupled\ from\ UWB\ arrival\ rate}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ ekf\_timer\_\ =\ this-\/>create\_wall\_timer(}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ std::chrono::milliseconds(25),\ \ \ \textcolor{comment}{//\ 1000\ ms\ /\ 40\ Hz\ =\ 25\ ms}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ std::bind(\&NavigationNode::ekf\_timer\_cb,\ \textcolor{keyword}{this}));}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00458}00458\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00459}00459\ \ \ \ \ \ \ \ \ this-\/>declare\_parameter<double>(\textcolor{stringliteral}{"{}init\_x"{}},\ 0.0);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ this-\/>declare\_parameter<double>(\textcolor{stringliteral}{"{}init\_y"{}},\ 0.0);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00461}00461\ \ \ \ \ \ \ \ \ this-\/>declare\_parameter<double>(\textcolor{stringliteral}{"{}init\_z"{}},\ 0.0);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00462}00462\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00463}00463\ \ \ \ \ \ \ \ \ this-\/>START\_X\_FROM\_ANCHOR\ =\ this-\/>get\_parameter(\textcolor{stringliteral}{"{}init\_x"{}}).as\_double();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00464}00464\ \ \ \ \ \ \ \ \ this-\/>START\_Y\_FROM\_ANCHOR\ =\ this-\/>get\_parameter(\textcolor{stringliteral}{"{}init\_y"{}}).as\_double();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ this-\/>START\_Z\_FROM\_ANCHOR\ =\ this-\/>get\_parameter(\textcolor{stringliteral}{"{}init\_z"{}}).as\_double();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00466}00466\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00467}00467\ \ \ \ \ \ \ \ \ estimation\_publisher\ =\ create\_publisher<nav\_msgs::msg::Odometry>(}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}/trans\_est"{}},\ 10);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00469}00469\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ prior\_orientation\ =\ Eigen::VectorXd(7);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00471}00471\ \ \ \ \ \ \ \ \ prior\_orientation.setZero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ prior\_orientation[0]\ =\ 1.0;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ prior\_orientation[4]\ =\ -\/5.303292015263019e-\/05;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ prior\_orientation[5]\ =\ -\/0.0007559242840490004;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ prior\_orientation[6]\ =\ 0.00016513284163815418;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00476}00476\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ prior\_location\ =\ Eigen::VectorXd::Zero(11);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00478}00478\ \ \ \ \ \ \ \ \ prior\_location[0]\ =\ START\_X\_FROM\_ANCHOR;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00479}00479\ \ \ \ \ \ \ \ \ prior\_location[1]\ =\ START\_Y\_FROM\_ANCHOR;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ prior\_location[2]\ =\ START\_Z\_FROM\_ANCHOR;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00481}00481\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00482}00482\ \ \ \ \ \ \ \ \ prior\_location[10]\ =\ 1e-\/2;\ \textcolor{comment}{//\ brangerate}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00483}00483\ \ \ \ \ \ \ \ \ prior\_location[9]\ \ =\ 1e-\/1;\ \textcolor{comment}{//\ brange}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00484}00484\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ prior\_location[8]\ =\ 1e-\/2;\ \textcolor{comment}{//\ baz}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ prior\_location[7]\ =\ 1e-\/2;\ \textcolor{comment}{//\ bay}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00487}00487\ \ \ \ \ \ \ \ \ prior\_location[6]\ =\ 1e-\/2;\ \textcolor{comment}{//\ bax}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00488}00488\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00489}00489\ \ \ \ \ \ \ \ \ prior\_P\_loc.setZero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00490}00490\ \ \ \ \ \ \ \ \ prior\_P\_loc.diagonal()\ <<\ pow(0.01,\ 2),\ pow(0.03,\ 2),\ pow(0.01,\ 2),\ pow(0.001,\ 2),\ pow(0.001,\ 2),}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ pow(0.001,\ 2),\ pow(5e-\/2,\ 2),\ pow(5e-\/3,\ 2),\ pow(5e-\/2,\ 2),\ pow(5e-\/3,\ 2),}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ pow(1e-\/2,\ 2),\ pow(1e-\/2,\ 2),\ pow(1e-\/2,\ 2),\ pow(5e-\/2,\ 2),\ pow(1e-\/2,\ 2);}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00493}00493\ \ \ \ \ \ \ \ \ prior\_P\_rot.setZero();}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00494}00494\ \ \ \ \ \ \ \ \ prior\_P\_rot.diagonal()\ <<\ 0.01,\ 0.01,\ 0.01,\ 7.6e-\/4,\ 7.6e-\/4,\ 7.6e-\/4;}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00495}00495\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00496}00496\ \};}
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00497}00497\ }
-\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00498}00498\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00308}00308\ \}\ \textcolor{comment}{//\ namespace\ nav}}
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{nav__node_8hpp_source_l00310}00310\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

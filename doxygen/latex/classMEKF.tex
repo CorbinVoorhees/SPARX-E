@@ -1,0 +1,222 @@
+\doxysection{MEKF Class Reference}
+\hypertarget{classMEKF}{}\label{classMEKF}\index{MEKF@{MEKF}}
+
+
+{\ttfamily \#include $<$mekf.\+hpp$>$}
+
+
+
+Inheritance diagram for MEKF\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{classMEKF__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for MEKF\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{classMEKF__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classMEKF_a9833178ae1ee57972b84627d4c84ec7b}{is\+\_\+finished\+\_\+orienting}} ()
+\item 
+\mbox{\hyperlink{classMEKF_ac58ff84d27642fa80fc6e111ee6ce601}{MEKF}} (Steady\+Clock\+::time\+\_\+point t0)
+\item 
+Eigen\+::\+Quaterniond \mbox{\hyperlink{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}{orientation}} () const
+\item 
+Eigen\+::\+Quaterniond \mbox{\hyperlink{classMEKF_a0c61327054091f50f2afefdc163e2572}{orientation0}} () const
+\item 
+Eigen\+::\+Quaterniond \mbox{\hyperlink{classMEKF_a15afe8874ea9d5b44f6ca0ef20d0047c}{rel\+\_\+orientation}} () const
+\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{classMEKF_a190351c210e9b8eb7b046e5334500eed}{get\+\_\+bg}} ()
+\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{classMEKF_aafb16c6f6a9bc53011873843654234ca}{rpy}} () const
+\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{classMEKF_aa8bc6050d0718a18deb0ecb74b1407bf}{gyro\+\_\+bias}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classekf_1_1EKF_a3f36b75db5c5266f85ab5d22eefd2a8e}{get\+\_\+cov\+\_\+matrix}} () const
+\item 
+virtual \mbox{\hyperlink{classekf_1_1EKF_a44769999a203e1bd5cde84f5a33a3bfd}{\texorpdfstring{$\sim$}{\string~}\+EKF}} ()=default
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a1fb02603b5c59dfd90839e4c1e625a1f}{tick}} (Steady\+Clock\+::time\+\_\+point now)
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a2a4abbe07a27f4f6eb7f5757133f7514}{last\+\_\+gain}} (const std\+::string \&name, Eigen\+::\+Index n) const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a921f95cbea690a28fd17c498e4d1912b}{last\+\_\+innovation}} (const std\+::string \&name, Eigen\+::\+Index m) const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classekf_1_1EKF_a2b55a37be34e719b46aee41fdb08289d}{num\+\_\+steps}} () const
+\item 
+const Eigen\+::\+Matrix\+Xd \& \mbox{\hyperlink{classekf_1_1EKF_a6f013297f3e51f8ab9b7f009db2e42dd}{covariance}} () const
+\item 
+double \mbox{\hyperlink{classekf_1_1EKF_a0e30b789f01959b4109192ec2012c8ec}{last\+\_\+nis}} () const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a2c128fc1ee8f8b2c61be06ed1557aa7e}{get\+\_\+curr\+\_\+state}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classMEKF_aef42816238410c8da83024e67d75750f}{should\+\_\+print\+\_\+diagnostic}} = true
+\item 
+bool \mbox{\hyperlink{classMEKF_ab98f50e8ad2b02c49db99ddfc41595ed}{suppress\+\_\+magnm}} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Types inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structekf_1_1EKF_1_1snapshot}{ekf\+::\+EKF\+::snapshot}} \mbox{\hyperlink{classekf_1_1EKF_a817667abe2ccae1ad9bf7a3e5ff02ef1}{snapshot}}
+\item 
+using \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}} = std\+::function$<$ bool(Eigen\+::\+Matrix\+Xd \&H, Eigen\+::\+Vector\+Xd \&r)$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classekf_1_1EKF_aadf052d59c7a26ad5fbbbb0e1e56bc5e}{EKF}} (const Eigen\+::\+Matrix\+Xd \&P0, const Eigen\+::\+Vector\+Xd \&x0, Steady\+Clock\+::time\+\_\+point t0)
+\item 
+\mbox{\hyperlink{classekf_1_1EKF_aadbc06513e883eced7bf225459dac5db}{EKF}} (Eigen\+::\+Index state\+\_\+len, Eigen\+::\+Index cov\+\_\+len, Steady\+Clock\+::time\+\_\+point t)
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a9cf170fac053324be15a55840a525c04}{queue\+\_\+task}} (Steady\+Clock\+::time\+\_\+point t, std\+::function$<$ void()$>$ callback)
+\item 
+void \mbox{\hyperlink{classekf_1_1EKF_a7e52bd42115d9f9e50e340030c5dfd7a}{queue\+\_\+correction}} (Steady\+Clock\+::time\+\_\+point t, const Eigen\+::\+Matrix\+Xd \&R, \mbox{\hyperlink{classekf_1_1EKF_a8a86e9b7aafc24c2bdef89536a089d35}{Compute\+Hr\+Fn}} compute\+\_\+\+Hr, std\+::string name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classekf_1_1EKF}{ekf\+::\+EKF}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classekf_1_1EKF_a0fe5aba21fa40cef8d79e96b547547c3}{nis}} = 0.\+0
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classekf_1_1EKF_a1ff3bed85d3a463212ebc7cdc5871f5b}{P}}
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classekf_1_1EKF_a64f70b5eadac31a71fadc76690bd0c59}{x}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00008}{8}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMEKF_ac58ff84d27642fa80fc6e111ee6ce601}\label{classMEKF_ac58ff84d27642fa80fc6e111ee6ce601} 
+\index{MEKF@{MEKF}!MEKF@{MEKF}}
+\index{MEKF@{MEKF}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{MEKF()}{MEKF()}}
+{\footnotesize\ttfamily MEKF\+::\+MEKF (\begin{DoxyParamCaption}\item[{Steady\+Clock\+::time\+\_\+point}]{t0 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00219}{219}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMEKF_a190351c210e9b8eb7b046e5334500eed}\label{classMEKF_a190351c210e9b8eb7b046e5334500eed} 
+\index{MEKF@{MEKF}!get\_bg@{get\_bg}}
+\index{get\_bg@{get\_bg}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{get\_bg()}{get\_bg()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d MEKF\+::get\+\_\+bg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00391}{391}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_aa8bc6050d0718a18deb0ecb74b1407bf}\label{classMEKF_aa8bc6050d0718a18deb0ecb74b1407bf} 
+\index{MEKF@{MEKF}!gyro\_bias@{gyro\_bias}}
+\index{gyro\_bias@{gyro\_bias}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{gyro\_bias()}{gyro\_bias()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d MEKF\+::gyro\+\_\+bias (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00403}{403}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_a9833178ae1ee57972b84627d4c84ec7b}\label{classMEKF_a9833178ae1ee57972b84627d4c84ec7b} 
+\index{MEKF@{MEKF}!is\_finished\_orienting@{is\_finished\_orienting}}
+\index{is\_finished\_orienting@{is\_finished\_orienting}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{is\_finished\_orienting()}{is\_finished\_orienting()}}
+{\footnotesize\ttfamily bool MEKF\+::is\+\_\+finished\+\_\+orienting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00217}{217}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b}\label{classMEKF_a034bb29728d74ffd795d77d39d3f9d4b} 
+\index{MEKF@{MEKF}!orientation@{orientation}}
+\index{orientation@{orientation}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{orientation()}{orientation()}}
+{\footnotesize\ttfamily Eigen\+::\+Quaterniond MEKF\+::orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00378}{378}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_a0c61327054091f50f2afefdc163e2572}\label{classMEKF_a0c61327054091f50f2afefdc163e2572} 
+\index{MEKF@{MEKF}!orientation0@{orientation0}}
+\index{orientation0@{orientation0}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{orientation0()}{orientation0()}}
+{\footnotesize\ttfamily Eigen\+::\+Quaterniond MEKF\+::orientation0 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00382}{382}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_a15afe8874ea9d5b44f6ca0ef20d0047c}\label{classMEKF_a15afe8874ea9d5b44f6ca0ef20d0047c} 
+\index{MEKF@{MEKF}!rel\_orientation@{rel\_orientation}}
+\index{rel\_orientation@{rel\_orientation}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{rel\_orientation()}{rel\_orientation()}}
+{\footnotesize\ttfamily Eigen\+::\+Quaterniond MEKF\+::rel\+\_\+orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00384}{384}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_aafb16c6f6a9bc53011873843654234ca}\label{classMEKF_aafb16c6f6a9bc53011873843654234ca} 
+\index{MEKF@{MEKF}!rpy@{rpy}}
+\index{rpy@{rpy}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{rpy()}{rpy()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d MEKF\+::rpy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00393}{393}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classMEKF_aef42816238410c8da83024e67d75750f}\label{classMEKF_aef42816238410c8da83024e67d75750f} 
+\index{MEKF@{MEKF}!should\_print\_diagnostic@{should\_print\_diagnostic}}
+\index{should\_print\_diagnostic@{should\_print\_diagnostic}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{should\_print\_diagnostic}{should\_print\_diagnostic}}
+{\footnotesize\ttfamily bool MEKF\+::should\+\_\+print\+\_\+diagnostic = true}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00215}{215}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+\Hypertarget{classMEKF_ab98f50e8ad2b02c49db99ddfc41595ed}\label{classMEKF_ab98f50e8ad2b02c49db99ddfc41595ed} 
+\index{MEKF@{MEKF}!suppress\_magnm@{suppress\_magnm}}
+\index{suppress\_magnm@{suppress\_magnm}!MEKF@{MEKF}}
+\doxysubsubsection{\texorpdfstring{suppress\_magnm}{suppress\_magnm}}
+{\footnotesize\ttfamily bool MEKF\+::suppress\+\_\+magnm = false}
+
+
+
+Definition at line \mbox{\hyperlink{mekf_8hpp_source_l00216}{216}} of file \mbox{\hyperlink{mekf_8hpp_source}{mekf.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{mekf_8hpp}{mekf.\+hpp}}\end{DoxyCompactItemize}

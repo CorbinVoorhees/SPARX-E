@@ -1,5 +1,4 @@
-#ifndef GENERIC_BRIDGE
-#define GENERIC_BRIDGE
+#pragma once
 
 #include <cassert>
 #include <cerrno>
@@ -197,5 +196,3 @@ public:
     return s;
   }
 };
-
-#endif

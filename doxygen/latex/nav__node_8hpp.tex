@@ -1,24 +1,42 @@
-\doxysection{src/nav\+\_\+filters/src/nav\+\_\+node.hpp File Reference}
-\hypertarget{nav__node_8hpp}{}\label{nav__node_8hpp}\index{src/nav\_filters/src/nav\_node.hpp@{src/nav\_filters/src/nav\_node.hpp}}
-{\ttfamily \#include "{}ekf.\+hpp"{}}\newline
-{\ttfamily \#include "{}rclcpp/rclcpp.\+hpp"{}}\newline
-{\ttfamily \#include "{}std\+\_\+msgs/msg/float32.\+hpp"{}}\newline
-{\ttfamily \#include "{}geometry\+\_\+msgs/msg/vector3.\+hpp"{}}\newline
-{\ttfamily \#include "{}sensor\+\_\+msgs/msg/imu.\+hpp"{}}\newline
-{\ttfamily \#include "{}nav\+\_\+msgs/msg/odometry.\+hpp"{}}\newline
+\doxysection{src/nav\+\_\+filters/include/nav\+\_\+filters/nav\+\_\+node.hpp File Reference}
+\hypertarget{nav__node_8hpp}{}\label{nav__node_8hpp}\index{src/nav\_filters/include/nav\_filters/nav\_node.hpp@{src/nav\_filters/include/nav\_filters/nav\_node.hpp}}
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
 {\ttfamily \#include $<$chrono$>$}\newline
-{\ttfamily \#include $<$cmath$>$}\newline
-{\ttfamily \#include $<$mutex$>$}\newline
-{\ttfamily \#include $<$queue$>$}\newline
-{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/msg/quaternion.\+hpp$>$}\newline
+{\ttfamily \#include $<$rclcpp/node.\+hpp$>$}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/msg/imu.\+hpp$>$}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/msg/magnetic\+\_\+field.\+hpp$>$}\newline
+{\ttfamily \#include $<$std\+\_\+msgs/msg/float32.\+hpp$>$}\newline
+{\ttfamily \#include "{}ISensor.\+hpp"{}}\newline
+{\ttfamily \#include "{}ekf.\+hpp"{}}\newline
+{\ttfamily \#include "{}mekf.\+hpp"{}}\newline
+{\ttfamily \#include "{}trans\+\_\+ekf.\+hpp"{}}\newline
 Include dependency graph for nav\+\_\+node.\+hpp\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{nav__node_8hpp__incl}
+\end{center}
+\end{figure}
 This graph shows which files directly or indirectly include this file\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{nav__node_8hpp__dep__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \mbox{\hyperlink{classNavigationNode}{Navigation\+Node}}
+class \mbox{\hyperlink{classnav_1_1NavNode}{nav\+::\+Nav\+Node}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacenav}{nav}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
@@ -32,9 +50,9 @@ using \mbox{\hyperlink{nav__node_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\
 \index{nav\_node.hpp@{nav\_node.hpp}!SteadyClock@{SteadyClock}}
 \index{SteadyClock@{SteadyClock}!nav\_node.hpp@{nav\_node.hpp}}
 \doxysubsubsection{\texorpdfstring{SteadyClock}{SteadyClock}}
-{\footnotesize\ttfamily using \mbox{\hyperlink{nav__node_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\+Clock}} =  std\+::chrono\+::steady\+\_\+clock}
+{\footnotesize\ttfamily using \mbox{\hyperlink{ekf_8hpp_a2bad2cc0a942ac46811d2fb59b8fa4a5}{Steady\+Clock}} =  std\+::chrono\+::steady\+\_\+clock}
 
 
 
-Definition at line \mbox{\hyperlink{nav__node_8hpp_source_l00016}{16}} of file \mbox{\hyperlink{nav__node_8hpp_source}{nav\+\_\+node.\+hpp}}.
+Definition at line \mbox{\hyperlink{nav__node_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{nav__node_8hpp_source}{nav\+\_\+node.\+hpp}}.
 

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SPARX Source Docs: src/nav_filters/src/ekf.hpp File Reference</title>
+<title>SPARX Source Docs: src/nav_filters/include/nav_filters/ekf.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -90,199 +99,172 @@ $(document).ready(function(){initNavTree('ekf_8hpp.html',''); initResizable(); }
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">ekf.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;Eigen/Dense&quot;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;fstream&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="ISensor_8hpp_source.html">ISensor.hpp</a>&quot;</code><br />
+<code>#include &lt;Eigen/Dense&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;functional&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
+<code>#include &lt;queue&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ekf.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="ekf_8hpp__incl.png" border="0" usemap="#asrc_2nav__filters_2src_2ekf_8hpp" alt=""/></div>
-<!-- MAP 0 -->
+<div class="center"><img src="ekf_8hpp__incl.png" border="0" usemap="#asrc_2nav__filters_2include_2nav__filters_2ekf_8hpp" alt=""/></div>
+<map name="asrc_2nav__filters_2include_2nav__filters_2ekf_8hpp" id="asrc_2nav__filters_2include_2nav__filters_2ekf_8hpp">
+<area shape="rect" title=" " alt="" coords="296,5,460,45"/>
+<area shape="rect" href="ISensor_8hpp.html" title=" " alt="" coords="213,93,311,119"/>
+<area shape="poly" title=" " alt="" coords="351,48,292,88,289,83,348,43"/>
+<area shape="rect" title=" " alt="" coords="5,167,108,192"/>
+<area shape="poly" title=" " alt="" coords="306,48,243,69,179,96,126,128,82,160,79,156,123,123,177,91,241,64,304,43"/>
+<area shape="rect" title=" " alt="" coords="133,167,199,192"/>
+<area shape="poly" title=" " alt="" coords="297,45,248,65,224,79,204,95,184,123,174,154,168,152,180,121,200,92,221,74,245,60,295,40"/>
+<area shape="rect" title=" " alt="" coords="335,93,421,119"/>
+<area shape="poly" title=" " alt="" coords="381,46,381,79,375,79,375,46"/>
+<area shape="rect" title=" " alt="" coords="446,93,497,119"/>
+<area shape="poly" title=" " alt="" coords="402,44,448,82,445,86,399,48"/>
+<area shape="rect" title=" " alt="" coords="521,93,584,119"/>
+<area shape="poly" title=" " alt="" coords="421,43,516,85,513,90,419,48"/>
+<area shape="rect" title=" " alt="" coords="608,93,671,119"/>
+<area shape="poly" title=" " alt="" coords="441,43,596,89,594,94,440,48"/>
+<area shape="rect" title=" " alt="" coords="728,167,815,192"/>
+<area shape="poly" title=" " alt="" coords="311,114,324,116,432,131,518,139,604,148,715,164,714,169,604,153,517,144,431,136,323,121,310,119"/>
+<area shape="poly" title=" " alt="" coords="230,121,104,165,102,160,228,116"/>
+<area shape="poly" title=" " alt="" coords="248,121,194,160,191,156,245,117"/>
+<area shape="rect" title=" " alt="" coords="223,167,301,192"/>
+<area shape="poly" title=" " alt="" coords="265,119,265,153,259,153,259,119"/>
+<area shape="rect" title=" " alt="" coords="325,167,439,192"/>
+<area shape="poly" title=" " alt="" coords="283,116,352,157,349,162,280,121"/>
+<area shape="rect" title=" " alt="" coords="464,167,556,192"/>
+<area shape="poly" title=" " alt="" coords="303,116,457,160,456,165,301,121"/>
+<area shape="rect" title=" " alt="" coords="580,167,704,192"/>
+<area shape="poly" title=" " alt="" coords="311,114,568,162,567,167,310,119"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="ekf_8hpp__dep__incl.png" border="0" usemap="#asrc_2nav__filters_2src_2ekf_8hppdep" alt=""/></div>
-<!-- MAP 1 -->
+<div class="center"><img src="ekf_8hpp__dep__incl.png" border="0" usemap="#asrc_2nav__filters_2include_2nav__filters_2ekf_8hppdep" alt=""/></div>
+<map name="asrc_2nav__filters_2include_2nav__filters_2ekf_8hppdep" id="asrc_2nav__filters_2include_2nav__filters_2ekf_8hppdep">
+<area shape="rect" title=" " alt="" coords="125,5,289,45"/>
+<area shape="rect" href="mekf_8hpp.html" title=" " alt="" coords="5,93,169,133"/>
+<area shape="poly" title=" " alt="" coords="171,56,115,95,112,91,168,51"/>
+<area shape="rect" href="nav__node_8hpp.html" title=" " alt="" coords="73,269,262,309"/>
+<area shape="poly" title=" " alt="" coords="234,55,257,90,277,132,283,155,286,178,283,201,275,223,250,251,219,271,216,267,247,247,270,220,278,200,280,178,278,156,272,134,253,93,230,58"/>
+<area shape="rect" href="trans__ekf_8hpp.html" title=" " alt="" coords="74,181,261,221"/>
+<area shape="poly" title=" " alt="" coords="203,59,174,182,169,181,197,58"/>
+<area shape="poly" title=" " alt="" coords="71,146,59,183,59,202,64,220,88,247,118,267,116,271,84,251,60,223,53,203,54,182,66,145"/>
+<area shape="poly" title=" " alt="" coords="116,142,152,179,148,183,112,145"/>
+<area shape="rect" href="nav__filters_2src_2main_8cpp.html" title=" " alt="" coords="99,357,235,397"/>
+<area shape="poly" title=" " alt="" coords="170,323,170,357,165,357,165,323"/>
+<area shape="poly" title=" " alt="" coords="170,235,170,269,165,269,165,235"/>
+</map>
 </div>
 </div>
 <p><a href="ekf_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classekf_1_1EKF.html">ekf::EKF</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structekf_1_1EKF_1_1snapshot.html">ekf::EKF::snapshot</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceekf" id="r_namespaceekf"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceekf.html">ekf</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a2bad2cc0a942ac46811d2fb59b8fa4a5" id="r_a2bad2cc0a942ac46811d2fb59b8fa4a5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ekf_8hpp.html#a2bad2cc0a942ac46811d2fb59b8fa4a5">SteadyClock</a> = std::chrono::steady_clock</td></tr>
+<tr class="separator:a2bad2cc0a942ac46811d2fb59b8fa4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa03ef056b2faac861333846f6651f1ed" id="r_aa03ef056b2faac861333846f6651f1ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ekf_8hpp.html#aa03ef056b2faac861333846f6651f1ed">rotational_mekf</a> (const Eigen::Quaterniond &amp;q_est_triad, const Eigen::Vector3d &amp;w_gyro, const Eigen::VectorXd &amp;prior_state, const Eigen::Matrix&lt; double, 6, 6 &gt; &amp;prior_P, double dt, double sigma_gyro, Eigen::Matrix&lt; double, 6, 6 &gt; &amp;P, Eigen::VectorXd &amp;mekf_out)</td></tr>
-<tr class="separator:aa03ef056b2faac861333846f6651f1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bc11e0a1899ec4ee9415102f8cbc5c8" id="r_a4bc11e0a1899ec4ee9415102f8cbc5c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ekf_8hpp.html#a4bc11e0a1899ec4ee9415102f8cbc5c8">translational_ekf</a> (const Eigen::VectorXd &amp;IMU_const, const float_t range_const, const float_t range_rate_const, const Eigen::Vector3d &amp;orientation_estimate, const Eigen::VectorXd &amp;u, const Eigen::VectorXd &amp;prior_location, const Eigen::MatrixXd &amp;prior_P, const Eigen::MatrixXd &amp;rot_P, double dt, Eigen::Matrix&lt; double, 15, 15 &gt; &amp;P, Eigen::VectorXd &amp;state_hat)</td></tr>
-<tr class="separator:a4bc11e0a1899ec4ee9415102f8cbc5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad03dbc11f697911d4aefdea77c7ae2bc" id="r_ad03dbc11f697911d4aefdea77c7ae2bc"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ekf_8hpp.html#ad03dbc11f697911d4aefdea77c7ae2bc">skew</a> (const Eigen::Vector3d &amp;v)</td></tr>
+<tr class="separator:ad03dbc11f697911d4aefdea77c7ae2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:af19c968b28d79f66a1a4976c7d299ef5" id="r_af19c968b28d79f66a1a4976c7d299ef5"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ekf_8hpp.html#af19c968b28d79f66a1a4976c7d299ef5">grav_vec</a> {0.0, 0.0, 9.81}</td></tr>
+<tr class="separator:af19c968b28d79f66a1a4976c7d299ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a2bad2cc0a942ac46811d2fb59b8fa4a5" name="a2bad2cc0a942ac46811d2fb59b8fa4a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bad2cc0a942ac46811d2fb59b8fa4a5">&#9670;&#160;</a></span>SteadyClock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="ekf_8hpp.html#a2bad2cc0a942ac46811d2fb59b8fa4a5">SteadyClock</a> =  std::chrono::steady_clock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ekf_8hpp_source.html#l00017">17</a> of file <a class="el" href="ekf_8hpp_source.html">ekf.hpp</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aa03ef056b2faac861333846f6651f1ed" name="aa03ef056b2faac861333846f6651f1ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa03ef056b2faac861333846f6651f1ed">&#9670;&#160;</a></span>rotational_mekf()</h2>
+<a id="ad03dbc11f697911d4aefdea77c7ae2bc" name="ad03dbc11f697911d4aefdea77c7ae2bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad03dbc11f697911d4aefdea77c7ae2bc">&#9670;&#160;</a></span>skew()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void rotational_mekf </td>
+          <td class="memname">Eigen::Matrix3d skew </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::Quaterniond &amp;&#160;</td>
-          <td class="paramname"><em>q_est_triad</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>w_gyro</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>prior_state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Matrix&lt; double, 6, 6 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>prior_P</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>sigma_gyro</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Matrix&lt; double, 6, 6 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>P</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>mekf_out</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ekf_8hpp_source.html#l00007">7</a> of file <a class="el" href="ekf_8hpp_source.html">ekf.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ekf_8hpp_source.html#l00012">12</a> of file <a class="el" href="ekf_8hpp_source.html">ekf.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a4bc11e0a1899ec4ee9415102f8cbc5c8" name="a4bc11e0a1899ec4ee9415102f8cbc5c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bc11e0a1899ec4ee9415102f8cbc5c8">&#9670;&#160;</a></span>translational_ekf()</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="af19c968b28d79f66a1a4976c7d299ef5" name="af19c968b28d79f66a1a4976c7d299ef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19c968b28d79f66a1a4976c7d299ef5">&#9670;&#160;</a></span>grav_vec</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void translational_ekf </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>IMU_const</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float_t&#160;</td>
-          <td class="paramname"><em>range_const</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float_t&#160;</td>
-          <td class="paramname"><em>range_rate_const</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>orientation_estimate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>u</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>prior_location</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>prior_P</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>rot_P</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Matrix&lt; double, 15, 15 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>P</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>state_hat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">const Eigen::Vector3d grav_vec {0.0, 0.0, 9.81}</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">IMU_const</td><td></td></tr>
-    <tr><td class="paramname">range_const</td><td></td></tr>
-    <tr><td class="paramname">range_rate_const</td><td></td></tr>
-    <tr><td class="paramname">orientation_estimate</td><td></td></tr>
-    <tr><td class="paramname">u</td><td></td></tr>
-    <tr><td class="paramname">prior_location</td><td></td></tr>
-    <tr><td class="paramname">prior_P</td><td></td></tr>
-    <tr><td class="paramname">rot_P</td><td></td></tr>
-    <tr><td class="paramname">dt</td><td></td></tr>
-    <tr><td class="paramname">P</td><td></td></tr>
-    <tr><td class="paramname">state_hat</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
 
-<p class="definition">Definition at line <a class="el" href="ekf_8hpp_source.html#l00114">114</a> of file <a class="el" href="ekf_8hpp_source.html">ekf.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ekf_8hpp_source.html#l00011">11</a> of file <a class="el" href="ekf_8hpp_source.html">ekf.hpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +273,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_e7f5534288e60c743609b705508d80a9.html">nav_filters</a></li><li class="navelem"><a class="el" href="dir_466feae0e27deabab9f3b5f53436e42b.html">src</a></li><li class="navelem"><a class="el" href="ekf_8hpp.html">ekf.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_e7f5534288e60c743609b705508d80a9.html">nav_filters</a></li><li class="navelem"><a class="el" href="dir_d860096e0e5b2fcfb81b91392280f83d.html">include</a></li><li class="navelem"><a class="el" href="dir_7a8391f3b8e767367875e891a5f03ec3.html">nav_filters</a></li><li class="navelem"><a class="el" href="ekf_8hpp.html">ekf.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

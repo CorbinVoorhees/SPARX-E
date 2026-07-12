@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -94,18 +103,63 @@ $(document).ready(function(){initNavTree('example_8h.html',''); initResizable();
   <div class="headertitle"><div class="title">example.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="unitree__lidar__sdk_8h_source.html">unitree_lidar_sdk.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="unitree__lidar__sdk_8h_source.html">unitree_lidar_sdk.h</a>&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;iomanip&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for example.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="example_8h__incl.png" border="0" usemap="#asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2example_8h" alt=""/></div>
-<!-- MAP 0 -->
+<map name="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2example_8h" id="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2example_8h">
+<area shape="rect" title=" " alt="" coords="346,5,558,45"/>
+<area shape="rect" href="unitree__lidar__sdk_8h.html" title=" " alt="" coords="242,93,388,119"/>
+<area shape="poly" title=" " alt="" coords="421,48,348,89,346,84,418,43"/>
+<area shape="rect" title=" " alt="" coords="412,93,492,119"/>
+<area shape="poly" title=" " alt="" coords="455,46,455,79,450,79,450,46"/>
+<area shape="rect" title=" " alt="" coords="516,93,591,119"/>
+<area shape="poly" title=" " alt="" coords="478,43,529,82,526,87,475,48"/>
+<area shape="rect" href="unitree__lidar__utilities_8h.html" title=" " alt="" coords="160,167,332,192"/>
+<area shape="poly" title=" " alt="" coords="305,121,268,159,264,155,302,117"/>
+<area shape="rect" title=" " alt="" coords="356,167,415,192"/>
+<area shape="poly" title=" " alt="" coords="328,117,366,155,363,159,325,121"/>
+<area shape="rect" title=" " alt="" coords="266,313,332,339"/>
+<area shape="poly" title=" " alt="" coords="160,187,97,195,42,210,22,220,11,232,9,246,18,264,33,276,56,286,118,302,189,313,252,319,251,324,188,318,117,308,54,291,30,280,14,267,4,247,6,230,19,216,40,205,96,190,159,182"/>
+<area shape="rect" title=" " alt="" coords="28,240,103,265"/>
+<area shape="poly" title=" " alt="" coords="218,195,109,237,107,232,216,190"/>
+<area shape="rect" title=" " alt="" coords="128,240,190,265"/>
+<area shape="poly" title=" " alt="" coords="233,194,185,233,182,229,230,190"/>
+<area shape="rect" title=" " alt="" coords="214,240,277,265"/>
+<area shape="poly" title=" " alt="" coords="248,192,248,226,243,226,243,192"/>
+<area shape="rect" title=" " alt="" coords="302,240,366,265"/>
+<area shape="poly" title=" " alt="" coords="261,190,310,229,307,233,258,194"/>
+<area shape="rect" href="unitree__lidar__sdk__config_8h.html" title=" " alt="" coords="390,240,582,265"/>
+<area shape="poly" title=" " alt="" coords="285,189,434,233,433,239,283,195"/>
+<area shape="rect" href="unitree__lidar__protocol_8h.html" title=" " alt="" coords="606,240,782,265"/>
+<area shape="poly" title=" " alt="" coords="318,189,608,235,607,240,317,195"/>
+<area shape="poly" title=" " alt="" coords="631,268,346,319,345,314,630,263"/>
+<area shape="rect" title=" " alt="" coords="619,313,680,339"/>
+<area shape="poly" title=" " alt="" coords="689,267,666,303,662,300,684,264"/>
+<area shape="rect" title=" " alt="" coords="704,313,771,339"/>
+<area shape="poly" title=" " alt="" coords="703,264,726,300,721,303,699,267"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="example_8h__dep__incl.png" border="0" usemap="#asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2example_8hdep" alt=""/></div>
-<!-- MAP 1 -->
+<map name="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2example_8hdep" id="asrc_2unilidar__sdk2_2unitree__lidar__sdk_2include_2example_8hdep">
+<area shape="rect" title=" " alt="" coords="473,5,685,45"/>
+<area shape="rect" href="example__lidar__serial_8cpp.html" title=" " alt="" coords="5,93,223,148"/>
+<area shape="poly" title=" " alt="" coords="466,51,235,96,224,98,223,93,233,91,465,45"/>
+<area shape="rect" href="example__lidar__udp_8cpp.html" title=" " alt="" coords="247,93,464,148"/>
+<area shape="poly" title=" " alt="" coords="522,53,419,96,417,91,520,48"/>
+<area shape="rect" href="set__ip__address_8cpp.html" title=" " alt="" coords="488,93,671,148"/>
+<area shape="poly" title=" " alt="" coords="582,59,582,93,577,93,577,59"/>
+<area shape="rect" href="set__to__serial__mode_8cpp.html" title=" " alt="" coords="695,93,877,148"/>
+<area shape="poly" title=" " alt="" coords="635,49,729,91,727,96,632,53"/>
+<area shape="rect" href="set__to__udp__mode_8cpp.html" title=" " alt="" coords="901,93,1084,148"/>
+<area shape="poly" title=" " alt="" coords="685,46,891,91,902,93,900,99,889,96,683,51"/>
+</map>
 </div>
 </div>
 <p><a href="example_8h_source.html">Go to the source code of this file.</a></p>
@@ -121,6 +175,9 @@ Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void exampleProcess </td>
@@ -130,9 +187,14 @@ Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="example_8h_source.html#l00011">11</a> of file <a class="el" href="example_8h_source.html">example.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="example_8h_source.html#l00013">13</a> of file <a class="el" href="example_8h_source.html">example.h</a>.</p>
 
 </div>
 </div>

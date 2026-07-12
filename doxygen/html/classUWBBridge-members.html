@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -95,8 +104,21 @@ $(document).ready(function(){initNavTree('classUWBBridge.html',''); initResizabl
 
 <p>This is the complete list of members for <a class="el" href="classUWBBridge.html">UWBBridge</a>, including all inherited members.</p>
 <table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#a41de155823ba40f07bf99843a8eaab92">baud_rate</a></td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#a740dab7d5937092e5deb8b0a3c1bb3ed">BridgeBase</a>(const BridgeBase &amp;)=delete</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#adb16281ff6ac7c2848754829b683eb79">BridgeBase</a>(BridgeBase &amp;&amp;)=delete</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#a3336dab88e1f5c2fed0791f8b507d5e1">BridgeBase</a>(std::string node_name, std::string serial_port_str, int baud_rate_int, size_t buflen)</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#a5a265dd563033cf843ffa7a753b7acb1">buf</a></td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#af5e3461975c69370adcbee6a66369cc6">operator=</a>(const BridgeBase &amp;)=delete</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#acfb9c232955e7e1897259734be10fd5a">operator=</a>(BridgeBase &amp;&amp;)=delete</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#a4b530ff07f338dae058913095302498f">read_serial</a>()</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#afe6ba71fdf93a6b1e068c2422237f2ca">serial_fd</a></td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#af8bd2bed2327173d2b8aaf05fb364a22">serial_monitor_subscription</a></td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#a316bdd6412a414a77e08c1605f462472">serial_port</a></td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#a6819ff19051ea2c11beaed2ab30a684a">target</a></td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classUWBBridge.html#a8f19e7bc07403a3aa9444cee49c74aaa">UWBBridge</a>()</td><td class="entry"><a class="el" href="classUWBBridge.html">UWBBridge</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classUWBBridge.html#af02fe7029a28d55e63ff8262e208cb74">~UWBBridge</a>()</td><td class="entry"><a class="el" href="classUWBBridge.html">UWBBridge</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBridgeBase.html#a225a5da44b606264c006589618584662">write_serial</a>(const std_msgs::msg::String::SharedPtr msg)</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBridgeBase.html#a47b98c8c59f5fd96fdba955795c3d83b">~BridgeBase</a>()</td><td class="entry"><a class="el" href="classBridgeBase.html">BridgeBase</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

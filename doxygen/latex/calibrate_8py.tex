@@ -1,0 +1,43 @@
+\doxysection{analysis/calibrate.py File Reference}
+\hypertarget{calibrate_8py}{}\label{calibrate_8py}\index{analysis/calibrate.py@{analysis/calibrate.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecalibrate}{calibrate}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecalibrate_a35cd52347e13938fd66bdbd9e12d0bf7}{calibrate.\+load\+\_\+csv}} (base)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a359014eba4f3470167d1803073c0a2ec}{calibrate.\+extract}} (df, sensor\+\_\+type)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a693ba1a97e67e93f1557c45e05d836af}{calibrate.\+fit\+\_\+ellipsoid}} (mx, my, mz)
+\item 
+\mbox{\hyperlink{namespacecalibrate_ae15a415a08ff01cebcad91bf2fdc0b97}{calibrate.\+apply\+\_\+mag\+\_\+calibration}} (mx, my, mz, bias, W)
+\item 
+\mbox{\hyperlink{namespacecalibrate_ae0bd9ea7283cff8feb6d7173a757362c}{calibrate.\+save\+\_\+mag\+\_\+calibration}} (path, bias, W)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a6b0e263f3d73e3a53e7369543057e183}{calibrate.\+recommend\+\_\+cutoff}} (x, fs, top\+\_\+frac=0.\+2, drop\+\_\+factor=3.\+0, fmin\+\_\+floor=0.\+5)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a1df9c062b61661b2a2942756b425e9e7}{calibrate.\+recommend\+\_\+sensor\+\_\+cutoff}} (df, sensor\+\_\+type, fs)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a45b56b2c7d3ded4d5e19915e31cb5ce3}{calibrate.\+save\+\_\+filter\+\_\+cutoffs}} (path, fc\+\_\+gyro, fc\+\_\+accel, fc\+\_\+magnm)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a534a18074e94c06cb388feae3505cf4f}{calibrate.\+plot\+\_\+psd}} (sensor\+\_\+type, psd\+\_\+data)
+\item 
+\mbox{\hyperlink{namespacecalibrate_a3be6ce6312a1951cc5ec0e33d011bb6d}{calibrate.\+main}} (\mbox{\hyperlink{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6}{csv\+\_\+path}}=\mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}}, show\+\_\+plots=True)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{calibrate.\+SENSORS\+\_\+\+CSV}} = \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespacecalibrate_ae1cd95e66fc97588f692c08e320b65d5}{calibrate.\+MAG\+\_\+\+CALIBRATION\+\_\+\+PATH}} = \textquotesingle{}mag\+\_\+calibration.\+txt\textquotesingle{}
+\item 
+str \mbox{\hyperlink{namespacecalibrate_a746136a4204ad2981875db27158859cc}{calibrate.\+FILTER\+\_\+\+CUTOFFS\+\_\+\+PATH}} = \textquotesingle{}filter\+\_\+cutoffs.\+txt\textquotesingle{}
+\item 
+float \mbox{\hyperlink{namespacecalibrate_a0e4ce7a16dba28d17ba7ecd604bc2872}{calibrate.\+IMU\+\_\+\+SAMPLE\+\_\+\+RATE\+\_\+\+HZ}} = 125.\+0
+\item 
+int \mbox{\hyperlink{namespacecalibrate_ad03b6e7df99f0ec7d4ca75f95f5f24e6}{calibrate.\+csv\+\_\+path}} = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \mbox{\hyperlink{namespacecalibrate_aa734f5d8c00b3952911e932712a7d8dd}{SENSORS\+\_\+\+CSV}}
+\end{DoxyCompactItemize}

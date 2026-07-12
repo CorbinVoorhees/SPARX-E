@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['read_5fpid_2epy_0',['read_pid.py',['../read__pid_8py.html',1,'']]],
-  ['readme_2emd_1',['readme.md',['../README_8md.html',1,'(Global Namespace)'],['../unitree__lidar__ros2_2src_2unitree__lidar__ros2_2README_8md.html',1,'(Global Namespace)'],['../unitree__lidar__sdk_2README_8md.html',1,'(Global Namespace)']]],
-  ['readme_5fcn_2emd_2',['README_CN.md',['../README__CN_8md.html',1,'']]],
+  ['readme_2emd_0',['readme.md',['../README_8md.html',1,'(Global Namespace)'],['../unitree__lidar__ros2_2src_2unitree__lidar__ros2_2README_8md.html',1,'(Global Namespace)'],['../unitree__lidar__sdk_2README_8md.html',1,'(Global Namespace)']]],
+  ['readme_5fcn_2emd_1',['README_CN.md',['../README__CN_8md.html',1,'']]],
+  ['readme_5fpi_5fgateway_2emd_2',['README_PI_GATEWAY.md',['../README__PI__GATEWAY_8md.html',1,'']]],
   ['rosidl_5fgenerator_5fc_5f_5fvisibility_5fcontrol_2eh_3',['rosidl_generator_c__visibility_control.h',['../build_2lidar__processor_2rosidl__generator__c_2lidar__processor_2msg_2rosidl__generator__c____visibility__control_8h.html',1,'(Global Namespace)'],['../install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2rosidl__generator__c____visibility__control_8h.html',1,'(Global Namespace)']]],
   ['rosidl_5fgenerator_5fcpp_5f_5fvisibility_5fcontrol_2ehpp_4',['rosidl_generator_cpp__visibility_control.hpp',['../build_2lidar__processor_2rosidl__generator__cpp_2lidar__processor_2msg_2rosidl__generator__cpp____visibility__control_8hpp.html',1,'(Global Namespace)'],['../install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2rosidl__generator__cpp____visibility__control_8hpp.html',1,'(Global Namespace)']]],
   ['rosidl_5ftypesupport_5ffastrtps_5fc_5f_5fvisibility_5fcontrol_2eh_5',['rosidl_typesupport_fastrtps_c__visibility_control.h',['../build_2lidar__processor_2rosidl__typesupport__fastrtps__c_2lidar__processor_2msg_2rosidl__typesufbdc00effe52e5d65f46d2d8a8e2f24b.html',1,'(Global Namespace)'],['../install_2lidar__processor_2include_2lidar__processor_2lidar__processor_2msg_2rosidl__typesupporta815363883dfb7c6b944b2b42907efb3.html',1,'(Global Namespace)']]],

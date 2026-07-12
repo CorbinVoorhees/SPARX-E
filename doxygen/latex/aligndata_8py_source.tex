@@ -1,0 +1,661 @@
+\doxysection{aligndata.\+py}
+\hypertarget{aligndata_8py_source}{}\label{aligndata_8py_source}\index{analysis/aligndata.py@{analysis/aligndata.py}}
+\mbox{\hyperlink{aligndata_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00001}\mbox{\hyperlink{namespacealigndata}{00001}}\ \textcolor{keyword}{import}\ matplotlib}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00002}00002\ matplotlib.use(\textcolor{stringliteral}{'TkAgg'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00004}00004\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00005}00005\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00006}00006\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00007}00007\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00009}00009\ \textcolor{keyword}{from}\ matplotlib.widgets\ \textcolor{keyword}{import}\ Slider}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00010}00010\ \textcolor{keyword}{from}\ scipy.spatial.transform\ \textcolor{keyword}{import}\ Rotation}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00013}00013\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00014}00014\ \textcolor{comment}{\#\ CONFIGURATION}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00015}00015\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00016}\mbox{\hyperlink{namespacealigndata_aa5f59504e0b20ff09f4d0ab3ca899675}{00016}}\ MEKF\_CSV\ \ \ \ \ =\ \textcolor{stringliteral}{'../sparxe\_mekf\_test1\_\_1\_1'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00017}\mbox{\hyperlink{namespacealigndata_a456dbbaf81254c3239615f1259d8dbe2}{00017}}\ APRILTAG\_CSV\ =\ \textcolor{stringliteral}{'../mekf\_retest\_lowlight\_raw'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00019}\mbox{\hyperlink{namespacealigndata_a8f5ecea2d46b9db4b1cfd7332ef1de65}{00019}}\ APRILTAG\_TIME\_OFFSET\_INIT\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00021}00021\ \textcolor{comment}{\#\ Your\ C++\ logger\ already\ converts\ RPY\ to\ degrees.}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00022}\mbox{\hyperlink{namespacealigndata_ae1a4cfdfbd43bb3d22666e854b88c50a}{00022}}\ MEKF\_LOG\_ANGLES\_ARE\_DEGREES\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00024}00024\ \textcolor{comment}{\#\ First\ MEKF\ row\ whose\ RPY\ is\ not\ the\ startup\ identity.}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00025}\mbox{\hyperlink{namespacealigndata_a7bf6b40574922c0913bdb1bf6120fd19}{00025}}\ MEKF\_READY\_THRESHOLD\_DEG\ =\ 1e-\/4}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00027}00027\ \textcolor{comment}{\#\ qx,qy,qz,qw\ is\ assumed\ to\ represent\ R\_CAMERA\_TAG.}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00028}00028\ \textcolor{comment}{\#\ Flip\ this\ if\ the\ AprilTag\ library\ logs\ R\_TAG\_CAMERA.}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00029}\mbox{\hyperlink{namespacealigndata_a823e88483afb3358f99b2a422fa83006}{00029}}\ APRILTAG\_QUATERNION\_IS\_CAMERA\_FROM\_TAG\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00032}00032\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00033}00033\ \textcolor{comment}{\#\ CAMERA/APRILTAG\ FRAME\ -\/>\ ROVER\ BODY\ FRAME}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00034}00034\ \textcolor{comment}{\#}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00035}00035\ \textcolor{comment}{\#\ Camera/AprilTag\ axes:}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00036}00036\ \textcolor{comment}{\#\ \ \ +X\ =\ rover\ right}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00037}00037\ \textcolor{comment}{\#\ \ \ +Y\ =\ rover\ backward}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00038}00038\ \textcolor{comment}{\#\ \ \ +Z\ =\ rover\ down}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00039}00039\ \textcolor{comment}{\#}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00040}00040\ \textcolor{comment}{\#\ Rover\ body\ axes:}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00041}00041\ \textcolor{comment}{\#\ \ \ +X\ =\ rover\ forward}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00042}00042\ \textcolor{comment}{\#\ \ \ +Y\ =\ rover\ left}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00043}00043\ \textcolor{comment}{\#\ \ \ +Z\ =\ rover\ up}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00044}00044\ \textcolor{comment}{\#}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00045}00045\ \textcolor{comment}{\#\ v\_camera\ =\ R\_CAMERA\_BODY\ @\ v\_body}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00046}00046\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00047}\mbox{\hyperlink{namespacealigndata_a331340d13dfc69df7796f9fbbebdf716}{00047}}\ R\_CAMERA\_BODY\_FIXED\ =\ np.array([}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00048}00048\ \ \ \ \ [\ 0.0,\ -\/1.0,\ \ 0.0],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00049}00049\ \ \ \ \ [-\/1.0,\ \ 0.0,\ \ 0.0],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00050}00050\ \ \ \ \ [\ 0.0,\ \ 0.0,\ -\/1.0],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00051}00051\ ])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00054}00054\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00055}00055\ \textcolor{comment}{\#\ HELPERS}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00056}00056\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00057}\mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{00057}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{load\_exact\_csv}}(base\_name):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(base\_name):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pd.read\_csv(base\_name)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(base\_name\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pd.read\_csv(base\_name\ +\ \textcolor{stringliteral}{'.csv'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{raise}\ FileNotFoundError(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}Could\ not\ find\ '\{base\_name\}'\ or\ '\{base\_name\}.csv'."{}}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00066}00066\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00069}\mbox{\hyperlink{namespacealigndata_a0a6a950a1d396d153ec7ccc715fbb7bf}{00069}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_a0a6a950a1d396d153ec7ccc715fbb7bf}{require\_columns}}(df,\ columns,\ name):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00070}00070\ \ \ \ \ missing\ =\ [column\ \textcolor{keywordflow}{for}\ column\ \textcolor{keywordflow}{in}\ columns\ \textcolor{keywordflow}{if}\ column\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{if}\ missing:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ KeyError(f\textcolor{stringliteral}{'\{name\}\ missing\ columns:\ \{missing\}'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00076}\mbox{\hyperlink{namespacealigndata_a84794670d2eb2c15cee55667fdaa48ec}{00076}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_a84794670d2eb2c15cee55667fdaa48ec}{clean\_numeric}}(df,\ columns,\ time\_column):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00077}00077\ \ \ \ \ result\ =\ df.copy()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{for}\ column\ \textcolor{keywordflow}{in}\ columns:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ result[column]\ =\ pd.to\_numeric(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ result[column],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ errors=\textcolor{stringliteral}{'coerce'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00085}00085\ \ \ \ \ result\ =\ result.dropna(subset=columns)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00086}00086\ \ \ \ \ result\ =\ result.sort\_values(time\_column)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00087}00087\ \ \ \ \ result\ =\ result.drop\_duplicates(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ subset=time\_column,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ keep=\textcolor{stringliteral}{'first'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00090}00090\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00091}00091\ \ \ \ \ result\ =\ result.reset\_index(drop=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{if}\ len(result)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(f\textcolor{stringliteral}{'Not\ enough\ valid\ rows\ in\ \{time\_column\}.'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{return}\ result}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00099}\mbox{\hyperlink{namespacealigndata_a57bdc7d751912351de09aa7f949333a5}{00099}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_a57bdc7d751912351de09aa7f949333a5}{relative\_rotations}}(rotation\_matrices):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00100}00100\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ Convert\ R\_WORLD\_BODY(t)\ into\ orientation\ relative\ to\ the\ first\ sample:}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00102}00102\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ R\_INITIAL\_BODY(t)\ =\ R\_WORLD\_BODY(0)\string^T\ R\_WORLD\_BODY(t)}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{return}\ np.einsum(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'ij,njk-\/>nik'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ rotation\_matrices[0].T,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ rotation\_matrices,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00109}00109\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00112}\mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{00112}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{matrices\_to\_unwrapped\_rpy}}(rotation\_matrices):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00113}00113\ \ \ \ \ rpy\ =\ Rotation.from\_matrix(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ rotation\_matrices}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00115}00115\ \ \ \ \ ).as\_euler(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'xyz'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ degrees=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00118}00118\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{return}\ np.rad2deg(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ np.unwrap(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ np.deg2rad(rpy),}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ axis=0,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00125}00125\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00128}\mbox{\hyperlink{namespacealigndata_afc1da51b103a24d4d8316ea8e8a7f93f}{00128}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_afc1da51b103a24d4d8316ea8e8a7f93f}{integrate\_body\_rates}}(t,\ omega):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00129}00129\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ Integrate\ body-\/frame\ angular\ velocity\ using:}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00131}00131\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ R\_new\ =\ R\_old\ @\ Exp(omega\ *\ dt)}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00133}00133\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ This\ matches:}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00135}00135\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ q\_new\ =\ q\_old\ *\ dq}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00138}00138\ \ \ \ \ matrices\ =\ np.empty(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ (len(t),\ 3,\ 3),}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ dtype=float,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00141}00141\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00143}00143\ \ \ \ \ current\_rotation\ =\ Rotation.identity()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00144}00144\ \ \ \ \ matrices[0]\ =\ np.eye(3)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00146}00146\ \ \ \ \ dt\ =\ np.diff(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ t,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ prepend=t[0],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00149}00149\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00151}00151\ \ \ \ \ positive\_dt\ =\ dt[dt\ >\ 0.0]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00153}00153\ \ \ \ \ \textcolor{keywordflow}{if}\ len(positive\_dt)\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(\textcolor{stringliteral}{'MEKF\ timestamps\ never\ increase.'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00156}00156\ \ \ \ \ median\_dt\ =\ np.median(positive\_dt)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00158}00158\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(1,\ len(t)):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ step\_dt\ =\ dt[i]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ step\_dt\ <=\ 0.0\ \textcolor{keywordflow}{or}\ step\_dt\ >\ 10.0\ *\ median\_dt:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ step\_dt\ =\ median\_dt}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ omega\_average\ =\ 0.5\ *\ (}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ omega[i\ -\/\ 1]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ +\ omega[i]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ delta\_rotation\ =\ Rotation.from\_rotvec(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ omega\_average\ *\ step\_dt}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ current\_rotation\ =\ (}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ current\_rotation}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ *\ delta\_rotation}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ matrices[i]\ =\ current\_rotation.as\_matrix()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00180}00180\ \ \ \ \ \textcolor{keywordflow}{return}\ matrices}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00183}00183\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00184}00184\ \textcolor{comment}{\#\ LOAD\ MEKF}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00185}00185\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00186}00186\ print(\textcolor{stringliteral}{'Loading\ MEKF\ data...'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00188}\mbox{\hyperlink{namespacealigndata_adb7c4d920d802ba088132c849d2d269b}{00188}}\ df\_mekf\ =\ \mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{load\_exact\_csv}}(MEKF\_CSV)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00190}\mbox{\hyperlink{namespacealigndata_a73092c8a30a4fa3a881f5e07a7ded66b}{00190}}\ mekf\_columns\ =\ [}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00191}00191\ \ \ \ \ \textcolor{stringliteral}{'time'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00192}00192\ \ \ \ \ \textcolor{stringliteral}{'roll'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00193}00193\ \ \ \ \ \textcolor{stringliteral}{'pitch'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00194}00194\ \ \ \ \ \textcolor{stringliteral}{'yaw'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00195}00195\ \ \ \ \ \textcolor{stringliteral}{'gx'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00196}00196\ \ \ \ \ \textcolor{stringliteral}{'gy'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00197}00197\ \ \ \ \ \textcolor{stringliteral}{'gz'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00198}00198\ \ \ \ \ \textcolor{stringliteral}{'gunbx'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00199}00199\ \ \ \ \ \textcolor{stringliteral}{'gunby'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00200}00200\ \ \ \ \ \textcolor{stringliteral}{'gunbz'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00201}00201\ \ \ \ \ \textcolor{stringliteral}{'bgx'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00202}00202\ \ \ \ \ \textcolor{stringliteral}{'bgy'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00203}00203\ \ \ \ \ \textcolor{stringliteral}{'bgz'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00204}00204\ ]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00206}00206\ \mbox{\hyperlink{namespacealigndata_a0a6a950a1d396d153ec7ccc715fbb7bf}{require\_columns}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00207}00207\ \ \ \ \ df\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00208}00208\ \ \ \ \ mekf\_columns,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00209}00209\ \ \ \ \ \textcolor{stringliteral}{'MEKF\ CSV'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00210}00210\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00212}00212\ df\_mekf\ =\ \mbox{\hyperlink{namespacealigndata_a84794670d2eb2c15cee55667fdaa48ec}{clean\_numeric}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00213}00213\ \ \ \ \ df\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00214}00214\ \ \ \ \ mekf\_columns,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00215}00215\ \ \ \ \ \textcolor{stringliteral}{'time'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00216}00216\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00218}\mbox{\hyperlink{namespacealigndata_a4f8e88c45d56aaf373abbd79cb3f0cd9}{00218}}\ rpy\_logged\ =\ df\_mekf[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00219}00219\ \ \ \ \ [\textcolor{stringliteral}{'roll'},\ \textcolor{stringliteral}{'pitch'},\ \textcolor{stringliteral}{'yaw'}]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00220}00220\ ].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00222}00222\ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ MEKF\_LOG\_ANGLES\_ARE\_DEGREES:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00223}00223\ \ \ \ \ rpy\_logged\ =\ np.rad2deg(rpy\_logged)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00225}\mbox{\hyperlink{namespacealigndata_a0c870d667a39236838e4446133cfaf91}{00225}}\ rpy\_norm\ =\ np.linalg.norm(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00226}00226\ \ \ \ \ rpy\_logged,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00227}00227\ \ \ \ \ axis=1,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00228}00228\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00230}\mbox{\hyperlink{namespacealigndata_ae05595ac7e4095e46de0a9b7621dce83}{00230}}\ ready\_indices\ =\ np.flatnonzero(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00231}00231\ \ \ \ \ rpy\_norm\ >\ MEKF\_READY\_THRESHOLD\_DEG}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00232}00232\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00234}00234\ \textcolor{keywordflow}{if}\ len(ready\_indices)\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'MEKF\ orientation\ never\ leaves\ the\ startup\ identity.'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00237}00237\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00239}\mbox{\hyperlink{namespacealigndata_a106249dcc443ff6f7a3252dddd0471a2}{00239}}\ mekf\_start\_index\ =\ int(ready\_indices[0])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00241}00241\ print(f\textcolor{stringliteral}{'MEKF\ first\ initialized\ row:\ \{mekf\_start\_index\}'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00242}00242\ print(f\textcolor{stringliteral}{'MEKF\ first\ initialized\ RPY:\ \{rpy\_logged[mekf\_start\_index]\}\ deg'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00244}00244\ df\_mekf\ =\ df\_mekf.iloc[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00245}00245\ \ \ \ \ mekf\_start\_index:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00246}00246\ ].reset\_index(drop=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00248}00248\ rpy\_logged\ =\ rpy\_logged[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00249}00249\ \ \ \ \ mekf\_start\_index:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00250}00250\ ]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00252}\mbox{\hyperlink{namespacealigndata_a40dde4cb6f744fe2bed0f6c9680ffe1b}{00252}}\ t\_mekf\ =\ df\_mekf[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00253}00253\ \ \ \ \ \textcolor{stringliteral}{'time'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00254}00254\ ].to\_numpy(dtype=float).copy()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00256}00256\ t\_mekf\ -\/=\ t\_mekf[0]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00258}\mbox{\hyperlink{namespacealigndata_a1934b7824d932ab7d575b35d967ae61d}{00258}}\ gyro\_raw\ =\ df\_mekf[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00259}00259\ \ \ \ \ [\textcolor{stringliteral}{'gx'},\ \textcolor{stringliteral}{'gy'},\ \textcolor{stringliteral}{'gz'}]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00260}00260\ ].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00262}\mbox{\hyperlink{namespacealigndata_a303625b4dd55e8f10891c357f88514fc}{00262}}\ gyro\_unbiased\ =\ df\_mekf[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00263}00263\ \ \ \ \ [\textcolor{stringliteral}{'gunbx'},\ \textcolor{stringliteral}{'gunby'},\ \textcolor{stringliteral}{'gunbz'}]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00264}00264\ ].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00266}\mbox{\hyperlink{namespacealigndata_af2f72a64780a0b93901aeeb6d0351f9d}{00266}}\ gyro\_bias\ =\ df\_mekf[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00267}00267\ \ \ \ \ [\textcolor{stringliteral}{'bgx'},\ \textcolor{stringliteral}{'bgy'},\ \textcolor{stringliteral}{'bgz'}]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00268}00268\ ].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00271}00271\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00272}00272\ \textcolor{comment}{\#\ MEKF\ RELATIVE\ ORIENTATION}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00273}00273\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00274}\mbox{\hyperlink{namespacealigndata_a59a2999c405aab948a903b1f76d23467}{00274}}\ R\_inertial\_body\_mekf\ =\ Rotation.from\_euler(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00275}00275\ \ \ \ \ \textcolor{stringliteral}{'xyz'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00276}00276\ \ \ \ \ rpy\_logged,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00277}00277\ \ \ \ \ degrees=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00278}00278\ ).as\_matrix()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00280}\mbox{\hyperlink{namespacealigndata_a48ab8ae75ff9f53340e0a69f1c5384a4}{00280}}\ R\_relative\_mekf\ =\ \mbox{\hyperlink{namespacealigndata_a57bdc7d751912351de09aa7f949333a5}{relative\_rotations}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00281}00281\ \ \ \ \ R\_inertial\_body\_mekf}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00282}00282\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00284}\mbox{\hyperlink{namespacealigndata_a10e91ace72b6d2c98cc7397cbce31949}{00284}}\ rpy\_relative\_mekf\ =\ \mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{matrices\_to\_unwrapped\_rpy}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00285}00285\ \ \ \ \ R\_relative\_mekf}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00286}00286\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00289}00289\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00290}00290\ \textcolor{comment}{\#\ INTEGRATE\ RAW,\ BIAS,\ AND\ UNBIASED\ GYRO}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00291}00291\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00292}\mbox{\hyperlink{namespacealigndata_a577706127a1a1866cb18533a920391e5}{00292}}\ R\_relative\_raw\_gyro\ =\ \mbox{\hyperlink{namespacealigndata_afc1da51b103a24d4d8316ea8e8a7f93f}{integrate\_body\_rates}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00293}00293\ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00294}00294\ \ \ \ \ gyro\_raw,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00295}00295\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00297}\mbox{\hyperlink{namespacealigndata_ae8ab36af0e3e214134192945419a6fb4}{00297}}\ R\_relative\_bias\ =\ \mbox{\hyperlink{namespacealigndata_afc1da51b103a24d4d8316ea8e8a7f93f}{integrate\_body\_rates}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00298}00298\ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00299}00299\ \ \ \ \ gyro\_bias,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00300}00300\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00302}\mbox{\hyperlink{namespacealigndata_a26668cb50c895215237c7274daf5d1cb}{00302}}\ R\_relative\_unbiased\ =\ \mbox{\hyperlink{namespacealigndata_afc1da51b103a24d4d8316ea8e8a7f93f}{integrate\_body\_rates}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00303}00303\ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00304}00304\ \ \ \ \ gyro\_unbiased,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00305}00305\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00306}00306\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00307}\mbox{\hyperlink{namespacealigndata_a225bc1673e5d8f60239e16cc3aba49eb}{00307}}\ rpy\_raw\_gyro\ =\ \mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{matrices\_to\_unwrapped\_rpy}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00308}00308\ \ \ \ \ R\_relative\_raw\_gyro}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00309}00309\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00311}\mbox{\hyperlink{namespacealigndata_abcdb27df3220ca2baf6585d175b75952}{00311}}\ rpy\_bias\ =\ \mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{matrices\_to\_unwrapped\_rpy}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00312}00312\ \ \ \ \ R\_relative\_bias}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00313}00313\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00315}\mbox{\hyperlink{namespacealigndata_a6bcc5ae16aa32841a2932f4a77b880bc}{00315}}\ rpy\_unbiased\ =\ \mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{matrices\_to\_unwrapped\_rpy}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00316}00316\ \ \ \ \ R\_relative\_unbiased}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00317}00317\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00320}00320\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00321}00321\ \textcolor{comment}{\#\ LOAD\ APRILTAG}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00322}00322\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00323}00323\ print(\textcolor{stringliteral}{'Loading\ AprilTag\ data...'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00325}\mbox{\hyperlink{namespacealigndata_a94727c8b666950876287aea3b8a111ba}{00325}}\ df\_at\ =\ \mbox{\hyperlink{namespacealigndata_a3016df21efad1e446d77d9b5cc844974}{load\_exact\_csv}}(APRILTAG\_CSV)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00326}00326\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00327}\mbox{\hyperlink{namespacealigndata_abb69d6a0934ef1b8b6facd5297d92d37}{00327}}\ at\_columns\ =\ [}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00328}00328\ \ \ \ \ \textcolor{stringliteral}{'time\_s'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00329}00329\ \ \ \ \ \textcolor{stringliteral}{'pose\_valid'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00330}00330\ \ \ \ \ \textcolor{stringliteral}{'qx'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00331}00331\ \ \ \ \ \textcolor{stringliteral}{'qy'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00332}00332\ \ \ \ \ \textcolor{stringliteral}{'qz'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00333}00333\ \ \ \ \ \textcolor{stringliteral}{'qw'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00334}00334\ ]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00336}00336\ \mbox{\hyperlink{namespacealigndata_a0a6a950a1d396d153ec7ccc715fbb7bf}{require\_columns}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00337}00337\ \ \ \ \ df\_at,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00338}00338\ \ \ \ \ at\_columns,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00339}00339\ \ \ \ \ \textcolor{stringliteral}{'AprilTag\ CSV'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00340}00340\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00342}00342\ df\_at[\textcolor{stringliteral}{'pose\_valid'}]\ =\ pd.to\_numeric(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00343}00343\ \ \ \ \ df\_at[\textcolor{stringliteral}{'pose\_valid'}],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00344}\mbox{\hyperlink{namespacealigndata_affcb6242a098c53eb0ad3b6a381543b2}{00344}}\ \ \ \ \ errors=\textcolor{stringliteral}{'coerce'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00345}00345\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00347}00347\ df\_at\ =\ df\_at[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00348}00348\ \ \ \ \ df\_at[\textcolor{stringliteral}{'pose\_valid'}]\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00349}00349\ ].copy()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00351}00351\ df\_at\ =\ \mbox{\hyperlink{namespacealigndata_a84794670d2eb2c15cee55667fdaa48ec}{clean\_numeric}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00352}00352\ \ \ \ \ df\_at,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00353}00353\ \ \ \ \ at\_columns,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00354}00354\ \ \ \ \ \textcolor{stringliteral}{'time\_s'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00355}00355\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00356}00356\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00357}\mbox{\hyperlink{namespacealigndata_a697a594ba03d220be397057fe051b8fc}{00357}}\ t\_at\ =\ df\_at[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00358}00358\ \ \ \ \ \textcolor{stringliteral}{'time\_s'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00359}00359\ ].to\_numpy(dtype=float).copy()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00360}00360\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00361}00361\ t\_at\ -\/=\ t\_at[0]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00363}\mbox{\hyperlink{namespacealigndata_aa196af91121423d4cffbc8756e55e1da}{00363}}\ q\_at\ =\ df\_at[}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00364}00364\ \ \ \ \ [\textcolor{stringliteral}{'qx'},\ \textcolor{stringliteral}{'qy'},\ \textcolor{stringliteral}{'qz'},\ \textcolor{stringliteral}{'qw'}]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00365}00365\ ].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00366}00366\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00367}\mbox{\hyperlink{namespacealigndata_aa9f5ebe4bf3ddf019cc9bcb7060d5b07}{00367}}\ q\_norm\ =\ np.linalg.norm(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00368}00368\ \ \ \ \ q\_at,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00369}00369\ \ \ \ \ axis=1,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00370}00370\ \ \ \ \ keepdims=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00371}00371\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00373}\mbox{\hyperlink{namespacealigndata_a2abaa6f6fdb68813a688823db3daff12}{00373}}\ valid\_quaternion\ =\ q\_norm[:,\ 0]\ >\ 1e-\/12}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00375}00375\ q\_at\ =\ q\_at[valid\_quaternion]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00376}00376\ q\_norm\ =\ q\_norm[valid\_quaternion]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00377}00377\ t\_at\ =\ t\_at[valid\_quaternion]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00378}00378\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00379}00379\ q\_at\ =\ q\_at\ /\ q\_norm}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00380}00380\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00382}00382\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00383}00383\ \textcolor{comment}{\#\ TRANSFORM\ EVERY\ APRILTAG\ SAMPLE}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00384}00384\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00385}\mbox{\hyperlink{namespacealigndata_aa01416d34934290a2d4739060fc5e43f}{00385}}\ R\_quaternion\ =\ Rotation.from\_quat(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00386}00386\ \ \ \ \ q\_at}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00387}00387\ ).as\_matrix()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00389}00389\ \textcolor{keywordflow}{if}\ APRILTAG\_QUATERNION\_IS\_CAMERA\_FROM\_TAG:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00390}\mbox{\hyperlink{namespacealigndata_a9f8a5304ce67c4133bde88fda2c90321}{00390}}\ \ \ \ \ R\_camera\_tag\ =\ R\_quaternion}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00391}00391\ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00392}00392\ \ \ \ \ R\_camera\_tag\ =\ np.transpose(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00393}00393\ \ \ \ \ \ \ \ \ R\_quaternion,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ axes=(0,\ 2,\ 1),}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00395}00395\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00396}00396\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00397}00397\ \textcolor{comment}{\#\ R\_\{C<-\/BODY\}\ =\ R\_\{C<-\/TAG\}\ @\ R\_\{TAG<-\/BODY\}}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00398}00398\ \textcolor{comment}{\#\ R\_camera\_tag\ \ =\ R\_\{C<-\/TAG\}:\ tag\ orientation\ in\ camera/world\ frame\ (lib\ output)}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00399}00399\ \textcolor{comment}{\#\ R\_CAMERA\_BODY\_FIXED\ =\ R\_\{TAG<-\/BODY\}:\ fixed\ tag-\/to-\/body\ rotation\ (mount\ offset)}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00400}\mbox{\hyperlink{namespacealigndata_a82e6986d0821c09a204e6e2008723984}{00400}}\ R\_camera\_body\ =\ np.einsum(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00401}00401\ \ \ \ \ \textcolor{stringliteral}{'nij,jk-\/>nik'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00402}00402\ \ \ \ \ R\_camera\_tag,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00403}00403\ \ \ \ \ R\_CAMERA\_BODY\_FIXED,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00404}00404\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00406}00406\ \textcolor{comment}{\#\ Every\ transformed\ sample\ is\ expressed\ relative\ to\ the\ first\ one.}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00407}\mbox{\hyperlink{namespacealigndata_aaed28f1cbf225c96fe7c03dc7fcea82e}{00407}}\ R\_relative\_at\ =\ \mbox{\hyperlink{namespacealigndata_a57bdc7d751912351de09aa7f949333a5}{relative\_rotations}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00408}00408\ \ \ \ \ R\_camera\_body}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00409}00409\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00410}00410\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00411}\mbox{\hyperlink{namespacealigndata_ac96b886e34bc5a1eb832bd11e4ed8c53}{00411}}\ rpy\_relative\_at\ =\ \mbox{\hyperlink{namespacealigndata_abdfda1157e067388fb941b91d0035ae7}{matrices\_to\_unwrapped\_rpy}}(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00412}00412\ \ \ \ \ R\_relative\_at}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00413}00413\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00414}00414\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00415}00415\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00416}00416\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00417}00417\ \textcolor{comment}{\#\ DIAGNOSTIC\ OUTPUT}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00418}00418\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00419}00419\ print()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00420}00420\ print(\textcolor{stringliteral}{'Final\ relative\ orientation\ [deg]'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00421}00421\ print(\textcolor{stringliteral}{'-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00422}00422\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00423}00423\ print(\textcolor{stringliteral}{'MEKF:\ \ \ \ \ \ \ \ \ \ \ \ \ \ '},\ rpy\_relative\_mekf[-\/1])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00424}00424\ print(\textcolor{stringliteral}{'Raw\ gyro\ integral:\ \ '},\ rpy\_raw\_gyro[-\/1])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00425}00425\ print(\textcolor{stringliteral}{'Bias\ integral:\ \ \ \ \ \ '},\ rpy\_bias[-\/1])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00426}00426\ print(\textcolor{stringliteral}{'Unbiased\ integral:\ \ '},\ rpy\_unbiased[-\/1])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00427}00427\ print(\textcolor{stringliteral}{'AprilTag:\ \ \ \ \ \ \ \ \ \ \ '},\ rpy\_relative\_at[-\/1])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00428}00428\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00429}00429\ print()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00430}00430\ print(\textcolor{stringliteral}{'Mean\ gyro\ channels\ [rad/s]'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00431}00431\ print(\textcolor{stringliteral}{'-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/'})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00432}00432\ print(\textcolor{stringliteral}{'Raw:\ \ \ \ \ \ \ '},\ np.mean(gyro\_raw,\ axis=0))}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00433}00433\ print(\textcolor{stringliteral}{'Bias:\ \ \ \ \ \ '},\ np.mean(gyro\_bias,\ axis=0))}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00434}00434\ print(\textcolor{stringliteral}{'Unbiased:\ \ '},\ np.mean(gyro\_unbiased,\ axis=0))}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00435}00435\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00436}00436\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00437}00437\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00438}00438\ \textcolor{comment}{\#\ PLOTS}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00439}00439\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00440}\mbox{\hyperlink{namespacealigndata_ad9a0341a3bddaa0f82921e2d78d26941}{00440}}\ fig,\ axes\ =\ plt.subplots(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00441}00441\ \ \ \ \ 3,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00442}00442\ \ \ \ \ 2,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00443}\mbox{\hyperlink{namespacealigndata_a037df48fb5ada1c56e5fd366dd49d11c}{00443}}\ \ \ \ \ figsize=(16,\ 10),}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00444}\mbox{\hyperlink{namespacealigndata_a9950e176ac74c49644d180eb9e83d55a}{00444}}\ \ \ \ \ sharex=\textcolor{stringliteral}{'col'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00445}00445\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00446}00446\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00447}00447\ plt.subplots\_adjust(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00448}\mbox{\hyperlink{namespacealigndata_ac9b93410aaa6da7781303da12c233994}{00448}}\ \ \ \ \ bottom=0.16,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00449}\mbox{\hyperlink{namespacealigndata_a753cb20c93a1645e1230eaef5e18d623}{00449}}\ \ \ \ \ hspace=0.25,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00450}\mbox{\hyperlink{namespacealigndata_afaab48110b672b1e613cee0a8c37e8df}{00450}}\ \ \ \ \ wspace=0.25,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00451}00451\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00452}00452\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00453}\mbox{\hyperlink{namespacealigndata_aa6adae1a497206ab477e2143388a8981}{00453}}\ angle\_labels\ =\ [}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00454}00454\ \ \ \ \ \textcolor{stringliteral}{'Roll\ (deg)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00455}00455\ \ \ \ \ \textcolor{stringliteral}{'Pitch\ (deg)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00456}00456\ \ \ \ \ \textcolor{stringliteral}{'Yaw\ (deg)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00457}00457\ ]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00458}00458\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00459}\mbox{\hyperlink{namespacealigndata_ac28eeb73c5850e8165eb64ee3fc894b7}{00459}}\ rate\_labels\ =\ [}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00460}00460\ \ \ \ \ \textcolor{stringliteral}{'X\ Rate\ (rad/s)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00461}00461\ \ \ \ \ \textcolor{stringliteral}{'Y\ Rate\ (rad/s)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00462}00462\ \ \ \ \ \textcolor{stringliteral}{'Z\ Rate\ (rad/s)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00463}00463\ ]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00464}00464\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00465}\mbox{\hyperlink{namespacealigndata_a244505e82c76a62f33ba082c202e1ffb}{00465}}\ april\_tag\_lines\ =\ []}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00466}00466\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00467}\mbox{\hyperlink{namespacealigndata_a4e8b887df4d09e0e6b331e619f399452}{00467}}\ shifted\_at\_time\ =\ (}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00468}00468\ \ \ \ \ t\_at}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00469}00469\ \ \ \ \ +\ APRILTAG\_TIME\_OFFSET\_INIT}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00470}00470\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00471}00471\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00472}00472\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(3):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00473}00473\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00474}00474\ \ \ \ \ \textcolor{comment}{\#\ Relative\ orientation\ comparison}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00475}00475\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00476}00476\ \ \ \ \ axes[i,\ 0].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00477}00477\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00478}00478\ \ \ \ \ \ \ \ \ rpy\_relative\_mekf[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00479}\mbox{\hyperlink{namespacealigndata_a6bb5544b1efa4c0acec5fae0257b662f}{00479}}\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'MEKF'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00480}\mbox{\hyperlink{namespacealigndata_a47998586ba272b1562109633ada2e71e}{00480}}\ \ \ \ \ \ \ \ \ linewidth=1.5,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00481}00481\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00483}00483\ \ \ \ \ axes[i,\ 0].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00484}00484\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00485}00485\ \ \ \ \ \ \ \ \ rpy\_raw\_gyro[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00486}00486\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'Integrated\ raw\ gyro'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00487}00487\ \ \ \ \ \ \ \ \ linewidth=1.2,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00488}00488\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00490}00490\ \ \ \ \ axes[i,\ 0].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00491}00491\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00492}00492\ \ \ \ \ \ \ \ \ rpy\_bias[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00493}00493\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'Integrated\ estimated\ bias'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00494}00494\ \ \ \ \ \ \ \ \ linewidth=1.2,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00495}00495\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00496}00496\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00497}00497\ \ \ \ \ axes[i,\ 0].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00498}00498\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00499}00499\ \ \ \ \ \ \ \ \ rpy\_unbiased[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00500}00500\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'Integrated\ gyro\ -\/\ bias'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00501}00501\ \ \ \ \ \ \ \ \ linewidth=1.2,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00502}00502\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00503}00503\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00504}00504\ \ \ \ \ april\_tag\_line,\ =\ axes[i,\ 0].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00505}00505\ \ \ \ \ \ \ \ \ shifted\_at\_time,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00506}00506\ \ \ \ \ \ \ \ \ rpy\_relative\_at[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00507}00507\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'AprilTag'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00508}00508\ \ \ \ \ \ \ \ \ linewidth=1.5,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00509}00509\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00511}00511\ \ \ \ \ april\_tag\_lines.append(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00512}00512\ \ \ \ \ \ \ \ \ april\_tag\_line}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00513}00513\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00514}00514\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00515}00515\ \ \ \ \ axes[i,\ 0].set\_ylabel(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00516}00516\ \ \ \ \ \ \ \ \ angle\_labels[i]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00517}00517\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00518}00518\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00519}00519\ \ \ \ \ axes[i,\ 0].grid(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00520}00520\ \ \ \ \ \ \ \ \ \textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00521}\mbox{\hyperlink{namespacealigndata_a0c9df216db2ef3caf30df29368ca9f47}{00521}}\ \ \ \ \ \ \ \ \ linestyle=\textcolor{stringliteral}{'-\/-\/'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00522}\mbox{\hyperlink{namespacealigndata_a808303b0a1fa9a533cc0b9f658e3a44a}{00522}}\ \ \ \ \ \ \ \ \ alpha=0.6,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00523}00523\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00524}00524\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00525}00525\ \ \ \ \ axes[i,\ 0].legend(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00526}\mbox{\hyperlink{namespacealigndata_a4a319c642203f8f09cd7d0fa7d7eeb72}{00526}}\ \ \ \ \ \ \ \ \ loc=\textcolor{stringliteral}{'upper\ right'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00527}00527\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00529}00529\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00530}00530\ \ \ \ \ \textcolor{comment}{\#\ Instantaneous\ angular-\/rate\ channels}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00531}00531\ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00532}00532\ \ \ \ \ axes[i,\ 1].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00533}00533\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00534}00534\ \ \ \ \ \ \ \ \ gyro\_raw[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00535}00535\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'Raw\ gyro'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00536}00536\ \ \ \ \ \ \ \ \ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00537}00537\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00538}00538\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00539}00539\ \ \ \ \ axes[i,\ 1].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00540}00540\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00541}00541\ \ \ \ \ \ \ \ \ gyro\_bias[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00542}00542\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'Estimated\ bias'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00543}00543\ \ \ \ \ \ \ \ \ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00544}00544\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00545}00545\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00546}00546\ \ \ \ \ axes[i,\ 1].plot(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00547}00547\ \ \ \ \ \ \ \ \ t\_mekf,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00548}00548\ \ \ \ \ \ \ \ \ gyro\_unbiased[:,\ i],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00549}00549\ \ \ \ \ \ \ \ \ label=\textcolor{stringliteral}{'Gyro\ -\/\ bias'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00550}00550\ \ \ \ \ \ \ \ \ linewidth=1.0,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00551}00551\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00552}00552\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00553}00553\ \ \ \ \ axes[i,\ 1].set\_ylabel(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00554}00554\ \ \ \ \ \ \ \ \ rate\_labels[i]}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00555}00555\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00556}00556\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00557}00557\ \ \ \ \ axes[i,\ 1].grid(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00558}00558\ \ \ \ \ \ \ \ \ \textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00559}00559\ \ \ \ \ \ \ \ \ linestyle=\textcolor{stringliteral}{'-\/-\/'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00560}00560\ \ \ \ \ \ \ \ \ alpha=0.6,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00561}00561\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00562}00562\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00563}00563\ \ \ \ \ axes[i,\ 1].legend(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00564}00564\ \ \ \ \ \ \ \ \ loc=\textcolor{stringliteral}{'upper\ right'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00565}00565\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00566}00566\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00567}00567\ axes[0,\ 0].set\_title(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00568}00568\ \ \ \ \ \textcolor{stringliteral}{'Relative\ Orientation\ Comparison'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00569}00569\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00570}00570\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00571}00571\ axes[0,\ 1].set\_title(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00572}00572\ \ \ \ \ \textcolor{stringliteral}{'Gyro\ /\ Bias\ Channels'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00573}00573\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00574}00574\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00575}00575\ axes[2,\ 0].set\_xlabel(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00576}00576\ \ \ \ \ \textcolor{stringliteral}{'Time\ since\ MEKF\ initialization\ (s)'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00577}00577\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00578}00578\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00579}00579\ axes[2,\ 1].set\_xlabel(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00580}00580\ \ \ \ \ \textcolor{stringliteral}{'Time\ since\ MEKF\ initialization\ (s)'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00581}00581\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00582}00582\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00583}00583\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00584}00584\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00585}00585\ \textcolor{comment}{\#\ APRILTAG\ TIME\ SLIDER}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00586}00586\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00587}\mbox{\hyperlink{namespacealigndata_a6600f02c3999fac182ada0f6b0960531}{00587}}\ slider\_limit\ =\ max(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00588}00588\ \ \ \ \ 10.0,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00589}00589\ \ \ \ \ t\_mekf[-\/1],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00590}00590\ \ \ \ \ t\_at[-\/1],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00591}00591\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00592}00592\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00593}\mbox{\hyperlink{namespacealigndata_a4c720b87de2510a9a0e38cf989a1b1e1}{00593}}\ slider\_axis\ =\ plt.axes([}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00594}00594\ \ \ \ \ 0.15,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00595}00595\ \ \ \ \ 0.055,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00596}00596\ \ \ \ \ 0.70,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00597}00597\ \ \ \ \ 0.03,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00598}00598\ ])}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00599}00599\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00600}\mbox{\hyperlink{namespacealigndata_a2a423abf6c4a648defa542c186a7a79e}{00600}}\ time\_slider\ =\ Slider(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00601}00601\ \ \ \ \ ax=slider\_axis,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00602}00602\ \ \ \ \ label=\textcolor{stringliteral}{'Shift\ AprilTag\ Time\ (s)'},}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00603}00603\ \ \ \ \ valmin=-\/slider\_limit,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00604}00604\ \ \ \ \ valmax=slider\_limit,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00605}00605\ \ \ \ \ valinit=APRILTAG\_TIME\_OFFSET\_INIT,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00606}00606\ \ \ \ \ valstep=0.01,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00607}00607\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00608}00608\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00609}00609\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00610}\mbox{\hyperlink{namespacealigndata_a110bc2423a371fbc34496f1d91de4a28}{00610}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacealigndata_a110bc2423a371fbc34496f1d91de4a28}{update\_time\_shift}}(\_):}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00611}00611\ \ \ \ \ shifted\_time\ =\ (}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00612}00612\ \ \ \ \ \ \ \ \ t\_at}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00613}00613\ \ \ \ \ \ \ \ \ +\ time\_slider.val}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00614}00614\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00615}00615\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00616}00616\ \ \ \ \ \textcolor{keywordflow}{for}\ line\ \textcolor{keywordflow}{in}\ april\_tag\_lines:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00617}00617\ \ \ \ \ \ \ \ \ line.set\_xdata(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ shifted\_time}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00619}00619\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00620}00620\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00621}00621\ \ \ \ \ x\_min\ =\ min(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00622}00622\ \ \ \ \ \ \ \ \ t\_mekf[0],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00623}00623\ \ \ \ \ \ \ \ \ shifted\_time[0],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00624}00624\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00625}00625\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00626}00626\ \ \ \ \ x\_max\ =\ max(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00627}00627\ \ \ \ \ \ \ \ \ t\_mekf[-\/1],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00628}00628\ \ \ \ \ \ \ \ \ shifted\_time[-\/1],}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00629}00629\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00630}00630\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00631}00631\ \ \ \ \ \textcolor{keywordflow}{for}\ axis\ \textcolor{keywordflow}{in}\ axes[:,\ 0]:}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00632}00632\ \ \ \ \ \ \ \ \ axis.set\_xlim(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ x\_min,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ x\_max,}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00635}00635\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00636}00636\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00637}00637\ \ \ \ \ fig.canvas.draw\_idle()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00638}00638\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00639}00639\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00640}00640\ time\_slider.on\_changed(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00641}00641\ \ \ \ \ update\_time\_shift}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00642}00642\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00643}00643\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00644}00644\ \mbox{\hyperlink{namespacealigndata_a110bc2423a371fbc34496f1d91de4a28}{update\_time\_shift}}(\textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00645}00645\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00646}00646\ plt.suptitle(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00647}00647\ \ \ \ \ \textcolor{stringliteral}{'MEKF\ vs\ Raw\ Gyro\ vs\ Bias\ vs\ Unbiased\ Gyro\ vs\ AprilTag'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00648}00648\ )}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00649}00649\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00650}00650\ plt.show()}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00651}00651\ }
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00652}00652\ print(}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00653}00653\ \ \ \ \ f\textcolor{stringliteral}{'Final\ AprilTag\ time\ offset:\ '}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00654}00654\ \ \ \ \ f\textcolor{stringliteral}{'\{time\_slider.val:.3f\}\ s'}}
+\DoxyCodeLine{\Hypertarget{aligndata_8py_source_l00655}00655\ )}
+
+\end{DoxyCode}

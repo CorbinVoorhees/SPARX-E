@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -95,27 +104,44 @@ $(document).ready(function(){initNavTree('classAutoPublisher.html',''); initResi
   <div class="headertitle"><div class="title">AutoPublisher Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classAutoPublisher.html" title="AutoPublisher specifically targets nav_node during runtime to kill and restart the Kalman Filter when...">AutoPublisher</a> specifically targets nav_node during runtime to kill and restart the Kalman Filter when state estimation has collapsed, or the nav_node as failed to start. This was a patch solution before competition to restart the nav_node, and also the Kalman Filter, and SHOULD NOT BE USED ANYMORE.  
+ <a href="classAutoPublisher.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="auto__publisher_8hpp_source.html">auto_publisher.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AutoPublisher:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAutoPublisher__inherit__graph.png" border="0" usemap="#aAutoPublisher_inherit__map" alt="Inheritance graph"/></div>
-<!-- MAP 0 -->
+<map name="aAutoPublisher_inherit__map" id="aAutoPublisher_inherit__map">
+<area shape="rect" title="AutoPublisher specifically targets nav_node during runtime to kill and restart the Kalman Filter when..." alt="" coords="5,79,117,104"/>
+<area shape="rect" title=" " alt="" coords="10,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="64,44,64,79,59,79,59,44"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for AutoPublisher:</div>
 <div class="dyncontent">
 <div class="center"><img src="classAutoPublisher__coll__graph.png" border="0" usemap="#aAutoPublisher_coll__map" alt="Collaboration graph"/></div>
-<!-- MAP 1 -->
+<map name="aAutoPublisher_coll__map" id="aAutoPublisher_coll__map">
+<area shape="rect" title="AutoPublisher specifically targets nav_node during runtime to kill and restart the Kalman Filter when..." alt="" coords="5,79,117,104"/>
+<area shape="rect" title=" " alt="" coords="10,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="64,44,64,79,59,79,59,44"/>
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3fa16849013acdfdb28e080a873a3377" id="r_a3fa16849013acdfdb28e080a873a3377"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAutoPublisher.html#a3fa16849013acdfdb28e080a873a3377">AutoPublisher</a> ()</td></tr>
+<tr class="memdesc:a3fa16849013acdfdb28e080a873a3377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Auto Publisher object.  <br /></td></tr>
 <tr class="separator:a3fa16849013acdfdb28e080a873a3377"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="auto__pub_8cpp_source.html#l00015">15</a> of file <a class="el" href="auto__pub_8cpp_source.html">auto_pub.cpp</a>.</p>
+<div class="textblock"><p><a class="el" href="classAutoPublisher.html" title="AutoPublisher specifically targets nav_node during runtime to kill and restart the Kalman Filter when...">AutoPublisher</a> specifically targets nav_node during runtime to kill and restart the Kalman Filter when state estimation has collapsed, or the nav_node as failed to start. This was a patch solution before competition to restart the nav_node, and also the Kalman Filter, and SHOULD NOT BE USED ANYMORE. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Krish Sridhar </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="auto__publisher_8hpp_source.html#l00015">15</a> of file <a class="el" href="auto__publisher_8hpp_source.html">auto_publisher.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3fa16849013acdfdb28e080a873a3377" name="a3fa16849013acdfdb28e080a873a3377"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3fa16849013acdfdb28e080a873a3377">&#9670;&#160;</a></span>AutoPublisher()</h2>
@@ -140,12 +166,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="auto__pub_8cpp_source.html#l00047">47</a> of file <a class="el" href="auto__pub_8cpp_source.html">auto_pub.cpp</a>.</p>
+<p>Construct a new Auto Publisher object. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>DO NOT USE THIS NODE. USING A SERVICE, OR ALTERNATIVE NODE IS RECOMMENDED. OR FIX THE BUG! </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="auto__publisher_8hpp_source.html#l00073">73</a> of file <a class="el" href="auto__publisher_8hpp_source.html">auto_publisher.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/nav_filters/src/<a class="el" href="auto__pub_8cpp_source.html">auto_pub.cpp</a></li>
+<li>src/nav_filters/include/nav_filters/<a class="el" href="auto__publisher_8hpp_source.html">auto_publisher.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

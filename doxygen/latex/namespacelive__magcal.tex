@@ -1,0 +1,148 @@
+\doxysection{live\+\_\+magcal Namespace Reference}
+\hypertarget{namespacelive__magcal}{}\label{namespacelive__magcal}\index{live\_magcal@{live\_magcal}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacelive__magcal_aeb1b11250c709e0d4a17308d7b083b9a}{read\+\_\+mag}} (path)
+\item 
+\mbox{\hyperlink{namespacelive__magcal_a7e195d99e08b6b6e0fe4062054e05864}{coverage}} (M)
+\item 
+\mbox{\hyperlink{namespacelive__magcal_ab37acc60acbdf90cd361740bebbc3211}{verdict\+\_\+text}} (ratio, flat)
+\item 
+\mbox{\hyperlink{namespacelive__magcal_af096435e34fb7eef68133f8d92b9cad2}{main}} (csv=\mbox{\hyperlink{namespacelive__magcal_af75ba275fc07919e224dab1d31b0fc46}{CSV}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespacelive__magcal_af75ba275fc07919e224dab1d31b0fc46}{CSV}} = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw.\+csv\textquotesingle{}
+\item 
+int \mbox{\hyperlink{namespacelive__magcal_a1493131b56e7187c9262fde7203c6a4a}{INTERVAL\+\_\+\+MS}} = 500
+\item 
+list \mbox{\hyperlink{namespacelive__magcal_a997acc4b0bae7ffd30096d7b3feb3682}{PROJ}} = \mbox{[}(\textquotesingle{}XY\textquotesingle{}, 0, 1), (\textquotesingle{}XZ\textquotesingle{}, 0, 2), (\textquotesingle{}YZ\textquotesingle{}, 1, 2)\mbox{]}
+\item 
+list \mbox{\hyperlink{namespacelive__magcal_ac884338ed32d8c319b227b73239d1cfe}{LABELS}} = \mbox{[}\textquotesingle{}mx\textquotesingle{}, \textquotesingle{}my\textquotesingle{}, \textquotesingle{}mz\textquotesingle{}\mbox{]}
+\item 
+float \mbox{\hyperlink{namespacelive__magcal_a628f57476a06b2efaeacbae6e42a5553}{GOOD\+\_\+\+FLATNESS}} = 0.\+60
+\item 
+float \mbox{\hyperlink{namespacelive__magcal_afc654bddd5d7f17c2d75021d2def553f}{GOOD\+\_\+\+AXISRATIO}} = 0.\+50
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Live magnetometer calibration-coverage viewer.
+
+Run nav_filters (writing sparxe_sensors_raw.csv) in one terminal, this in
+another, then pick the robot up and tumble it through all orientations. The
+three projections fill in live; the title turns green when the point cloud
+covers the sphere well enough to calibrate. Then run calibrate.py on the log.
+
+    python live_magcal.py [path_to_sparxe_sensors_raw.csv]
+
+Press 'q' to quit.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacelive__magcal_a7e195d99e08b6b6e0fe4062054e05864}\label{namespacelive__magcal_a7e195d99e08b6b6e0fe4062054e05864} 
+\index{live\_magcal@{live\_magcal}!coverage@{coverage}}
+\index{coverage@{coverage}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{coverage()}{coverage()}}
+{\footnotesize\ttfamily live\+\_\+magcal.\+coverage (\begin{DoxyParamCaption}\item[{}]{M }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00049}{49}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_af096435e34fb7eef68133f8d92b9cad2}\label{namespacelive__magcal_af096435e34fb7eef68133f8d92b9cad2} 
+\index{live\_magcal@{live\_magcal}!main@{main}}
+\index{main@{main}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily live\+\_\+magcal.\+main (\begin{DoxyParamCaption}\item[{}]{csv = {\ttfamily \mbox{\hyperlink{namespacelive__magcal_af75ba275fc07919e224dab1d31b0fc46}{CSV}}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00064}{64}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_aeb1b11250c709e0d4a17308d7b083b9a}\label{namespacelive__magcal_aeb1b11250c709e0d4a17308d7b083b9a} 
+\index{live\_magcal@{live\_magcal}!read\_mag@{read\_mag}}
+\index{read\_mag@{read\_mag}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{read\_mag()}{read\_mag()}}
+{\footnotesize\ttfamily live\+\_\+magcal.\+read\+\_\+mag (\begin{DoxyParamCaption}\item[{}]{path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00033}{33}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_ab37acc60acbdf90cd361740bebbc3211}\label{namespacelive__magcal_ab37acc60acbdf90cd361740bebbc3211} 
+\index{live\_magcal@{live\_magcal}!verdict\_text@{verdict\_text}}
+\index{verdict\_text@{verdict\_text}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{verdict\_text()}{verdict\_text()}}
+{\footnotesize\ttfamily live\+\_\+magcal.\+verdict\+\_\+text (\begin{DoxyParamCaption}\item[{}]{ratio,  }\item[{}]{flat }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00057}{57}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacelive__magcal_af75ba275fc07919e224dab1d31b0fc46}\label{namespacelive__magcal_af75ba275fc07919e224dab1d31b0fc46} 
+\index{live\_magcal@{live\_magcal}!CSV@{CSV}}
+\index{CSV@{CSV}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{CSV}{CSV}}
+{\footnotesize\ttfamily int live\+\_\+magcal.\+CSV = sys.\+argv\mbox{[}1\mbox{]} if len(sys.\+argv) $>$ 1 else \textquotesingle{}../sparxe\+\_\+sensors\+\_\+raw.\+csv\textquotesingle{}}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00023}{23}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_afc654bddd5d7f17c2d75021d2def553f}\label{namespacelive__magcal_afc654bddd5d7f17c2d75021d2def553f} 
+\index{live\_magcal@{live\_magcal}!GOOD\_AXISRATIO@{GOOD\_AXISRATIO}}
+\index{GOOD\_AXISRATIO@{GOOD\_AXISRATIO}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{GOOD\_AXISRATIO}{GOOD\_AXISRATIO}}
+{\footnotesize\ttfamily float live\+\_\+magcal.\+GOOD\+\_\+\+AXISRATIO = 0.\+50}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00030}{30}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_a628f57476a06b2efaeacbae6e42a5553}\label{namespacelive__magcal_a628f57476a06b2efaeacbae6e42a5553} 
+\index{live\_magcal@{live\_magcal}!GOOD\_FLATNESS@{GOOD\_FLATNESS}}
+\index{GOOD\_FLATNESS@{GOOD\_FLATNESS}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{GOOD\_FLATNESS}{GOOD\_FLATNESS}}
+{\footnotesize\ttfamily float live\+\_\+magcal.\+GOOD\+\_\+\+FLATNESS = 0.\+60}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00029}{29}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_a1493131b56e7187c9262fde7203c6a4a}\label{namespacelive__magcal_a1493131b56e7187c9262fde7203c6a4a} 
+\index{live\_magcal@{live\_magcal}!INTERVAL\_MS@{INTERVAL\_MS}}
+\index{INTERVAL\_MS@{INTERVAL\_MS}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{INTERVAL\_MS}{INTERVAL\_MS}}
+{\footnotesize\ttfamily int live\+\_\+magcal.\+INTERVAL\+\_\+\+MS = 500}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00024}{24}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_ac884338ed32d8c319b227b73239d1cfe}\label{namespacelive__magcal_ac884338ed32d8c319b227b73239d1cfe} 
+\index{live\_magcal@{live\_magcal}!LABELS@{LABELS}}
+\index{LABELS@{LABELS}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{LABELS}{LABELS}}
+{\footnotesize\ttfamily list live\+\_\+magcal.\+LABELS = \mbox{[}\textquotesingle{}mx\textquotesingle{}, \textquotesingle{}my\textquotesingle{}, \textquotesingle{}mz\textquotesingle{}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00026}{26}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+
+\Hypertarget{namespacelive__magcal_a997acc4b0bae7ffd30096d7b3feb3682}\label{namespacelive__magcal_a997acc4b0bae7ffd30096d7b3feb3682} 
+\index{live\_magcal@{live\_magcal}!PROJ@{PROJ}}
+\index{PROJ@{PROJ}!live\_magcal@{live\_magcal}}
+\doxysubsubsection{\texorpdfstring{PROJ}{PROJ}}
+{\footnotesize\ttfamily list live\+\_\+magcal.\+PROJ = \mbox{[}(\textquotesingle{}XY\textquotesingle{}, 0, 1), (\textquotesingle{}XZ\textquotesingle{}, 0, 2), (\textquotesingle{}YZ\textquotesingle{}, 1, 2)\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{live__magcal_8py_source_l00025}{25}} of file \mbox{\hyperlink{live__magcal_8py_source}{live\+\_\+magcal.\+py}}.
+

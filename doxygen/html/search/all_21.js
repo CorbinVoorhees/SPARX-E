@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['y_0',['y',['../structplanning__module_1_1Vec2.html#acbde3df5c1bf3c805625fc37c8a1e207',1,'planning_module::Vec2::y'],['../structunilidar__sdk2_1_1PointUnitree.html#a97f8d4651336cecdf2f6b10efb8e4552',1,'unilidar_sdk2::PointUnitree::y'],['../namespacetest.html#a8e35cd41a1bbd5493b663b19c9df1d1d',1,'test.y']]],
-  ['y_5fcoeffs_1',['y_coeffs',['../structspline__testcase_1_1funct.html#a1c2f4fec94398124324781fba871ebbf',1,'spline_testcase::funct']]],
-  ['yaw_2',['yaw',['../namespacebias__calc.html#a130ab21ee7a6622712af2bdbb426ce9e',1,'bias_calc.yaw'],['../namespacetest.html#aab35dc833fa812fbf1fe41130f743fde',1,'test.yaw']]]
+  ['x_0',['x',['../classekf_1_1EKF.html#a64f70b5eadac31a71fadc76690bd0c59',1,'ekf::EKF::x'],['../structunilidar__sdk2_1_1PointUnitree.html#a922b0cc0ea4814592bbc8c959465d87c',1,'unilidar_sdk2::PointUnitree::x'],['../namespacetest.html#accf9c2b29590b2e2d68bb2614364444e',1,'test.x']]],
+  ['x_5fptch_1',['X_ptch',['../namespacebias__calc.html#a57a27ae5cae559048cdc83bebc118388',1,'bias_calc']]],
+  ['x_5froll_2',['X_roll',['../namespacebias__calc.html#ac3607645434b5c0144d3d99c54216c93',1,'bias_calc']]],
+  ['x_5fyaw_3',['X_yaw',['../namespacebias__calc.html#ace22b1e7607d4a60a989400f386835d4',1,'bias_calc']]],
+  ['xi_5fangle_4',['xi_angle',['../structunilidar__sdk2_1_1LidarCalibParam.html#ad5a07058e275db8b08a308efb345b1d1',1,'unilidar_sdk2::LidarCalibParam']]]
 ];

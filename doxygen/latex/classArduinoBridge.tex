@@ -12,17 +12,65 @@ Bridges Arduino serial data into ROS 2 topics.
 
 
 Inheritance diagram for Arduino\+Bridge\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classArduinoBridge__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Arduino\+Bridge\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{classArduinoBridge__coll__graph}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classArduinoBridge_a56605ad34d27baf30757717d5d319cb4}{Arduino\+Bridge}} ()
-\begin{DoxyCompactList}\small\item\em constructor for making arduino bridge node object \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classArduinoBridge_a20aa90d502eae4de9e8b3090f4271a38}{\texorpdfstring{$\sim$}{\string~}\+Arduino\+Bridge}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the arduino bridge node\+: "{}arduino\+\_\+bridge\+\_\+node"{}. No idea how long the char string is. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed}{Bridge\+Base}} (const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& \mbox{\hyperlink{classBridgeBase_af5e3461975c69370adcbee6a66369cc6}{operator=}} (const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& \mbox{\hyperlink{classBridgeBase_acfb9c232955e7e1897259734be10fd5a}{operator=}} (\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase_adb16281ff6ac7c2848754829b683eb79}{Bridge\+Base}} (\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1}{Bridge\+Base}} (std\+::string node\+\_\+name, std\+::string serial\+\_\+port\+\_\+str, int baud\+\_\+rate\+\_\+int, size\+\_\+t buflen)
+\begin{DoxyCompactList}\small\item\em Base constructor for Bridges. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b}{\texorpdfstring{$\sim$}{\string~}\+Bridge\+Base}} ()
+\item 
+void \mbox{\hyperlink{classBridgeBase_a225a5da44b606264c006589618584662}{write\+\_\+serial}} (const std\+\_\+msgs\+::msg\+::\+String\+::\+Shared\+Ptr msg)
+\begin{DoxyCompactList}\small\item\em Generic write serial function. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classBridgeBase_a4b530ff07f338dae058913095302498f}{read\+\_\+serial}} ()
+\begin{DoxyCompactList}\small\item\em Generic read from terminal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+rclcpp\+::\+Subscription$<$ std\+\_\+msgs\+::msg\+::\+String $>$\+::\+Shared\+Ptr \mbox{\hyperlink{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22}{serial\+\_\+monitor\+\_\+subscription}}
+\item 
+int \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\+\_\+fd}}
+\item 
+std\+::string \mbox{\hyperlink{classBridgeBase_a316bdd6412a414a77e08c1605f462472}{serial\+\_\+port}}
+\item 
+speed\+\_\+t \mbox{\hyperlink{classBridgeBase_a41de155823ba40f07bf99843a8eaab92}{baud\+\_\+rate}}
+\item 
+struct \mbox{\hyperlink{structBridgeBase_1_1Buffer}{Bridge\+Base\+::\+Buffer}} \mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr char \mbox{\hyperlink{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a}{target}} = \textquotesingle{}\textbackslash{}n\textquotesingle{}
 \end{DoxyCompactItemize}
 
 
@@ -41,7 +89,7 @@ May 28, 2026
 \end{DoxyDate}
 
 
-Definition at line \mbox{\hyperlink{arduino__bridge_8hpp_source_l00022}{22}} of file \mbox{\hyperlink{arduino__bridge_8hpp_source}{arduino\+\_\+bridge.\+hpp}}.
+Definition at line \mbox{\hyperlink{arduino__bridge_8hpp_source_l00015}{15}} of file \mbox{\hyperlink{arduino__bridge_8hpp_source}{arduino\+\_\+bridge.\+hpp}}.
 
 
 
@@ -54,26 +102,14 @@ Definition at line \mbox{\hyperlink{arduino__bridge_8hpp_source_l00022}{22}} of 
 
 
 
-constructor for making arduino bridge node object 
-
-hello these are details
-
-The constructor 
-
-Definition at line \mbox{\hyperlink{arduino__bridge_8hpp_source_l00118}{118}} of file \mbox{\hyperlink{arduino__bridge_8hpp_source}{arduino\+\_\+bridge.\+hpp}}.
-
-\Hypertarget{classArduinoBridge_a20aa90d502eae4de9e8b3090f4271a38}\label{classArduinoBridge_a20aa90d502eae4de9e8b3090f4271a38} 
-\index{ArduinoBridge@{ArduinoBridge}!````~ArduinoBridge@{\texorpdfstring{$\sim$}{\string~}ArduinoBridge}}
-\index{````~ArduinoBridge@{\texorpdfstring{$\sim$}{\string~}ArduinoBridge}!ArduinoBridge@{ArduinoBridge}}
-\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ArduinoBridge()}{\string~ArduinoBridge()}}
-{\footnotesize\ttfamily Arduino\+Bridge\+::\texorpdfstring{$\sim$}{\string~}\+Arduino\+Bridge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+Constructor for the arduino bridge node\+: "{}arduino\+\_\+bridge\+\_\+node"{}. No idea how long the char string is. 
 
 
 
-Definition at line \mbox{\hyperlink{arduino__bridge_8hpp_source_l00136}{136}} of file \mbox{\hyperlink{arduino__bridge_8hpp_source}{arduino\+\_\+bridge.\+hpp}}.
+Definition at line \mbox{\hyperlink{arduino__bridge_8hpp_source_l00026}{26}} of file \mbox{\hyperlink{arduino__bridge_8hpp_source}{arduino\+\_\+bridge.\+hpp}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/arduino\+\_\+bridge/include/arduino\+\_\+bridge/\mbox{\hyperlink{arduino__bridge_8hpp}{arduino\+\_\+bridge.\+hpp}}\end{DoxyCompactItemize}
+src/bridges/include/bridges/\mbox{\hyperlink{arduino__bridge_8hpp}{arduino\+\_\+bridge.\+hpp}}\end{DoxyCompactItemize}

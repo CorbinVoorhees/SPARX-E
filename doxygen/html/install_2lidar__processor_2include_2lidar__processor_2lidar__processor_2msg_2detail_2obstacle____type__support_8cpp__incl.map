@@ -1,0 +1,31 @@
+<map id="install/lidar_processor/include/lidar_processor/lidar_processor/msg/detail/obstacle__type_support.cpp" name="install/lidar_processor/include/lidar_processor/lidar_processor/msg/detail/obstacle__type_support.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="902,5,1109,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,137,61,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="902,47,705,54,466,69,237,92,144,107,74,125,60,132,58,127,72,120,143,102,237,87,465,64,705,49,902,41"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="86,137,157,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="902,49,725,59,514,75,314,97,232,111,170,125,151,133,149,128,169,120,231,105,313,92,513,70,725,54,902,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="181,137,240,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="902,49,742,60,555,76,378,98,307,111,253,125,238,132,235,128,251,120,306,106,378,92,554,71,742,55,901,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="265,137,327,163"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="902,43,784,48,642,60,489,85,413,103,340,125,324,132,322,127,338,120,412,98,488,79,641,55,784,42,902,38"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="351,130,545,170"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="902,61,740,90,558,125,538,129,537,124,557,120,739,85,901,56"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="569,130,804,170"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="907,77,757,128,755,123,905,72"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="829,130,979,170"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="976,77,934,121,930,118,972,73"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1004,130,1212,170"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1039,73,1082,118,1078,121,1035,77"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1237,130,1438,170"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1109,72,1267,123,1265,128,1108,77"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1463,123,1639,177"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1109,55,1266,83,1450,120,1449,125,1265,88,1108,61"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1663,130,1897,170"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="1109,49,1357,78,1651,120,1678,125,1678,130,1650,125,1356,83,1109,55"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="1921,123,2127,177"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="1109,43,1459,68,1681,90,1907,120,1906,125,1680,95,1459,73,1109,49"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="2151,123,2358,177"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="1109,41,1299,48,1553,61,1842,85,2138,120,2137,125,1842,90,1553,67,1299,53,1109,46"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="2382,123,2586,177"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="1109,39,1334,43,1645,55,2003,79,2187,97,2369,120,2368,125,2187,102,2002,84,1645,60,1334,48,1109,44"/>
+</map>

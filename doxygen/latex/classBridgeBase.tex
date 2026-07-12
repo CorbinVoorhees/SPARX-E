@@ -1,0 +1,239 @@
+\doxysection{Bridge\+Base Class Reference}
+\hypertarget{classBridgeBase}{}\label{classBridgeBase}\index{BridgeBase@{BridgeBase}}
+
+
+Bridge is a base class that defines serial monitor communication for peripherals that use TTY.  
+
+
+
+
+{\ttfamily \#include $<$bridge.\+hpp$>$}
+
+
+
+Inheritance diagram for Bridge\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classBridgeBase__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Bridge\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{classBridgeBase__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structBridgeBase_1_1Buffer}{Buffer}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed}{Bridge\+Base}} (const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& \mbox{\hyperlink{classBridgeBase_af5e3461975c69370adcbee6a66369cc6}{operator=}} (const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& \mbox{\hyperlink{classBridgeBase_acfb9c232955e7e1897259734be10fd5a}{operator=}} (\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase_adb16281ff6ac7c2848754829b683eb79}{Bridge\+Base}} (\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1}{Bridge\+Base}} (std\+::string node\+\_\+name, std\+::string serial\+\_\+port\+\_\+str, int baud\+\_\+rate\+\_\+int, size\+\_\+t buflen)
+\begin{DoxyCompactList}\small\item\em Base constructor for Bridges. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b}{\texorpdfstring{$\sim$}{\string~}\+Bridge\+Base}} ()
+\item 
+void \mbox{\hyperlink{classBridgeBase_a225a5da44b606264c006589618584662}{write\+\_\+serial}} (const std\+\_\+msgs\+::msg\+::\+String\+::\+Shared\+Ptr msg)
+\begin{DoxyCompactList}\small\item\em Generic write serial function. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classBridgeBase_a4b530ff07f338dae058913095302498f}{read\+\_\+serial}} ()
+\begin{DoxyCompactList}\small\item\em Generic read from terminal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+rclcpp\+::\+Subscription$<$ std\+\_\+msgs\+::msg\+::\+String $>$\+::\+Shared\+Ptr \mbox{\hyperlink{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22}{serial\+\_\+monitor\+\_\+subscription}}
+\item 
+int \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\+\_\+fd}}
+\item 
+std\+::string \mbox{\hyperlink{classBridgeBase_a316bdd6412a414a77e08c1605f462472}{serial\+\_\+port}}
+\item 
+speed\+\_\+t \mbox{\hyperlink{classBridgeBase_a41de155823ba40f07bf99843a8eaab92}{baud\+\_\+rate}}
+\item 
+struct \mbox{\hyperlink{structBridgeBase_1_1Buffer}{Bridge\+Base\+::\+Buffer}} \mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr char \mbox{\hyperlink{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a}{target}} = \textquotesingle{}\textbackslash{}n\textquotesingle{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Bridge is a base class that defines serial monitor communication for peripherals that use TTY. 
+
+\begin{DoxyAuthor}{Author}
+Krish Sridhar 
+\end{DoxyAuthor}
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00025}{25}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed}\label{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed} 
+\index{BridgeBase@{BridgeBase}!BridgeBase@{BridgeBase}}
+\index{BridgeBase@{BridgeBase}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{BridgeBase()}{BridgeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Bridge\+Base\+::\+Bridge\+Base (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{classBridgeBase_adb16281ff6ac7c2848754829b683eb79}\label{classBridgeBase_adb16281ff6ac7c2848754829b683eb79} 
+\index{BridgeBase@{BridgeBase}!BridgeBase@{BridgeBase}}
+\index{BridgeBase@{BridgeBase}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{BridgeBase()}{BridgeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Bridge\+Base\+::\+Bridge\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1}\label{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1} 
+\index{BridgeBase@{BridgeBase}!BridgeBase@{BridgeBase}}
+\index{BridgeBase@{BridgeBase}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{BridgeBase()}{BridgeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Bridge\+Base\+::\+Bridge\+Base (\begin{DoxyParamCaption}\item[{std\+::string}]{node\+\_\+name,  }\item[{std\+::string}]{serial\+\_\+port\+\_\+str,  }\item[{int}]{baud\+\_\+rate\+\_\+int,  }\item[{size\+\_\+t}]{buflen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Base constructor for Bridges. 
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00118}{118}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+\Hypertarget{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b}\label{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b} 
+\index{BridgeBase@{BridgeBase}!````~BridgeBase@{\texorpdfstring{$\sim$}{\string~}BridgeBase}}
+\index{````~BridgeBase@{\texorpdfstring{$\sim$}{\string~}BridgeBase}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BridgeBase()}{\string~BridgeBase()}}
+{\footnotesize\ttfamily virtual Bridge\+Base\+::\texorpdfstring{$\sim$}{\string~}\+Bridge\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00156}{156}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classBridgeBase_acfb9c232955e7e1897259734be10fd5a}\label{classBridgeBase_acfb9c232955e7e1897259734be10fd5a} 
+\index{BridgeBase@{BridgeBase}!operator=@{operator=}}
+\index{operator=@{operator=}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& Bridge\+Base\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{classBridgeBase_af5e3461975c69370adcbee6a66369cc6}\label{classBridgeBase_af5e3461975c69370adcbee6a66369cc6} 
+\index{BridgeBase@{BridgeBase}!operator=@{operator=}}
+\index{operator=@{operator=}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& Bridge\+Base\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{classBridgeBase_a4b530ff07f338dae058913095302498f}\label{classBridgeBase_a4b530ff07f338dae058913095302498f} 
+\index{BridgeBase@{BridgeBase}!read\_serial@{read\_serial}}
+\index{read\_serial@{read\_serial}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{read\_serial()}{read\_serial()}}
+{\footnotesize\ttfamily std\+::string Bridge\+Base\+::read\+\_\+serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Generic read from terminal. 
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00184}{184}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+\Hypertarget{classBridgeBase_a225a5da44b606264c006589618584662}\label{classBridgeBase_a225a5da44b606264c006589618584662} 
+\index{BridgeBase@{BridgeBase}!write\_serial@{write\_serial}}
+\index{write\_serial@{write\_serial}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{write\_serial()}{write\_serial()}}
+{\footnotesize\ttfamily void Bridge\+Base\+::write\+\_\+serial (\begin{DoxyParamCaption}\item[{const std\+\_\+msgs\+::msg\+::\+String\+::\+Shared\+Ptr}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Generic write serial function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & String message shared pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+std\+\_\+msgs\+::msg\+::\+String 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00166}{166}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classBridgeBase_a41de155823ba40f07bf99843a8eaab92}\label{classBridgeBase_a41de155823ba40f07bf99843a8eaab92} 
+\index{BridgeBase@{BridgeBase}!baud\_rate@{baud\_rate}}
+\index{baud\_rate@{baud\_rate}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{baud\_rate}{baud\_rate}}
+{\footnotesize\ttfamily speed\+\_\+t Bridge\+Base\+::baud\+\_\+rate\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00039}{39}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+\Hypertarget{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}\label{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1} 
+\index{BridgeBase@{BridgeBase}!buf@{buf}}
+\index{buf@{buf}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{buf}{buf}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structBridgeBase_1_1Buffer}{Bridge\+Base\+::\+Buffer}} Bridge\+Base\+::buf\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}\label{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca} 
+\index{BridgeBase@{BridgeBase}!serial\_fd@{serial\_fd}}
+\index{serial\_fd@{serial\_fd}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{serial\_fd}{serial\_fd}}
+{\footnotesize\ttfamily int Bridge\+Base\+::serial\+\_\+fd\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00033}{33}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+\Hypertarget{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22}\label{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22} 
+\index{BridgeBase@{BridgeBase}!serial\_monitor\_subscription@{serial\_monitor\_subscription}}
+\index{serial\_monitor\_subscription@{serial\_monitor\_subscription}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{serial\_monitor\_subscription}{serial\_monitor\_subscription}}
+{\footnotesize\ttfamily rclcpp\+::\+Subscription$<$std\+\_\+msgs\+::msg\+::\+String$>$\+::\+Shared\+Ptr Bridge\+Base\+::serial\+\_\+monitor\+\_\+subscription\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00030}{30}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+\Hypertarget{classBridgeBase_a316bdd6412a414a77e08c1605f462472}\label{classBridgeBase_a316bdd6412a414a77e08c1605f462472} 
+\index{BridgeBase@{BridgeBase}!serial\_port@{serial\_port}}
+\index{serial\_port@{serial\_port}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{serial\_port}{serial\_port}}
+{\footnotesize\ttfamily std\+::string Bridge\+Base\+::serial\+\_\+port\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00036}{36}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+\Hypertarget{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a}\label{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a} 
+\index{BridgeBase@{BridgeBase}!target@{target}}
+\index{target@{target}!BridgeBase@{BridgeBase}}
+\doxysubsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily constexpr char Bridge\+Base\+::target = \textquotesingle{}\textbackslash{}n\textquotesingle{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{bridge_8hpp_source_l00050}{50}} of file \mbox{\hyperlink{bridge_8hpp_source}{bridge.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/bridges/include/bridges/\mbox{\hyperlink{bridge_8hpp}{bridge.\+hpp}}\end{DoxyCompactItemize}

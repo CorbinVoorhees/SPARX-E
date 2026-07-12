@@ -1,0 +1,9 @@
+<map id="unilidar_sdk2::LidarAckDataPacket" name="unilidar_sdk2::LidarAckDataPacket">
+<area shape="rect" id="Node000001" title="ACK command Packet." alt="" coords="235,93,439,133"/>
+<area shape="rect" id="Node000002" href="$structunilidar__sdk2_1_1FrameHeader.html" title="Frame Header." alt="" coords="5,5,211,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,33,292,91,290,96,148,38"/>
+<area shape="rect" id="Node000003" href="$structunilidar__sdk2_1_1LidarAckData.html" title="ACK." alt="" coords="235,5,439,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="340,44,340,93,335,93,335,44"/>
+<area shape="rect" id="Node000004" href="$structunilidar__sdk2_1_1FrameTail.html" title="Frame Tail." alt="" coords="463,5,643,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="515,38,382,96,380,91,513,34"/>
+</map>

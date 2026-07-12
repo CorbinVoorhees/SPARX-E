@@ -36,36 +36,3 @@ namespace \mbox{\hyperlink{namespace__local__setup__util__sh}{\+\_\+local\+\_\+s
 \item 
 \mbox{\hyperlink{namespace__local__setup__util__sh_a70e35ff4abbd80263516d27c8e09a983}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+\_\+set\+\_\+if\+\_\+unset}} (name, value)
 \end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_acfdfd3d3869f5cbfb8824105dc24c38d}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+COMMENT\+\_\+\+LINE}} = \textquotesingle{}\# \{comment\}\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a29c36c07078b8578f6503f83664acefa}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+SET\+\_\+\+ENV\+\_\+\+VAR}} = \textquotesingle{}export \{name\}="{}\{value\}"{}\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_adf57924f1362c6bf90a1c0a4026ddce6}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+USE\+\_\+\+ENV\+\_\+\+VAR}} = \textquotesingle{}\$\{name\}\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a043d90a82a879c6cee8160b6901bb037}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+INVOKE\+\_\+\+SCRIPT}} = \textquotesingle{}COLCON\+\_\+\+CURRENT\+\_\+\+PREFIX="{}\{prefix\}"{} \+\_\+colcon\+\_\+prefix\+\_\+sh\+\_\+source\+\_\+script "{}\{script\+\_\+path\}"{}\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a6894a255d8b5f5c42aaca189da2a5acb}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+REMOVE\+\_\+\+LEADING\+\_\+\+SEPARATOR}} = \textquotesingle{}if \mbox{[} "{}\$(echo -\/n \$\{name\} \texorpdfstring{$\vert$}{|} head -\/c 1)"{} = "{}\+:"{} \mbox{]}; then export \{name\}=\$\{\{\{name\}\#?\}\} ; fi\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a409113f1059ba8134f6b9a7c5f3e1d6b}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+FORMAT\+\_\+\+STR\+\_\+\+REMOVE\+\_\+\+TRAILING\+\_\+\+SEPARATOR}} = \textquotesingle{}if \mbox{[} "{}\$(echo -\/n \$\{name\} \texorpdfstring{$\vert$}{|} tail -\/c 1)"{} = "{}\+:"{} \mbox{]}; then export \{name\}=\$\{\{\{name\}\%?\}\} ; fi\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a2f274909f5a84ec6e9ef83a6928ae3e4}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+APPEND\+\_\+\+NON\+\_\+\+DUPLICATE}} = \textquotesingle{}append-\/non-\/duplicate\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a64588c97095b89bd6a20623289a37051}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+PREPEND\+\_\+\+NON\+\_\+\+DUPLICATE}} = \textquotesingle{}prepend-\/non-\/duplicate\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a1aed77c074b12d2ab6c11fb16dc01cfc}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+PREPEND\+\_\+\+NON\+\_\+\+DUPLICATE\+\_\+\+IF\+\_\+\+EXISTS}} = \textquotesingle{}prepend-\/non-\/duplicate-\/if-\/exists\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_ab3adaba61d9af99e2c3ae68f64e00a49}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+SET}} = \textquotesingle{}set\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_abd1e85db4deba9dd4ec1bc97c41e4744}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+SET\+\_\+\+IF\+\_\+\+UNSET}} = \textquotesingle{}set-\/if-\/unset\textquotesingle{}
-\item 
-str \mbox{\hyperlink{namespace__local__setup__util__sh_a641c7643fae0080e426bedec13be1490}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+DSV\+\_\+\+TYPE\+\_\+\+SOURCE}} = \textquotesingle{}source\textquotesingle{}
-\item 
-dict \mbox{\hyperlink{namespace__local__setup__util__sh_a4671fbb6038d6bc762ef0d125249acca}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+env\+\_\+state}} = \{\}
-\item 
-\mbox{\hyperlink{namespace__local__setup__util__sh_a33c8846fcbbb8b254bd1bb1564a82282}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+rc}} = \mbox{\hyperlink{namespace__local__setup__util__sh_a1b27fc72a79bb06ff30ee558df7ccaa2}{main}}()
-\item 
-\mbox{\hyperlink{namespace__local__setup__util__sh_a8a4c43c0327926319dae62ac05e08b1d}{\+\_\+local\+\_\+setup\+\_\+util\+\_\+sh.\+file}}
-\end{DoxyCompactItemize}

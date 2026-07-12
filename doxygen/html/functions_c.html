@@ -16,6 +16,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -92,13 +101,12 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
-<li>calculate_key()&#160;:&#160;<a class="el" href="classplanning__module_1_1d__star.html#ac7a3a454fbf580c3165e67c6455a68aa">planning_module::d_star</a></li>
 <li>camera_pub&#160;:&#160;<a class="el" href="classstatus__updater_1_1main_1_1StatusUpdaterNode.html#a1ae81f2323ec7cd45cb8f5cbcb7af72a">status_updater.main.StatusUpdaterNode</a></li>
 <li>capacity&#160;:&#160;<a class="el" href="structlidar__processor____msg____Env____Sequence.html#a2f8c488537c2cb165ea1022980f17ece">lidar_processor__msg__Env__Sequence</a>, <a class="el" href="structlidar__processor____msg____Obstacle____Sequence.html#aa46331434623e956d585f67e352b29fe">lidar_processor__msg__Obstacle__Sequence</a></li>
-<li>case_eval_at()&#160;:&#160;<a class="el" href="structspline__testcase_1_1funct.html#aa2f560b3250609ce08b403d658241435">spline_testcase::funct</a></li>
-<li>center&#160;:&#160;<a class="el" href="classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#a88e0e1235994a99bedd0d2e4124c6670">lidar_processor.msg._obstacle.Obstacle</a>, <a class="el" href="classlidar__processor_1_1msg_1_1builder_1_1Init__Obstacle__center.html#ac04afc7322ac6a9c155018ed7bcd8134">lidar_processor.msg::builder::Init_Obstacle_center</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#accd60f23f58357e578da3041f88ece02">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor____msg____Obstacle.html#a8afe7e8ca0bfac1a3ad625e3319706a2">lidar_processor__msg__Obstacle</a></li>
+<li>center&#160;:&#160;<a class="el" href="classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#ad1d0cdd392d2d045382727541a85f6d5">lidar_processor.msg._obstacle.Obstacle</a>, <a class="el" href="classlidar__processor_1_1msg_1_1builder_1_1Init__Obstacle__center.html#abc75970a58ac69539f222360dfa950a9">lidar_processor::msg::builder::Init_Obstacle_center</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ad026f95ddb9bf9c138268afc7c6ab10a">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor____msg____Obstacle.html#a8afe7e8ca0bfac1a3ad625e3319706a2">lidar_processor__msg__Obstacle</a></li>
 <li>check_stream()&#160;:&#160;<a class="el" href="classcamera_1_1main_1_1StreamCameraNode.html#a34b6641e38a8d8da3af4be246935127e">camera.main.StreamCameraNode</a></li>
 <li>clearBuffer()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#acd6f6892d178437e07da1bddea2c437c">unilidar_sdk2::UnitreeLidarReader</a></li>
+<li>client&#160;:&#160;<a class="el" href="classuwb__gatewayd_1_1UwbSession.html#aaebf6ccb58b0ee0a86c20542cb039ca1">uwb_gatewayd.UwbSession</a></li>
 <li>Close()&#160;:&#160;<a class="el" href="classUDPHandler.html#a3df6afebb8d5b2b31f3be1137e9729b7">UDPHandler</a></li>
 <li>closeSerial()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#a1d0ed70e524508587328642dca1d4615">unilidar_sdk2::UnitreeLidarReader</a></li>
 <li>closeUDP()&#160;:&#160;<a class="el" href="classunilidar__sdk2_1_1UnitreeLidarReader.html#aec05370f444d3c843cdae0cb60903c60">unilidar_sdk2::UnitreeLidarReader</a></li>
@@ -110,19 +118,16 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 <li>com_horizontal_angle_start&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarPointData.html#ad2652077b78f10d6f7927597806508e6">unilidar_sdk2::LidarPointData</a></li>
 <li>com_horizontal_angle_step&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarPointData.html#a2127cbed33ab8b20d16a565be73b5387">unilidar_sdk2::LidarPointData</a></li>
 <li>com_rotation_period&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1LidarInsideState.html#a02a8e435669ede8ef9b3383984a3bf4c">unilidar_sdk2::LidarInsideState</a></li>
-<li>compute_shortest_path()&#160;:&#160;<a class="el" href="classplanning__module_1_1d__star.html#a8474ffa7a709b975aa1b8462d5999905">planning_module::d_star</a></li>
-<li>ConstPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#aad523d9fb5045c8961ca2289498aa45e">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ac0163107f8a38b99c158cb22dad9ea5f">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>ConstRawPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#ab3bafb82acb37f9b22b70a7d3b9a7be9">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ab0c1ecf0303a10d26d911f500e15eb17">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>ConstSharedPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#afe82baa1be4967fbe1845500d3b8de2c">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a059115a563ca65b92021083fb2292bcc">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>ConstUniquePtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#aa22ca04855576a1d3d687a1e8a51844c">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ac608eca5516ec5222b20e1c54eb1189e">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>ConstUniquePtrWithDeleter&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a7ea3ba73864dc5308ac6a3ca4c4ab96b">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#aa97df15c394301a973eb38f583a3085e">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>ConstWeakPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#aafc45945a8ad8568eba618ee4cc70e96">lidar_processor.msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a409a08c38b1e4eaaf19bddca91705c5c">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
-<li>coord_from_index()&#160;:&#160;<a class="el" href="classplanning__module_1_1grid2d.html#a88c1be82adac4467f5804fadcbfd40b4">planning_module::grid2d</a></li>
-<li>cost()&#160;:&#160;<a class="el" href="classplanning__module_1_1d__star.html#af858feb5af73a916bacf4bee22b7d78a">planning_module::d_star</a></li>
-<li>covariance&#160;:&#160;<a class="el" href="classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#a806292fbdce92959d692b0ab7209d333">lidar_processor.msg._obstacle.Obstacle</a>, <a class="el" href="classlidar__processor_1_1msg_1_1builder_1_1Init__Obstacle__covariance.html#a83fb1667a4141566b2b821859869b532">lidar_processor.msg::builder::Init_Obstacle_covariance</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a0fd4a19d1260fb3841b385eb36a5b222">lidar_processor.msg::Obstacle_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor____msg____Obstacle.html#a7586fce3cde9f247658acb6f2849eadf">lidar_processor__msg__Obstacle</a></li>
+<li>ComputeHrFn&#160;:&#160;<a class="el" href="classekf_1_1EKF.html#a8a86e9b7aafc24c2bdef89536a089d35">ekf::EKF</a></li>
+<li>ConstPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a833fc275d9d3e32d9e69fcd854926f69">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a46b37060acb3a4d2353407532334dbf9">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>ConstRawPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a2c2cf96e85a2e5783e0aa73966570826">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a68f0b5efd52dcb8d96617716183a7ff9">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>ConstSharedPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#acb79b918a6bc10419e0021902370124b">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a74efe8b648cf11df3727bf03efa85ada">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>ConstUniquePtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a49daf8e068632e6bd0ca01974ff48d7c">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#ad45276a597ef34c985df3d3287718a2e">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>ConstUniquePtrWithDeleter&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a1274d6633487c792c4755eeb2da0c8b3">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a9e2f040e1b75f3decf3642e97aa322cb">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>ConstWeakPtr&#160;:&#160;<a class="el" href="structlidar__processor_1_1msg_1_1Env__.html#a2c8339c4b36ec2787cc979c68194de82">lidar_processor::msg::Env_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a3809b61605cf86d886ee31257139bfaf">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a></li>
+<li>covariance()&#160;:&#160;<a class="el" href="classekf_1_1EKF.html#a6f013297f3e51f8ab9b7f009db2e42dd">ekf::EKF</a>, <a class="el" href="classlidar__processor_1_1msg_1_1__obstacle_1_1Obstacle.html#aa7487782dbe2f677628225c53d1ab0bf">lidar_processor.msg._obstacle.Obstacle</a>, <a class="el" href="classlidar__processor_1_1msg_1_1builder_1_1Init__Obstacle__covariance.html#a712cd4a0f6789f9689c93000b156d271">lidar_processor::msg::builder::Init_Obstacle_covariance</a>, <a class="el" href="structlidar__processor_1_1msg_1_1Obstacle__.html#a23e6ba89996673b8d8203e85afdfb5ef">lidar_processor::msg::Obstacle_&lt; ContainerAllocator &gt;</a>, <a class="el" href="structlidar__processor____msg____Obstacle.html#a7586fce3cde9f247658acb6f2849eadf">lidar_processor__msg__Obstacle</a></li>
 <li>crc32&#160;:&#160;<a class="el" href="structunilidar__sdk2_1_1FrameTail.html#a47ba08226e19498118d08f6dae3c62fd">unilidar_sdk2::FrameTail</a></li>
 <li>CreateSocket()&#160;:&#160;<a class="el" href="classUDPHandler.html#a56068abcf9d595250a1f3d0ead2f1324">UDPHandler</a></li>
-<li>curr_time()&#160;:&#160;<a class="el" href="classplanning__module_1_1Trajectory.html#a9165657ca3b286a5941d1974560532a4">planning_module::Trajectory</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

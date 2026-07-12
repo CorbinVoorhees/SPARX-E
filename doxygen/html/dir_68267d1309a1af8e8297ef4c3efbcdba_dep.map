@@ -1,16 +1,12 @@
 <map id="src" name="src">
-<area shape="rect" id="node2" href="dir_a74298565a788353833bfb0781cc7faa.html" title="arduino_bridge" alt="" coords="1471,27,1590,52"/>
-<area shape="rect" id="node3" href="dir_d54b4ab01cfca2d6a2adf243a13c9d48.html" title="autonomy" alt="" coords="1359,27,1447,52"/>
-<area shape="rect" id="node4" href="dir_c2fcf3be784993bb5c8f7c337d0d625f.html" title="build" alt="" coords="1279,27,1334,52"/>
-<area shape="rect" id="node5" href="dir_b81a6d37c1be1da3994811284375cdfd.html" title="build_sparxe" alt="" coords="1151,27,1255,52"/>
-<area shape="rect" id="node6" href="dir_34519bff5ae72130fe71a8620cbf1fc0.html" title="camera" alt="" coords="1055,27,1126,52"/>
-<area shape="rect" id="node7" href="dir_4ec1b7dc0f5a431ee5d5f760970f8a7b.html" title="install" alt="" coords="969,27,1031,52"/>
-<area shape="rect" id="node8" href="dir_2f7cccdc383050a74f40680d8ab35088.html" title="lidar_processor" alt="" coords="823,27,945,52"/>
-<area shape="rect" id="node9" href="dir_7347abcc631cc7e99731be92270a31b6.html" title="motor_commander" alt="" coords="652,27,799,52"/>
-<area shape="rect" id="node10" href="dir_e7f5534288e60c743609b705508d80a9.html" title="nav_filters" alt="" coords="537,27,628,52"/>
-<area shape="rect" id="node11" href="dir_58080eca09e3385f6c0ce93162c4153c.html" title="status_updater" alt="" coords="394,27,513,52"/>
-<area shape="rect" id="node12" href="dir_1983ed94cd103ac1af32eeebf4c82145.html" title="telemetry" alt="" coords="283,27,370,52"/>
-<area shape="rect" id="node13" href="dir_d0cf874822187224b779888ae38e2e53.html" title="unilidar_sdk2" alt="" coords="149,27,259,52"/>
-<area shape="rect" id="node14" href="dir_7825725ad8aa4264bab015768583f37d.html" title="uwb_bridge" alt="" coords="27,27,125,52"/>
-<area shape="rect" id="clust1" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html" alt="" coords="16,16,1667,63"/>
+<area shape="rect" id="node2" href="dir_b1f1c94472a52d9c42ff4292371bbf64.html" title="bridges" alt="" coords="1082,27,1153,52"/>
+<area shape="rect" id="node3" href="dir_b81a6d37c1be1da3994811284375cdfd.html" title="build_sparxe" alt="" coords="953,27,1057,52"/>
+<area shape="rect" id="node4" href="dir_34519bff5ae72130fe71a8620cbf1fc0.html" title="camera" alt="" coords="858,27,929,52"/>
+<area shape="rect" id="node5" href="dir_2f7cccdc383050a74f40680d8ab35088.html" title="lidar_processor" alt="" coords="713,27,834,52"/>
+<area shape="rect" id="node6" href="dir_7347abcc631cc7e99731be92270a31b6.html" title="motor_commander" alt="" coords="541,27,688,52"/>
+<area shape="rect" id="node7" href="dir_e7f5534288e60c743609b705508d80a9.html" title="nav_filters" alt="" coords="427,27,517,52"/>
+<area shape="rect" id="node8" href="dir_58080eca09e3385f6c0ce93162c4153c.html" title="status_updater" alt="" coords="283,27,402,52"/>
+<area shape="rect" id="node9" href="dir_d0cf874822187224b779888ae38e2e53.html" title="unilidar_sdk2" alt="" coords="149,27,259,52"/>
+<area shape="rect" id="node10" href="dir_7825725ad8aa4264bab015768583f37d.html" title="uwb_bridge" alt="" coords="27,27,125,52"/>
+<area shape="rect" id="clust1" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html" alt="" coords="16,16,1229,63"/>
 </map>

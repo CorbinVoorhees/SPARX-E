@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['依赖_0',['依赖',['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md32',1,'4.1 依赖'],['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md37',1,'5.1 依赖']]]
+  ['使用串口运行_0',['3.4 使用串口运行',['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md30',1,'']]],
+  ['使用网口运行_1',['3.3 使用网口运行',['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md29',1,'']]]
 ];

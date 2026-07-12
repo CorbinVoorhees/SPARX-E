@@ -1,21 +1,7 @@
 var searchData=
 [
-  ['radian_5fto_5fdegree_0',['RADIAN_TO_DEGREE',['../namespaceunilidar__sdk2.html#a08d0ed7f3d3c85235be118cdf7d872a4',1,'unilidar_sdk2']]],
-  ['range_5fbias_1',['range_bias',['../structunilidar__sdk2_1_1LidarCalibParam.html#aa505908574e625eaa02b109ca37b4432',1,'unilidar_sdk2::LidarCalibParam']]],
-  ['range_5fmax_2',['range_max',['../structunilidar__sdk2_1_1LidarPointData.html#a7a49fdf0ae63c8df96a32c29818d9a05',1,'unilidar_sdk2::LidarPointData::range_max'],['../structunilidar__sdk2_1_1Lidar2DPointData.html#adfe20bdeeb4851e3b7049802421f86ef',1,'unilidar_sdk2::Lidar2DPointData::range_max']]],
-  ['range_5fmax_5f_3',['range_max_',['../classUnitreeLidarSDKNode.html#a06898410e17625008f6f934968c097b2',1,'UnitreeLidarSDKNode']]],
-  ['range_5fmin_4',['range_min',['../structunilidar__sdk2_1_1LidarPointData.html#a0dff4c16e756108c0194304051b9397d',1,'unilidar_sdk2::LidarPointData::range_min'],['../structunilidar__sdk2_1_1Lidar2DPointData.html#a3ff304680494704ec61e957b30735bf0',1,'unilidar_sdk2::Lidar2DPointData::range_min']]],
-  ['range_5fmin_5f_5',['range_min_',['../classUnitreeLidarSDKNode.html#ad04eda37d74d2a03dc976265e46baa82',1,'UnitreeLidarSDKNode']]],
-  ['range_5fscale_6',['range_scale',['../structunilidar__sdk2_1_1LidarCalibParam.html#a00d29f4ebb9b92f65481abe2c4ccaf4d',1,'unilidar_sdk2::LidarCalibParam']]],
-  ['ranges_7',['ranges',['../structunilidar__sdk2_1_1LidarPointData.html#a6e1b49ad8057a5add22b8aefc7bbe95c',1,'unilidar_sdk2::LidarPointData::ranges'],['../structunilidar__sdk2_1_1Lidar2DPointData.html#a1da4f96c1af2642d1b54867865b49684',1,'unilidar_sdk2::Lidar2DPointData::ranges']]],
-  ['rc_8',['rc',['../namespace__local__setup__util__sh.html#a33c8846fcbbb8b254bd1bb1564a82282',1,'_local_setup_util_sh']]],
-  ['real_5fprefix_9',['real_prefix',['../namespacesitecustomize.html#ad92471310d42d90c5d1670962e6548f2',1,'sitecustomize']]],
-  ['res_10',['res',['../namespaceanis.html#ab7e41dce99e624409ef9fb37007d78a8',1,'anis']]],
-  ['reserve_11',['reserve',['../structunilidar__sdk2_1_1LidarMacAddressConfig.html#a3cee81da38f4b4c87ce6fa416d7f4d18',1,'unilidar_sdk2::LidarMacAddressConfig::reserve'],['../structunilidar__sdk2_1_1LidarVersionData.html#a30d25ab42932de9ec4a91ee1e69e0b7c',1,'unilidar_sdk2::LidarVersionData::reserve'],['../structunilidar__sdk2_1_1FrameTail.html#a509dedeaab5ecc3897870242513db2b8',1,'unilidar_sdk2::FrameTail::reserve']]],
-  ['residuals_12',['residuals',['../namespaceanis.html#a697c1287330daf209d0656fc315dda43',1,'anis']]],
-  ['rhs_13',['rhs',['../structplanning__module_1_1datapoint.html#ab5b5a8cb5b2d408f49831d2a8e48ec01',1,'planning_module::datapoint']]],
-  ['ring_14',['ring',['../structunilidar__sdk2_1_1PointUnitree.html#a23735fef87a73b2a3e8f66e41a03eee9',1,'unilidar_sdk2::PointUnitree::ring'],['../structPointType.html#a174ef211a58a2113461f4e92c7a7d2f0',1,'PointType::ring']]],
-  ['ringnum_15',['ringNum',['../structunilidar__sdk2_1_1PointCloudUnitree.html#a4305251fefa6715981a15973d360a5a6',1,'unilidar_sdk2::PointCloudUnitree']]],
-  ['roll_16',['roll',['../namespacebias__calc.html#afb4965f188ce8b2565847622538c07fd',1,'bias_calc']]],
-  ['ros_5fpython_5fcheck_5ffields_17',['ros_python_check_fields',['../namespacelidar__processor_1_1msg_1_1__env.html#a197487e3779bd6a0b3499db967a3f6d7',1,'lidar_processor.msg._env.ros_python_check_fields'],['../namespacelidar__processor_1_1msg_1_1__obstacle.html#aff537c5d737d02c35ca26ea08d92250b',1,'lidar_processor.msg._obstacle.ros_python_check_fields']]]
+  ['q_5fat_0',['q_at',['../namespacealigndata.html#aa196af91121423d4cffbc8756e55e1da',1,'aligndata']]],
+  ['q_5fnorm_1',['q_norm',['../namespacealigndata.html#aa9f5ebe4bf3ddf019cc9bcb7060d5b07',1,'aligndata']]],
+  ['quat_2',['quat',['../namespacetest.html#af71d7cd0d297c3f033e3b16701f2e6de',1,'test']]],
+  ['quaternion_3',['quaternion',['../structunilidar__sdk2_1_1LidarImuData.html#abe4fefac4b033bf476c3e3d3eae32099',1,'unilidar_sdk2::LidarImuData']]]
 ];

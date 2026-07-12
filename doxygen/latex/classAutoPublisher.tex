@@ -2,23 +2,51 @@
 \hypertarget{classAutoPublisher}{}\label{classAutoPublisher}\index{AutoPublisher@{AutoPublisher}}
 
 
+\doxylink{classAutoPublisher}{Auto\+Publisher} specifically targets nav\+\_\+node during runtime to kill and restart the Kalman Filter when state estimation has collapsed, or the nav\+\_\+node as failed to start. This was a patch solution before competition to restart the nav\+\_\+node, and also the Kalman Filter, and SHOULD NOT BE USED ANYMORE.  
+
+
+
+
+{\ttfamily \#include $<$auto\+\_\+publisher.\+hpp$>$}
+
+
+
 Inheritance diagram for Auto\+Publisher\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{classAutoPublisher__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Auto\+Publisher\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{classAutoPublisher__coll__graph}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classAutoPublisher_a3fa16849013acdfdb28e080a873a3377}{Auto\+Publisher}} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Construct a new Auto Publisher object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
+\doxylink{classAutoPublisher}{Auto\+Publisher} specifically targets nav\+\_\+node during runtime to kill and restart the Kalman Filter when state estimation has collapsed, or the nav\+\_\+node as failed to start. This was a patch solution before competition to restart the nav\+\_\+node, and also the Kalman Filter, and SHOULD NOT BE USED ANYMORE. 
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\mbox{\hyperlink{deprecated__deprecated000001}{Deprecated}}]\end{DoxyRefDesc}
+\begin{DoxyAuthor}{Author}
+Krish Sridhar 
+\end{DoxyAuthor}
 
 
-Definition at line \mbox{\hyperlink{auto__pub_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{auto__pub_8cpp_source}{auto\+\_\+pub.\+cpp}}.
+Definition at line \mbox{\hyperlink{auto__publisher_8hpp_source_l00015}{15}} of file \mbox{\hyperlink{auto__publisher_8hpp_source}{auto\+\_\+publisher.\+hpp}}.
 
 
 
@@ -31,10 +59,19 @@ Definition at line \mbox{\hyperlink{auto__pub_8cpp_source_l00015}{15}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{auto__pub_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{auto__pub_8cpp_source}{auto\+\_\+pub.\+cpp}}.
+Construct a new Auto Publisher object. 
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\mbox{\hyperlink{deprecated__deprecated000002}{Deprecated}}]\end{DoxyRefDesc}
+\begin{DoxyWarning}{Warning}
+DO NOT USE THIS NODE. USING A SERVICE, OR ALTERNATIVE NODE IS RECOMMENDED. OR FIX THE BUG! 
+\end{DoxyWarning}
+
+
+Definition at line \mbox{\hyperlink{auto__publisher_8hpp_source_l00073}{73}} of file \mbox{\hyperlink{auto__publisher_8hpp_source}{auto\+\_\+publisher.\+hpp}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/nav\+\_\+filters/src/\mbox{\hyperlink{auto__pub_8cpp}{auto\+\_\+pub.\+cpp}}\end{DoxyCompactItemize}
+src/nav\+\_\+filters/include/nav\+\_\+filters/\mbox{\hyperlink{auto__publisher_8hpp}{auto\+\_\+publisher.\+hpp}}\end{DoxyCompactItemize}

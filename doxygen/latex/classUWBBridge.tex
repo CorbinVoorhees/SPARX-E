@@ -2,25 +2,82 @@
 \hypertarget{classUWBBridge}{}\label{classUWBBridge}\index{UWBBridge@{UWBBridge}}
 
 
+Bridges UWB serial range data into ROS 2 topics.  
+
+
+
+
+{\ttfamily \#include $<$uwb\+\_\+bridge.\+hpp$>$}
+
+
+
 Inheritance diagram for UWBBridge\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=157pt]{classUWBBridge__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for UWBBridge\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{classUWBBridge__coll__graph}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classUWBBridge_a8f19e7bc07403a3aa9444cee49c74aaa}{UWBBridge}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the UWB bridge node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}}}
+\begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classUWBBridge_af02fe7029a28d55e63ff8262e208cb74}{\texorpdfstring{$\sim$}{\string~}\+UWBBridge}} ()
+\mbox{\hyperlink{classBridgeBase_a740dab7d5937092e5deb8b0a3c1bb3ed}{Bridge\+Base}} (const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& \mbox{\hyperlink{classBridgeBase_af5e3461975c69370adcbee6a66369cc6}{operator=}} (const \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \& \mbox{\hyperlink{classBridgeBase_acfb9c232955e7e1897259734be10fd5a}{operator=}} (\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase_adb16281ff6ac7c2848754829b683eb79}{Bridge\+Base}} (\mbox{\hyperlink{classBridgeBase}{Bridge\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classBridgeBase_a3336dab88e1f5c2fed0791f8b507d5e1}{Bridge\+Base}} (std\+::string node\+\_\+name, std\+::string serial\+\_\+port\+\_\+str, int baud\+\_\+rate\+\_\+int, size\+\_\+t buflen)
+\begin{DoxyCompactList}\small\item\em Base constructor for Bridges. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classBridgeBase_a47b98c8c59f5fd96fdba955795c3d83b}{\texorpdfstring{$\sim$}{\string~}\+Bridge\+Base}} ()
+\item 
+void \mbox{\hyperlink{classBridgeBase_a225a5da44b606264c006589618584662}{write\+\_\+serial}} (const std\+\_\+msgs\+::msg\+::\+String\+::\+Shared\+Ptr msg)
+\begin{DoxyCompactList}\small\item\em Generic write serial function. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classBridgeBase_a4b530ff07f338dae058913095302498f}{read\+\_\+serial}} ()
+\begin{DoxyCompactList}\small\item\em Generic read from terminal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+rclcpp\+::\+Subscription$<$ std\+\_\+msgs\+::msg\+::\+String $>$\+::\+Shared\+Ptr \mbox{\hyperlink{classBridgeBase_af8bd2bed2327173d2b8aaf05fb364a22}{serial\+\_\+monitor\+\_\+subscription}}
+\item 
+int \mbox{\hyperlink{classBridgeBase_afe6ba71fdf93a6b1e068c2422237f2ca}{serial\+\_\+fd}}
+\item 
+std\+::string \mbox{\hyperlink{classBridgeBase_a316bdd6412a414a77e08c1605f462472}{serial\+\_\+port}}
+\item 
+speed\+\_\+t \mbox{\hyperlink{classBridgeBase_a41de155823ba40f07bf99843a8eaab92}{baud\+\_\+rate}}
+\item 
+struct \mbox{\hyperlink{structBridgeBase_1_1Buffer}{Bridge\+Base\+::\+Buffer}} \mbox{\hyperlink{classBridgeBase_a5a265dd563033cf843ffa7a753b7acb1}{buf}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classBridgeBase}{Bridge\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr char \mbox{\hyperlink{classBridgeBase_a6819ff19051ea2c11beaed2ab30a684a}{target}} = \textquotesingle{}\textbackslash{}n\textquotesingle{}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
+Bridges UWB serial range data into ROS 2 topics. 
 
-
-Definition at line \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source}{main.\+cpp}}.
+Definition at line \mbox{\hyperlink{uwb__bridge_8hpp_source_l00015}{15}} of file \mbox{\hyperlink{uwb__bridge_8hpp_source}{uwb\+\_\+bridge.\+hpp}}.
 
 
 
@@ -33,20 +90,14 @@ Definition at line \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source_l00010}{1
 
 
 
-Definition at line \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source}{main.\+cpp}}.
-
-\Hypertarget{classUWBBridge_af02fe7029a28d55e63ff8262e208cb74}\label{classUWBBridge_af02fe7029a28d55e63ff8262e208cb74} 
-\index{UWBBridge@{UWBBridge}!````~UWBBridge@{\texorpdfstring{$\sim$}{\string~}UWBBridge}}
-\index{````~UWBBridge@{\texorpdfstring{$\sim$}{\string~}UWBBridge}!UWBBridge@{UWBBridge}}
-\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}UWBBridge()}{\string~UWBBridge()}}
-{\footnotesize\ttfamily UWBBridge\+::\texorpdfstring{$\sim$}{\string~}\+UWBBridge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+Constructor for the UWB bridge node. 
 
 
 
-Definition at line \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{uwb__bridge_2src_2main_8cpp_source}{main.\+cpp}}.
+Definition at line \mbox{\hyperlink{uwb__bridge_8hpp_source_l00055}{55}} of file \mbox{\hyperlink{uwb__bridge_8hpp_source}{uwb\+\_\+bridge.\+hpp}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/uwb\+\_\+bridge/src/\mbox{\hyperlink{uwb__bridge_2src_2main_8cpp}{main.\+cpp}}\end{DoxyCompactItemize}
+src/bridges/include/bridges/\mbox{\hyperlink{uwb__bridge_8hpp}{uwb\+\_\+bridge.\+hpp}}\end{DoxyCompactItemize}

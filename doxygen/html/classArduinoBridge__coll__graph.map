@@ -1,5 +1,9 @@
 <map id="ArduinoBridge" name="ArduinoBridge">
-<area shape="rect" id="Node000001" title="Bridges Arduino serial data into ROS 2 topics." alt="" coords="5,79,120,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="11,5,114,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,44,65,79,60,79,60,44"/>
+<area shape="rect" id="Node000001" title="Bridges Arduino serial data into ROS 2 topics." alt="" coords="73,168,187,193"/>
+<area shape="rect" id="Node000002" href="$classBridgeBase.html" title="Bridge is a base class that defines serial monitor communication for peripherals that use TTY." alt="" coords="82,93,178,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,133,133,168,127,168,127,133"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,108,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,39,122,91,118,95,73,43"/>
+<area shape="rect" id="Node000004" href="$structBridgeBase_1_1Buffer.html" title=" " alt="" coords="132,5,275,31"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="187,43,142,95,138,91,183,39"/>
 </map>

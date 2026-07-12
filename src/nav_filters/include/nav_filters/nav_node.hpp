@@ -1,191 +1,402 @@
-#ifndef NAV_NODE_HPP
-#define NAV_NODE_HPP
+#pragma once
 
-#include "../../../utils.h"
 #include <Eigen/Dense>
-#include <algorithm>
 #include <chrono>
-#include <iostream>
 #include <memory>
 
+#include <geometry_msgs/msg/quaternion.hpp>
+#include <nav_msgs/msg/odometry.hpp>
 #include <rclcpp/node.hpp>
 #include <sensor_msgs/msg/imu.hpp>
 #include <sensor_msgs/msg/magnetic_field.hpp>
+#include <std_msgs/msg/float32.hpp>
 
-#include <nav_filters/ekf.hpp>
-#include <nav_filters/mekf.hpp>
+#include "ISensor.hpp"
+#include "ckf.hpp"
+#include "mekf.hpp"
+#include "nav_msgs/msg/odometry.hpp"
+#include "trans_ekf.hpp"
+
 using SteadyClock = std::chrono::steady_clock;
 
 namespace nav {
-static Eigen::Vector3d quat_to_rpy(const Eigen::Quaterniond &qn) {
-  Eigen::Matrix3d R     = qn.normalized().toRotationMatrix();
-  double          roll  = std::atan2(R(2, 1), R(2, 2));
-  double          s     = -R(2, 0);
-  double          pitch = (std::abs(s) >= 1.0) ? std::copysign(M_PI / 2, s) : std::asin(s);
-  double          yaw   = std::atan2(R(1, 0), R(0, 0));
-  return {roll, pitch, yaw};
-}
 
-class NavigationNode : public rclcpp::Node {
+class NavNode : public rclcpp::Node {
 private:
-  /// Statistics Generator for the incoming imu data.
-  FilteredSampleProducer<Eigen::Vector3d> gyros{Eigen::Vector3d::Zero(), 1.0};
-  FilteredSampleProducer<Eigen::Vector3d> accel{Eigen::Vector3d::Zero(), 1.0};
-  FilteredSampleProducer<Eigen::Vector3d> magnm{Eigen::Vector3d::Zero(), 1.0};
+  using V3 = Eigen::Vector3d;
+  using V4 = Eigen::Vector4d;
 
-  // initial values
-  double             init_x, init_y, init_z;
-  int                min_imu_samples, min_uwb_samples, min_mekf_samples;
-  Eigen::Quaterniond init_orientation;
+  std::shared_ptr<MEKF> mekf_;
+  std::unique_ptr<TRANSEKF> trans_ekf_;
 
-  // mekf values
-  std::unique_ptr<MEKF> mekf;
-  bool                  initialized     = false;
-  bool                  orientation_set = false;
+  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
+  rclcpp::Subscription<sensor_msgs::msg::MagneticField>::SharedPtr mag_sub_;
+  rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr uwb_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::Quaternion>::SharedPtr cntrl_sub_;
 
-  Logger csv_log{"mekf_log.csv", std::chrono::milliseconds(50)};
+  // wall timer for publisher...
+  rclcpp::TimerBase::SharedPtr publisher_timer;
+  rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr estim_;
 
-  rclcpp::Subscription<sensor_msgs::msg::MagneticField>::SharedPtr mag_sub;
-  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr           imu_sub;
-  rclcpp::TimerBase::SharedPtr                                     ekf_timer;
+  Logger csv_log;
+  Logger csv_log_trans;
+  Logger csv_log_sensors;
+  Logger csv_log_gains;
+  Logger csv_log_corr;
+  // full per-step Kalman pipeline trace (long format: one row per element)
+  Logger csv_log_kf;
 
-  void mag_cb(const sensor_msgs::msg::MagneticField::SharedPtr m) {
-    Eigen::Vector3d mag_vec{m->magnetic_field.x, m->magnetic_field.y, m->magnetic_field.z};
-    if (!this->initialized) {
-      magnm.put(mag_vec);
-      initialize_from_profile();
-    } else {
-      this->mekf->put_magnm(mag_vec);
-      this->mekf->step(SteadyClock::now());
-      if (!this->orientation_set)
-        initialize_from_profile();
-    }
+  inline static constexpr uint32_t min_gyro_samples = 3000;
+  uint32_t n_gyro_samples = 0;
+
+  inline static constexpr uint32_t min_accel_samples = 3000;
+  uint32_t n_accel_samples = 0;
+
+  inline static constexpr uint32_t min_magnm_samples = 3000;
+  uint32_t n_magnm_samples = 0;
+
+  inline static constexpr uint32_t min_uwb_samples = 1000;
+  uint32_t n_uwb_samples = 0;
+
+  // initialization...
+  Eigen::Vector3d pos0 = Eigen::Vector3d{13.5, 0.0, -36.5} * 0.0254;
+
+public:
+  NavNode()
+      : Node("nav_node"),
+        csv_log("sparxe_mekf_test1__1_1.csv", std::chrono::milliseconds(25)),
+        csv_log_trans("sparxe_ekf_test1__1_1.csv",
+                      std::chrono::milliseconds(25)),
+        csv_log_sensors("sparxe_sensors_raw.csv", std::chrono::milliseconds(0)),
+        csv_log_gains("sparxe_gains.csv", std::chrono::milliseconds(25)),
+        csv_log_corr("sparxe_corrections.csv", std::chrono::milliseconds(25)),
+        csv_log_kf("sparxe_kf_trace.csv", std::chrono::milliseconds(0)) {
+
+    Sensor::SensorTable::register_sensor<V3>(V3::Zero(), min_gyro_samples,
+                                             "gyro");
+    Sensor::SensorTable::register_sensor<V3>(V3::Zero(), min_accel_samples,
+                                             "accel");
+    Sensor::SensorTable::register_sensor<V3>(V3::Zero(), min_magnm_samples,
+                                             "magnm");
+
+    Sensor::SensorTable::register_sensor<double>(0.0, min_uwb_samples, "uwb");
+    Sensor::SensorTable::register_sensor<V4>(V4::Zero(), 0, "control");
+
+    csv_log.log("time,nis,roll,pitch,yaw,gx,gy,gz,"
+                "gunbx,gunby,gunbz,bgx,bgy,bgz,gmx,gmy,gmz,"
+                "cthx,cthy,cthz\n");
+
+    csv_log_sensors.log("time,type,v0,v1,v2,v3\n");
+
+    // q0-frame strapdown states + the adaptive wheel efficiencies (mu) and
+    // forward accel bias.
+    csv_log_trans.log("time,nis,"
+                      "px,py,pz,"
+                      "vx,vy,vz,"
+                      "ax_raw,ay_raw,az_raw,"
+                      "pxx,pyy,pxy,"
+                      "bax,mur,mul,"
+                      "pzz,pvx,pvy,pvz,pmr,pml\n");
+
+    // per-state |K| of the last applied correction, per sensor, plus the
+    // last innovation (pre-gate, so rejected updates show too).
+    // trans states: px,py,pz,vx,vy,vz,mur,mul ; mekf states: thx,thy,thz
+    csv_log_gains.log("time,"
+                      "uwb_px,uwb_py,uwb_pz,uwb_vx,uwb_vy,uwb_vz,uwb_mr,uwb_ml,"
+                      "acc_px,acc_py,acc_pz,acc_vx,acc_vy,acc_vz,acc_mr,acc_ml,"
+                      "macc_x,macc_y,macc_z,"
+                      "mmag_x,mmag_y,mmag_z,"
+                      "mctl_x,mctl_y,mctl_z,"
+                      "uwb_r,acc_rx,acc_ry,acc_rz,"
+                      "macc_rx,macc_ry,macc_rz,"
+                      "mmag_rx,mmag_ry,mmag_rz,mctl_r\n");
+
+    // signed per-state correction dx = K*d_r actually applied (keeps sign).
+    // trans states: px,py,pz,vx,vy,vz,mur,mul ; mekf attitude: thx,thy,thz
+    csv_log_corr.log("time,"
+                     "uwb_px,uwb_py,uwb_pz,uwb_vx,uwb_vy,uwb_vz,uwb_mr,uwb_ml,"
+                     "acc_px,acc_py,acc_pz,acc_vx,acc_vy,acc_vz,acc_mr,acc_ml,"
+                     "macc_x,macc_y,macc_z,"
+                     "mmag_x,mmag_y,mmag_z,"
+                     "mctl_x,mctl_y,mctl_z\n");
+
+    // full per-step Kalman trace (long format)
+    csv_log_kf.log("time,filter,sensor,step,applied,nis,kind,idx,value\n");
+
+    const auto t0 = SteadyClock::now();
+    mekf_ = std::make_shared<MEKF>(t0);
+    trans_ekf_ = std::make_unique<TRANSEKF>(t0, mekf_, pos0);
+
+    mekf_->should_print_diagnostic = false;
+    trans_ekf_->should_print_diagnostic = true;
+
+    // stream every correction step of both filters to the trace CSV
+    mekf_->trace_sink = [this](const ckf::KFTrace &tr) {
+      log_kf_trace("mekf", tr);
+    };
+    trans_ekf_->trace_sink = [this](const ckf::KFTrace &tr) {
+      log_kf_trace("trans", tr);
+    };
+
+    imu_sub_ = create_subscription<sensor_msgs::msg::Imu>(
+        "/imu/data_raw", rclcpp::SensorDataQoS(),
+        [this](sensor_msgs::msg::Imu::SharedPtr m) { imu_cb(m); });
+
+    mag_sub_ = create_subscription<sensor_msgs::msg::MagneticField>(
+        "/imu/mag", rclcpp::SensorDataQoS(),
+        [this](sensor_msgs::msg::MagneticField::SharedPtr m) { mag_cb(m); });
+
+    uwb_sub_ = create_subscription<std_msgs::msg::Float32>(
+        "/uwb", rclcpp::SensorDataQoS(),
+        [this](std_msgs::msg::Float32::SharedPtr m) { uwb_cb(m); });
+
+    cntrl_sub_ = create_subscription<geometry_msgs::msg::Quaternion>(
+        "/smc/control", rclcpp::SensorDataQoS(),
+        [this](geometry_msgs::msg::Quaternion::SharedPtr m) { control_cb(m); });
+
+    using namespace std::chrono_literals;
+    publisher_timer = create_wall_timer(10ms, [this]() { publisher_cb(); });
+    estim_ = create_publisher<nav_msgs::msg::Odometry>("/trans_est", 10);
+  }
+
+private:
+  // one CSV row per element of every captured vector (long format)
+  void log_kf_trace(const char *filter, const ckf::KFTrace &tr) {
+    const double t = tr.t_s;
+    const auto emit = [&](const char *kind, const Eigen::VectorXd &v) {
+      for (int i = 0; i < v.size(); ++i)
+        csv_log_kf.log(string_format("%.9f,%s,%s,%u,%d,%.9e,%s,%d,%.9e\n", t,
+                                     filter, tr.sensor.c_str(), tr.step,
+                                     tr.applied ? 1 : 0, tr.nis, kind, i, v(i)));
+    };
+    emit("z", tr.z);
+    emit("Hx", tr.Hx);
+    emit("r", tr.r);
+    emit("S", tr.S_diag);
+    emit("R", tr.R_diag);
+    emit("dx", tr.dx);
+    emit("P", tr.P_diag);
+    emit("x_pre", tr.x_pre);
+    emit("x_post", tr.x_post);
+  }
+
+  void publisher_cb() {
+    auto attitude = mekf_->get_curr_state();
+    auto posvel = trans_ekf_->get_curr_state();
+
+    nav_msgs::msg::Odometry msg;
+
+    msg.pose.pose.position.x = posvel(0);
+    msg.pose.pose.position.y = posvel(1);
+    msg.pose.pose.position.z = posvel(2);
+
+    // rel (q0-frame) orientation: same frame the trans EKF positions and the
+    // wheel-odometry yaw live in
+    auto o = mekf_->rel_orientation();
+
+    msg.pose.pose.orientation.w = o.w();
+    msg.pose.pose.orientation.x = o.x();
+    msg.pose.pose.orientation.y = o.y();
+    msg.pose.pose.orientation.z = o.z();
+
+    estim_->publish(msg);
+  }
+
+  void control_cb(const geometry_msgs::msg::Quaternion::SharedPtr m) {
+    // [wr, wl, dwr, dwl]
+    const V4 control(m->w, m->x, m->y, m->z);
+    const auto now = SteadyClock::now();
+    Sensor::SensorTable::put<V4>("control", control, now);
+    // mekf_->suppress_magnm = (std::abs(m->w) > 0.05 || std::abs(m->x) > 0.05);
+
+    const double t_s =
+        std::chrono::duration<double>(now.time_since_epoch()).count();
+    csv_log_sensors.log(string_format("%.9f,control,%.9f,%.9f,%.9f,%.9f\n", t_s,
+                                      control(0), control(1), control(2),
+                                      control(3)));
+    trans_ekf_->tick(now);
+  }
+
+  void uwb_cb(const std_msgs::msg::Float32::SharedPtr m) {
+    const double range = static_cast<double>(m->data);
+    const auto now = SteadyClock::now();
+    Sensor::SensorTable::put<double>("uwb", range, now);
+    ++n_uwb_samples;
+
+    const double t_s =
+        std::chrono::duration<double>(now.time_since_epoch()).count();
+    csv_log_sensors.log(string_format("%.9f,uwb,%.9f,,,\n", t_s, range));
+    trans_ekf_->tick(now);
   }
 
   void imu_cb(const sensor_msgs::msg::Imu::SharedPtr m) {
-    Eigen::Vector3d w_vec{m->angular_velocity.x, m->angular_velocity.y, m->angular_velocity.z};
-    Eigen::Vector3d a_vec{m->linear_acceleration.x, m->linear_acceleration.y, m->linear_acceleration.z};
-    if (!this->initialized) {
-      this->accel.put(a_vec);
-      this->gyros.put(w_vec);
-      initialize_from_profile();
-    } else {
-      this->mekf->put_accel(a_vec);
-      this->mekf->put_gyros(w_vec);
-      this->mekf->step(SteadyClock::now());
-      if (!this->orientation_set)
-        initialize_from_profile();
-    }
-  }
+    const V3 w(m->angular_velocity.x, m->angular_velocity.y,
+               m->angular_velocity.z);
 
-  void initialize_from_profile() {
-    // Phase 1: collecting the stationary profile -> nothing built yet, just wait.
-    if (!this->initialized) {
-      if (this->gyros.get_count() < static_cast<size_t>(this->min_imu_samples)) {
-        std::cout << string_format("\r\033[2KCounts: gyro=%zu accel=%zu mag=%zu / target=%d", this->gyros.get_count(),
-                                   this->accel.get_count(), this->magnm.get_count(), this->min_imu_samples)
-                  << std::flush;
-        return;
-      }
+    const V3 a(m->linear_acceleration.x, m->linear_acceleration.y,
+               m->linear_acceleration.z);
 
-      Eigen::Quaterniond q0         = Eigen::Quaterniond::FromTwoVectors(this->accel.get_mean().normalized(), Eigen::Vector3d::UnitZ());
-      Eigen::Vector3d    gyro_bias  = this->gyros.get_mean();
-      Eigen::Vector3d    magnm_bias = Eigen::Vector3d::Zero();
-      Eigen::Vector3d    mean_north = q0.toRotationMatrix() * this->magnm.get_mean();
+    const auto now = SteadyClock::now();
 
-      Eigen::VectorXd x0(10);
-      x0 << q0.w(), q0.x(), q0.y(), q0.z(), gyro_bias.x(), gyro_bias.y(), gyro_bias.z(), magnm_bias.x(), magnm_bias.y(), magnm_bias.z();
+    ++n_gyro_samples;
+    ++n_accel_samples;
 
-      Eigen::Matrix<double, 9, 9> P0 = Eigen::Matrix<double, 9, 9>::Zero();
-      const double                n  = static_cast<double>(this->gyros.get_count());
+    Sensor::SensorTable::put<V3>("gyro", w, now);
+    Sensor::SensorTable::put<V3>("accel", a, now);
 
-      P0.diagonal().segment<3>(0).setConstant(std::pow(0.5 * M_PI / 180.0, 2));
-      P0.diagonal().segment<3>(3) = this->gyros.get_variance();
-      P0.diagonal().segment<3>(6) = this->magnm.get_variance();
-
-      Eigen::Vector3d gyro_var  = this->gyros.get_variance();
-      Eigen::Vector3d accel_var = this->accel.get_variance();
-      Eigen::Vector3d magnm_var = this->magnm.get_variance();
-
-      // double Q_MULT = 10.0;
-      double R_MULT = 100.0;
-
-      // Eigen::Matrix3d Q_gyro       = (gyro_var * Q_MULT).asDiagonal();
-      Eigen::Matrix3d Q_gyro       = Eigen::Matrix3d::Identity() * 1e-5;
-      Eigen::Matrix3d Q_bias_gyro  = Eigen::Matrix3d::Identity() * 1e-15;
-      Eigen::Matrix3d Q_bias_magnm = Eigen::Matrix3d::Identity() * 1e-15;
-
-      Eigen::Matrix3d R_accel = (accel_var * R_MULT).asDiagonal();
-      Eigen::Matrix3d R_magnm = (magnm_var * R_MULT).asDiagonal();
-
-      this->mekf =
-          std::make_unique<MEKF>(x0, P0, Q_gyro, Q_bias_gyro, Q_bias_magnm, R_accel, R_magnm, // Pass the newly constructed Matrix3d's here
-                                 SteadyClock::now(), mean_north, this->gyros, this->accel, this->magnm);
-      this->initialized = true;
-      return;
+    {
+      const double t_s =
+          std::chrono::duration<double>(now.time_since_epoch()).count();
+      csv_log_sensors.log(string_format("%.9f,gyro,%.9f,%.9f,%.9f,\n", t_s,
+                                        w.x(), w.y(), w.z()));
+      csv_log_sensors.log(string_format("%.9f,accel,%.9f,%.9f,%.9f,\n", t_s,
+                                        a.x(), a.y(), a.z()));
     }
 
-    // Phase 2: MEKF exists and the callbacks are stepping it -> let bias converge.
-    if (this->mekf->num_steps() < static_cast<uint32_t>(this->min_mekf_samples)) {
-      this->init_orientation    = this->mekf->orientation();
-      const Eigen::Vector3d rpy = quat_to_rpy(this->init_orientation) * 180.0 / M_PI;
-      std::cout << string_format("\r\033[2KInitial Orientation: roll=%.2f pitch=%.2f yaw=%.2f / steps=%u/%d", rpy.x(), rpy.y(), rpy.z(),
-                                 this->mekf->num_steps(), this->min_mekf_samples)
+    mekf_->tick(now);
+
+    if (n_accel_samples >= min_accel_samples &&
+        n_gyro_samples >= min_gyro_samples &&
+        n_magnm_samples >= min_magnm_samples) {
+      const Eigen::Quaterniond q = mekf_->orientation().normalized();
+
+      const Eigen::Matrix3d R_I_B = q.toRotationMatrix();
+
+      const double roll = std::atan2(R_I_B(2, 1), R_I_B(2, 2)) * 180.0 / M_PI;
+      const double pitch =
+          std::asin(std::clamp(-R_I_B(2, 0), -1.0, 1.0)) * 180.0 / M_PI;
+      const double yaw = std::atan2(R_I_B(1, 0), R_I_B(0, 0)) * 180.0 / M_PI;
+
+      const V3 bg = mekf_->gyro_bias();
+
+      const V3 gyro_unbiased = w - bg;
+
+      V3 gyro_mean = V3::Zero();
+
+      Sensor::SensorTable::get_mean<V3>("gyro", gyro_mean);
+
+      double time =
+          std::chrono::duration<double>(now.time_since_epoch()).count();
+
+      // attitude error-state (dtheta) covariance diagonal, rad^2
+      const auto &Pm = mekf_->covariance();
+
+      csv_log.log(string_format("%.9f,%.9f,"
+                                "%.9f,%.9f,%.9f,"
+                                "%.9f,%.9f,%.9f,"
+                                "%.9f,%.9f,%.9f,"
+                                "%.9f,%.9f,%.9f,"
+                                "%.9f,%.9f,%.9f,"
+                                "%.9e,%.9e,%.9e\n",
+                                time, mekf_->last_nis(), roll, pitch, yaw,
+                                w.x(), w.y(), w.z(), gyro_unbiased.x(),
+                                gyro_unbiased.y(), gyro_unbiased.z(), bg.x(),
+                                bg.y(), bg.z(), gyro_mean.x(), gyro_mean.y(),
+                                gyro_mean.z(), Pm(0, 0), Pm(1, 1), Pm(2, 2)));
+    } else
+      std::cout << string_format("\raccel: %d, gyro: %d, magnm: %d, uwb: %d",
+                                 n_accel_samples, n_gyro_samples,
+                                 n_magnm_samples, n_uwb_samples)
                 << std::flush;
-      return;
+    // std::cout << "ticking tekf" << std::endl;
+    trans_ekf_->tick(now);
+    // std::cout << "done" << std::endl;
+    // std::cout << "-------------" << std::endl;
+
+    if (n_accel_samples >= min_accel_samples &&
+        n_gyro_samples >= min_gyro_samples &&
+        n_magnm_samples >= min_magnm_samples &&
+        n_uwb_samples >= min_uwb_samples) {
+      const V3 p = trans_ekf_->get_position();
+      const V3 v = trans_ekf_->get_velocity();
+
+      const double time =
+          std::chrono::duration<double>(now.time_since_epoch()).count();
+
+      const auto &cov = trans_ekf_->covariance();
+      csv_log_trans.log(string_format(
+          "%.9f,%.9f,"
+          "%.9f,%.9f,%.9f,"
+          "%.9f,%.9f,%.9f,"
+          "%.9f,%.9f,%.9f,"
+          "%.9e,%.9e,%.9e,"
+          "%.9f,%.9f,%.9f,"
+          "%.9e,%.9e,%.9e,%.9e,%.9e,%.9e\n",
+          time, trans_ekf_->last_nis(), p.x(), p.y(), p.z(), v.x(), v.y(),
+          v.z(), a.x(), a.y(), a.z(), cov(0, 0), cov(1, 1), cov(0, 1), 0.0,
+          trans_ekf_->get_mu_r(), trans_ekf_->get_mu_l(), cov(2, 2), cov(3, 3),
+          cov(4, 4), cov(5, 5), cov(6, 6), cov(7, 7)));
     }
 
-    // Phase 3: settled -> lock the reference orientation, start diagnostics.
-    this->orientation_set               = true;
-    this->mekf->should_print_diagnostic = true;
+    if (n_accel_samples >= min_accel_samples &&
+        n_gyro_samples >= min_gyro_samples &&
+        n_magnm_samples >= min_magnm_samples &&
+        n_uwb_samples >= min_uwb_samples) {
+      const double time =
+          std::chrono::duration<double>(now.time_since_epoch()).count();
+
+      const Eigen::VectorXd gu = trans_ekf_->last_gain("uwb", 8);
+      const Eigen::VectorXd ga = trans_ekf_->last_gain("accel", 8);
+      const Eigen::VectorXd ma = mekf_->last_gain("accel", 3);
+      const Eigen::VectorXd mm = mekf_->last_gain("magnm", 3);
+      const Eigen::VectorXd mc = mekf_->last_gain("control", 3);
+
+      const Eigen::VectorXd ru = trans_ekf_->last_innovation("uwb", 1);
+      const Eigen::VectorXd ra = trans_ekf_->last_innovation("accel", 3);
+      const Eigen::VectorXd rma = mekf_->last_innovation("accel", 3);
+      const Eigen::VectorXd rmm = mekf_->last_innovation("magnm", 3);
+      const Eigen::VectorXd rmc = mekf_->last_innovation("control", 1);
+
+      csv_log_gains.log(string_format(
+          "%.9f,"
+          "%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,%.9e\n",
+          time, gu(0), gu(1), gu(2), gu(3), gu(4), gu(5), gu(6), gu(7), ga(0),
+          ga(1), ga(2), ga(3), ga(4), ga(5), ga(6), ga(7), ma(0), ma(1), ma(2),
+          mm(0), mm(1), mm(2), mc(0), mc(1), mc(2), ru(0), ra(0), ra(1), ra(2),
+          rma(0), rma(1), rma(2), rmm(0), rmm(1), rmm(2), rmc(0)));
+
+      // signed corrections dx = K*d_r per state (direction, not magnitude)
+      const Eigen::VectorXd cu = trans_ekf_->last_correction("uwb", 8);
+      const Eigen::VectorXd ca = trans_ekf_->last_correction("accel", 8);
+      const Eigen::VectorXd cma = mekf_->last_correction("accel", 3);
+      const Eigen::VectorXd cmm = mekf_->last_correction("magnm", 3);
+      const Eigen::VectorXd cmc = mekf_->last_correction("control", 3);
+
+      csv_log_corr.log(string_format(
+          "%.9f,"
+          "%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e,"
+          "%.9e,%.9e,%.9e\n",
+          time, cu(0), cu(1), cu(2), cu(3), cu(4), cu(5), cu(6), cu(7), ca(0),
+          ca(1), ca(2), ca(3), ca(4), ca(5), ca(6), ca(7), cma(0), cma(1),
+          cma(2), cmm(0), cmm(1), cmm(2), cmc(0), cmc(1), cmc(2)));
+    }
   }
 
-  void log_func() {
-    if (!this->initialized || !this->mekf)
-      return;
+  void mag_cb(const sensor_msgs::msg::MagneticField::SharedPtr m) {
+    const V3 magnetic_field(m->magnetic_field.x, m->magnetic_field.y,
+                            m->magnetic_field.z);
+    const auto now = SteadyClock::now();
 
-    const Eigen::Quaterniond q     = this->mekf->orientation();
-    Eigen::Quaterniond       q_rel = this->init_orientation.conjugate() * q;
-    q_rel.normalize();
+    Sensor::SensorTable::put<V3>("magnm", magnetic_field, now);
+    ++n_magnm_samples;
 
-    const Eigen::Vector3d rpy = quat_to_rpy(q_rel); // rad (×180/M_PI for deg)
-
-    const Eigen::Vector3d bg = this->mekf->gyro_bias();
-    const Eigen::Vector3d w  = this->gyros.peek();     // raw gyro
-    const Eigen::Vector3d wu = w - bg;                 // bias-corrected
-    const Eigen::Vector3d wm = this->gyros.get_mean(); // EMA mean
-
-    const double t = std::chrono::duration<double>(SteadyClock::now().time_since_epoch()).count();
-
-    csv_log.log(string_format("%.6f,%.4f,"
-                              "%.6f,%.6f,%.6f,"   // roll pitch yaw
-                              "%.6e,%.6e,%.6e,"   // w raw   (gx..)
-                              "%.6e,%.6e,%.6e,"   // w - bg  (gunb..)
-                              "%.6e,%.6e,%.6e,"   // bg      (bg..)
-                              "%.6e,%.6e,%.6e\n", // w mean  (gm..)
-                              t, this->mekf->last_nis(), rpy.x(), rpy.y(), rpy.z(), w.x(), w.y(), w.z(), wu.x(), wu.y(), wu.z(), bg.x(),
-                              bg.y(), bg.z(), wm.x(), wm.y(), wm.z()));
-  }
-
-public:
-  NavigationNode() : Node("nav_node") {
-    this->init_x           = declare_parameter<double>("init_x", 0.0);
-    this->init_y           = declare_parameter<double>("init_y", 0.0);
-    this->init_z           = declare_parameter<double>("init_z", 0.0);
-    this->min_imu_samples  = declare_parameter<int>("min_imu_samples", 3000);
-    this->min_uwb_samples  = declare_parameter<int>("min_uwb_samples", 3000);
-    this->min_mekf_samples = declare_parameter<int>("min_mekf_samples", 3000);
-
-    this->imu_sub =
-        create_subscription<sensor_msgs::msg::Imu>("/imu/data_raw", 10, [this](sensor_msgs::msg::Imu::SharedPtr m) { imu_cb(m); });
-    this->mag_sub = create_subscription<sensor_msgs::msg::MagneticField>(
-        "/imu/mag", 10, [this](sensor_msgs::msg::MagneticField::SharedPtr m) { mag_cb(m); });
-
-    // logger
-    this->ekf_timer = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&NavigationNode::log_func, this));
-    this->csv_log.log("time,nis,roll,pitch,yaw,gx,gy,gz,gunbx,gunby,gunbz,bgx,bgy,bgz,gmx,gmy,gmz\n");
+    const double t_s =
+        std::chrono::duration<double>(now.time_since_epoch()).count();
+    csv_log_sensors.log(string_format("%.9f,magnm,%.9f,%.9f,%.9f,\n", t_s,
+                                      magnetic_field.x(), magnetic_field.y(),
+                                      magnetic_field.z()));
+    mekf_->tick(now);
   }
 };
-}; // namespace nav
 
-#endif // NAV_NODE_HPP
+} // namespace nav

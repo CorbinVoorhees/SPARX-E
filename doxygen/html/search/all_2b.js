@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['配置_0',['配置',['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md33',1,'4.2 配置'],['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md38',1,'5.2 配置']]],
-  ['配置工作模式_1',['3.2 配置工作模式',['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md28',1,'']]]
+  ['运行_0',['运行',['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md35',1,'4.4 运行'],['../md_src_2unilidar__sdk2_2README__CN.html#autotoc_md40',1,'5.4 运行']]]
 ];

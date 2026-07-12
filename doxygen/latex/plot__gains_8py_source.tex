@@ -1,0 +1,116 @@
+\doxysection{plot\+\_\+gains.\+py}
+\hypertarget{plot__gains_8py_source}{}\label{plot__gains_8py_source}\index{analysis/plot\_gains.py@{analysis/plot\_gains.py}}
+\mbox{\hyperlink{plot__gains_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00001}\mbox{\hyperlink{namespaceplot__gains}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00004}00004\ \textcolor{keyword}{import}\ matplotlib}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00005}00005\ matplotlib.use(\textcolor{stringliteral}{'TkAgg'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00007}00007\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00008}00008\ \textcolor{keyword}{import}\ pandas\ \textcolor{keyword}{as}\ pd}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00009}00009\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00011}00011\ \textcolor{keyword}{from}\ plot\_common\ \textcolor{keyword}{import}\ enable\_quit\_key,\ add\_time\_window}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00014}\mbox{\hyperlink{namespaceplot__gains_aca9816a28fa3ce9170daa1f7a7cef35e}{00014}}\ GAINS\_CSV\ =\ \textcolor{stringliteral}{'../sparxe\_gains'}}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00016}\mbox{\hyperlink{namespaceplot__gains_aabdb5756ec341cac7633988477b14910}{00016}}\ GROUPS\ =\ [}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00017}00017\ \ \ \ \ (\textcolor{stringliteral}{'TRANSEKF\ UWB\ Gain'},\ [\textcolor{stringliteral}{'uwb\_px'},\ \textcolor{stringliteral}{'uwb\_py'},\ \textcolor{stringliteral}{'uwb\_pz'},\ \textcolor{stringliteral}{'uwb\_vx'},\ \textcolor{stringliteral}{'uwb\_vy'},\ \textcolor{stringliteral}{'uwb\_vz'},\ \textcolor{stringliteral}{'uwb\_mr'},\ \textcolor{stringliteral}{'uwb\_ml'}]),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00018}00018\ \ \ \ \ (\textcolor{stringliteral}{'TRANSEKF\ Accel\ Gain'},\ [\textcolor{stringliteral}{'acc\_px'},\ \textcolor{stringliteral}{'acc\_py'},\ \textcolor{stringliteral}{'acc\_pz'},\ \textcolor{stringliteral}{'acc\_vx'},\ \textcolor{stringliteral}{'acc\_vy'},\ \textcolor{stringliteral}{'acc\_vz'},\ \textcolor{stringliteral}{'acc\_mr'},\ \textcolor{stringliteral}{'acc\_ml'}]),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00019}00019\ \ \ \ \ (\textcolor{stringliteral}{'MEKF\ Accel\ Gain'},\ [\textcolor{stringliteral}{'macc\_x'},\ \textcolor{stringliteral}{'macc\_y'},\ \textcolor{stringliteral}{'macc\_z'}]),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00020}00020\ \ \ \ \ (\textcolor{stringliteral}{'MEKF\ Mag\ Gain'},\ [\textcolor{stringliteral}{'mmag\_x'},\ \textcolor{stringliteral}{'mmag\_y'},\ \textcolor{stringliteral}{'mmag\_z'}]),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00021}00021\ \ \ \ \ (\textcolor{stringliteral}{'MEKF\ Control/Yaw-\/Odom\ Gain'},\ [\textcolor{stringliteral}{'mctl\_x'},\ \textcolor{stringliteral}{'mctl\_y'},\ \textcolor{stringliteral}{'mctl\_z'}]),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00022}00022\ ]}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00024}00024\ \textcolor{comment}{\#\ last\ innovation\ per\ sensor\ (pre-\/gate:\ rejected\ updates\ show\ here\ too)}}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00025}\mbox{\hyperlink{namespaceplot__gains_a7599054b006d915e9600aca243c9950f}{00025}}\ INNOV\_GROUPS\ =\ [}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00026}00026\ \ \ \ \ (\textcolor{stringliteral}{'TRANSEKF\ UWB\ Innovation'},\ [\textcolor{stringliteral}{'uwb\_r'}],\ \textcolor{stringliteral}{'m'}),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00027}00027\ \ \ \ \ (\textcolor{stringliteral}{'TRANSEKF\ Accel\ Innovation'},\ [\textcolor{stringliteral}{'acc\_rx'},\ \textcolor{stringliteral}{'acc\_ry'},\ \textcolor{stringliteral}{'acc\_rz'}],\ \textcolor{stringliteral}{'m/s²'}),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00028}00028\ \ \ \ \ (\textcolor{stringliteral}{'MEKF\ Accel\ Innovation'},\ [\textcolor{stringliteral}{'macc\_rx'},\ \textcolor{stringliteral}{'macc\_ry'},\ \textcolor{stringliteral}{'macc\_rz'}],\ \textcolor{stringliteral}{'m/s²'}),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00029}00029\ \ \ \ \ (\textcolor{stringliteral}{'MEKF\ Mag\ Innovation'},\ [\textcolor{stringliteral}{'mmag\_rx'},\ \textcolor{stringliteral}{'mmag\_ry'},\ \textcolor{stringliteral}{'mmag\_rz'}],\ \textcolor{stringliteral}{'T'}),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00030}00030\ \ \ \ \ (\textcolor{stringliteral}{'MEKF\ Yaw-\/Odom\ Innovation'},\ [\textcolor{stringliteral}{'mctl\_r'}],\ \textcolor{stringliteral}{'rad'}),}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00031}00031\ ]}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00034}\mbox{\hyperlink{namespaceplot__gains_a93ce55afacb1912fa62e2b55a1a54c90}{00034}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__gains_a93ce55afacb1912fa62e2b55a1a54c90}{load\_csv}}(base):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{for}\ path\ \textcolor{keywordflow}{in}\ (base,\ base\ +\ \textcolor{stringliteral}{'.csv'}):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ os.path.exists(path):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pd.read\_csv(path)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{raise}\ FileNotFoundError(f\textcolor{stringliteral}{"{}Could\ not\ find\ '\{base\}'\ or\ '\{base\}.csv'."{}})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00041}\mbox{\hyperlink{namespaceplot__gains_a6b97e0c7de76aa6a0d4770c1b84d19a8}{00041}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__gains_a6b97e0c7de76aa6a0d4770c1b84d19a8}{clean}}(df):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'time'}\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ KeyError(\textcolor{stringliteral}{"{}Gains\ CSV\ missing\ 'time'\ column."{}})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00045}00045\ \ \ \ \ all\_groups\ =\ [g\ \textcolor{keywordflow}{for}\ \_,\ g\ \textcolor{keywordflow}{in}\ GROUPS]\ +\ [g\ \textcolor{keywordflow}{for}\ \_,\ g,\ \_\ \textcolor{keywordflow}{in}\ INNOV\_GROUPS]}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00046}00046\ \ \ \ \ cols\ =\ [\textcolor{stringliteral}{'time'}]\ +\ [c\ \textcolor{keywordflow}{for}\ group\ \textcolor{keywordflow}{in}\ all\_groups\ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ group\ \textcolor{keywordflow}{if}\ c\ \textcolor{keywordflow}{in}\ df.columns]}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00047}00047\ \ \ \ \ df\ =\ df.copy()}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ cols:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ df[c]\ =\ pd.to\_numeric(df[c],\ errors=\textcolor{stringliteral}{'coerce'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00051}00051\ \ \ \ \ df\ =\ df.dropna(subset=[\textcolor{stringliteral}{'time'}]).sort\_values(\textcolor{stringliteral}{'time'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00052}00052\ \ \ \ \ df\ =\ df.drop\_duplicates(subset=\textcolor{stringliteral}{'time'},\ keep=\textcolor{stringliteral}{'first'}).reset\_index(drop=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{if}\ len(df)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ RuntimeError(\textcolor{stringliteral}{'Not\ enough\ gain\ rows\ to\ plot.\ Run\ nav\_node\ until\ sparxe\_gains.csv\ has\ data\ rows.'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{return}\ df}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00058}\mbox{\hyperlink{namespaceplot__gains_add892e5fb069496fb5bfa0a847614102}{00058}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceplot__gains_add892e5fb069496fb5bfa0a847614102}{plot\_group}}(ax,\ t,\ df,\ title,\ cols,\ ylabel='|K|\ row\ norm'):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00059}00059\ \ \ \ \ plotted\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{for}\ c\ \textcolor{keywordflow}{in}\ cols:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ c\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ df.columns:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ y\ =\ df[c].to\_numpy(dtype=float)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ np.all(\string~np.isfinite(y)):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ ax.plot(t,\ y,\ linewidth=1.2,\ label=c)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ plotted\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00069}00069\ \ \ \ \ ax.set\_title(title,\ fontsize=11)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00070}00070\ \ \ \ \ ax.set\_ylabel(ylabel)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00071}00071\ \ \ \ \ ax.grid(\textcolor{keyword}{True},\ linestyle=\textcolor{stringliteral}{'-\/-\/'},\ alpha=0.45)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{if}\ plotted:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ ax.legend(loc=\textcolor{stringliteral}{'upper\ right'},\ fontsize=8,\ ncol=2)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ ax.text(0.5,\ 0.5,\ \textcolor{stringliteral}{'missing\ columns'},\ transform=ax.transAxes,}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ha=\textcolor{stringliteral}{'center'},\ va=\textcolor{stringliteral}{'center'},\ color=\textcolor{stringliteral}{'tab:red'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00079}\mbox{\hyperlink{namespaceplot__gains_a897e9d7db13048dcf2943361df1161f8}{00079}}\ \textcolor{keyword}{def\ }main(gains\_path=GAINS\_CSV):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00080}00080\ \ \ \ \ df\ =\ \mbox{\hyperlink{namespaceplot__gains_a6b97e0c7de76aa6a0d4770c1b84d19a8}{clean}}(\mbox{\hyperlink{namespaceplot__gains_a93ce55afacb1912fa62e2b55a1a54c90}{load\_csv}}(gains\_path))}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00082}00082\ \ \ \ \ t\ =\ df[\textcolor{stringliteral}{'time'}].to\_numpy(dtype=float).copy()}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00083}00083\ \ \ \ \ t\ -\/=\ t[0]}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00085}00085\ \ \ \ \ fig,\ axes\ =\ plt.subplots(len(GROUPS),\ 1,\ figsize=(15,\ 12),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00086}00086\ \ \ \ \ fig.suptitle(\textcolor{stringliteral}{'Kalman\ Gain\ Row\ Norms'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{for}\ ax,\ (title,\ cols)\ \textcolor{keywordflow}{in}\ zip(axes,\ GROUPS):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplot__gains_add892e5fb069496fb5bfa0a847614102}{plot\_group}}(ax,\ t,\ df,\ title,\ cols)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00091}00091\ \ \ \ \ axes[-\/1].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00092}00092\ \ \ \ \ add\_time\_window(fig,\ axes,\ t)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00094}00094\ \ \ \ \ fig\_r,\ axes\_r\ =\ plt.subplots(len(INNOV\_GROUPS),\ 1,\ figsize=(15,\ 12),\ sharex=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00095}00095\ \ \ \ \ fig\_r.suptitle(\textcolor{stringliteral}{'Innovations\ (pre-\/gate)'},\ fontsize=14)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{for}\ ax,\ (title,\ cols,\ unit)\ \textcolor{keywordflow}{in}\ zip(axes\_r,\ INNOV\_GROUPS):}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceplot__gains_add892e5fb069496fb5bfa0a847614102}{plot\_group}}(ax,\ t,\ df,\ title,\ cols,\ ylabel=unit)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ ax.axhline(0.0,\ color=\textcolor{stringliteral}{'k'},\ linewidth=0.8,\ alpha=0.5)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00101}00101\ \ \ \ \ axes\_r[-\/1].set\_xlabel(\textcolor{stringliteral}{'Time\ (s)'})}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00102}00102\ \ \ \ \ add\_time\_window(fig\_r,\ axes\_r,\ t)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00104}00104\ \ \ \ \ enable\_quit\_key(fig,\ fig\_r)}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00105}00105\ \ \ \ \ plt.show()}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00108}00108\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{'\_\_main\_\_'}:}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00109}\mbox{\hyperlink{namespaceplot__gains_ab8d7dd3ce8cc2c6ab16a2a3d52da51bf}{00109}}\ \ \ \ \ path\ =\ sys.argv[1]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 1\ \textcolor{keywordflow}{else}\ GAINS\_CSV}
+\DoxyCodeLine{\Hypertarget{plot__gains_8py_source_l00110}00110\ \ \ \ \ main(path)}
+
+\end{DoxyCode}

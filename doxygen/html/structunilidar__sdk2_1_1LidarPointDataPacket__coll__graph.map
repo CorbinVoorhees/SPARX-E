@@ -1,0 +1,17 @@
+<map id="unilidar_sdk2::LidarPointDataPacket" name="unilidar_sdk2::LidarPointDataPacket">
+<area shape="rect" id="Node000001" title="Lidar Point Data Packet." alt="" coords="884,57,1067,97"/>
+<area shape="rect" id="Node000002" href="$structunilidar__sdk2_1_1FrameHeader.html" title="Frame Header." alt="" coords="577,15,783,41"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="774,40,860,55,884,59,883,64,860,60,773,46"/>
+<area shape="rect" id="Node000003" href="$structunilidar__sdk2_1_1LidarPointData.html" title="Lidar Point Data." alt="" coords="573,65,787,90"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="801,75,884,75,884,80,801,80"/>
+<area shape="rect" id="Node000004" href="$structunilidar__sdk2_1_1DataInfo.html" title="Data Info." alt="" coords="298,7,471,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="465,33,614,62,613,67,464,38"/>
+<area shape="rect" id="Node000005" href="$structunilidar__sdk2_1_1TimeStamp.html" title="Time stamp." alt="" coords="5,7,197,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="211,17,298,17,298,23,211,23"/>
+<area shape="rect" id="Node000006" href="$structunilidar__sdk2_1_1LidarInsideState.html" title="Lidar Inside State." alt="" coords="291,57,479,97"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="493,75,573,75,573,80,493,80"/>
+<area shape="rect" id="Node000007" href="$structunilidar__sdk2_1_1LidarCalibParam.html" title="Lidar calib param." alt="" coords="293,121,476,161"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="489,116,620,87,621,93,490,121"/>
+<area shape="rect" id="Node000008" href="$structunilidar__sdk2_1_1FrameTail.html" title="Frame Tail." alt="" coords="590,114,770,139"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="773,109,860,95,883,91,884,96,860,100,774,114"/>
+</map>

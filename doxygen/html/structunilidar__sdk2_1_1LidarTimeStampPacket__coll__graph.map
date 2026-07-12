@@ -1,0 +1,9 @@
+<map id="unilidar_sdk2::LidarTimeStampPacket" name="unilidar_sdk2::LidarTimeStampPacket">
+<area shape="rect" id="Node000001" title="Lidar Time Stamp Packet." alt="" coords="239,93,422,133"/>
+<area shape="rect" id="Node000002" href="$structunilidar__sdk2_1_1FrameHeader.html" title="Frame Header." alt="" coords="5,5,211,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,33,287,91,285,96,147,38"/>
+<area shape="rect" id="Node000003" href="$structunilidar__sdk2_1_1TimeStamp.html" title="Time stamp." alt="" coords="235,5,427,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,44,333,93,328,93,328,44"/>
+<area shape="rect" id="Node000004" href="$structunilidar__sdk2_1_1FrameTail.html" title="Frame Tail." alt="" coords="451,5,631,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="504,39,374,96,372,91,502,34"/>
+</map>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['navigationnode_0',['NavigationNode',['../classNavigationNode.html',1,'']]],
-  ['nominaltrajectory_1',['NominalTrajectory',['../classplanning__module_1_1NominalTrajectory.html',1,'planning_module']]]
+  ['navnode_0',['NavNode',['../classnav_1_1NavNode.html',1,'nav']]]
 ];
