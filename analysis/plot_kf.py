@@ -1,89 +1,98 @@
 #!/usr/bin/env python3
-# plot every kalman step from sparxe_kf_trace.csv
-# long format: time,filter,sensor,step,applied,nis,kind,idx,value
-# kinds: z Hx r S R dx P x_pre x_post
+# One figure per state; rows are the complete correction pipeline.
 import os, sys
 import matplotlib; matplotlib.use('TkAgg')
 import pandas as pd, matplotlib.pyplot as plt
 
-CSV = '../sparxe_kf_trace.csv'
-SLAB = {'trans': ['px','py','pz','vx','vy','vz','mu_r','mu_l'], 'mekf': ['th_x','th_y','th_z']}
-MLAB = {'uwb': ['range'], 'accel': ['a0','a1','a2'], 'magnm': ['m0','m1','m2'], 'control': ['yaw_odo']}
-
-path = CSV if os.path.exists(CSV) else CSV + '.csv'
-if not os.path.exists(path):
-    sys.exit(f"no '{CSV}' — run nav_node first")
-df = pd.read_csv(path)
+CSV='../sparxe_kf_trace.csv'
+SLAB={'trans':['px','py','pz','vx','vy','vz','mu_r','mu_l'],
+      'mekf':['th_x','th_y','th_z']}
+MLAB={'uwb':['range'],'accel':['a0','a1','a2'],
+      'magnm':['m0','m1','m2'],'control':['control_derived_yaw']}
+path=CSV if os.path.exists(CSV) else CSV+'.csv'
+if not os.path.exists(path): sys.exit(f"no '{CSV}' — run nav_node first")
+df=pd.read_csv(path)
 for c in ('time','step','applied','nis','idx','value'):
-    df[c] = pd.to_numeric(df[c], errors='coerce')
-df = df.dropna(subset=['time','value'])
-df['t'] = df['time'] - df['time'].min()
+    df[c]=pd.to_numeric(df[c],errors='coerce')
+df=df.dropna(subset=['time','value']); df['t']=df.time-df.time.min()
 
+def wide(d,kind):
+    sub=d[d.kind==kind]
+    if sub.empty:return None,None
+    w=sub.pivot_table(index='step',columns='idx',values='value')
+    return w,sub.groupby('step').t.first().reindex(w.index)
 
-def wide(d, kind):
-    sub = d[d['kind'] == kind]
-    if sub.empty:
-        return None, None
-    piv = sub.pivot_table(index='step', columns='idx', values='value')
-    return piv, sub.groupby('step')['t'].first().reindex(piv.index)
+def meas_label(sensor,i):
+    labels=MLAB.get(sensor,[])
+    return labels[i] if i<len(labels) else f'm{i}'
 
+def plot_measurements(a,w,t,sensor,prefix,style='.-',root=False):
+    if w is None:return
+    for i in w.columns:
+        v=w[i].clip(lower=0).pow(.5) if root else w[i]
+        a.plot(t.values,v.values,style,ms=3,lw=1,
+               label=f'{prefix}[{meas_label(sensor,int(i))}]')
 
-def sl(f, i): return SLAB.get(f, [])[i] if i < len(SLAB.get(f, [])) else f's{i}'
-def ml(s, i): return MLAB.get(s, [])[i] if i < len(MLAB.get(s, [])) else f'm{i}'
+def decorate(a,title,zero=False):
+    a.set_title(title,fontsize=10)
+    if zero:a.axhline(0,color='k',lw=.8,alpha=.5)
+    a.legend(loc='upper right',fontsize=7,ncol=3)
+    a.grid(True,ls='--',alpha=.4)
 
+for f,sensor in sorted(set(df[['filter','sensor']].drop_duplicates().itertuples(index=False,name=None))):
+    d=df[(df['filter']==f)&(df['sensor']==sensor)]
+    z,tz=wide(d,'z'); hx,th=wide(d,'Hx'); resid,tr=wide(d,'r')
+    dx,td=wide(d,'dx'); P,tP=wide(d,'P')
+    xpre,tx=wide(d,'x_pre'); xpost,tq=wide(d,'x_post')
+    S,tS=wide(d,'S'); R,tR=wide(d,'R')
+    nis=d.groupby('step').nis.first(); tn=d.groupby('step').t.first().reindex(nis.index)
+    rejected=d[d.applied==0].step.unique()
 
-for f, s in sorted(set(df[['filter','sensor']].drop_duplicates().itertuples(index=False, name=None))):
-    d = df[(df['filter'] == f) & (df['sensor'] == s)]
-    lm, ls = (lambda i: ml(s, i)), (lambda i: sl(f, i))
-    fig, ax = plt.subplots(6, 1, figsize=(15, 15), sharex=True)
-    fig.suptitle(f'{f} / {s} — kalman pipeline', fontsize=13)
+    groups = ([('position', [0,1,2]), ('velocity', [3,4,5]), ('wheel efficiency', [6,7])] if f == 'trans' else
+              [('attitude error', list(range(len(SLAB.get(f, [])))) )])
+    for group, state_indices in groups:
+        fig,ax=plt.subplots(8,1,figsize=(15,20),sharex=True)
+        fig.suptitle(f'{f} / {sensor} / {group} — complete correction pipeline',fontsize=13)
 
-    zw, tz = wide(d, 'z'); hw, _ = wide(d, 'Hx')
-    if zw is not None:
-        for i in zw.columns:
-            ax[0].plot(tz.values, zw[i].values, '.-', ms=3, lw=1, label=f'z[{lm(int(i))}]')
-    if hw is not None:
-        for i in hw.columns:
-            ax[0].plot(tz.values, hw[i].values, '--', lw=1.2, label=f'Hx[{lm(int(i))}]')
-    ax[0].set_title('z (meas) vs Hx (pred)', fontsize=10)
+        plot_measurements(ax[0],z,tz,sensor,'z')
+        plot_measurements(ax[0],hx,th,sensor,'Hx','--')
+        decorate(ax[0],'measurement z vs predicted Hx')
 
-    for a, kind, lab, title, zero in [
-        (ax[1], 'r',  lm, 'residual r = z - Hx', True),
-        (ax[2], 'dx', ls, 'correction dx = K·r', True),
-        (ax[3], 'P',  ls, 'state covariance P diag', False)]:
-        w, t = wide(d, kind)
-        if w is not None:
-            for i in w.columns:
-                a.plot(t.values, w[i].values, '.-', ms=3, lw=1, label=f'{kind}[{lab(int(i))}]')
-        if zero:
-            a.axhline(0, color='k', lw=0.8, alpha=0.5)
-        a.set_title(title, fontsize=10)
-    ax[3].set_yscale('log')
+        plot_measurements(ax[1],resid,tr,sensor,'z-Hx')
+        decorate(ax[1],'measurement residual z - Hx',True)
 
-    xp, tp = wide(d, 'x_pre'); xq, _ = wide(d, 'x_post')
-    if xp is not None:
-        for i in xp.columns:
-            line, = ax[4].plot(tp.values, xp[i].values, '-', lw=1, label=f'{ls(int(i))}')
-            if xq is not None and i in xq.columns:
-                ax[4].plot(tp.values, xq[i].values, '--', lw=1, color=line.get_color(), alpha=0.7)
-    ax[4].set_title('state x (solid=pre, dashed=post)', fontsize=10)
+        for state_i in state_indices:
+            state = SLAB[f][state_i]
+            if dx is not None and state_i in dx.columns:
+                ax[2].plot(td.values,dx[state_i].values,'.-',ms=3,lw=1,label=f'K*r -> {state}')
+        decorate(ax[2],f'correction into {group}: K*r',True)
 
-    nis = d.groupby('step')['nis'].first(); tn = d.groupby('step')['t'].first()
-    ax[5].plot(tn.values, nis.values, '.-', ms=3, lw=1, color='tab:red', label='nis')
-    for kind, st in (('S', '-'), ('R', ':')):
-        w, _ = wide(d, kind)
-        if w is not None:
-            for i in w.columns:
-                ax[5].plot(tn.reindex(w.index).values, w[i].values, st, lw=1, label=f'{kind}[{lm(int(i))}]')
-    for st in d[d['applied'] == 0]['step'].unique():
-        if st in tn.index:
-            ax[5].axvline(tn[st], color='gray', alpha=0.15, lw=1)
-    ax[5].set_title('nis (red), S solid, R dotted; gray=rejected', fontsize=10)
+        for state_i in state_indices:
+            state = SLAB[f][state_i]
+            if P is not None and state_i in P.columns:
+                ax[3].plot(tP.values,P[state_i].clip(lower=0).pow(.5).values,'.-',ms=3,lw=1,label=f'sqrt(P_{state})')
+        decorate(ax[3],f'{group} standard deviation sqrt(P)')
 
-    for a in ax:
-        a.legend(loc='upper right', fontsize=7, ncol=4)
-        a.grid(True, ls='--', alpha=0.4)
-    ax[-1].set_xlabel('time (s)')
-    fig.tight_layout(rect=(0, 0, 1, 0.98))
+        for state_i in state_indices:
+            state = SLAB[f][state_i]
+            if xpre is not None and state_i in xpre.columns:
+                ax[4].plot(tx.values,xpre[state_i].values,'-',lw=1,label=f'{state} pre')
+            if xpost is not None and state_i in xpost.columns:
+                ax[4].plot(tq.values,xpost[state_i].values,'--',lw=1,label=f'{state} post')
+        decorate(ax[4],f'{group} before and after correction')
 
+        ax[5].plot(tn.values,nis.values,'.-',ms=3,lw=1,color='tab:red',label='NIS')
+        decorate(ax[5],'normalized innovation squared (NIS)')
+
+        plot_measurements(ax[6],S,tS,sensor,'sqrt(S)',root=True)
+        decorate(ax[6],'innovation standard deviation sqrt(S)')
+
+        plot_measurements(ax[7],R,tR,sensor,'sqrt(R)',root=True)
+        decorate(ax[7],'measurement noise standard deviation sqrt(R)')
+
+        for step in rejected:
+            if step in tn.index:
+                for a in ax:a.axvline(tn[step],color='gray',alpha=.15,lw=1)
+        ax[-1].set_xlabel('time (s)')
+        fig.tight_layout(rect=(0,0,1,.98))
 plt.show()

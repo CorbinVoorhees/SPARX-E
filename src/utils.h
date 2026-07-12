@@ -34,6 +34,9 @@ std::string string_format(const char *fmt, Args... args) {
   return result;
 }
 
+// perf A/B: uncomment to make every Logger a no-op
+// #define NO_LOGGING
+
 /**
  * @brief Meyer's singleton used on a logging instance.
  *
@@ -56,6 +59,9 @@ public:
         rate(app_rate) {}
 
   void log(const std::string &str) {
+#ifdef NO_LOGGING
+    return;
+#endif
     const auto now = Clock::now();
     if (now - this->last_log_time >= this->rate) {
       this->out << str;
@@ -68,10 +74,10 @@ public:
 // single source of truth for rover geometry + wheel slip efficiencies —
 // used by the SMC, the TRANS-EKF wheel model, and the MEKF yaw odometry.
 struct RoverGeometry {
-  double rw = 0.175 / 2; // wheel radius [m]
-  double B = 0.381;      // track width [m]
-  double mu_r = 0.95;    // right wheel slip efficiency [-]
-  double mu_l = 0.95;    // left wheel slip efficiency [-]
+  double rw = 0.175 / 2.0; // wheel radius [m]
+  double B = 0.400;        // track width [m]
+  double mu_r = 0.95;      // right wheel slip efficiency [-]
+  double mu_l = 0.95;      // left wheel slip efficiency [-]
 };
 inline constexpr RoverGeometry GEOM{};
 

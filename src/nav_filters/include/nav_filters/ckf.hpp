@@ -45,7 +45,6 @@ struct KFTrace {
   Eigen::VectorXd z, Hx, r, S_diag, R_diag, dx, P_diag, x_pre, x_post;
 };
 
-
 /**
  * @brief A class containing basic Kalman filtering functions, and an important
  * inheritance-based framework for to do async estimation and updates on sparse,
@@ -102,8 +101,7 @@ private:
                const Eigen::VectorXd &d_r, const Eigen::VectorXd &z,
                std::string name = "") {
     // innovation covariance
-    const Eigen::MatrixXd Pz = H * P * H.transpose();
-    const Eigen::MatrixXd S = Pz + R;
+    const Eigen::MatrixXd S = H * P * H.transpose() + R;
 
     // Kalman gain
     const Eigen::MatrixXd K = P * H.transpose() * S.inverse();
@@ -134,37 +132,21 @@ private:
     // stashed pre-gate so rejected updates still show their innovation
     last_residual[name] = d_r;
 
-    // do a one-tailed chi-score test
-    // double chi_sq_threshold = 100.0;
-    // // lowered the ci from 95 -> 99.9
-    // // double chi_sq_threshold = 0;
-    // switch (d_r.size()) {
-    // case 1:
-    //   chi_sq_threshold = 10.828;
-    //   break;
-    // case 2:
-    //   chi_sq_threshold = 13.816;
-    //   break;
-    // case 3:
-    //   chi_sq_threshold = 16.266;
-    //   break;
-    // default:
-    //   chi_sq_threshold = 100;
-    // }
-    // if (nis > chi_sq_threshold) {
-    //   tr.applied = false;
-    //   tr.x_post = x; // unchanged
-    //   this->trace_step(tr);
-    //   return; // probably didn't happen...
-    // }
+    // PURE PREDICT: gate rejects every correction (nis is always >= 0), so the
+    // filter dead-reckons on the process model only. Set threshold high to
+    // re-enable corrections.
+    const double chi_sq_threshold = 0.0;
+    if (nis > chi_sq_threshold) {
+      tr.applied = false;
+      tr.x_post = x; // unchanged
+      this->trace_step(tr);
+      return;
+    }
 
     // per-state gain magnitude of the applied correction (row-wise norm of K)
     last_K[name] = K.rowwise().norm();
     // signed correction actually applied to each state this step
     last_dx[name] = dx;
-
-    // print the diagnostic to the termianl
-    this->print_diagnostic(S, Pz, R, d_r, name);
 
     // Update the covariance matrix.
     const Eigen::MatrixXd I = Eigen::MatrixXd::Identity(P.rows(), P.cols());
@@ -272,21 +254,6 @@ protected:
    * @param dx Measurement residual
    */
   virtual void apply_error(const Eigen::VectorXd &dx) = 0;
-  /**
-   * @brief Simple print diagnostic panel that breaks out innovation and
-   * covariance values for the user.
-   *
-   * @param S innovation covariance
-   * @param Pz covariance mapped to the measurement space
-   * @param R measurement noise
-   * @param d_r measurement residual
-   * @param name name of the sensor (title of the panel)
-   */
-  virtual void print_diagnostic(const Eigen::MatrixXd &S,
-                                const Eigen::MatrixXd &Pz,
-                                const Eigen::MatrixXd &R,
-                                const Eigen::VectorXd &d_r,
-                                std::string name) = 0;
 
   /**
    * @brief Full-pipeline trace sink, called once per correction step with
@@ -306,15 +273,14 @@ public:
   std::function<void(const KFTrace &)> trace_sink;
 
 protected:
-
   /**
    * @brief Derived classes implement a form of this in the @ref SensorTable and
    * is required by the filter.
    */
   // Fills H (observation), r (residual = z - h(x)), and z (raw measurement).
   // z lets the trace log the true measurement and reconstruct Hx = z - r.
-  using ComputeHrFn = std::function<bool(
-      Eigen::MatrixXd &H, Eigen::VectorXd &r, Eigen::VectorXd &z)>;
+  using ComputeHrFn = std::function<bool(Eigen::MatrixXd &H, Eigen::VectorXd &r,
+                                         Eigen::VectorXd &z)>;
 
   /**
    * @brief Pushes a task to be completed by the filter into the queue.
@@ -426,6 +392,7 @@ public:
    * @return uint32_t
    */
   uint32_t num_steps() const { return steps; }
+  std::size_t queue_size() const { return queue.size(); }
   /**
    * @brief Gets the covariance matrix
    *

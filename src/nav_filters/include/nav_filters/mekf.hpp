@@ -61,129 +61,6 @@ private:
     P = Phi * P * Phi.transpose() + Qk;
   }
 
-  void print_diagnostic(const Eigen::MatrixXd &S, const Eigen::MatrixXd &Pz,
-                        const Eigen::MatrixXd &R, const Eigen::VectorXd &d_r,
-                        std::string name) override {
-    if (!this->should_print_diagnostic)
-      return;
-
-    // dashboard is laid out for 3-axis corrections; skip 1-D ones (e.g. the
-    // wheel-odometry yaw correction) instead of indexing out of range.
-    if (d_r.rows() < 3)
-      return;
-
-    using clock = std::chrono::steady_clock;
-    static auto last_print = clock::now();
-    static bool first_run = true;
-
-    const auto now = clock::now();
-    const auto elapsed_ms =
-        std::chrono::duration_cast<std::chrono::milliseconds>(now - last_print)
-            .count();
-
-    if (elapsed_ms < 1000)
-      return;
-
-    last_print = now;
-
-    const double Sx = S(0, 0);
-    const double Sy = S(1, 1);
-    const double Sz = S(2, 2);
-
-    const double Pzx = Pz(0, 0);
-    const double Pzy = Pz(1, 1);
-    const double Pzz = Pz(2, 2);
-
-    const double Rx = R(0, 0);
-    const double Ry = R(1, 1);
-    const double Rz = R(2, 2);
-
-    const double nrx = d_r(0) / std::sqrt(Sx);
-    const double nry = d_r(1) / std::sqrt(Sy);
-    const double nrz = d_r(2) / std::sqrt(Sz);
-
-    const Eigen::Vector4d q_curr = this->q();
-    const Eigen::Vector3d bg_curr = this->bg0; // constant offset, not a state
-    const Eigen::Vector3d bm_curr = Eigen::Vector3d::Zero(); // bm removed
-
-    Eigen::Vector3d w_raw = Eigen::Vector3d::Zero(); // <-- changed
-    if (gyro_snapshot.fresh)                         // <-- changed
-      w_raw = gyro_snapshot.z;                       // <-- changed
-
-    const Eigen::Vector3d w_corrected = w_raw - bg_curr;
-
-    Eigen::Vector3d w_mean = Eigen::Vector3d::Zero(); // <-- changed
-    Sensor::SensorTable::get_mean<Eigen::Vector3d>("gyro",
-                                                   w_mean); // <-- changed
-
-    Eigen::Quaterniond q_obj(q_curr(0), q_curr(1), q_curr(2), q_curr(3));
-    q_obj.normalize();
-
-    const Eigen::Matrix3d Rot = q_obj.toRotationMatrix();
-
-    const double roll = std::atan2(Rot(2, 1), Rot(2, 2)) * 180.0 / M_PI;
-    const double pitch =
-        std::asin(std::max(-1.0, std::min(1.0, -Rot(2, 0)))) * 180.0 / M_PI;
-    const double yaw = std::atan2(Rot(1, 0), Rot(0, 0)) * 180.0 / M_PI;
-
-    if (!first_run) {
-      std::cout << "\033[19A";
-    } else {
-      first_run = false;
-    }
-
-    std::cout
-        << string_format(
-               "\033[2K============================= %s DASHBOARD "
-               "=============================\n"
-               "\033[2KNIS  : %9.4f (Expected Mean: %d)\n"
-               "\033[2K--------------------------------------------------------"
-               "------------------\n"
-               "\033[2KAttitude (Euler Angles)          | State Trajectory "
-               "Estimates\n"
-               "\033[2K  Roll : %8.3f deg               |   q  : [%.4f, %.4f, "
-               "%.4f, %.4f]\n"
-               "\033[2K  Pitch: %8.3f deg               |   bg : [%.6f, %.6f, "
-               "%.6f] rad/s\n"
-               "\033[2K  Yaw  : %8.3f deg               |   bm : [%.6f, %.6f, "
-               "%.6f]\n"
-               "\033[2K--------------------------------------------------------"
-               "------------------\n"
-               "\033[2KGyroscope Channels (rad/s)       | Measurement "
-               "Innovation Residuals\n"
-               "\033[2K  w raw  : [%.5f, %.5f, %.5f]  |   r  : [%.6f, %.6f, "
-               "%.6f]\n"
-               "\033[2K  w-bg   : [%.5f, %.5f, %.5f]  |   nr : [%.4f, %.4f, "
-               "%.4f]\n"
-               "\033[2K  w mean : [%.5f, %.5f, %.5f]  |\n"
-               "\033[2K--------------------------------------------------------"
-               "------------------\n"
-               "\033[2KUncertainty & Sensor Noise Balances (Axis: X, Y, Z)\n"
-               "\033[2K  S  total innov var :  %.4e,  %.4e,  %.4e\n"
-               "\033[2K  Pz state contrib   :  %.4e,  %.4e,  %.4e  (%5.1f%%, "
-               "%5.1f%%, %5.1f%%)\n"
-               "\033[2K  R  sensor noise    :  %.4e,  %.4e,  %.4e  (%5.1f%%, "
-               "%5.1f%%, %5.1f%%)\n"
-               "\033[2K========================================================"
-               "==================\n",
-               name.c_str(), this->last_nis(), (int)d_r.rows(),
-
-               roll, q_curr(0), q_curr(1), q_curr(2), q_curr(3), pitch,
-               bg_curr(0), bg_curr(1), bg_curr(2), yaw, bm_curr(0), bm_curr(1),
-               bm_curr(2),
-
-               w_raw.x(), w_raw.y(), w_raw.z(), d_r(0), d_r(1), d_r(2),
-
-               w_corrected.x(), w_corrected.y(), w_corrected.z(), nrx, nry, nrz,
-
-               w_mean.x(), w_mean.y(), w_mean.z(),
-
-               Sx, Sy, Sz, Pzx, Pzy, Pzz, 100.0 * Pzx / Sx, 100.0 * Pzy / Sy,
-               100.0 * Pzz / Sz, Rx, Ry, Rz, 100.0 * Rx / Sx, 100.0 * Ry / Sy,
-               100.0 * Rz / Sz)
-        << std::flush;
-  }
-
   Eigen::Quaterniond q0_ref{Eigen::Quaterniond::Identity()};
   Eigen::Vector3d magnm_mean{Eigen::Vector3d::Zero()};
   Eigen::MatrixXd R_accel, R_magnm;
@@ -214,7 +91,6 @@ private:
   }
 
 public:
-  bool should_print_diagnostic = true;
   bool suppress_magnm = false;
   bool is_finished_orienting() { return this->accel_finished; }
 
@@ -342,49 +218,6 @@ public:
           // plain constant offset from the startup mean — not estimated online
           bg0 = prod.get_mean();
         });
-
-    Sensor::SensorTable::bind<V4>(
-        "control",
-        [this](const V4 &z, const Eigen::MatrixXd &,
-               SteadyClock::time_point t) {
-          // accumulate wheel-odometry yaw (start-relative, like rel yaw).
-          // Done here at emit time so the integration order is well-defined.
-          if (control_snapshot.fresh) {
-            const double dt =
-                std::chrono::duration<double>(t - control_snapshot.t).count();
-            // z is down: wr > wl turns CCW viewed from above = negative yaw.
-            // mu_r stays with wr (z(0)), mu_l with wl (z(1)).
-            yaw_wheel +=
-                GEOM.rw / GEOM.B * (GEOM.mu_l * z(1) - GEOM.mu_r * z(0)) * dt;
-          }
-          this->control_snapshot = {t, z, true};
-
-          queue_correction(
-              t, this->R_yaw_odo,
-              // capture the accumulated value at queue time
-              [this, yw = yaw_wheel](Eigen::MatrixXd &H, Eigen::VectorXd &r,
-                                     Eigen::VectorXd &z_out) {
-                if (!this->accel_finished)
-                  return false;
-
-                // wheel yaw is relative to startup, so compare against the
-                // rel (q0-frame) yaw, not the absolute one
-                const Eigen::Matrix3d Rm = rel_orientation().toRotationMatrix();
-                const double yaw_orient = std::atan2(Rm(1, 0), Rm(0, 0));
-
-                const double yaw_error = std::atan2(std::sin(yw - yaw_orient),
-                                                    std::cos(yw - yaw_orient));
-
-                H = Eigen::MatrixXd::Zero(1, 3);
-                H(0, 2) = 1;
-                r = Eigen::VectorXd::Constant(1, yaw_error);
-                // raw wheel-odometry yaw measurement (start-relative)
-                z_out = Eigen::VectorXd::Constant(1, yw);
-                return true;
-              },
-              "control");
-        },
-        [](const FilteredSampleProducer<V4> &) {});
   };
 
   Eigen::Quaterniond orientation() const {

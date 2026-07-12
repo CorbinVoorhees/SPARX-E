@@ -64,91 +64,11 @@ private:
     P = dfdx * P * dfdx.transpose() + Qd;
   }
 
-  void print_diagnostic(const Eigen::MatrixXd &S, const Eigen::MatrixXd &,
-                        const Eigen::MatrixXd &, const Eigen::VectorXd &d_r,
-                        std::string name) override {
-    if (!this->should_print_diagnostic)
-      return;
-    using clock = std::chrono::steady_clock;
-
-    static auto last_print = clock::now();
-    static bool first_print = true;
-    const auto now = clock::now();
-
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - last_print)
-            .count() < 1000)
-      return;
-
-    last_print = now;
-
-    const int m = static_cast<int>(d_r.rows());
-
-    std::array<double, 3> residual{};
-    std::array<double, 3> normalized{};
-    std::array<double, 3> s_diag{};
-
-    for (int i = 0; i < std::min(m, 3); ++i) {
-      residual[i] = d_r(i);
-      s_diag[i] = S(i, i);
-      if (s_diag[i] > 0.0)
-        normalized[i] = residual[i] / std::sqrt(s_diag[i]);
-    }
-
-    const V3 p = position();
-    const V3 v = velocity();
-
-    const double wr = control_snapshot.fresh ? control_snapshot.z(0) : 0.0;
-    const double wl = control_snapshot.fresh ? control_snapshot.z(1) : 0.0;
-
-    const double uwb_meas = uwb_snapshot.fresh ? uwb_snapshot.z(0) : 0.0;
-    const double uwb_pred = p.norm();
-    const double uwb_resid = uwb_snapshot.fresh ? uwb_meas - uwb_pred : 0.0;
-    const char *uwb_tag = uwb_snapshot.fresh ? "" : " [stale]";
-
-    if (!first_print)
-      std::cout << "\033[16A\033[J";
-    first_print = false;
-
-    std::cout
-        << string_format(
-               "===================== %s TRANSLATIONAL EKF (q0, kinematic, "
-               "adaptive mu) =====================\n"
-               "NIS          : %.6f (dim: %d)\n"
-               "-----------------------------------------------------------\n"
-               "position     : [% .6f, % .6f, % .6f] m\n"
-               "velocity     : [% .6f, % .6f, % .6f] m/s\n"
-               "-----------------------------------------------------------\n"
-               "mu_r / mu_l  : % .4f / % .4f   (cmd wr/wl: % .3f / % .3f)\n"
-               "wheel v(mu)  : % .4f m/s  (mu*rw*(wr+wl)/2)\n"
-               "-----------------------------------------------------------\n"
-               "UWB meas     : % .6f m%s\n"
-               "UWB pred(|p|): % .6f m\n"
-               "UWB resid    : % .6f m%s\n"
-               "-----------------------------------------------------------\n"
-               "residual     : [% .6f, % .6f, % .6f]\n"
-               "normalized   : [% .4f, % .4f, % .4f]\n"
-               "S            : [% .4e, % .4e, % .4e]\n"
-               "===========================================================\n",
-
-               name.c_str(), nis, m,
-
-               p.x(), p.y(), p.z(), v.x(), v.y(), v.z(),
-
-               x(6), x(7), wr, wl, GEOM.rw / 2 * (x(6) * wr + x(7) * wl),
-
-               uwb_meas, uwb_tag, uwb_pred, uwb_resid, uwb_tag,
-
-               residual[0], residual[1], residual[2], normalized[0],
-               normalized[1], normalized[2], s_diag[0], s_diag[1], s_diag[2])
-        << std::flush;
-  }
-
 public:
   V3 get_position() const { return x.segment<3>(0); }
   V3 get_velocity() const { return x.segment<3>(3); }
   double get_mu_r() const { return x(6); }
   double get_mu_l() const { return x(7); }
-  bool should_print_diagnostic = true;
 
   TRANSEKF(SteadyClock::time_point t0, const std::shared_ptr<MEKF> &ref,
            Eigen::Vector3d pos0)

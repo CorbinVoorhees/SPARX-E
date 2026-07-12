@@ -59,7 +59,7 @@ private:
   uint32_t n_uwb_samples = 0;
 
   // initialization...
-  Eigen::Vector3d pos0 = Eigen::Vector3d{13.5, 0.0, -36.5} * 0.0254;
+  Eigen::Vector3d pos0 = Eigen::Vector3d{12.0, 0.0, -36.5} * 0.0254;
 
 public:
   NavNode()
@@ -100,7 +100,8 @@ public:
 
     // per-state |K| of the last applied correction, per sensor, plus the
     // last innovation (pre-gate, so rejected updates show too).
-    // trans states: px,py,pz,vx,vy,vz,mur,mul ; mekf states: thx,thy,thz
+    // trans stochastic states: px,py,pz,mur,mul (derived velocity slots log as
+    // zero) ; mekf states: thx,thy,thz
     csv_log_gains.log("time,"
                       "uwb_px,uwb_py,uwb_pz,uwb_vx,uwb_vy,uwb_vz,uwb_mr,uwb_ml,"
                       "acc_px,acc_py,acc_pz,acc_vx,acc_vy,acc_vz,acc_mr,acc_ml,"
@@ -112,7 +113,8 @@ public:
                       "mmag_rx,mmag_ry,mmag_rz,mctl_r\n");
 
     // signed per-state correction dx = K*d_r actually applied (keeps sign).
-    // trans states: px,py,pz,vx,vy,vz,mur,mul ; mekf attitude: thx,thy,thz
+    // trans stochastic states: px,py,pz,mur,mul (derived velocity slots log as
+    // zero) ; mekf attitude: thx,thy,thz
     csv_log_corr.log("time,"
                      "uwb_px,uwb_py,uwb_pz,uwb_vx,uwb_vy,uwb_vz,uwb_mr,uwb_ml,"
                      "acc_px,acc_py,acc_pz,acc_vx,acc_vy,acc_vz,acc_mr,acc_ml,"
@@ -126,9 +128,6 @@ public:
     const auto t0 = SteadyClock::now();
     mekf_ = std::make_shared<MEKF>(t0);
     trans_ekf_ = std::make_unique<TRANSEKF>(t0, mekf_, pos0);
-
-    mekf_->should_print_diagnostic = false;
-    trans_ekf_->should_print_diagnostic = true;
 
     // stream every correction step of both filters to the trace CSV
     mekf_->trace_sink = [this](const ckf::KFTrace &tr) {
@@ -163,11 +162,12 @@ private:
   // one CSV row per element of every captured vector (long format)
   void log_kf_trace(const char *filter, const ckf::KFTrace &tr) {
     const double t = tr.t_s;
+    std::string rows;
     const auto emit = [&](const char *kind, const Eigen::VectorXd &v) {
       for (int i = 0; i < v.size(); ++i)
-        csv_log_kf.log(string_format("%.9f,%s,%s,%u,%d,%.9e,%s,%d,%.9e\n", t,
-                                     filter, tr.sensor.c_str(), tr.step,
-                                     tr.applied ? 1 : 0, tr.nis, kind, i, v(i)));
+        rows += string_format("%.9f,%s,%s,%u,%d,%.9e,%s,%d,%.9e\n", t, filter,
+                              tr.sensor.c_str(), tr.step, tr.applied ? 1 : 0,
+                              tr.nis, kind, i, v(i));
     };
     emit("z", tr.z);
     emit("Hx", tr.Hx);
@@ -178,6 +178,8 @@ private:
     emit("P", tr.P_diag);
     emit("x_pre", tr.x_pre);
     emit("x_post", tr.x_post);
+    // One synchronized write/flush per correction instead of one per element.
+    csv_log_kf.log(rows);
   }
 
   void publisher_cb() {
@@ -200,6 +202,22 @@ private:
     msg.pose.pose.orientation.z = o.z();
 
     estim_->publish(msg);
+
+    // full trans state on one line, ~1 Hz
+    static int tick = 0;
+    if (++tick % 100 == 0) {
+      const Eigen::VectorXd x = trans_ekf_->get_curr_state();
+      const Eigen::Matrix3d R = o.normalized().toRotationMatrix();
+      const double roll = std::atan2(R(2, 1), R(2, 2)) * 180.0 / M_PI;
+      const double pitch =
+          std::asin(std::clamp(-R(2, 0), -1.0, 1.0)) * 180.0 / M_PI;
+      const double yaw = std::atan2(R(1, 0), R(0, 0)) * 180.0 / M_PI;
+      std::cout << string_format("p[% .2f % .2f % .2f] v[% .2f % .2f % .2f] "
+                                 "mu[% .2f % .2f] rpy[% .1f % .1f % .1f]deg\n",
+                                 x(0), x(1), x(2), x(3), x(4), x(5), x(6), x(7),
+                                 roll, pitch, yaw)
+                << std::flush;
+    }
   }
 
   void control_cb(const geometry_msgs::msg::Quaternion::SharedPtr m) {
@@ -324,8 +342,8 @@ private:
           "%.9e,%.9e,%.9e,%.9e,%.9e,%.9e\n",
           time, trans_ekf_->last_nis(), p.x(), p.y(), p.z(), v.x(), v.y(),
           v.z(), a.x(), a.y(), a.z(), cov(0, 0), cov(1, 1), cov(0, 1), 0.0,
-          trans_ekf_->get_mu_r(), trans_ekf_->get_mu_l(), cov(2, 2), cov(3, 3),
-          cov(4, 4), cov(5, 5), cov(6, 6), cov(7, 7)));
+          trans_ekf_->get_mu_r(), trans_ekf_->get_mu_l(), cov(2, 2), 0.0, 0.0,
+          0.0, cov(3, 3), cov(4, 4)));
     }
 
     if (n_accel_samples >= min_accel_samples &&
@@ -335,8 +353,15 @@ private:
       const double time =
           std::chrono::duration<double>(now.time_since_epoch()).count();
 
-      const Eigen::VectorXd gu = trans_ekf_->last_gain("uwb", 8);
-      const Eigen::VectorXd ga = trans_ekf_->last_gain("accel", 8);
+      const auto expand_trans = [](const Eigen::VectorXd &in) {
+        Eigen::VectorXd out = Eigen::VectorXd::Zero(8);
+        out.head<3>() = in.head<3>();
+        out.segment<2>(6) = in.segment<2>(3);
+        return out;
+      };
+      const Eigen::VectorXd gu = expand_trans(trans_ekf_->last_gain("uwb", 5));
+      const Eigen::VectorXd ga =
+          expand_trans(trans_ekf_->last_gain("accel", 5));
       const Eigen::VectorXd ma = mekf_->last_gain("accel", 3);
       const Eigen::VectorXd mm = mekf_->last_gain("magnm", 3);
       const Eigen::VectorXd mc = mekf_->last_gain("control", 3);
@@ -363,8 +388,10 @@ private:
           rma(0), rma(1), rma(2), rmm(0), rmm(1), rmm(2), rmc(0)));
 
       // signed corrections dx = K*d_r per state (direction, not magnitude)
-      const Eigen::VectorXd cu = trans_ekf_->last_correction("uwb", 8);
-      const Eigen::VectorXd ca = trans_ekf_->last_correction("accel", 8);
+      const Eigen::VectorXd cu =
+          expand_trans(trans_ekf_->last_correction("uwb", 5));
+      const Eigen::VectorXd ca =
+          expand_trans(trans_ekf_->last_correction("accel", 5));
       const Eigen::VectorXd cma = mekf_->last_correction("accel", 3);
       const Eigen::VectorXd cmm = mekf_->last_correction("magnm", 3);
       const Eigen::VectorXd cmc = mekf_->last_correction("control", 3);
