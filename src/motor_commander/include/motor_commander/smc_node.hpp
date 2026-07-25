@@ -123,7 +123,7 @@ private:
     Eigen::Vector3d xdot_d = this->latest_state_desired.tail<3>();
 
     const double epsilon = 3.0;
-    Eigen::Vector3d K(2.0, 2.0, 4.0);
+    Eigen::Vector3d K(1.0, 1.0, 2.0);
 
     Eigen::Vector3d Ks = (K.array() * comp_tanh(s, epsilon).array()).matrix();
     // target closed-loop velocity is  xdot_d + K*tanh(s)  (s = desired - x, so
@@ -224,7 +224,10 @@ private:
     double s = -R(2, 0);
     double pitch =
         (std::abs(s) >= 1.0) ? std::copysign(MY_PI / 2.0, s) : std::asin(s);
-    double yaw = std::atan2(R(1, 0), R(0, 0));
+    // z-down, x-fwd, y-right: CW-from-above is positive yaw (matches the plant
+    // model in b_jacobian/B_Xu). atan2(R10,R00) is standard CCW-positive, so
+    // negate to convert to the CW-positive convention the controller expects.
+    double yaw = -std::atan2(R(1, 0), R(0, 0));
 
     std::lock_guard<std::mutex> lk(this->state_mutex);
     this->latest_state_estimate << position.x, position.y, roll, pitch, yaw;

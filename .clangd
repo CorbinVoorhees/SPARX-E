@@ -1,2 +1,5 @@
 CompileFlags:
-  Add: ["-I/usr/include/pcl-1.14", "-I/usr/include/eigen3"]
+  CompilationDatabase: build/nav_filters
+  Add:
+    - "-I/usr/include/pcl-1.14"
+    - "-I/usr/include/eigen3"

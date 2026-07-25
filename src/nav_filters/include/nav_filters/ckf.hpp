@@ -1,17 +1,16 @@
 #pragma once
 
 #include <Eigen/Dense>
+#include <boost/math/distributions/chi_squared.hpp>
 #include <chrono>
 #include <functional>
+#include <iostream>
 #include <map>
+#include <mutex>
 #include <queue>
 #include <vector>
 
-/**
- * @brief Expected accel (specific-force) reading at rest (m/s^2).
- * Frame is x-forward, y-right, z-down: gravity is +z, so the accel reads -g.
- */
-inline const Eigen::Vector3d grav_vec{0.0, 0.0, -9.80655};
+inline const Eigen::Vector3d grav_vec{0.0, 0.0, 9.80655};
 inline double MIN_PREDICT_INTVL = 1e-3;
 
 /**
@@ -73,6 +72,7 @@ private:
   std::priority_queue<CorrectionTask, std::vector<CorrectionTask>,
                       std::greater<CorrectionTask>>
       queue;
+  mutable std::mutex queue_mutex;
 
   // internal clock tracks time of most-recent accomplished task
   SteadyClock::time_point t_state;
@@ -132,16 +132,11 @@ private:
     // stashed pre-gate so rejected updates still show their innovation
     last_residual[name] = d_r;
 
-    // PURE PREDICT: gate rejects every correction (nis is always >= 0), so the
-    // filter dead-reckons on the process model only. Set threshold high to
-    // re-enable corrections.
-    const double chi_sq_threshold = 0.0;
-    if (nis > chi_sq_threshold) {
-      tr.applied = false;
-      tr.x_post = x; // unchanged
-      this->trace_step(tr);
-      return;
-    }
+    // NIS is DIAGNOSTIC ONLY — the gate is deliberately OFF. In the observed
+    // fault mode (gyro bias with the Phidgets onboard comp disabled), the
+    // accumulating attitude error makes the honest aiding sensor's residual
+    // large; gating it out locks out the exact sensor that rescues the filter
+    // and lets roll/pitch ramp unbounded at rest. Keep NIS for logging only.
 
     // per-state gain magnitude of the applied correction (row-wise norm of K)
     last_K[name] = K.rowwise().norm();
@@ -289,6 +284,7 @@ protected:
    * @param callback task to complete
    */
   void queue_task(SteadyClock::time_point t, std::function<void()> callback) {
+    std::lock_guard<std::mutex> lock(queue_mutex);
     queue.push({t, std::move(callback)});
   }
 
@@ -334,11 +330,20 @@ public:
    */
   void tick(SteadyClock::time_point now) {
     // process the entire queue build up until I'm done.
-    while (!queue.empty() && queue.top().t <= now) {
-      CorrectionTask task = queue.top(); // get that corrective task
-      queue.pop();
-      if (!advance_to(task.t))
-        continue;      // predict up to the measurement time...
+    for (;;) {
+      CorrectionTask task;
+      {
+        std::lock_guard<std::mutex> lock(queue_mutex);
+        if (queue.empty() || queue.top().t > now)
+          break;
+
+        task = queue.top();
+        queue.pop();
+      }
+
+      if (!advance_to(task.t)) {
+        continue; // predict up to the measurement time...
+      }
       task.callback(); // ...then correct
     }
 
@@ -392,7 +397,10 @@ public:
    * @return uint32_t
    */
   uint32_t num_steps() const { return steps; }
-  std::size_t queue_size() const { return queue.size(); }
+  std::size_t queue_size() const {
+    std::lock_guard<std::mutex> lock(queue_mutex);
+    return queue.size();
+  }
   /**
    * @brief Gets the covariance matrix
    *

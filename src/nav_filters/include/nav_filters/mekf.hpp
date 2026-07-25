@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ckf.hpp"
-#include "nav_filters/ISensor.hpp"
+#include "sensor/sensor.hpp"
 #include <Eigen/Dense>
 
 class MEKF : public ckf::CommonKF {
@@ -136,8 +136,8 @@ public:
               },
               "accel");
         },
-        [this](const FilteredSampleProducer<V3> &prod) {
-          const Eigen::Vector3d accel_mean = prod.get_mean();
+        [this](const Sensor::DataPrefilter<V3>::Stamped &sample) {
+          const Eigen::Vector3d accel_mean = sample.mean;
 
           // z-down inertial frame: the rest accel (pointing up in body
           // coords) aligns to -Z, so q0 is near-identity for a level start
@@ -150,7 +150,7 @@ public:
               std::pow(0.5 * M_PI / 180.0, 2));
 
           const double accel_norm = std::max(accel_mean.norm(), 1e-9);
-          const Eigen::Matrix3d R_accel_raw = prod.get_variance().asDiagonal();
+          const Eigen::Matrix3d R_accel_raw = sample.variance.asDiagonal();
           R_accel = R_accel_raw / (accel_norm * accel_norm);
           accel_finished = true;
         });
@@ -194,14 +194,14 @@ public:
               },
               "magnm");
         },
-        [this](const FilteredSampleProducer<V3> &prod) {
+        [this](const Sensor::DataPrefilter<V3>::Stamped &sample) {
           this->load_mag_calibration();
 
           // affine, so calibrating the mean is equivalent to calibrating
           // every raw sample before averaging
-          magnm_mean = this->W_mag * (prod.get_mean() - this->bias_mag);
+          magnm_mean = this->W_mag * (sample.mean - this->bias_mag);
 
-          const Eigen::Matrix3d R_raw = prod.get_variance().asDiagonal();
+          const Eigen::Matrix3d R_raw = sample.variance.asDiagonal();
           const Eigen::Matrix3d R_cal =
               this->W_mag * R_raw * this->W_mag.transpose();
 
@@ -214,9 +214,9 @@ public:
                SteadyClock::time_point t) {
           queue_task(t, [this, z, t]() { this->gyro_snapshot = {t, z, true}; });
         },
-        [this](const FilteredSampleProducer<V3> &prod) {
+        [this](const Sensor::DataPrefilter<V3>::Stamped &sample) {
           // plain constant offset from the startup mean — not estimated online
-          bg0 = prod.get_mean();
+          bg0 = sample.mean;
         });
   };
 

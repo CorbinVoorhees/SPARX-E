@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{print $6}')",
+      "Bash(awk -F, '$3!=0||$4!=0{print $3\",\"$4}')",
+      "Bash(awk -F, '$2==\"gyro\"{n++; s+=$5; ss+=$5*$5; if\\($5<mn||n==1\\)mn=$5; if\\($5>mx||n==1\\)mx=$5} END{print \"gz mean=\"s/n\" min=\"mn\" max=\"mx\" rms=\"sqrt\\(ss/n\\)}' sparxe_sensors_raw.csv)",
+      "Bash(awk -F, '$5==1 && $3==\"accel\" && $7==\"dx\" && \\($8==9||$8==10\\){v=\\($9<0?-$9:$9\\); print v}' sparxe_kf_trace.csv)",
+      "Bash(awk -F, '$5==1 && $3==\"accel\" && $7==\"dx\" && \\($8==9||$8==10\\){v=\\($9<0?-$9:$9\\); s+=v; n++} END{print \"n=\"n\" total=\"s\" mean=\"s/n}' sparxe_kf_trace.csv)",
+      "Bash(awk -F, '$2==\"accel\"{a++} $2==\"control\"{c++}' sparxe_sensors_raw.csv)",
+      "Bash(awk 'NR>1{d=$1-prev; s+=d; n++; if\\(d>mx\\)mx=d} {prev=$1} END{print \"mean control dt=\"s/n\" max gap=\"mx}')",
+      "Bash(awk 'NR>1{d=$1-prev; s+=d; n++} {prev=$1} END{print \"mean accel dt=\"s/n}')",
+      "Bash(colcon build *)",
+      "Bash(awk -F, '{if\\($3<mn||NR==1\\)mn=$3; if\\($3>mx||NR==1\\)mx=$3} END{print \"px min=\"mn\" max=\"mx\" range=\"mx-mn}')",
+      "Bash(awk -F, '{if\\($4<mn||NR==1\\)mn=$4; if\\($4>mx||NR==1\\)mx=$4} END{print \"py min=\"mn\" max=\"mx\" range=\"mx-mn}')",
+      "Bash(awk -F, 'NR%500==1{print $1,$3,$4}')",
+      "Bash(awk -F, '$3==\"uwb\" && $7==\"r\" && $1>72354.0 && $1<72355.5{print $1, \"nis=\"$6, \"r=\"$9, \"applied=\"$5}' sparxe_kf_trace.csv)",
+      "Bash(awk -F, '$3==\"uwb\" && $1>72354.0 && $1<72355.0' sparxe_kf_trace.csv)",
+      "Bash(awk -F, '$1>72370 && $1<72417 && $3>1.3{print $1,$3}')",
+      "Bash(awk -F, '$3==\"uwb\" && $1>72376.0 && $1<72377.5' sparxe_kf_trace.csv)",
+      "Bash(awk -F, '$1>73601.5 && $1<73612')",
+      "Bash(awk 'NR%3==1')",
+      "Bash(awk -F, '$1>73601.5 && $1<73612{s+=$5*$5; n++; if\\($5<mn||n==1\\)mn=$5; if\\($5>mx\\)mx=$5} END{print \"gz min=\"mn\" max=\"mx\" rms=\"sqrt\\(s/n\\)}')",
+      "Bash(awk -F, '$1>73601.5 && $1<73612{n=sqrt\\($3*$3+$4*$4+$5*$5\\); if\\(n<mn||NR==1\\)mn=n; if\\(n>mx\\)mx=n} END{print \"norm min=\"mn\" max=\"mx}')"
+    ]
+  }
+}

@@ -1,0 +1,1839 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Filter math from the ground up — Jacobians, noise, spectra</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      font: 18px/1.55 system-ui, sans-serif;
+    }
+
+    h1,
+    h2 {
+      line-height: 1.2;
+    }
+
+    math[display="block"] {
+      margin: 1.25rem 0;
+      font-size: 1.15em;
+    }
+
+    code {
+      background: color-mix(in srgb, CanvasText 10%, Canvas);
+      padding: .15em .35em;
+      border-radius: 4px;
+    }
+
+    .result {
+      border-left: 5px solid #3b82f6;
+      padding: .5rem 1rem;
+      background: color-mix(in srgb, #3b82f6 10%, Canvas);
+    }
+
+    .note {
+      color: color-mix(in srgb, CanvasText 70%, Canvas);
+    }
+
+    pre {
+      overflow-x: auto;
+    }
+
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .warn {
+      border-left: 5px solid #d97706;
+      padding: .5rem 1rem;
+      background: color-mix(in srgb, #d97706 10%, Canvas);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Filter math, from the ground up</h1>
+  <p>Five parts, each built strictly upward — no step uses a result that has
+    not been proven or explicitly flagged.</p>
+  <ul>
+    <li><strong>Part I</strong> — the attitude machinery and every Jacobian
+      block the CHUUDKF uses, from dot products up (§1–10).</li>
+    <li><strong>Part II</strong> — where the numbers in <code>W</code> come
+      from, starting at literal atoms: thermal motion → white noise → PSD →
+      sampling and aliasing → Welch → digital filters → measuring the noise
+      live (§11–21).</li>
+    <li><strong>Part III</strong> — the estimator itself: fusing two numbers →
+      the Kalman filter → the NIS gate and its death spiral → observability
+      (§22–25).</li>
+    <li><strong>Part IV</strong> — the principles underneath: where humility
+      lives, the predict/correct assignment, the dead-reckoning budget,
+      Gauss–Markov error states, constraints as free measurements, Allan
+      variance (§26–31).</li>
+    <li><strong>Part V</strong> — the story: five runs of one rover, and which
+      section each disaster became.</li>
+  </ul>
+
+  <h1>Part I — Attitude errors and Jacobians</h1>
+  <p>The convention used throughout is the one in the filter:</p>
+  <pre><code>q_corrected = q_nominal * dq(delta_theta); // right correction</code></pre>
+
+  <h2>1. Angles and rotations</h2>
+  <p>An angle measures relative direction. In radians it equals arc length
+    divided by circle radius. A quarter, half, and full turn are π/2, π, and 2π.</p>
+  <svg viewBox="0 0 420 180" aria-label="Angle diagram">
+    <circle cx="125" cy="95" r="65" fill="none" stroke="currentColor" opacity=".25" />
+    <line x1="125" y1="95" x2="225" y2="95" stroke="#3b82f6" stroke-width="4" />
+    <line x1="125" y1="95" x2="183" y2="42" stroke="#16a34a" stroke-width="4" />
+    <path d="M168 95 A43 43 0 0 0 157 66" fill="none" stroke="#d97706" stroke-width="4" />
+    <text x="164" y="76" font-size="22" fill="currentColor">θ</text>
+  </svg>
+  <p>In 3D a rotation needs an axis and an angle. The rotation matrix
+    <code>R</code> preserves lengths: <code>RᵀR=I</code>. That property is not a
+    definition pulled from a book — it is forced by what "rotation" means.
+    A rotation must keep every length, so for all v:</p>
+  <pre><code>norm(R*v)² = (R*v).transpose()*(R*v)
+           = v.transpose()*(R.transpose()*R)*v
+           = v.transpose()*v            // must hold for every v
+=&gt; R.transpose()*R = I</code></pre>
+  <p>An immediate consequence: <code>R⁻¹ = Rᵀ</code> — undoing a rotation is
+    free. Matrices with <code>RᵀR=I</code> come in two families,
+    <code>det(R)=+1</code> (rotations) and <code>det(R)=-1</code> (mirror
+    images). Physical attitudes never mirror, so rotations always have
+    determinant +1. In this filter:</p>
+  <pre><code>v_world = R * v_body;
+v_body  = R.transpose() * v_world;</code></pre>
+
+  <h2>2. Cross products and skew matrices</h2>
+  <p><code>skew(a)</code> is simply the matrix that performs a cross product:</p>
+  <pre><code>          [  0   -az   ay ]
+skew(a) = [ az     0  -ax ]
+          [-ay    ax    0 ]
+
+skew(a) * b = a × b = -skew(b) * a</code></pre>
+  <p>Where the matrix comes from: write out the cross product by components,</p>
+  <pre><code>a × b = [ ay*bz - az*by ]
+        [ az*bx - ax*bz ]
+        [ ax*by - ay*bx ]</code></pre>
+  <p>Each output component is a linear combination of the components of b, so
+    the whole operation must be a matrix acting on b; reading off the
+    coefficients row by row gives exactly <code>skew(a)</code>. Two properties
+    fall out immediately:</p>
+  <pre><code>skew(a).transpose() = -skew(a)     // antisymmetric
+a × b = -(b × a)                   // swapping negates</code></pre>
+  <p>The second one, rewritten as <code>skew(a)*b = -skew(b)*a</code>, is the
+    Jacobian trick: it moves an unknown small rotation to the right, where a
+    matrix can multiply it. Concretely, every H and F block below is born as an
+    expression like <code>[delta_theta]× * m</code> with the unknown error stuck
+    on the left where no matrix can reach it; the swap turns it into
+    <code>-[m]× * delta_theta</code>, which has the shape
+    <code>(known matrix) * (error vector)</code> that a Kalman filter requires.</p>
+
+  <h2>3. Axis-angle and exponential coordinates</h2>
+  <p>Store an axis and angle in one vector:</p>
+  <pre><code>theta = unit_axis * angle
+direction(theta) = rotation axis
+norm(theta)      = rotation angle in radians</code></pre>
+  <p>The exponential map converts it into a rotation matrix:</p>
+  <pre><code>R = Exp(skew(theta))
+Exp(A) = I + A + A²/2! + A³/3! + ...</code></pre>
+  <p>Imagine applying N tiny rotations <code>I+skew(theta)/N</code>. Their
+     product approaches the exponential — the same limit as compound interest,
+     <code>(1+r/N)^N → e^r</code>, with rotation playing the role of interest.
+     For a tiny error:</p>
+  <div class="result"><code>Exp(skew(delta_theta)) ≈ I + skew(delta_theta)</code></div>
+
+  <h2>4. Proof: exponential coordinates become a rotation matrix</h2>
+  <p>We now prove that <code>Exp(skew(theta))</code> rotates by
+  <code>norm(theta)</code> about the axis <code>theta/norm(theta)</code>.</p>
+
+  <h3>4.1 Separate axis and angle</h3>
+  <pre><code>phi = norm(theta)
+u   = theta/phi          // unit axis
+theta = phi*u
+skew(theta) = phi*skew(u)</code></pre>
+  <p>Define <code>U=skew(u)</code>. We must evaluate <code>Exp(phi*U)</code>.</p>
+
+  <h3>4.2 Powers of the unit-axis skew matrix</h3>
+  <p>Recall that <code>U=skew(u)</code>. Applying U means crossing with u:</p>
+  <pre><code>U*v = u × v
+U²*v = U*(U*v) = u × (u × v)</code></pre>
+
+  <h4>4.2.1 Prove the vector triple-product identity</h4>
+  <p>The general identity, often called “BAC minus CAB,” is:</p>
+  <pre><code>a × (b × c) = b*(a dot c) - c*(a dot b)</code></pre>
+  <p>A component proof uses the Levi-Civita symbol:</p>
+  <pre><code>(a × b)_i = epsilon_ijk * a_j * b_k
+
+[a × (b × c)]_i
+ = epsilon_ijk * a_j * epsilon_klm * b_l * c_m</code></pre>
+  <p>Contract the two epsilon symbols:</p>
+  <pre><code>epsilon_ijk * epsilon_klm
+ = delta_il*delta_jm - delta_im*delta_jl</code></pre>
+  <p>The Kronecker delta is one when its indices match and zero otherwise.
+  Substitution gives:</p>
+  <pre><code>[a × (b × c)]_i
+ = (delta_il*delta_jm - delta_im*delta_jl)*a_j*b_l*c_m
+ = b_i*(a_j*c_j) - c_i*(a_j*b_j)
+ = [b*(a dot c) - c*(a dot b)]_i</code></pre>
+  <p>Every component agrees, proving the identity.</p>
+
+  <h4>4.2.2 Apply it when both outer vectors are u</h4>
+  <p>Set <code>a=u</code>, <code>b=u</code>, and <code>c=v</code>:</p>
+  <pre><code>u × (u × v) = u*(u dot v) - v*(u dot u)</code></pre>
+  <p>Because u is a unit vector, <code>u dot u=1</code>:</p>
+  <pre><code>u × (u × v) = u*(u dot v) - v</code></pre>
+  <p>Translate each term into matrix notation:</p>
+  <pre><code>u*(u dot v)
+ = u*(u.transpose()*v)
+ = (u*u.transpose())*v
+
+v = I*v</code></pre>
+  <p>Here is the key dimensional step:</p>
+  <pre><code>u.transpose()*v     is a 1×1 scalar: u dot v
+u*u.transpose()     is a 3×3 outer-product matrix
+(u*u.transpose())*v = u*(u.transpose()*v)
+                      = u*(u dot v)</code></pre>
+  <p>Because u has unit length, <code>u dot v</code> is the signed length of
+  v along u. Multiplying it by u reconstructs that parallel component:</p>
+  <div class="result"><pre><code>P_parallel = u*u.transpose()
+P_parallel*v = v_parallel</code></pre></div>
+  <p>The identity returns the whole vector. Therefore:</p>
+  <pre><code>u*(u dot v) - v
+ = (u*u.transpose())*v - I*v
+ = (u*u.transpose() - I)*v</code></pre>
+  <p>Also, <code>I-u*u.transpose()</code> projects onto the plane perpendicular
+  to u. Consequently:</p>
+  <div class="result"><pre><code>u*u.transpose() - I
+ = -(I-u*u.transpose())
+ = -P_perpendicular</code></pre></div>
+  <p>The double cross discards the parallel component and negates the
+  perpendicular component.</p>
+
+  <h4>Concrete example: u is the Z axis</h4>
+  <pre><code>u = [0, 0, 1].transpose()
+
+u*u.transpose() = [0 0 0]     u*u.transpose() - I = [-1  0  0]
+                  [0 0 0]                            [ 0 -1  0]
+                  [0 0 1]                            [ 0  0  0]
+
+(u*u.transpose() - I)*[vx,vy,vz].transpose()
+ = [-vx,-vy,0].transpose()</code></pre>
+  <p>The direct cross-product calculation agrees:</p>
+  <pre><code>u × v        = [-vy, vx, 0]
+u × (u × v) = [-vx,-vy,0]</code></pre>
+  <p>Therefore:</p>
+  <pre><code>U²*v
+ = (u*u.transpose())*v - I*v
+ = (u*u.transpose() - I)*v</code></pre>
+
+  <h4>4.2.3 Why can v be removed?</h4>
+  <p>The two matrices produce identical output for every vector v. Choosing
+  <code>v=e1</code>, <code>e2</code>, and <code>e3</code> selects their first,
+  second, and third columns. Every column is equal, so the matrices are equal:</p>
+  <div class="result"><code>U² = u*u.transpose() - I</code></div>
+
+  <h4>4.2.4 Verify U² by explicit multiplication</h4>
+  <p>For <code>u=(ux,uy,uz)</code>, multiplying the skew matrix by itself gives:</p>
+  <pre><code>U² = [ ux²-1   ux*uy    ux*uz  ]
+     [ ux*uy   uy²-1    uy*uz  ]
+     [ ux*uz   uy*uz    uz²-1  ]</code></pre>
+  <p>This is exactly:</p>
+  <pre><code>u*u.transpose() - I
+ = [ ux²   ux*uy  ux*uz ]   [1 0 0]
+   [ ux*uy uy²    uy*uz ] - [0 1 0]
+   [ ux*uz uy*uz  uz²   ]   [0 0 1]</code></pre>
+
+  <h4>4.2.5 Derive U³ carefully</h4>
+  <p>Multiply the result for U² on the left by U:</p>
+  <pre><code>U³ = U*U²
+   = U*(u*u.transpose() - I)
+   = U*(u*u.transpose()) - U*I</code></pre>
+  <p>Associativity allows parentheses to move without changing multiplication
+  order:</p>
+  <pre><code>U*(u*u.transpose()) = (U*u)*u.transpose()</code></pre>
+  <p>But <code>U*u = u × u = 0</code>. Parallel vectors span zero area, so their
+  cross product is zero. Hence:</p>
+  <pre><code>U³
+ = (U*u)*u.transpose() - U
+ = 0*u.transpose() - U
+ = -U</code></pre>
+  <div class="result"><code>U³ = -U</code></div>
+
+  <p>Higher powers follow by multiplying by U again:</p>
+  <pre><code>U¹ =  U       U² =  U²
+U³ = -U       U⁴ = -U²
+U⁵ =  U       U⁶ =  U²  ...</code></pre>
+
+  <h3>4.3 Regroup the exponential series</h3>
+  <pre><code>Exp(phi*U)
+ = I + phi*U + phi²*U²/2! + phi³*U³/3! + ...
+
+ = I
+   + (phi - phi³/3! + phi⁵/5! - ...)*U
+   + (phi²/2! - phi⁴/4! + phi⁶/6! - ...)*U²</code></pre>
+  <p>The first scalar series is <code>sin(phi)</code>. The second is
+  <code>1-cos(phi)</code>. Therefore:</p>
+  <div class="result"><pre><code>Exp(phi*skew(u))
+ = I + sin(phi)*skew(u)
+     + (1-cos(phi))*skew(u)²</code></pre></div>
+  <p>This is Rodrigues' rotation formula.</p>
+
+  <h3>4.4 Why Rodrigues really rotates around u</h3>
+  <p>Split an arbitrary vector into parts parallel and perpendicular to u:</p>
+  <pre><code>v_parallel = u*(u dot v)
+v_perp     = v - v_parallel</code></pre>
+  <p>Since <code>U*v=u×v</code> and <code>U²*v=-v_perp</code>:</p>
+  <pre><code>R*v
+ = v + sin(phi)*(u×v) + (1-cos(phi))*(-v_perp)
+ = v_parallel
+   + cos(phi)*v_perp
+   + sin(phi)*(u×v_perp)</code></pre>
+  <p>The parallel part is unchanged. In the perpendicular plane,
+  <code>v_perp</code> and <code>u×v_perp</code> are perpendicular and equally
+  long. Their coefficients are the ordinary 2D rotation coefficients
+  <code>cos(phi)</code> and <code>sin(phi)</code>. Thus the exponential is exactly
+  a rotation of angle <code>phi</code> around axis <code>u</code>.</p>
+
+  <h3>4.5 Formula directly in theta</h3>
+  <div class="result"><pre><code>R = Exp(skew(theta))
+  = I
+    + sin(phi)/phi * skew(theta)
+    + (1-cos(phi))/phi² * skew(theta)²
+
+phi = norm(theta)</code></pre></div>
+  <p>At zero, use the continuous limits:</p>
+  <pre><code>sin(phi)/phi       -> 1
+(1-cos(phi))/phi² -> 1/2
+R                  -> I</code></pre>
+
+  <h3>4.6 Explicit axis-angle to 3x3 matrix</h3>
+  <p>Let <code>u=(ux,uy,uz)</code>, <code>c=cos(phi)</code>,
+  <code>s=sin(phi)</code>, and <code>C=1-c</code>. Expanding Rodrigues gives:</p>
+  <pre><code>R = [ c+ux²*C       ux*uy*C-uz*s  ux*uz*C+uy*s ]
+    [ uy*ux*C+uz*s  c+uy²*C       uy*uz*C-ux*s ]
+    [ uz*ux*C-uy*s  uz*uy*C+ux*s  c+uz²*C      ]</code></pre>
+
+  <h3>4.7 Rotation matrix back to axis-angle</h3>
+  <p>Taking the trace of that matrix gives:</p>
+  <pre><code>trace(R) = 1 + 2*cos(phi)
+phi = acos(clamp((trace(R)-1)/2, -1, 1))</code></pre>
+  <p>Subtracting the transpose of Rodrigues gives:</p>
+  <pre><code>R - R.transpose() = 2*sin(phi)*skew(u)
+
+u = 1/(2*sin(phi)) * [ R(2,1)-R(1,2),
+                        R(0,2)-R(2,0),
+                        R(1,0)-R(0,1) ]
+
+theta = phi*u</code></pre>
+  <p>Special cases:</p>
+  <ul>
+   <li><strong>phi near zero:</strong> the axis is irrelevant; use
+   <code>theta ≈ vee(R-R.transpose())/2</code>.</li>
+   <li><strong>phi near pi:</strong> <code>sin(phi)=0</code>, so use a diagonal
+   or eigenvector method to recover the axis.</li>
+  </ul>
+  <p><code>Log(R)</code> denotes this inverse on the principal range from zero
+  through pi. It cannot be globally unique because full turns produce the same
+  physical rotation.</p>
+
+  <h2>5. Quaternions and their relationship to angles</h2>
+  <p>A quaternion has four numbers <code>q=(w,x,y,z)=(w,v)</code>: a scalar part
+    w and a vector part v. A unit quaternion represents the axis-angle
+    rotation:</p>
+  <pre><code>q = (cos(angle/2), unit_axis * sin(angle/2))</code></pre>
+
+  <h3>5.1 The product rule</h3>
+  <p>Multiplication is defined so that composing two quaternions composes their
+    rotations. In scalar/vector form:</p>
+  <pre><code>(w1, v1) * (w2, v2)
+ = (w1*w2 - v1 dot v2,
+    w1*v2 + w2*v1 + v1 × v2)</code></pre>
+  <p>The cross-product term is why order matters: swapping the factors flips
+    <code>v1 × v2</code>, so quaternion multiplication is non-commutative,
+    exactly as 3D rotations are.</p>
+
+  <h3>5.2 How a quaternion rotates a vector, and why the half angle</h3>
+  <p>A vector is embedded as a quaternion with zero scalar part,
+    <code>(0, v)</code>, and rotated by the sandwich product:</p>
+  <pre><code>(0, v_rotated) = q * (0, v) * q*        // q* = (w, -v), the conjugate</code></pre>
+  <p>The vector is touched by q <em>twice</em> — once on each side — and each
+    side contributes half the rotation. That is the entire mystery of the
+    half-angle convention. Verify it concretely: rotate the x-axis about the
+    z-axis, with <code>c=cos(phi/2)</code>, <code>s=sin(phi/2)</code>,
+    <code>q=(c, 0,0,s)</code>, <code>v=(1,0,0)</code>. First product:</p>
+  <pre><code>q * (0, v)
+ = (c*0 - (0,0,s) dot (1,0,0),
+    c*(1,0,0) + 0*(0,0,s) + (0,0,s) × (1,0,0))
+ = (0, (c, s, 0))</code></pre>
+  <p>Second product:</p>
+  <pre><code>(0, (c,s,0)) * (c, 0,0,-s)
+ = (0*c - (c,s,0) dot (0,0,-s),
+    0*(0,0,-s) + c*(c,s,0) + (c,s,0) × (0,0,-s))
+ = (0, (c² - s², 2*c*s, 0))
+ = (0, (cos(phi), sin(phi), 0))     // double-angle identities</code></pre>
+  <p>Each half-angle factor delivered half the turn; the sandwich delivered the
+    full <code>phi</code>. This also explains the famous sign ambiguity:</p>
+  <pre><code>(-q) * (0, v) * (-q)* = q * (0, v) * q*    // the two minus signs cancel</code></pre>
+  <p>so <code>q</code> and <code>-q</code> are the <em>same physical
+    orientation</em>. The filter's <code>q_normalize</code> flips the sign until
+    <code>w ≥ 0</code> purely to pick one representative of the pair, so that
+    small orientation errors always look like small quaternion differences.</p>
+
+  <h3>5.3 The small-rotation quaternion</h3>
+  <p>For a small rotation the half-angle sine and cosine linearize:</p>
+  <pre><code>cos(phi/2) ≈ 1,   sin(phi/2)*u ≈ (phi/2)*u = delta_theta/2</code></pre>
+  <div class="result"><code>dq ≈ (1, delta_theta/2)</code></div>
+  <p>This is exactly the filter's <code>dq(1, .5*theta.x(), ...)</code>, and it
+    is the quaternion twin of <code>Exp(skew(delta_theta)) ≈
+    I+skew(delta_theta)</code> from section 3 — same first-order rotation, two
+    notations.</p>
+
+  <h2>6. Why attitude uncertainty uses three numbers</h2>
+  <p>Why not simply keep a 4×4 covariance over the quaternion components? Because
+    the quaternion lives on the unit sphere <code>|q|=1</code>: there is no such
+    thing as uncertainty <em>along the norm direction</em> — a longer q is not a
+    different orientation, it is the same orientation written wrong. A 4×4
+    covariance would either claim phantom variance in that direction or be
+    exactly singular (rank 3), and singular covariances break the inversion in
+    the Kalman gain. Rotations genuinely have three degrees of freedom, so the
+    error state uses three numbers, living in the tangent plane of the sphere at
+    the current estimate.</p>
+  <p>The nominal unit quaternion stores the full orientation. A three-vector
+    stores its small local error without violating the quaternion's unit norm:</p>
+  <div class="result"><code>R_true = R_nominal * Exp(skew(delta_theta))</code></div>
+  <p>Right multiplication means <code>delta_theta</code> is expressed in the
+    nominal body frame. Angular velocity then gives:</p>
+  <pre><code>R(t+dt) = R(t) Exp(skew(omega*dt))
+R_dot   = R * skew(omega)</code></pre>
+
+  <h2>7. Proof of the attitude-error dynamics</h2>
+  <p>This matches the right-multiplicative correction used by
+    <code>q_new = q_current * dq</code>.
+  </p>
+
+  <h3>7.1 Define the attitude error</h3>
+  <math display="block">
+    <msub>
+      <mi>R</mi>
+      <mi>t</mi>
+    </msub>
+    <mo>=</mo>
+    <mover>
+      <mi>R</mi>
+      <mo>^</mo>
+    </mover>
+    <mi>δR</mi>
+    <mo>,</mo>
+    <mspace width="1em" />
+    <mi>δR</mi>
+    <mo>=</mo>
+    <mi>Exp</mi>
+    <mo>(</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>δθ</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>)</mo>
+    <mo>≈</mo>
+    <mi>I</mi>
+    <mo>+</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>δθ</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+  </math>
+  <p>The skew operator is the matrix form of a cross product:</p>
+  <math display="block">
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>a</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mi>b</mi>
+    <mo>=</mo>
+    <mi>a</mi>
+    <mo>×</mo>
+    <mi>b</mi>
+  </math>
+
+  <h3>7.2 Write true and nominal rotation dynamics</h3>
+  <math display="block">
+    <msub>
+      <mover>
+        <mi>R</mi>
+        <mo>˙</mo>
+      </mover>
+      <mi>t</mi>
+    </msub>
+    <mo>=</mo>
+    <msub>
+      <mi>R</mi>
+      <mi>t</mi>
+    </msub>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <msub>
+          <mi>ω</mi>
+          <mi>t</mi>
+        </msub>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>,</mo>
+    <mspace width="2em" />
+    <mover>
+      <mover>
+        <mi>R</mi>
+        <mo>^</mo>
+      </mover>
+      <mo>˙</mo>
+    </mover>
+    <mo>=</mo>
+    <mover>
+      <mi>R</mi>
+      <mo>^</mo>
+    </mover>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mover>
+          <mi>ω</mi>
+          <mo>^</mo>
+        </mover>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+  </math>
+  <p>Differentiate <math>
+      <msub>
+        <mi>R</mi>
+        <mi>t</mi>
+      </msub>
+      <mo>=</mo>
+      <mover>
+        <mi>R</mi>
+        <mo>^</mo>
+      </mover>
+      <mi>δR</mi>
+    </math>:</p>
+  <math display="block">
+    <mover>
+      <mover>
+        <mi>R</mi>
+        <mo>^</mo>
+      </mover>
+      <mo>˙</mo>
+    </mover>
+    <mi>δR</mi>
+    <mo>+</mo>
+    <mover>
+      <mi>R</mi>
+      <mo>^</mo>
+    </mover>
+    <mover>
+      <mi>δR</mi>
+      <mo>˙</mo>
+    </mover>
+    <mo>=</mo>
+    <mover>
+      <mi>R</mi>
+      <mo>^</mo>
+    </mover>
+    <mi>δR</mi>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <msub>
+          <mi>ω</mi>
+          <mi>t</mi>
+        </msub>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+  </math>
+  <p>Cancel the nominal rotation:</p>
+  <math display="block">
+    <mover>
+      <mi>δR</mi>
+      <mo>˙</mo>
+    </mover>
+    <mo>=</mo>
+    <mi>δR</mi>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <msub>
+          <mi>ω</mi>
+          <mi>t</mi>
+        </msub>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>−</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mover>
+          <mi>ω</mi>
+          <mo>^</mo>
+        </mover>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mi>δR</mi>
+  </math>
+
+  <h3>7.3 Insert gyro-bias error</h3>
+  <math display="block">
+    <msub>
+      <mi>ω</mi>
+      <mi>t</mi>
+    </msub>
+    <mo>=</mo>
+    <mover>
+      <mi>ω</mi>
+      <mo>^</mo>
+    </mover>
+    <mo>−</mo>
+    <mi>δb</mi>
+    <mo>−</mo>
+    <msub>
+      <mi>n</mi>
+      <mi>g</mi>
+    </msub>
+  </math>
+  <p>Substitute this and use <math>
+      <mi>δR</mi>
+      <mo>≈</mo>
+      <mi>I</mi>
+      <mo>+</mo>
+      <msup>
+        <mrow>
+          <mo>[</mo>
+          <mi>δθ</mi>
+          <mo>]</mo>
+        </mrow>
+        <mo>×</mo>
+      </msup>
+    </math>.
+    Discard products of two small errors:</p>
+  <math display="block">
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mover>
+          <mi>δθ</mi>
+          <mo>˙</mo>
+        </mover>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>=</mo>
+    <mo>−</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>δb</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>−</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <msub>
+          <mi>n</mi>
+          <mi>g</mi>
+        </msub>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>+</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>δθ</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mover>
+          <mi>ω</mi>
+          <mo>^</mo>
+        </mover>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>−</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mover>
+          <mi>ω</mi>
+          <mo>^</mo>
+        </mover>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>δθ</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+  </math>
+
+  <h3>7.4 Use the skew commutator identity</h3>
+  <math display="block">
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>a</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>b</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>−</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>b</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>a</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+    <mo>=</mo>
+    <msup>
+      <mrow>
+        <mo>[</mo>
+        <mi>a</mi>
+        <mo>×</mo>
+        <mi>b</mi>
+        <mo>]</mo>
+      </mrow>
+      <mo>×</mo>
+    </msup>
+  </math>
+  <p>Since <math>
+      <mi>δθ</mi>
+      <mo>×</mo>
+      <mover>
+        <mi>ω</mi>
+        <mo>^</mo>
+      </mover>
+      <mo>=</mo>
+      <mo>−</mo>
+      <mover>
+        <mi>ω</mi>
+        <mo>^</mo>
+      </mover>
+      <mo>×</mo>
+      <mi>δθ</mi>
+    </math>, the vector equation is:</p>
+
+  <div class="result">
+    <math display="block">
+      <mover>
+        <mi>δθ</mi>
+        <mo>˙</mo>
+      </mover>
+      <mo>=</mo>
+      <mo>−</mo>
+      <msup>
+        <mrow>
+          <mo>[</mo>
+          <mover>
+            <mi>ω</mi>
+            <mo>^</mo>
+          </mover>
+          <mo>]</mo>
+        </mrow>
+        <mo>×</mo>
+      </msup>
+      <mi>δθ</mi>
+      <mo>−</mo>
+      <mi>δb</mi>
+      <mo>−</mo>
+      <msub>
+        <mi>n</mi>
+        <mi>g</mi>
+      </msub>
+    </math>
+  </div>
+
+  <p>Therefore the continuous-time error-state matrix contains:</p>
+  <pre><code>F.block&lt;3, 3&gt;(0, 0)  = -skew(w);
+F.block&lt;3, 3&gt;(0, 12) = -I;</code></pre>
+
+  <p class="note">The minus-skew block appears because the attitude error is
+    expressed in the rotating body frame. As the body frame rotates by
+    +ω, the coordinates of an existing error rotate by −ω.</p>
+
+  <h2>8. The velocity-error rows of F</h2>
+  <p>The same machinery gives the two blocks that were sign-flipped in the
+    July 2026 fix. Start from the measurement convention, which is decided by
+    <em>data</em>, not by preference: this accelerometer reads
+    <code>(0, 0, +9.80)</code> at rest in the x-forward/y-right/z-down frame
+    (log evidence: raw accel mean over 100 stationary seconds =
+    (+0.08, +0.06, +9.804)). So the model of the reading is</p>
+  <pre><code>z_a = R.transpose()*(g - a_true) + b_a + n_a
+// at rest (a_true = 0):  z_a = R.transpose()*g + b_a   -> +9.8 on z  ✓</code></pre>
+  <p>Solve for the true acceleration and you get the predict step:</p>
+  <div class="result"><pre><code>a_true = g - R*(z_a - b_a - n_a)
+
+// chuudkf.hpp predict():
+// acceleration = grav_vec - R * a;      a = z_a - b_a</code></pre></div>
+
+  <h3>8.1 Perturb it</h3>
+  <p>Write truth as nominal-plus-error, using the section 7 error convention
+    <code>R_t = R_hat*(I + [delta_theta]×)</code> and
+    <code>b_a_true = b_a_hat + delta_b_a</code>, and abbreviate
+    <code>a = z_a - b_a_hat</code> (exactly the code's <code>a</code>):</p>
+  <pre><code>v_dot_true = g - R_hat*(I + [delta_theta]×)*(a - delta_b_a - n_a)
+v_dot_hat  = g - R_hat*a
+
+delta_v_dot = v_dot_true - v_dot_hat
+ = -R_hat*[delta_theta]×*a  +  R_hat*delta_b_a  +  R_hat*n_a
+   (+ products of two small terms, discarded)</code></pre>
+  <p>The unknown error is trapped on the left of <code>a</code>; free it with
+    the section 2 swap, <code>[delta_theta]×*a = -[a]×*delta_theta</code>:</p>
+  <div class="result"><pre><code>delta_v_dot = R_hat*[a]× * delta_theta + R_hat * delta_b_a + R_hat * n_a
+
+F.block&lt;3,3&gt;(6, 0) = R * skew(a);   // velocity error vs attitude error
+F.block&lt;3,3&gt;(6, 9) = R;             // velocity error vs accel-bias error</code></pre></div>
+  <p class="note">Under the opposite sign convention (accel reads −g at rest)
+    the predict line and both blocks flip sign together. The original bug was
+    not picking the wrong convention — it was picking <em>both</em>: predict
+    used one, the measurement update used the other. They agree at rest (both
+    give zero), so the bug was invisible until the rover moved, then every
+    real acceleration was integrated backwards. Position error
+    <code>delta_p_dot = delta_v</code> gives the remaining identity block
+    <code>F.block&lt;3,3&gt;(3,6) = I</code> with no derivation needed.</p>
+
+  <h2>9. Measurement Jacobians: one identity, three sensors</h2>
+  <p>Every vector sensor in the filter predicts a known world-frame vector seen
+    from the body frame: gravity for the accelerometer, the mean magnetic field
+    for the magnetometer. One perturbation identity covers all of them. From
+    <code>(A*B)ᵀ = Bᵀ*Aᵀ</code> and antisymmetry of skew:</p>
+  <pre><code>( R_hat*(I + [delta_theta]×) ).transpose()
+ = (I + [delta_theta]×).transpose() * R_hat.transpose()
+ = (I - [delta_theta]×) * R_hat.transpose()</code></pre>
+  <p>Now perturb a generic body-frame prediction of a world vector m:</p>
+  <pre><code>h = R_true.transpose() * m_world
+  = (I - [delta_theta]×) * R_hat.transpose() * m_world
+  = m_body_hat - [delta_theta]× * m_body_hat
+  = m_body_hat + [m_body_hat]× * delta_theta      // section 2 swap again</code></pre>
+  <div class="result"><pre><code>H_theta = skew(m_body_hat)
+
+// accel:  m_world = g          ->  H.block(0,0) = skew(grav_body)
+// magnm:  m_world = mean north ->  H.block(0,0) = skew(magnm_body)</code></pre></div>
+  <p class="note">The accelerometer's bias enters its measurement model
+    additively (<code>h = b_a + grav_body</code>), so its bias block is simply
+    <code>H.block&lt;3,3&gt;(0,9) = I</code>. Note the sign discipline: the
+    <em>transposed</em> perturbation carries a minus, which the swap turns back
+    into a plus — this is why measurement Jacobians get
+    <code>+skew(m_body)</code> while the process matrix got
+    <code>-skew(omega)</code>. Getting these two signs from one derivation,
+    rather than by flipping signs until a live filter stops diverging, is
+    the entire value of this part of the document.</p>
+
+  <h2>10. From F to P: the covariance differential equation</h2>
+  <p>Sections 7–9 produced the linear error model
+    <code>delta_x_dot = F*delta_x + w</code>, with w the white driving noise.
+    The covariance <code>P = E[delta_x*delta_xᵀ]</code> then evolves as
+    follows. Over a short dt, the error propagates as
+    <code>delta_x ← (I + F*dt)*delta_x + (noise accumulated over dt)</code>,
+    and since the noise is independent of the current error, variances add
+    (Part II, section 12):</p>
+  <pre><code>P ← (I + F*dt) * P * (I + F*dt)ᵀ + W*dt
+  = P + (F*P + P*Fᵀ)*dt + W*dt + O(dt²)</code></pre>
+  <div class="result"><pre><code>P_dot = F*P + P*Fᵀ + W
+
+// ckf/chuudkf predict():
+// P += (F * P + P * F.transpose() + W) * dt;   // Euler step of the ODE</code></pre></div>
+  <p>Everything in Part I is now accounted for except one number: what is
+    <code>W</code>? Its units are (state unit)² per second — a <em>rate of
+    variance production</em>, also called a power spectral density. The claim
+    that the noise term over dt has covariance <code>W*dt</code>, and the value
+    of W for a real sensor, are physics questions, not linear-algebra
+    questions. That is Part II.</p>
+
+  <h1>Part II — Noise, spectra, and filters, from atoms up</h1>
+  <p>Goal: derive, with no step skipped, why the filter's <code>W</code> should
+    equal the IMU's measured noise variance times the sample period — and build
+    every tool used to measure it (PSD, Welch, digital filters) from scratch on
+    the way.</p>
+
+  <h2>11. Ground zero: heat is motion</h2>
+  <p>Temperature is not a fluid that objects contain; it is the kinetic energy
+    of their atoms. For a particle of mass m in thermal equilibrium at absolute
+    temperature T, each independent direction of motion carries, on average,
+    the same energy (the equipartition theorem):</p>
+  <pre><code>(1/2)*m*&lt;v²&gt; = (3/2)*k_B*T          // 3 directions
+k_B = 1.38e-23 J/K                     // Boltzmann's constant</code></pre>
+  <p>Plug in room temperature (300 K) and a nitrogen molecule
+    (m = 4.65e-26 kg): v_rms ≈ 517 m/s. The air in the rover's IMU package is
+    a hail of half-kilometre-per-second projectiles.</p>
+
+  <h3>11.1 From collisions to a random force</h3>
+  <p>A MEMS accelerometer is a microscopic proof mass hanging on silicon
+    springs inside that hail. At atmospheric density, roughly
+    <strong>3×10²¹ molecules per mm² per second</strong> strike each face.
+    Each collision transfers a tiny momentum kick; the two faces almost — but
+    never exactly — balance. The residual imbalance is a random force that
+    jiggles the proof mass exactly as pollen grains jiggle in water (Brownian
+    motion, explained by Einstein in 1905 by precisely this argument). The
+    electrical twin is Johnson noise: thermally agitated electrons in every
+    resistor, same equipartition law, same consequences.</p>
+  <p>Statistical mechanics gives the strength of the mechanical version
+    (the fluctuation–dissipation theorem):</p>
+  <div class="result"><pre><code>S_F = 4 * k_B * T * b        // force PSD, N²/Hz; b = damping, N·s/m
+accel noise density = sqrt(4*k_B*T*b) / m     // (m/s²)/√Hz</code></pre></div>
+  <p class="note">Read the formula: the damping b and the noise come from the
+    <em>same molecular collisions</em>. A sensor cannot have friction without
+    noise — asking for a quieter accelerometer of the same size and damping is
+    asking the air to hit the proof mass only when convenient.</p>
+
+  <h3>11.2 Why the result is Gaussian and white</h3>
+  <p>Two structural facts follow from the collision picture, before any
+    formula:</p>
+  <ul>
+    <li><strong>Gaussian:</strong> each sample of the noise is the sum of
+      ~10²¹ independent tiny kicks. The central limit theorem says sums of
+      many independent small contributions approach the Gaussian bell curve
+      regardless of each kick's own distribution. (We use this fact without
+      proving it; the proof needs characteristic functions.)</li>
+    <li><strong>White:</strong> collisions in one microsecond share nothing
+      with collisions in the next. Disjoint time intervals are independent, so
+      the noise has no memory at any timescale the IMU can resolve. "White"
+      is the name for that memorylessness, made precise in section 13.</li>
+  </ul>
+
+  <h2>12. The variance algebra: three lines that run everything</h2>
+  <p>A random variable X has mean <code>E[X]</code> and variance</p>
+  <pre><code>Var[X] = E[(X - E[X])²] = E[X²] - E[X]²</code></pre>
+  <p>(expand the square, use linearity of E, done). Two consequences, derived
+    for zero-mean X and Y to keep the algebra clean:</p>
+  <pre><code>Var[a*X] = E[(a*X)²] = a² * E[X²] = a² * Var[X]
+
+Var[X + Y] = E[(X+Y)²] = E[X²] + 2*E[X*Y] + E[Y²]
+           = Var[X] + Var[Y] + 2*Cov[X,Y]</code></pre>
+  <p>If X and Y are independent, <code>E[X*Y] = E[X]*E[Y] = 0</code>:</p>
+  <div class="result"><code>Independent variances add: Var[X+Y] = Var[X] + Var[Y]</code></div>
+  <p>Three corollaries, each one line, that the rest of Part II runs on:</p>
+  <pre><code>sum of N iid samples:        Var = N*σ²      (std grows like √N)
+mean of N iid samples:       Var = σ²/N      (averaging works)
+difference of two samples:   Var = 2*σ²      (used by the live estimator)</code></pre>
+
+  <h2>13. Autocorrelation, and what "white" means precisely</h2>
+  <p>For a zero-mean signal x(t) that is statistically the same at all times
+    (stationary), the autocorrelation measures memory:</p>
+  <pre><code>R_x(tau) = E[ x(t) * x(t + tau) ]
+R_x(0)   = Var[x]</code></pre>
+  <p>A discrete white sequence is one with no memory at all:</p>
+  <pre><code>R_x[k] = σ² if k = 0, else 0</code></pre>
+  <p>The continuous-time idealization writes <code>R_x(tau) = q*δ(tau)</code>
+    with a Dirac delta, which implies infinite variance — a warning, not a
+    contradiction: truly white continuous noise does not exist physically.
+    Every real sensor has finite bandwidth, and "white" always means
+    <em>flat over the band you can observe</em>. The constant q — variance per
+    unit bandwidth — is the number the whole document has been converging on,
+    and the next section constructs it properly.</p>
+
+  <h2>14. Sinusoids, Fourier, and the power spectral density</h2>
+
+  <h3>14.1 The atomic unit of frequency: orthogonal sinusoids</h3>
+  <p>Frequency analysis rests on one integral. Take two cosines whose
+    frequencies are whole numbers of cycles over a window T
+    (<code>f_k = k/T</code>), multiply, and integrate, using
+    <code>cos A * cos B = ½[cos(A−B) + cos(A+B)]</code>:</p>
+  <pre><code>∫₀ᵀ cos(2π*f_j*t) * cos(2π*f_k*t) dt
+ = ½∫₀ᵀ cos(2π*(f_j−f_k)*t) dt + ½∫₀ᵀ cos(2π*(f_j+f_k)*t) dt
+ = T/2 if j = k, else 0</code></pre>
+  <p>Any cosine at a nonzero harmonic frequency completes whole cycles over T
+    and integrates to zero; only the matching frequency survives. Different
+    frequencies are <em>orthogonal</em> — they are non-interfering accounts
+    into which a signal's energy can be sorted, with no double counting.</p>
+
+  <h3>14.2 The DFT is a bank of correlations</h3>
+  <p>For N samples the discrete Fourier transform correlates the signal
+    against N sampled sinusoids (packing cosine and sine into a complex
+    exponential):</p>
+  <pre><code>X_k = Σ_n x_n * exp(-i*2π*k*n/N),    k = 0..N-1</code></pre>
+  <p>Orthogonality survives sampling, and gives Parseval's theorem — expand
+    <code>|x_n|²</code> in the sinusoid basis and every cross term dies:</p>
+  <div class="result"><code>Σ_n x_n² = (1/N) * Σ_k |X_k|²</code></div>
+  <p>Total power in time equals total power across the frequency accounts.
+    This is bookkeeping, not physics: nothing was lost or gained, the variance
+    was only <em>sorted by frequency</em>.</p>
+
+  <h3>14.3 Density: variance per unit frequency</h3>
+  <p>Divide each account by the width of its frequency bin,
+    <code>f_s/N</code>, and by N (Parseval's factor), and you get a
+    <em>density</em>:</p>
+  <pre><code>PSD_k = |X_k|² / (N * f_s)         // units: (signal unit)² per Hz
+Σ_k PSD_k * (f_s/N) ≈ Var[x]        // integral of density = variance</code></pre>
+  <p>The PSD answers exactly one question: <em>how is the variance budget
+    distributed over frequency?</em> Its integral over any band is the
+    variance contributed by that band.</p>
+
+  <h3>14.4 The PSD of white noise, and the number the filter wants</h3>
+  <p>For a white sequence, every frequency account gets, in expectation, the
+    same share — no frequency is preferred because no timescale is preferred
+    (that is what memoryless means). A flat function whose integral over the
+    two-sided band <code>[-f_s/2, +f_s/2]</code> must equal σ² has height:</p>
+  <div class="result"><pre><code>q = σ² / f_s = σ² * Δt          // two-sided PSD of white noise
+
+// σ  = per-sample standard deviation
+// Δt = sample period</code></pre></div>
+  <p>This is the formal statement of the Wiener–Khinchin theorem for the white
+    case: PSD is the Fourier transform of the autocorrelation, and the
+    transform of a spike at zero lag is a constant. (Sketch of the general
+    derivation: expand <code>E[|X_k|²]</code> as a double sum, note
+    <code>E[x_n x_m]</code> depends only on n−m, change variables — the double
+    sum collapses to N times the transform of R.)</p>
+  <div class="warn"><strong>Convention trap.</strong> <code>scipy.signal.welch</code>
+    returns a <em>one-sided</em> density: the negative-frequency half is folded
+    on top, so a white signal shows a plateau at <code>2σ²/f_s</code>. The
+    filter's <code>W</code> (next section) wants the two-sided value
+    <code>σ²*Δt</code> — <em>half the Welch plateau</em>. Off-by-two errors
+    here are the classic way to detune a filter while feeling rigorous.</div>
+
+  <h2>15. Integrating white noise: the random walk, and W at last</h2>
+  <p>The filter's predict step integrates the accelerometer. Integrate pure
+    noise and watch the variance, using nothing but section 12. After N steps
+    of size Δt, the accumulated velocity error is a sum of independent
+    kicks:</p>
+  <pre><code>v_N = Σ_{k=1..N} a_k * Δt
+
+Var[v_N] = N * σ² * Δt²          // independent variances add
+         = (σ² * Δt) * (N * Δt)
+         = q * t</code></pre>
+  <div class="result"><pre><code>Var grows linearly in time:  σ_v(t) = sqrt(q * t)
+
+q = σ² * Δt  is exactly the entry the filter's W wants,
+and W*dt in  P += (F*P + P*Fᵀ + W)*dt  is exactly q*t bookkeeping.</code></pre></div>
+  <svg viewBox="0 0 860 260" aria-label="Three random walks inside a square-root envelope">
+    <line x1="40" y1="130" x2="820" y2="130" stroke="currentColor" opacity=".3" />
+    <polyline points="40.0,130.0 49.8,120.9 59.5,117.1 69.2,114.2 79.0,111.7 88.8,109.5 98.5,107.6 108.2,105.8 118.0,104.1 127.8,102.6 137.5,101.1 147.2,99.7 157.0,98.3 166.8,97.0 176.5,95.8 186.2,94.6 196.0,93.4 205.8,92.3 215.5,91.2 225.2,90.1 235.0,89.1 244.8,88.1 254.5,87.1 264.2,86.1 274.0,85.2 283.8,84.3 293.5,83.4 303.2,82.5 313.0,81.6 322.8,80.7 332.5,79.9 342.2,79.1 352.0,78.3 361.8,77.5 371.5,76.7 381.2,75.9 391.0,75.1 400.8,74.4 410.5,73.6 420.2,72.9 430.0,72.1 439.8,71.4 449.5,70.7 459.2,70.0 469.0,69.3 478.8,68.6 488.5,68.0 498.2,67.3 508.0,66.6 517.8,66.0 527.5,65.3 537.2,64.7 547.0,64.0 556.8,63.4 566.5,62.8 576.2,62.2 586.0,61.5 595.8,60.9 605.5,60.3 615.2,59.7 625.0,59.1 634.8,58.6 644.5,58.0 654.2,57.4 664.0,56.8 673.8,56.3 683.5,55.7 693.2,55.1 703.0,54.6 712.8,54.0 722.5,53.5 732.2,52.9 742.0,52.4 751.8,51.8 761.5,51.3 771.2,50.8 781.0,50.3 790.8,49.7 800.5,49.2 810.2,48.7 820.0,48.2" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 5" opacity=".55" />
+    <polyline points="40.0,130.0 49.8,139.1 59.5,142.9 69.2,145.8 79.0,148.3 88.8,150.5 98.5,152.4 108.2,154.2 118.0,155.9 127.8,157.4 137.5,158.9 147.2,160.3 157.0,161.7 166.8,163.0 176.5,164.2 186.2,165.4 196.0,166.6 205.8,167.7 215.5,168.8 225.2,169.9 235.0,170.9 244.8,171.9 254.5,172.9 264.2,173.9 274.0,174.8 283.8,175.7 293.5,176.6 303.2,177.5 313.0,178.4 322.8,179.3 332.5,180.1 342.2,180.9 352.0,181.7 361.8,182.5 371.5,183.3 381.2,184.1 391.0,184.9 400.8,185.6 410.5,186.4 420.2,187.1 430.0,187.9 439.8,188.6 449.5,189.3 459.2,190.0 469.0,190.7 478.8,191.4 488.5,192.0 498.2,192.7 508.0,193.4 517.8,194.0 527.5,194.7 537.2,195.3 547.0,196.0 556.8,196.6 566.5,197.2 576.2,197.8 586.0,198.5 595.8,199.1 605.5,199.7 615.2,200.3 625.0,200.9 634.8,201.4 644.5,202.0 654.2,202.6 664.0,203.2 673.8,203.7 683.5,204.3 693.2,204.9 703.0,205.4 712.8,206.0 722.5,206.5 732.2,207.1 742.0,207.6 751.8,208.2 761.5,208.7 771.2,209.2 781.0,209.7 790.8,210.3 800.5,210.8 810.2,211.3 820.0,211.8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 5" opacity=".55" />
+    <polyline points="40.0,130.0 49.8,129.9 59.5,136.1 69.2,133.7 79.0,133.1 88.8,135.4 98.5,138.3 108.2,151.6 118.0,154.8 127.8,161.6 137.5,162.8 147.2,170.7 157.0,172.2 166.8,171.4 176.5,171.3 186.2,170.7 196.0,172.2 205.8,166.6 215.5,168.1 225.2,166.9 235.0,163.2 244.8,163.5 254.5,168.7 264.2,166.8 274.0,172.5 283.8,170.6 293.5,170.6 303.2,168.4 313.0,168.6 322.8,172.1 332.5,168.4 342.2,167.6 352.0,163.3 361.8,170.3 371.5,178.8 381.2,174.7 391.0,174.5 400.8,173.6 410.5,175.2 420.2,177.2 430.0,176.4 439.8,178.0 449.5,185.3 459.2,193.3 469.0,191.5 478.8,191.9 488.5,189.0 498.2,189.1 508.0,192.8 517.8,194.5 527.5,192.3 537.2,196.5 547.0,198.2 556.8,199.6 566.5,203.3 576.2,204.0 586.0,208.4 595.8,210.2 605.5,210.8 615.2,213.4 625.0,214.1 634.8,214.9 644.5,216.1 654.2,210.2 664.0,212.8 673.8,209.2 683.5,202.5 693.2,203.0 703.0,197.1 712.8,191.2 722.5,196.2 732.2,198.4 742.0,203.1 751.8,206.0 761.5,213.0 771.2,216.1 781.0,219.4 790.8,223.9 800.5,224.1 810.2,220.1 820.0,224.2" fill="none" stroke="#3b82f6" stroke-width="2" />
+    <polyline points="40.0,130.0 49.8,129.5 59.5,127.0 69.2,134.7 79.0,149.9 88.8,149.3 98.5,148.4 108.2,148.3 118.0,144.1 127.8,147.4 137.5,148.2 147.2,147.2 157.0,142.5 166.8,147.7 176.5,150.5 186.2,148.6 196.0,143.7 205.8,150.9 215.5,141.8 225.2,139.2 235.0,140.3 244.8,135.0 254.5,133.9 264.2,133.3 274.0,134.1 283.8,136.4 293.5,140.9 303.2,142.8 313.0,138.1 322.8,139.2 332.5,135.3 342.2,139.3 352.0,144.6 361.8,140.8 371.5,134.6 381.2,131.6 391.0,131.1 400.8,133.3 410.5,134.4 420.2,133.9 430.0,133.7 439.8,125.8 449.5,129.1 459.2,135.7 469.0,138.8 478.8,139.8 488.5,135.4 498.2,139.1 508.0,144.8 517.8,136.2 527.5,136.5 537.2,141.8 547.0,144.1 556.8,145.4 566.5,146.0 576.2,143.7 586.0,147.2 595.8,147.5 605.5,143.4 615.2,140.4 625.0,138.4 634.8,143.4 644.5,141.3 654.2,144.5 664.0,147.2 673.8,152.9 683.5,154.1 693.2,159.9 703.0,161.6 712.8,158.6 722.5,159.7 732.2,158.6 742.0,161.6 751.8,161.6 761.5,167.3 771.2,169.3 781.0,178.1 790.8,182.3 800.5,184.6 810.2,189.2 820.0,190.0" fill="none" stroke="#16a34a" stroke-width="2" />
+    <polyline points="40.0,130.0 49.8,129.0 59.5,126.6 69.2,136.9 79.0,135.3 88.8,136.2 98.5,145.1 108.2,146.0 118.0,148.9 127.8,150.1 137.5,156.2 147.2,159.6 157.0,156.5 166.8,154.0 176.5,157.7 186.2,159.0 196.0,159.1 205.8,164.1 215.5,165.0 225.2,172.0 235.0,179.8 244.8,179.6 254.5,184.3 264.2,186.2 274.0,188.4 283.8,188.5 293.5,191.0 303.2,191.0 313.0,188.9 322.8,190.9 332.5,184.5 342.2,186.5 352.0,196.2 361.8,197.9 371.5,193.5 381.2,190.2 391.0,194.3 400.8,190.3 410.5,190.6 420.2,185.2 430.0,187.7 439.8,190.6 449.5,195.2 459.2,205.1 469.0,202.6 478.8,202.2 488.5,208.4 498.2,199.1 508.0,195.4 517.8,194.5 527.5,189.9 537.2,185.9 547.0,185.1 556.8,180.8 566.5,186.3 576.2,189.3 586.0,188.0 595.8,183.0 605.5,187.1 615.2,186.5 625.0,189.7 634.8,190.1 644.5,175.7 654.2,170.9 664.0,173.5 673.8,178.8 683.5,182.9 693.2,181.0 703.0,183.0 712.8,183.6 722.5,186.6 732.2,189.5 742.0,186.6 751.8,182.5 761.5,178.6 771.2,172.3 781.0,164.1 790.8,166.1 800.5,163.8 810.2,167.4 820.0,169.3" fill="none" stroke="#d97706" stroke-width="2" />
+    <text x="700" y="40" font-size="16" fill="currentColor" opacity=".7">±2σ√N envelope</text>
+  </svg>
+  <p class="note">Three integrations of the same white noise. No trace returns
+    home; the ensemble spreads as √t inside the dashed envelope. The filter's
+    P must spread at the same rate, or it is lying about itself.</p>
+
+  <h3>15.1 The numbers for this rover</h3>
+  <pre><code>at rest (from the logs):   σ_a ≈ 0.045 m/s², f_s ≈ 123 Hz
+q_v = 0.045² / 123 ≈ 1.6e-5 (m/s²)²·s     // hand-tuned W was 1e-5: right!
+
+driving:                   σ_a ≈ 1.6 m/s²
+q_v = 1.6² / 123   ≈ 0.021                // ~2000× the booked value</code></pre>
+  <p class="note">This is the entire July 2026 divergence in two lines: the
+    stationary filter was calibrated by accident of tuning, and the driving
+    filter under-booked its own uncertainty by three orders of magnitude, so
+    the NIS gate — correctly — stopped believing it. The same arithmetic under
+    the names ARW/VRW (angle / velocity random walk, in units per √hour) is
+    exactly what IMU datasheets quote.</p>
+
+  <h2>16. Sampling and aliasing: what a sample rate cannot see</h2>
+  <p>Sampling keeps x(t) only at t = n/f_s. Two different frequencies can agree
+    at every one of those instants. With f_s = 4 Hz, compare 1 Hz and 3 Hz:</p>
+  <pre><code>cos(2π*(f_s - f)*n/f_s) = cos(2π*n - 2π*f*n/f_s)
+                        = cos(2π*f*n/f_s)        // cos is 2π-periodic</code></pre>
+  <svg viewBox="0 0 860 240" aria-label="A 3 Hz cosine and a 1 Hz cosine passing through identical 4 Hz samples">
+    <line x1="40" y1="120" x2="820" y2="120" stroke="currentColor" opacity=".25" />
+    <polyline points="40.0,50.0 43.9,50.3 47.8,51.2 51.7,52.8 55.6,54.9 59.5,57.6 63.4,60.9 67.3,64.7 71.2,69.0 75.1,73.7 79.0,78.9 82.9,84.4 86.8,90.2 90.7,96.3 94.6,102.6 98.5,109.0 102.4,115.6 106.3,122.2 110.2,128.8 114.1,135.3 118.0,141.6 121.9,147.8 125.8,153.7 129.7,159.3 133.6,164.6 137.5,169.5 141.4,173.9 145.3,177.9 149.2,181.3 153.1,184.2 157.0,186.6 160.9,188.3 164.8,189.4 168.7,190.0 172.6,189.9 176.5,189.1 180.4,187.8 184.3,185.9 188.2,183.3 192.1,180.3 196.0,176.6 199.9,172.5 203.8,167.9 207.7,162.9 211.6,157.5 215.5,151.8 219.4,145.8 223.3,139.5 227.2,133.1 231.1,126.6 235.0,120.0 238.9,113.4 242.8,106.9 246.7,100.5 250.6,94.2 254.5,88.2 258.4,82.5 262.3,77.1 266.2,72.1 270.1,67.5 274.0,63.4 277.9,59.7 281.8,56.7 285.7,54.1 289.6,52.2 293.5,50.9 297.4,50.1 301.3,50.0 305.2,50.6 309.1,51.7 313.0,53.4 316.9,55.8 320.8,58.7 324.7,62.1 328.6,66.1 332.5,70.5 336.4,75.4 340.3,80.7 344.2,86.3 348.1,92.2 352.0,98.4 355.9,104.7 359.8,111.2 363.7,117.8 367.6,124.4 371.5,131.0 375.4,137.4 379.3,143.7 383.2,149.8 387.1,155.6 391.0,161.1 394.9,166.3 398.8,171.0 402.7,175.3 406.6,179.1 410.5,182.4 414.4,185.1 418.3,187.2 422.2,188.8 426.1,189.7 430.0,190.0 433.9,189.7 437.8,188.8 441.7,187.2 445.6,185.1 449.5,182.4 453.4,179.1 457.3,175.3 461.2,171.0 465.1,166.3 469.0,161.1 472.9,155.6 476.8,149.8 480.7,143.7 484.6,137.4 488.5,131.0 492.4,124.4 496.3,117.8 500.2,111.2 504.1,104.7 508.0,98.4 511.9,92.2 515.8,86.3 519.7,80.7 523.6,75.4 527.5,70.5 531.4,66.1 535.3,62.1 539.2,58.7 543.1,55.8 547.0,53.4 550.9,51.7 554.8,50.6 558.7,50.0 562.6,50.1 566.5,50.9 570.4,52.2 574.3,54.1 578.2,56.7 582.1,59.7 586.0,63.4 589.9,67.5 593.8,72.1 597.7,77.1 601.6,82.5 605.5,88.2 609.4,94.2 613.3,100.5 617.2,106.9 621.1,113.4 625.0,120.0 628.9,126.6 632.8,133.1 636.7,139.5 640.6,145.8 644.5,151.8 648.4,157.5 652.3,162.9 656.2,167.9 660.1,172.5 664.0,176.6 667.9,180.3 671.8,183.3 675.7,185.9 679.6,187.8 683.5,189.1 687.4,189.9 691.3,190.0 695.2,189.4 699.1,188.3 703.0,186.6 706.9,184.2 710.8,181.3 714.7,177.9 718.6,173.9 722.5,169.5 726.4,164.6 730.3,159.3 734.2,153.7 738.1,147.8 742.0,141.6 745.9,135.3 749.8,128.8 753.7,122.2 757.6,115.6 761.5,109.0 765.4,102.6 769.3,96.3 773.2,90.2 777.1,84.4 781.0,78.9 784.9,73.7 788.8,69.0 792.7,64.7 796.6,60.9 800.5,57.6 804.4,54.9 808.3,52.8 812.2,51.2 816.1,50.3 820.0,50.0" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+    <polyline points="40.0,50.0 43.9,52.8 47.8,60.9 51.7,73.7 55.6,90.2 59.5,109.0 63.4,128.8 67.3,147.8 71.2,164.6 75.1,177.9 79.0,186.6 82.9,190.0 86.8,187.8 90.7,180.3 94.6,167.9 98.5,151.8 102.4,133.1 106.3,113.4 110.2,94.2 114.1,77.1 118.0,63.4 121.9,54.1 125.8,50.1 129.7,51.7 133.6,58.7 137.5,70.5 141.4,86.3 145.3,104.7 149.2,124.4 153.1,143.7 157.0,161.1 160.9,175.3 164.8,185.1 168.7,189.7 172.6,188.8 176.5,182.4 180.4,171.0 184.3,155.6 188.2,137.4 192.1,117.8 196.0,98.4 199.9,80.7 203.8,66.1 207.7,55.8 211.6,50.6 215.5,50.9 219.4,56.7 223.3,67.5 227.2,82.5 231.1,100.5 235.0,120.0 238.9,139.5 242.8,157.5 246.7,172.5 250.6,183.3 254.5,189.1 258.4,189.4 262.3,184.2 266.2,173.9 270.1,159.3 274.0,141.6 277.9,122.2 281.8,102.6 285.7,84.4 289.6,69.0 293.5,57.6 297.4,51.2 301.3,50.3 305.2,54.9 309.1,64.7 313.0,78.9 316.9,96.3 320.8,115.6 324.7,135.3 328.6,153.7 332.5,169.5 336.4,181.3 340.3,188.3 344.2,189.9 348.1,185.9 352.0,176.6 355.9,162.9 359.8,145.8 363.7,126.6 367.6,106.9 371.5,88.2 375.4,72.1 379.3,59.7 383.2,52.2 387.1,50.0 391.0,53.4 394.9,62.1 398.8,75.4 402.7,92.2 406.6,111.2 410.5,131.0 414.4,149.8 418.3,166.3 422.2,179.1 426.1,187.2 430.0,190.0 433.9,187.2 437.8,179.1 441.7,166.3 445.6,149.8 449.5,131.0 453.4,111.2 457.3,92.2 461.2,75.4 465.1,62.1 469.0,53.4 472.9,50.0 476.8,52.2 480.7,59.7 484.6,72.1 488.5,88.2 492.4,106.9 496.3,126.6 500.2,145.8 504.1,162.9 508.0,176.6 511.9,185.9 515.8,189.9 519.7,188.3 523.6,181.3 527.5,169.5 531.4,153.7 535.3,135.3 539.2,115.6 543.1,96.3 547.0,78.9 550.9,64.7 554.8,54.9 558.7,50.3 562.6,51.2 566.5,57.6 570.4,69.0 574.3,84.4 578.2,102.6 582.1,122.2 586.0,141.6 589.9,159.3 593.8,173.9 597.7,184.2 601.6,189.4 605.5,189.1 609.4,183.3 613.3,172.5 617.2,157.5 621.1,139.5 625.0,120.0 628.9,100.5 632.8,82.5 636.7,67.5 640.6,56.7 644.5,50.9 648.4,50.6 652.3,55.8 656.2,66.1 660.1,80.7 664.0,98.4 667.9,117.8 671.8,137.4 675.7,155.6 679.6,171.0 683.5,182.4 687.4,188.8 691.3,189.7 695.2,185.1 699.1,175.3 703.0,161.1 706.9,143.7 710.8,124.4 714.7,104.7 718.6,86.3 722.5,70.5 726.4,58.7 730.3,51.7 734.2,50.1 738.1,54.1 742.0,63.4 745.9,77.1 749.8,94.2 753.7,113.4 757.6,133.1 761.5,151.8 765.4,167.9 769.3,180.3 773.2,187.8 777.1,190.0 781.0,186.6 784.9,177.9 788.8,164.6 792.7,147.8 796.6,128.8 800.5,109.0 804.4,90.2 808.3,73.7 812.2,60.9 816.1,52.8 820.0,50.0" fill="none" stroke="#16a34a" stroke-width="1.5" opacity=".7" />
+    <circle cx="40.0" cy="50.0" r="5" fill="#d97706" />
+    <circle cx="105.0" cy="120.0" r="5" fill="#d97706" />
+    <circle cx="170.0" cy="190.0" r="5" fill="#d97706" />
+    <circle cx="235.0" cy="120.0" r="5" fill="#d97706" />
+    <circle cx="300.0" cy="50.0" r="5" fill="#d97706" />
+    <circle cx="365.0" cy="120.0" r="5" fill="#d97706" />
+    <circle cx="430.0" cy="190.0" r="5" fill="#d97706" />
+    <circle cx="495.0" cy="120.0" r="5" fill="#d97706" />
+    <circle cx="560.0" cy="50.0" r="5" fill="#d97706" />
+    <circle cx="625.0" cy="120.0" r="5" fill="#d97706" />
+    <circle cx="690.0" cy="190.0" r="5" fill="#d97706" />
+    <circle cx="755.0" cy="120.0" r="5" fill="#d97706" />
+    <circle cx="820.0" cy="50.0" r="5" fill="#d97706" />
+    <text x="48" y="222" font-size="16" fill="#16a34a">3 Hz (true)</text>
+    <text x="180" y="222" font-size="16" fill="#3b82f6">1 Hz (alias)</text>
+    <text x="330" y="222" font-size="16" fill="#d97706">samples at 4 Hz</text>
+  </svg>
+  <p>The samples cannot decide. Every frequency f lands at
+    <code>|f − k*f_s|</code> for the nearest integer k, so only
+    <code>[0, f_s/2]</code> (the Nyquist band) is distinguishable. For this
+    rover: f_s ≈ 123 Hz, Nyquist ≈ 61 Hz, and a 100 Hz motor vibration
+    masquerades as 23 Hz — which the filter dutifully integrates as if the
+    rover were physically oscillating at 23 Hz.</p>
+  <div class="warn"><strong>Two consequences.</strong> (1) Anti-alias filtering
+    must happen <em>before</em> sampling — on the IMU chip, which samples
+    internally at kHz rates — because afterwards the folded power is
+    mathematically indistinguishable from in-band signal; no software can undo
+    it. (2) Folding <em>conserves power</em>: flat noise folds onto flat noise,
+    so a variance measured from the samples is still correct. Aliasing destroys
+    <em>structure</em>, not energy — which is exactly why the live W estimator
+    of section 19 keeps working under aliasing while the signal path is
+    corrupted by it.</div>
+
+  <h2>17. Estimating a PSD from data: periodogram to Welch</h2>
+
+  <h3>17.1 The naive estimate does not converge</h3>
+  <p>Take one record of N samples, compute
+    <code>PSD_k = |X_k|²/(N*f_s)</code> (the <em>periodogram</em>), and you
+    have an unbiased but shockingly noisy estimate. Why: for white Gaussian
+    noise, each <code>X_k</code> is a sum of many independent terms, so its
+    real and imaginary parts are Gaussian (section 11.2's own argument);
+    <code>|X_k|²</code> is then the sum of two squared Gaussians — an
+    exponential distribution, whose standard deviation <em>equals its
+    mean</em>. Crucially, N appears nowhere in that sentence:</p>
+  <div class="result"><code>Each periodogram bin has 100% relative scatter, at any record length.</code></div>
+  <p>A longer record buys narrower bins (resolution <code>f_s/N</code>), not
+    steadier ones. One "look" per frequency is one sample of a random
+    variable, and one sample never averages itself.</p>
+
+  <h3>17.2 Averaging: trade resolution for trust</h3>
+  <p>Section 12 already contains the cure: means of K independent samples have
+    variance σ²/K. Split the record into K segments, compute K periodograms,
+    average bin by bin (Bartlett's method):</p>
+  <pre><code>relative scatter per bin:  100% / sqrt(K)
+frequency resolution:      f_s / nperseg</code></pre>
+
+  <h3>17.3 Leakage and the window</h3>
+  <p>A finite segment is the true signal <em>multiplied</em> by a rectangle
+    (on during the segment, off elsewhere). Multiplication in time is
+    convolution in frequency, and the rectangle's transform has strong
+    sidelobes (first one only 13 dB down): a single loud line — a motor hum —
+    smears across the whole spectrum and buries the noise floor you wanted to
+    read. Tapering the segment edges with a raised cosine (the Hann window,
+    <code>w_n = ½(1 − cos(2π n/N))</code>) drops the sidelobes to −31 dB at the
+    price of a 2× wider main lobe. Softer edges, less splatter, slightly
+    blurrier frequencies.</p>
+
+  <h3>17.4 Overlap: Welch's contribution</h3>
+  <p>Tapered segments barely use their edge samples. Welch (1967): overlap the
+    segments 50%, so every sample is near the center of <em>some</em> segment.
+    The overlapping halves are de-weighted by the taper, so the averaged
+    periodograms remain nearly independent, and almost none of the record is
+    wasted.</p>
+  <div class="result"><pre><code>Welch's method = Hann-windowed, 50%-overlapped, averaged periodograms
+
+scipy.signal.welch(x, fs=fs, nperseg=512)
+# resolution 123/512 ≈ 0.24 Hz; K ≈ 2*N/512 segments; scatter ~ 1/√K
+# reminder: output is one-sided — white noise plateau = 2σ²/fs (section 14.4)</code></pre></div>
+  <p class="note">This is what <code>analysis</code>'s Welch script runs on the
+    accel columns of the CHUUDKF log. Its three design questions for this
+    rover: how much driving power sits above Nyquist (only the on-chip filter
+    can fix that), is the below-Nyquist part a sharp line (notch it) or
+    broadband (low-pass it), and does the line move with wheel speed (track
+    it).</p>
+
+  <h2>18. Digital filters, from one delay</h2>
+
+  <h3>18.1 The atomic unit and the eigenfunction</h3>
+  <p>Every causal digital filter is built from three atoms: <em>delay one
+    sample</em>, <em>multiply by a constant</em>, <em>add</em>. Feed the probe
+    signal <code>x_n = exp(i*ω*n)</code> (ω = 2πf/f_s, one complex sinusoid)
+    into a delay:</p>
+  <pre><code>delay(x)_n = x_{n-1} = exp(i*ω*(n-1)) = exp(-i*ω) * x_n</code></pre>
+  <p>A delay does not change the sinusoid — it multiplies it by the constant
+    <code>exp(-i*ω)</code>. Since the other two atoms are also just scaling and
+    adding, <em>any</em> combination of them multiplies the sinusoid by some
+    complex number H(ω) built from the same pieces:</p>
+  <div class="result"><code>Sinusoid in → same-frequency sinusoid out, scaled by |H(ω)|, shifted by arg H(ω).</code></div>
+  <p>That is why frequency is the natural language for filters, and it is the
+    payoff of section 14's orthogonality: a filter treats each frequency
+    account independently.</p>
+
+  <h3>18.2 The first-order low-pass is the EWMA</h3>
+  <pre><code>y_n = y_{n-1} + α*(x_n − y_{n-1})       // the running-average update</code></pre>
+  <p>Substitute the probe and solve for the gain:</p>
+  <pre><code>H(ω) = α / (1 − (1−α)*exp(−i*ω))</code></pre>
+  <p>At DC (ω=0): H = 1 — slow signals pass untouched. For small α and small
+    ω, expand <code>exp(−i*ω) ≈ 1 − i*ω</code>:</p>
+  <pre><code>H ≈ α / (α + i*ω)         // half-power corner at ω = α
+f_c ≈ α * f_s / (2π)</code></pre>
+  <p>Unrolling the recurrence gives the impulse response
+    <code>α(1−α)^n</code> — geometric decay, which is why the same object is
+    called an <em>exponentially weighted</em> moving average, with memory
+    ≈ 1/α samples and mean delay (1−α)/α samples.</p>
+
+  <h3>18.3 High-pass, band-pass, and the differencer</h3>
+  <pre><code>high-pass:  y = x − lowpass(x)          // keep what the average rejects
+band-pass:  lowpass ∘ highpass           // two corners bracket the band</code></pre>
+  <p>The cheapest high-pass is the first difference
+    <code>d_n = x_n − x_{n−1}</code>:</p>
+  <pre><code>H(ω) = 1 − exp(−i*ω)
+|H(ω)|² = 2 − 2cos(ω) = 4 sin²(ω/2)
+|H(ω)| = 2|sin(ω/2)|     // ≈ ω at low f: slow motion suppressed linearly</code></pre>
+  <p>Cross-check it against section 12 without any Fourier: the difference of
+    two independent samples has variance 2σ². Integrating
+    <code>|H|² × (flat PSD)</code> over the band gives exactly the same 2σ².
+    Two derivations, one answer — the algebra and the spectrum agree.</p>
+
+  <h3>18.4 The notch, geometrically</h3>
+  <p>Filters with feedback are described by where their <em>zeros</em> and
+    <em>poles</em> sit relative to the unit circle of frequencies
+    (the probe <code>exp(i*ω)</code> walks this circle as f goes from 0 to
+    Nyquist). The gain at a frequency is:</p>
+  <pre><code>|H| = Π (distances to zeros) / Π (distances to poles)</code></pre>
+  <svg viewBox="0 0 420 240" aria-label="z-plane: zeros on the unit circle, poles just inside">
+    <circle cx="210" cy="120" r="95" fill="none" stroke="currentColor" opacity=".4" />
+    <line x1="95" y1="120" x2="325" y2="120" stroke="currentColor" opacity=".25" />
+    <line x1="210" y1="10" x2="210" y2="230" stroke="currentColor" opacity=".25" />
+    <circle cx="277" cy="52" r="7" fill="none" stroke="#d97706" stroke-width="3" />
+    <circle cx="277" cy="188" r="7" fill="none" stroke="#d97706" stroke-width="3" />
+    <text x="262" y="38" font-size="20" fill="#d97706">zero</text>
+    <text x="253" y="63" font-size="26" fill="#3b82f6">×</text>
+    <text x="253" y="196" font-size="26" fill="#3b82f6">×</text>
+    <text x="196" y="63" font-size="20" fill="#3b82f6">pole</text>
+    <text x="318" y="124" font-size="16" fill="currentColor" opacity=".7">ω=0</text>
+    <text x="150" y="30" font-size="16" fill="currentColor" opacity=".7">unit circle = frequencies</text>
+  </svg>
+  <p>Pin a zero <em>onto</em> the circle at the vibration frequency ω₀: the
+    distance to it is zero exactly there, so the gain is exactly zero — a
+    notch. Place a pole just inside at radius r on the same angle: everywhere
+    except near ω₀ the pole's distance nearly cancels the zero's, pulling the
+    gain back to 1. The closer r is to 1, the narrower the notch
+    (−3 dB width ≈ (1−r)·f_s/π):</p>
+  <pre><code>H(z) = (1 − 2cos(ω₀)z⁻¹ + z⁻²) / (1 − 2r·cos(ω₀)z⁻¹ + r²z⁻²)
+
+// coefficients from scipy, hardcoded as five doubles:
+// b, a = scipy.signal.iirnotch(f0, Q, fs)
+y = b0*x + b1*x1 + b2*x2 - a1*y1 - a2*y2;
+x2 = x1; x1 = x;  y2 = y1; y1 = y;</code></pre>
+  <p class="note">Cost of all signal-path filtering: group delay — the output
+    describes the slightly-past input (a gentle 2nd-order low-pass at ~30 Hz
+    costs a few ms here). Harmless for a 0.15 m/s rover with a 10 ms predict
+    quantum; ruinous if stacked aggressively. Filter gently in the signal path,
+    aggressively only where delay is free — which is the next section. And
+    remember section 16: none of this can un-fold aliased power.</p>
+
+  <h2>19. Closing the loop: measuring the noise live, feeding W</h2>
+  <p>Everything assembles. The estimator differentiates to kill real motion,
+    squares, averages exponentially, halves, and converts to a density:</p>
+  <div class="result"><pre><code>d_n   = z_n − z_{n−1}                    // §18.3: |H|≈ω kills slow dynamics
+v̂     ← (1−β)·v̂ + β·d_n²                // §18.2: EWMA, τ = Δt/β
+σ̂²    = v̂ / 2                           // §12: Var[difference] = 2σ²
+q̂     = σ̂² · Δt                          // §14.4: two-sided white PSD
+W_v   = clamp(q̂_accel, q_floor, q_ceil)  // §15: variance production rate
+W_θ   = clamp(q̂_gyro,  ...)</code></pre></div>
+  <p>Why each piece is safe:</p>
+  <ul>
+    <li><strong>Real motion doesn't inflate it.</strong> At f_s = 123 Hz, a
+      1 Hz genuine maneuver passes the differencer with amplitude gain
+      2·sin(π·1/123) ≈ 0.05 — a 400× power suppression — while vibration near
+      Nyquist passes at full strength. The estimator reads shaking, not
+      driving.</li>
+    <li><strong>Aliasing doesn't break it.</strong> Folding conserves power
+      (§16), so σ̂² still counts the vibration energy even when its frequency
+      is lied about.</li>
+    <li><strong>The floor keeps calibration honest.</strong> Clamp q̂ at the
+      stationary-calibrated value from the logs so live estimation can never
+      make the filter <em>more</em> confident than physics allows; the ceiling
+      keeps one glitch sample from detonating P.</li>
+    <li><strong>It is feed-forward.</strong> No rejected-measurement feedback,
+      no "adapt until the gate opens." The IMU stream is the input to predict;
+      its measured scatter is, by the error-state formulation itself, the
+      process noise. This is filling in a term the derivation always had.</li>
+  </ul>
+  <p class="note">For the bias blocks (b_a, b_g) the same game is played over
+    minutes instead of milliseconds, with the Allan deviation: plot the scatter
+    of averages against averaging time τ on log-log axes. White noise falls as
+    τ^(−1/2), bias instability flattens, and rate random walk rises as
+    τ^(+1/2); the flat and rising parts calibrate the 1e-11-class entries of W
+    that no live estimator can see in real time.</p>
+
+  <h3>19.1 The whole chain</h3>
+  <div class="result"><pre><code>k_B·T  (atoms move)
+  → white Gaussian force on the proof mass          §11
+  → per-sample variance σ² in the accel stream      §12–13
+  → flat PSD of height q = σ²·Δt                    §14
+  → velocity variance grows as q·t                  §15
+  → booked by  P += (F·P + P·Fᵀ + W)·dt             §10
+  → S = H·P·Hᵀ + R matches real residuals
+  → NIS ~ χ², gate rejects 2.5%, filter is honest</code></pre></div>
+  <p>Every arrow is a derivation in this document. When the chain holds, the
+    NIS medians sit at 2.37 for three degrees of freedom — which the
+    stationary logs of this filter now demonstrate. When one link is dropped —
+    booking calm-air q while driving on vibrating wheels — the gate detects
+    the lie within seconds, and it is the <em>filter</em>, not the gate, that
+    needs the apology.</p>
+
+  <h2>20. Time-varying W: measuring the input noise live</h2>
+  <p>Everything here is assembly of parts already proven. Recall the §8
+    result:</p>
+  <pre><code>delta_v_dot = R*[a]× * delta_theta + R * delta_b_a + R * n_a</code></pre>
+  <p><code>n_a</code> is <em>defined</em> as the accel error, and nothing in the
+    derivation makes its covariance constant in time. It is a physical,
+    time-varying quantity: tiny when the chassis is still, enormous when the
+    wheels shake it. "Constant W" was the approximation; this section removes
+    it.</p>
+
+  <h3>20.1 Which entries move, and which must not</h3>
+  <pre><code>W_theta (0..2)  ← live gyro scatter      // gyro drives attitude in predict
+W_v     (6..8)  ← live accel scatter     // accel drives velocity in predict
+W_p     (3..5)  : constant               // delta_p_dot = delta_v: position
+                                         // uncertainty is manufactured from
+                                         // W_v by F(3,6)=I automatically
+W_ba, W_bg      : constant               // bias random walk is electronics
+                                         // over minutes, not today's shaking</code></pre>
+
+  <h3>20.2 The estimator, derived</h3>
+  <p>Model one axis of the raw stream as slow real signal plus noise,
+    <code>z_n = s_n + e_n</code>, and difference consecutive samples:</p>
+  <pre><code>d_n = z_n − z_{n−1} = (s_n − s_{n−1}) + (e_n − e_{n−1})
+
+Var[e_n − e_{n−1}] = 2σ²                     // §12, difference of iid
+signal leakage: |H_diff| = 2|sin(ω/2)|       // §18.3
+  at 1 Hz real motion, f_s = 123 Hz: amplitude ×0.051, power ×0.0026</code></pre>
+  <p>So for any genuinely slow maneuver, <code>E[d²] ≈ 2σ²</code>: the
+    differencer reads the shaking, not the driving. Average it with the §18.2
+    low-pass, halve, and convert to a density with §14.4:</p>
+  <div class="result"><pre><code>v̂  ← (1−β)·v̂ + β·d_n²        // E[v̂] = 2σ², memory τ = Δt/β
+σ̂² = v̂ / 2
+q̂  = σ̂² · Δt                  // the two-sided white PSD = W entry</code></pre></div>
+  <p>Clamps close the construction: a <strong>floor</strong> at the
+    stationary-calibrated q (live estimation may never make the filter more
+    confident than calibration allows) and a <strong>ceiling</strong> so one
+    glitch sample cannot detonate P. In the filter's own idiom:</p>
+  <pre><code>// in the gyro/accel bind callbacks:
+const Eigen::Vector3d d = z - prev;
+prev = z;
+dvar = (1.0 - BETA) * dvar + BETA * d.cwiseProduct(d);
+
+// in predict():
+W.diagonal().segment&lt;3&gt;(0) = (gyro_dvar /2*DT_IMU).cwiseMax(1e-7).cwiseMin(1e-4);
+W.diagonal().segment&lt;3&gt;(6) = (accel_dvar/2*DT_IMU).cwiseMax(1e-5).cwiseMin(1.0);</code></pre>
+
+  <h3>20.3 The assumption ledger</h3>
+  <div class="warn">
+    <p><strong>1. Whiteness.</strong> The estimator books the measured power as
+      if white. A <em>coherent stable tone</em> at aliased frequency f is not:
+      it integrates to a <em>bounded</em> velocity oscillation,</p>
+    <pre><code>|v| ≤ a/(2π·f)     e.g. 6.5 m/s² at 23 Hz → only 0.045 m/s</code></pre>
+    <p>and white-W would then over-book. Broadband, frequency-wandering
+      vibration genuinely random-walks. The two cases are distinguishable from
+      the state error itself — see 20.4.</p>
+    <p><strong>2. Slow-signal leakage.</strong> Real jerk leaks into d² at
+      the 4sin²(ω/2) rate; bounded and negligible below a few Hz.</p>
+    <p><strong>3. Lag.</strong> The EWMA needs ~τ to notice an onset; the
+      first fraction of a second of a new vibration regime is under-booked.
+      The floor and the motor spin-up ramp both soften this.</p>
+  </div>
+
+  <h3>20.4 Why this is not the R band-aid, and how to falsify it</h3>
+  <p>The band-aid test: <em>does the adjusted number have a referent you could
+    measure with the filter deleted?</em> Symptom-driven R fails — it
+    references only the filter's distress. q̂ passes: it is the variance of
+    the input stream, computable with no filter in existence. It feeds a term
+    the §8 derivation already contains, feed-forward, with no rejection
+    feedback anywhere in the loop. And unlike widening R (which shrinks the
+    gain), growing W grows both S and K: the filter admits error <em>and
+    corrects harder</em>, which is what recovery requires.</p>
+  <div class="result"><pre><code>Predictions this model must survive:
+· white vibration → velocity error ≈ σ·sqrt(t·Δt) during unaided motion
+    (2026-07-19 log: predicted 0.8 m/s at 2 s into the drive; observed ~1 —
+     the white model was validated on this platform's data)
+· coherent tone → bounded error a/(2π f); if observed, white-W over-books
+     and the honest upgrade is a colored-noise (Gauss–Markov) error state
+· with live W during a drive: S_wheels ≈ q̂·Δt_wheel + R, NIS_wheels ~ O(1),
+     gate stays open, wheels steer v within ±sqrt(q̂·Δt_wheel)</code></pre></div>
+
+  <h2>21. The magnetometer: what it actually promises</h2>
+  <p>The filter's model (§9) predicts the body-frame field as
+    <code>h = R̂ᵀ·(R₀·m̄)</code>, where m̄ is the startup mean reading and R₀
+    the startup attitude. Read what this construction really says: <em>"the
+    world field is whatever I saw at startup, wherever I happen to go."</em>
+    At startup the residual is zero by construction — every calibration error
+    is silently absorbed into the reference. The magnetometer therefore
+    measures orientation <em>relative to the startup snapshot</em>, and every
+    deviation from three assumptions surfaces later, each with its own
+    fingerprint.</p>
+
+  <h3>21.1 The norm is a lie detector</h3>
+  <p>Rotations preserve length (§1): <code>|Rᵀm| = |m|</code>. So <em>no
+    attitude error, of any size, can ever change the measured field
+    magnitude</em>. Any change in |z| is interference or environment —
+    unconditionally. Always plot |z| first.</p>
+
+  <h3>21.2 Assumption 1: no body-fixed field (hard iron)</h3>
+  <p>Suppose the "calibrated" reading still carries a body-fixed offset b:
+    <code>z = Rᵀm_world + b</code>. The startup absorption puts b into the
+    world reference: <code>m_ref = R₀·m̄ = m_world + R₀·b</code>. Later, with
+    perfect attitude, the residual is:</p>
+  <pre><code>r = z − R̂ᵀ·m_ref = b − RᵀR₀·b = (I − RᵀR₀)·b
+
+pure yaw turn ψ since startup:  |r| = 2·|b_perp|·sin(ψ/2)</code></pre>
+  <p>Zero at start, growing with the turn — a residual that appears only
+    after rotating is the hard-iron fingerprint. (July 19 log: after a ~35°
+    turn, |r| ≈ 11 µT ⇒ |b_perp| ≈ 18 µT was still hiding in the
+    calibration.)</p>
+
+  <h3>21.3 Assumption 2: no current-driven fields</h3>
+  <p>Motor and ESC currents make µT-scale fields at close range,
+    proportional to torque. Fingerprint: residual (and |z|) jumps the moment
+    wheels are commanded, with zero attitude change, and vanishes at stop.
+    Definitive bench test: hold the rover in the air, spin the wheels — any
+    magnetometer shift is current interference, full stop.</p>
+
+  <h3>21.4 Assumption 3: the field is spatially uniform</h3>
+  <p>Indoors it is not — rebar, subfloor steel, furniture. Fingerprint:
+    stationary-to-stationary change in B after <em>translating</em>, with |z|
+    changed. This is the dominant violation in the current logs:</p>
+  <pre><code>phase                     B_body (µT)                |B| (µT)
+before drive (still)      (+17.1, −12.1, −40.1)      45.18 ± 0.42
+while driving             (+20.2,  −6.7, −41.5)      46.73 ± 0.85
+after drive   (still)     (+20.8,  −1.9, −41.0)      46.04 ± 0.42</code></pre>
+  <p>The norm changed 0.86 µT between two <em>stationary</em> states —
+    attitude cannot do that — and the body components moved ~11 µT across a
+    ~1.3 m drive with only ~1.6° of yaw. Measured indoor gradient:
+    roughly <strong>8 µT per meter</strong>. Against the booked
+    σ_R = 0.4 µT that is a guaranteed NIS of order (11/0.4)² ≈ 750 — exactly
+    the 350–1000 the log records. The magnetometer is not broken; it is
+    honestly reporting a field the model swore was uniform.</p>
+
+  <h3>21.5 What to do about it, in order</h3>
+  <ul>
+    <li><strong>Bench-isolate the causes:</strong> wheels-in-air test (21.3),
+      then a slow in-place yaw sweep — residual vs ψ fitting
+      2|b|sin(ψ/2) measures the remaining hard iron (21.2).</li>
+    <li><strong>Tell R the truth:</strong> indoors, the reference is good to
+      the field gradient × travel distance — µT-scale, not 0.4 µT. An honest
+      R keeps the mag useful for slow yaw-drift correction instead of
+      permanently gated.</li>
+    <li><strong>Model the gradient instead of denying it:</strong> promote the
+      reference field m_ref to a 3-state slowly-varying estimate with process
+      noise scaled by speed (~8 µT/m × |v|). The mag then constrains yaw
+      through field <em>changes</em> faster than the reference wanders — the
+      same "model the error as state" move as everywhere else in this
+      document.</li>
+    <li><strong>Or degrade gracefully:</strong> project the residual onto the
+      horizontal plane and use the mag as yaw-only aiding with wide R; tilt
+      already belongs to the accelerometer.</li>
+  </ul>
+  <div class="result"><code>|z| is rotation-invariant: plot the field norm before trusting any
+magnetometer conclusion. A norm that moves indicts the field, not the yaw.</code></div>
+
+  <h1>Part III — The estimator: fusing beliefs, from one number up</h1>
+  <p>Parts I–II built the models and the noise. This part builds the machine
+    that combines them — starting, as always, from the smallest unit: two
+    measurements of one number.</p>
+
+  <h2>22. Fusing two measurements of one number</h2>
+  <p>Two independent, unbiased measurements of the same quantity x:
+    z₁ with variance σ₁², z₂ with variance σ₂². Combine them linearly,
+    <code>x̂ = w·z₁ + (1−w)·z₂</code> (the weights must sum to 1 to stay
+    unbiased), and compute the estimate's variance with §12:</p>
+  <pre><code>Var[x̂] = w²σ₁² + (1−w)²σ₂²
+
+d/dw = 0:   2wσ₁² − 2(1−w)σ₂² = 0
+w = σ₂²/(σ₁² + σ₂²)</code></pre>
+  <div class="result"><pre><code>x̂ = (σ₂²·z₁ + σ₁²·z₂)/(σ₁² + σ₂²)
+1/Var[x̂] = 1/σ₁² + 1/σ₂²         // inverse variances ADD</code></pre></div>
+  <p>Read it: trust is inverse variance, weights are proportional to trust,
+    and fusing always helps (the fused variance is smaller than either
+    input's). Every Kalman filter ever run is this formula wearing matrices.
+    Note what the weights are made of: <em>claimed</em> variances. Feed this
+    formula a lie about σ and it confidently produces garbage — the entire
+    July log saga, in one line of algebra.</p>
+
+  <h2>23. The Kalman filter is fusion plus a clock</h2>
+  <h3>23.1 The scalar filter, complete</h3>
+  <p>Track one state x̂ with variance P. Two alternating moves:</p>
+  <pre><code>predict (time passes dt):    x̂ ← f(x̂)          // your dynamics
+                             P ← P + q·dt       // §15: random walk grows
+
+update (measurement z, R):   K = P/(P + R)      // §22 with σ₁²=P, σ₂²=R
+                             x̂ ← x̂ + K·(z − x̂)
+                             P ← (1 − K)·P</code></pre>
+  <p>K is the fraction of the disagreement you concede: P≫R → K→1, the
+    measurement wins; P≪R → K→0, the model wins. Predict manufactures
+    uncertainty (+q·dt), update spends it. That is the whole filter.</p>
+
+  <h3>23.2 The vector filter, derived with §12 only</h3>
+  <p>State error δx with covariance P, measurement <code>z = h(x) + n</code>
+    with noise covariance R. The residual, linearized (Parts I §7–9 built
+    every H we need):</p>
+  <pre><code>r = z − h(x̂) ≈ H·δx + n
+
+S := E[r·rᵀ] = H·P·Hᵀ + R      // §12: independent covariances add,
+                                // H scales as Var[aX]=a²Var[X], in matrices</code></pre>
+  <p>Correct with gain K: <code>x̂ ← x̂ ⊞ K·r</code>. The new error is
+    <code>e⁺ = (I − K·H)·e − K·n</code>; apply §12 once more:</p>
+  <div class="result"><pre><code>P⁺ = (I−KH)·P·(I−KH)ᵀ + K·R·Kᵀ     // the Joseph form — valid for ANY K</code></pre></div>
+  <p>This is exactly the line in <code>ckf.hpp correct()</code>, and note it is
+    not an approximation: it is the §12 variance algebra applied to e⁺,
+    which is why it preserves symmetry and positivity where the shortcut
+    <code>(I−KH)P</code> can rot numerically. Choosing the K that minimizes
+    the total variance (set the derivative of trace(P⁺) to zero) gives:</p>
+  <div class="result"><pre><code>K = P·Hᵀ·S⁻¹        // the matrix version of P/(P+R)</code></pre></div>
+  <p>Same anatomy as §22: P·Hᵀ maps state trust into measurement space,
+    S⁻¹ divides by total trust. Every input is a <em>claimed</em>
+    covariance.</p>
+
+  <h2>24. NIS: the residual on trial</h2>
+  <p>The filter claims r ~ N(0, S). Test the claim. Whiten the residual —
+    divide out its own claimed covariance — and measure its length:</p>
+  <pre><code>NIS = rᵀ·S⁻¹·r      // = |S^(-1/2)·r|², a length in "claimed sigmas"</code></pre>
+  <p>If the claim is true, this is a sum of d squared standard normals — the
+    chi-squared distribution with d degrees of freedom:</p>
+  <pre><code>E[NIS] = d          median (d=3) ≈ 2.37
+95% two-sided band (d=3): [0.216, 9.35]    (d=1): [0.001, 5.02]</code></pre>
+  <p>This is why a healthy filter shows magnm median 2.4 and ~2.5% rejection
+    (the gate <code>nis &lt; upper</code> cuts the top α/2 tail of good
+    measurements <em>by design</em>) — and it is the correct reading of the
+    stationary logs. NIS far above the band proves exactly one thing:
+    <em>r is much longer than S claims</em>. Locally, the filter cannot tell
+    which side lied — a measurement outlier (gate is right to reject) or an
+    overconfident S (gate starves the filter). The tiebreaker is history:
+    outliers are occasional; overconfidence rejects <em>everything,
+    persistently</em>.</p>
+  <h3>24.1 The lockout death spiral, quantified</h3>
+  <pre><code>reject → no correction → dead-reckoning error grows (§15)
+       → r grows while S stays small → NIS worse → reject forever
+
+recovery time: gate needs S ≳ r²/χ²_crit, S grows at W·dt
+  e.g. v error 0.5 m/s, W_v = 1e-5:  t ≈ 0.25/(5·1e-5) ≈ 5000 s</code></pre>
+  <p class="note">Every diverged run in the July logs is this loop: 100%
+    rejection on all sensors within ~2 s of motion, then hours-scale nominal
+    recovery time — i.e. never. The two escapes are honest W (S tracks
+    reality, spiral never starts — §20) and, as a backstop, treating a long
+    rejection streak as evidence against S rather than against the sensor.</p>
+
+  <h2>25. Observability: what the sensors cannot tell you</h2>
+  <p>A state (or direction in state space) is <em>observable</em> if the
+    measurements, over time, pin it down. Unobservable directions are not
+    exotic — this rover has several, and they leave a specific signature:
+    the state wanders there <em>without any residual complaining</em>, and
+    P grows without bound.</p>
+  <ul>
+    <li><strong>Single-anchor UWB range:</strong> constrains |p| only. The
+      whole sphere around the anchor is a level set; the two tangential
+      directions are unobservable. The logs show it plainly: over 90
+      <em>stationary</em> seconds p slid from (0.70, 0, 0.94) to
+      (1.15, 0, −0.10) — range 1.17 → 1.15, same sphere, different point —
+      with every residual content. More anchors, or wheel dead-reckoning
+      plus heading, are what actually fix x/y/z.</li>
+    <li><strong>Magnetometer:</strong> one world direction observed in the
+      body frame — constrains rotation about every axis <em>except</em> the
+      field direction; combined with gravity from the accel (a second
+      direction) attitude is fully pinned. Alone, it is a yaw sensor.</li>
+    <li><strong>Gyro bias:</strong> never measured directly by anything.
+      Observable only through the chain bg → attitude drift (F block 0,12)
+      → gravity/field residuals. Cut the corrections (lockout) and bg is
+      unobservable; the post-drive roll drift at 0.06°/s in the July log is
+      this chain severed.</li>
+  </ul>
+  <div class="result"><code>Unobservability is diagnosed jointly: state wanders + residuals silent +
+variance grows. Any one alone means something else.</code></div>
+
+  <h1>Part IV — Principles: the themes underneath the techniques</h1>
+
+  <h2>26. Where humility lives</h2>
+  <p>A Kalman filter's entire capacity for self-doubt is three matrices: P₀,
+    W (via Q), and R. There is no fourth place. "The filter should have room
+    to accept it's wrong" is not a feeling — it is a covariance, and it will
+    be one of these three. So the engineering question is never
+    <em>whether</em> to adjust a covariance; it is whether the number you set
+    corresponds to something real. The test, worth engraving:</p>
+  <div class="result"><code>Band-aid test: could you measure the number you are adjusting with the
+filter deleted? If yes, it is a model parameter. If no — if it exists only
+to make the filter's symptoms subside — it is a band-aid.</code></div>
+  <p>Corollary with teeth: widening R and widening W both open the NIS gate,
+    but they are opposites in the gain. Bigger R <em>shrinks</em> K — you
+    accept the measurement and barely move ("the world is blurry"). Bigger W
+    grows P, which grows K — you accept it and correct <em>harder</em> ("my
+    dead-reckoning is worse than I claimed"). Only the second one recovers a
+    diverged filter. Humility about yourself is useful; humility assigned to
+    the world is just deafness.</p>
+
+  <h2>27. The predict/correct assignment principle</h2>
+  <p>Predict and correct defend against different error shapes, and that —
+    not sensor prestige — decides which signal goes where:</p>
+  <pre><code>predict:  no gate, errors enter unconditionally
+          → wants errors that are CONTINUOUS and statistically describable
+            (defense: book them in W)
+correct:  gated per-sample
+          → tolerates errors that are OCCASIONAL and structural
+            (defense: reject the bad samples)</code></pre>
+  <p>Classify this rover's sensors and the classical architecture falls out:
+    IMU error is continuous noise (never an "outlier" — present in every
+    sample, describable by a variance) → predict. Wheel error is slip,
+    snag, lift — discrete, structural, unboundable → gated correction. Put
+    odometry in predict and a slip becomes an ungated state update no sensor
+    can veto; put the IMU through a gate and its continuous noise trips the
+    gate forever.</p>
+  <p>But the classification is <em>empirical, per platform</em>. On smooth
+    indoor floor at 0.2 m/s, slip is small and slowly varying — describable!
+    — which is why the old TRANSEKF (odometry-predict, accel demoted to a
+    gated consistency check, slip coefficients estimated online) genuinely
+    worked here. The resolution is prettier than the argument: with honest
+    input-driven W, the architectures <em>converge</em>. When vibration makes
+    q̂ huge, the Kalman weighting discounts the accel channel to nothing and
+    the wheels steer — odometry-predict emerges as computed behavior. When
+    the IMU is clean, it earns its keep back. You do not have to pick the
+    architecture by ideology; honest variances pick it per-timestep.</p>
+  <p class="note">Related idea with a name: using an <em>integrated</em> IMU
+    increment (delta-velocity over an interval) as a measurement is
+    "preintegration." In an EKF it requires cloning the past state into the
+    filter (the increment is a relative measurement, correlated with the
+    state — vanilla updates are inconsistent with it). Factor-graph
+    estimators are built around this; here, predict-side integration with
+    honest W consumes the same information without the machinery.</p>
+
+  <h2>28. The dead-reckoning budget</h2>
+  <p>§15 gives the unaided drift law σ_v = √(q·t). The design insight is to
+    read it over the <em>aiding interval</em>, not the mission:</p>
+  <pre><code>this rover, worst measured vibration (σ_a = 6.5 m/s², f_s = 123 Hz):
+
+unaided for one wheel gap (67 ms):   6.5·√(0.067/123) ≈ 0.15 m/s
+unaided for one drive     (8 s):     6.5·√(8/123)     ≈ 1.7  m/s
+the drive's own signal:                                 0.17 m/s</code></pre>
+  <p>Same IMU, same vibration: hopeless over 8 seconds, comfortably
+    correctable over 67 milliseconds. An aided INS is not "an INS that also
+    gets corrections" — it is a machine whose accuracy is set almost
+    entirely by <em>aiding cadence × gate uptime</em>, with the IMU bridging
+    the gaps and owning the attitude. Unaided MEMS dead-reckoning was never
+    viable for anyone; the only question is whether the gate stays open. This
+    is also the amputation test for a channel: if q̂·Δt_aiding ≫ R_aiding at
+    all times, the channel contributes nothing between corrections and can
+    be removed with data in hand.</p>
+
+  <h2>29. Modeling errors as states: the Gauss–Markov process</h2>
+  <p>The recurring ladder — remove the error, else <em>model</em> it, else
+    book it as noise — keeps landing on "model it." The workhorse model for
+    "wanders, but not without bound" is the first-order Gauss–Markov
+    process: white noise pushed through a leak,</p>
+  <pre><code>x_dot = −x/τ + w                    (continuous)
+x_{k+1} = a·x_k + w_k,  a = e^(−Δt/τ)   (discrete; Var[w_k] = σ²(1−a²))
+
+autocorrelation: R(Δ) = σ²·e^(−|Δ|/τ)   // memory with half-life ~τ
+PSD: flat below f ≈ 1/(2πτ), rolls off above — "white with a knee"</code></pre>
+  <p>Its two limits are old friends: τ→0 is white noise, τ→∞ is a constant
+    bias. Everything in between is a knob for structure. To adopt one:
+    append the state, put −I/τ in its F block, its driving variance in W,
+    and let corrections estimate it. Where each belongs on this rover:</p>
+  <pre><code>accel/gyro biases:     τ → ∞ (already states; Allan variance sets their W)
+coherent vibration:    τ ≈ seconds — absorbs the tone §20.3 warns about
+mag reference field:   τ set by travel: field wanders ~8 µT/m of motion
+scale factors:         τ → ∞, observable during dynamics</code></pre>
+  <div class="result"><code>Error with structure → state (the filter estimates it).
+Error without structure → noise (the filter budgets for it).
+The Jacobian machinery of Part I never changes; only the bookkeeping grows.</code></div>
+
+  <h2>30. Constraints are measurements: the free sensors</h2>
+  <p>Some of the best measurements cost nothing because they are facts about
+    the platform, not devices. A differential rover cannot move sideways or
+    vertically in its own body frame:</p>
+  <pre><code>v_body = Rᵀ·v = (v_forward, ~0, ~0)   // non-holonomic constraint</code></pre>
+  <p>The wheels binding already encodes this — <code>velocity_body =
+    (forward_speed, 0, 0)</code> — which means every wheels update is
+    three measurements, two of which (lateral, vertical) are valid <em>even
+    when the encoders slip</em>. Honest R here is anisotropic: tight lateral
+    and vertical, looser forward with a slip term that grows with commanded
+    speed. And note the degenerate case: commanded speed zero makes the
+    update <code>v = 0</code> — a <em>zero-velocity update</em> (ZUPT), the
+    single most powerful drift-killer in pedestrian and vehicle navigation.
+    This filter has been ZUPTing at every stop without the name; it is why
+    stationary velocity stays pinned for minutes. Constraints worth
+    auditing on any platform: motion model zeros, known map surfaces
+    (z = floor), stationarity detection, and — §21's contribution — the
+    rotation-invariance of every vector norm.</p>
+
+  <h2>31. Allan variance: calibrating the slow noises</h2>
+  <p>The live estimator of §20 sees fast noise. The bias blocks of W need the
+    <em>slow</em> noises — invisible in seconds, decisive over minutes. The
+    tool: average the signal in bins of length τ, and look at how adjacent
+    bin-averages disagree, as a function of τ:</p>
+  <pre><code>AVAR(τ) = ½·E[(mean_{k+1} − mean_k)²]</code></pre>
+  <p>For white noise, §12 does it in two lines: each bin mean has variance
+    σ²·Δt/τ, adjacent means are independent, so
+    AVAR = σ²·Δt/τ — a −½ slope on log-log axes of √AVAR vs τ. Real IMU
+    data departs from that line as the slow processes surface:</p>
+  <pre><code>slope −1/2 : white noise        (this segment ≡ the §20 q, cross-check)
+flat floor : bias instability   (how good the bias can ever be known)
+slope +1/2 : bias random walk   (sets W_ba, W_bg — the 1e-11 entries,
+                                 measured instead of guessed)</code></pre>
+  <p class="note">Procedure: log a motionless night (hours — the interesting
+    τ region is minutes), compute √AVAR vs τ per axis, read the three
+    regimes off the plot. One overnight log replaces every guessed bias
+    constant in the filter.</p>
+
+  <h1>Part V — The story: five runs of one filter</h1>
+  <p class="note">Everything above was learned in one July week, from the logs
+    of one rover. This is the chronology — what the data showed, what it
+    meant, and which section each lesson became. Numbers are from the actual
+    logs.</p>
+
+  <h3>Run one: the rover that fled backwards</h3>
+  <p>A 149-second log. For 130 seconds the rover sits still and the filter is
+    flawless. Then it drives forward for five seconds at 0.11 m/s — and the
+    filter's velocity goes <em>backwards</em>, reaching −2.9 m/s, position
+    −21 meters, every sensor 100% rejected from the first second of motion to
+    the end of the log. The tell was the sign: wheels said +x, filter said −x.
+    The raw data settled it — the accelerometer reads +9.80 on z at rest,
+    while the comment in the code swore it read −g. Predict had been written
+    to one convention, the measurement update to the other; they agree
+    perfectly at rest (both zero), so the bug was invisible until the first
+    real acceleration, which predict integrated with its sign flipped.
+    Convention is decided by data, not comments — that derivation, done
+    properly, became §8, and the two flipped F blocks came with it.</p>
+
+  <h3>Run two: the filter that was sure</h3>
+  <p>Sign fixed, process noise nudged ×10. At rest the filter is now
+    textbook — NIS medians 2.3–2.4 against the theoretical 2.37 (§24),
+    rejection 2–3% against the designed 2.5%. Then a 5.6-second drive, and a
+    different disaster: velocity +15 m/s, position +117 m, <em>forward</em>
+    this time. The dynamics were right; the confidence was wrong. Driving
+    vibration put the accel scatter at σ ≈ 1.6 m/s² against a booked 0.045 —
+    a 36× lie in σ, which enters NIS squared: ~1300× over baseline, hopeless
+    against a gate at 9.35. Locked out, the filter dead-reckoned on a small
+    tilt error picked up during the shaking; gravity leaked at ~1.3 m/s²
+    (§15's random walk with a bias), and §24.1's arithmetic said recovery
+    would take hours. The gate was never the villain — it correctly detected
+    that S was a lie. It just had no way to make the filter update its
+    self-image. That argument — R-inflation silences the gate by shrinking
+    the gain, W-inflation opens it by growing the gain — became §26.</p>
+
+  <h3>Run three: the bump that proved the gate right</h3>
+  <p>250 stationary seconds, perfectly calibrated. At t≈180 s something
+    knocks the rover — accel NIS spikes to 674, the gate rejects 27% for ten
+    seconds, then everything returns to green as if nothing happened. This
+    is the same gate that "ruined" runs one and two, shown working exactly
+    as designed <em>the moment its covariances told the truth</em>. Gates
+    reject outliers when S is honest; they reject everything when S is
+    smug. History, not any single sample, is what distinguishes the two
+    (§24).</p>
+
+  <h3>Run four: three meters, one point eight kilometers</h3>
+  <p>The drive that motivated most of Part II. Ninety healthy stationary
+    seconds, then a 1.3-meter forward drive at 0.166 m/s — and the log
+    records vibration of σ = 5.5–8.7 m/s² with ±30 m/s² spikes, a
+    <em>thousand</em> times the rest scatter, aliased through a 123 Hz
+    sample rate (§16). The §15 budget is merciless: integrating that blind
+    for 8 seconds random-walks velocity by ±1.7 m/s while the signal being
+    sought is 0.17 m/s. The filter locked out within two seconds and
+    free-integrated; worse, the drive genuinely changed the world — the
+    rest accel reading shifted 0.08 m/s² (a different patch of floor), the
+    gyro bias moved, and with every correction gated, none of it was ever
+    absorbed (§25's severed bg chain: roll drifting 0.06°/s with all
+    residuals silenced). Final state: 54 m/s, 1.8 kilometers. Actual
+    displacement: three meters. The same arithmetic read over a 67 ms wheel
+    gap instead of 8 s gives 0.15 m/s — trivially correctable — which is
+    §28's whole point: an aided INS lives or dies by aiding cadence × gate
+    uptime, and the cure (measure the input noise, book it live) became
+    §20.</p>
+
+  <h3>Run four, second verdict: the magnetometer that told the truth</h3>
+  <p>"The magnetometer is still shit." The norm said otherwise: |B| measured
+    45.18 ± 0.42 µT parked before the drive and 46.04 ± 0.42 µT parked
+    after — two <em>stationary</em> states, and rotations cannot change a
+    vector's length (§1, §21.1). The body-frame field moved ~11 µT across a
+    1.3-meter drive that turned the rover all of 1.6°. The building's field
+    simply differs by ~8 µT per meter of floor, and the filter was comparing
+    against a frozen startup snapshot with a 0.4 µT tolerance: a built-in
+    NIS of ~750, exactly what the log recorded. The sensor was honestly
+    reporting a field the model swore was uniform. Its anatomy — what the
+    startup-snapshot reference really promises, and the three fingerprints
+    of its three assumptions — became §21.</p>
+
+  <h3>Epilogue: the instruments were never lying</h3>
+  <p>Five runs, three "broken" components — and every one of them turns out
+    to have been telling the truth. The accelerometer reported +g exactly as
+    wired; the code had believed a comment instead. The NIS gate rejected
+    measurements that genuinely contradicted the claimed covariance; the
+    covariance was the liar. The magnetometer reported the actual magnetic
+    field at the rover's actual location; the model had promised uniformity
+    on its behalf. The recurring failure was never a sensor and never the
+    mathematics — it was <em>unexamined confidence</em>: a sign convention
+    assumed, a noise level assumed, a field assumed. And the recurring fix
+    was never a patch — it was replacing an assumption with a measurement
+    (§20, §21, §31) or with a derivation (§8, §9). What remains on the
+    workbench as this document closes: filter the vibration before it is
+    sampled (§16), wire the live W (§20), give the magnetometer an honest R
+    or a wandering reference state (§21, §29), and spend one overnight log
+    on the Allan plot (§31) so the last guessed constants become measured
+    ones. The mathematics will keep — every Jacobian, every PSD, every gate
+    threshold in this document was derived, and derivations do not drift.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li>J. Solà, <em>Quaternion kinematics for the error-state Kalman
+      filter</em>, 2017 — the standard reference for Part I's conventions.</li>
+    <li>P. D. Welch, <em>The use of FFT for the estimation of power spectra</em>,
+      IEEE Trans. Audio Electroacoust., 1967 — four pages, readable.</li>
+    <li>A. Einstein, <em>On the movement of small particles suspended in
+      stationary liquids</em>, 1905 — atoms to noise, the original.</li>
+    <li>Oppenheim &amp; Schafer, <em>Discrete-Time Signal Processing</em> —
+      sections 17–18 at full rigor.</li>
+    <li>IEEE Std 952 — Allan variance for IMU noise calibration.</li>
+    <li>Bar-Shalom, Li &amp; Kirubarajan, <em>Estimation with Applications to
+      Tracking and Navigation</em> — Part III at full rigor, including NIS
+      consistency testing.</li>
+    <li>Groves, <em>Principles of GNSS, Inertial, and Multisensor Integrated
+      Navigation Systems</em> — the aided-INS architecture of Part IV,
+      including odometry aiding, ZUPTs, and magnetometer error models.</li>
+    <li>Forster et al., <em>On-Manifold Preintegration for Real-Time
+      Visual-Inertial Odometry</em>, 2017 — the §27 note, done properly.</li>
+  </ul>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Eigen/Dense>
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -11,6 +12,7 @@
 #include <type_traits>
 #include <vector>
 
+using SteadyClock = std::chrono::steady_clock;
 /**
  * @brief
  *
@@ -118,113 +120,11 @@ inline bool load_doubles(const std::string &path, std::vector<double> &out,
   return true;
 }
 
-template <typename T> class FilteredSampleProducer {
-private:
-  using Clock = std::chrono::steady_clock;
-
-  mutable std::mutex m;
-  T latest;
-  T mean; // lifetime Welford mean (used by calibration hooks)
-  T var;
-  size_t count = 0;
-  Clock::time_point timestamp{};
-
-  // Sliding-window variance -> R. A fixed window over PAST samples keeps R
-  // independent of the current update (no adaptive-R / gain coupling), and the
-  // windowed mean + mean-of-squares are both maintained recursively (O(1)):
-  //   var = mean_sq_win - mean_win^2   over the last win_size samples.
-  static constexpr size_t win_size = 50;
-  std::vector<T> win_buf; // ring buffer of recent samples
-  size_t win_head = 0;    // next write slot
-  size_t win_count = 0;   // filled entries (<= win_size)
-  T mean_win;             // recursive windowed mean
-  T mean_sq_win;          // recursive windowed mean of squares
-
-  static T square_like(const T &x) {
-    T dummy;
-    IF_CONSTEXPR_ASSIGN(dummy, T, x * x, x.cwiseProduct(x));
-    return dummy;
-  }
-
-  static T sqrt_like(const T &x) {
-    T dummy;
-    IF_CONSTEXPR_ASSIGN(dummy, T, sqrt(x), x.array().sqrt().matrix());
-    return dummy;
-  }
-
-  // T apply_biquad(const T &x) {
-  //   const T y = coeffs_.b0 * x + this->z1_;
-  //   this->z1_ = coeffs_.b1 * x - coeffs_.a1 * y + this->z2_;
-  //   this->z2_ = coeffs_.b2 * x - coeffs_.a2 * y;
-  //   return y;
-  // }
-
-public:
-  explicit FilteredSampleProducer(const T &zero)
-      : latest(zero), mean(zero), var(zero), win_buf(win_size, zero),
-        mean_win(zero), mean_sq_win(zero){};
-
-  // void set_filter(BiquadCoeffs c) {
-  //   WITH_LOCK(this->m)
-  //   this->coeffs_ = c;
-  //   this->filter_enabled_ = true;
-  // }
-
-  void put(const T &x_in, Clock::time_point sample_time = Clock::now()) {
-    std::lock_guard<std::mutex> lg(this->m);
-
-    // const T x = this->filter_enabled_ ? this->apply_biquad(x_in) : x_in;
-    const T x = x_in;
-
-    this->latest = x;
-    this->timestamp = sample_time;
-    this->count++;
-
-    if (this->count == 1) {
-      this->mean = x;
-      return;
-    }
-
-    const double n = static_cast<double>(this->count);
-    const T delta = x - this->mean;
-    this->mean += delta / n; // lifetime Welford mean, unchanged (calib uses it)
-
-    // --- sliding-window variance over the ring buffer (recursive, O(1)) ---
-    const T x_sq = square_like(x);
-    if (this->win_count < win_size) {
-      // window still filling: incremental mean of the first win_count+1 samples
-      const double m = static_cast<double>(this->win_count) + 1.0;
-      this->mean_win += (x - this->mean_win) / m;
-      this->mean_sq_win += (x_sq - this->mean_sq_win) / m;
-      ++this->win_count;
-    } else {
-      // window full: swap oldest for newest, mean shifts by (new - old)/N
-      const T x_old = this->win_buf[this->win_head];
-      const double N = static_cast<double>(win_size);
-      this->mean_win += (x - x_old) / N;
-      this->mean_sq_win += (x_sq - square_like(x_old)) / N;
-    }
-
-    this->win_buf[this->win_head] = x;
-    this->win_head = (this->win_head + 1) % win_size;
-
-    // population variance of the window: E[x^2] - E[x]^2, floored at 0
-    const T v = this->mean_sq_win - square_like(this->mean_win);
-    IF_CONSTEXPR_ASSIGN(this->var, T, std::max(v, 0.0), v.cwiseMax(0.0));
-  }
-
-  void get_latest(T &out, Clock::time_point &when) {
-    WITH_LOCK(this->m)
-    out = this->latest;
-    when = this->timestamp;
-  }
-
-  T peek() const { WITH_LOCK(this->m) return this->latest; }
-  T get_mean() const { WITH_LOCK(m) return this->mean; }
-  T get_variance() const { WITH_LOCK(m) return this->var; }
-  T get_stddev() const {
-    WITH_LOCK(m) return FilteredSampleProducer::sqrt_like(this->var);
-  }
-  std::size_t get_count() const { WITH_LOCK(m) return this->count; }
-  Clock::time_point stamp() const { WITH_LOCK(m) return this->timestamp; }
-};
+// Convert a calibrated body-frame accelerometer sample into the start-relative
+// translation frame and remove the gravity vector captured at startup.
+inline Eigen::Vector3d
+linear_accel_in_start_frame(const Eigen::Quaterniond &start_from_body,
+                            const Eigen::Vector3d &accel_body,
+                            const Eigen::Vector3d &gravity_start) {
+  return start_from_body.normalized() * accel_body - gravity_start;
+}

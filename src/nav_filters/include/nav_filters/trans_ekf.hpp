@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ISensor.hpp"
+#include "sensor/sensor.hpp"
 #include "ckf.hpp"
 #include "mekf.hpp"
 #include <Eigen/Dense>
@@ -136,8 +136,8 @@ public:
               },
               "accel");
         },
-        [this](const FilteredSampleProducer<V3> &prod) {
-          const V3 g = prod.get_mean();
+        [this](const Sensor::DataPrefilter<V3>::Stamped &sample) {
+          const V3 g = sample.mean;
           queue_task(SteadyClock::now(), [this, g]() { this->grav_ref = g; });
         });
 
@@ -163,7 +163,7 @@ public:
               },
               "uwb");
         },
-        [](const FilteredSampleProducer<double> &) {});
+        [](const Sensor::DataPrefilter<double>::Stamped &) {});
 
     Sensor::SensorTable::bind<V4>(
         "control",
@@ -173,7 +173,7 @@ public:
             this->control_snapshot = {t, data, true};
           });
         },
-        [](const FilteredSampleProducer<V4> &) {});
+        [](const Sensor::DataPrefilter<V4>::Stamped &) {});
 
     Sensor::SensorTable::bind<V3>(
         "gyro",
@@ -182,6 +182,6 @@ public:
           queue_task(
               t, [this, data, t]() { this->gyro_snapshot = {t, data, true}; });
         },
-        [](const FilteredSampleProducer<V3> &) {});
+        [](const Sensor::DataPrefilter<V3>::Stamped &) {});
   }
 };

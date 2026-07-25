@@ -11,6 +11,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rcpputils REQUIRED)
+find_package(Eigen3 REQUIRED)
+
+include_directories(${EIGEN3_INCLUDE_DIR})
 
 add_executable(arduino_bridge_node src/arduino_main.cpp)
 target_include_directories(arduino_bridge_node PRIVATE include)
@@ -20,17 +23,8 @@ target_link_libraries(arduino_bridge_node PUBLIC
   rcpputils::rcpputils
 )
 
-add_executable(uwb_bridge_node src/uwb_main.cpp)
-target_include_directories(uwb_bridge_node PRIVATE include)
-target_link_libraries(uwb_bridge_node PUBLIC
-  rclcpp::rclcpp
-  ${std_msgs_TARGETS}
-  rcpputils::rcpputils
-)
-
 install(TARGETS
   arduino_bridge_node
-  uwb_bridge_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
